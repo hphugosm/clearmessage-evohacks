@@ -1,0 +1,53 @@
+{
+  "api_integrated": false,
+  "approved_data_ready": false,
+  "checks": {
+    "approved_training_preflight": "blocked",
+    "clean_environment_sparse_inference": "passed",
+    "fresh_process_all_candidates": "passed",
+    "pytest": "89 passed, 1 existing warning"
+  },
+  "confirmed_original_labels": 2,
+  "date": "2026-10-10",
+  "deployment_performed": false,
+  "disagreed_original_labels": 2,
+  "failed_attempts": [
+    {
+      "check": "dependency_resolution",
+      "reason": "hub 2.2 incompatible with sentence-transformers 6.1",
+      "resolved": true
+    },
+    {
+      "check": "training_v1_reload",
+      "held_out_scored": false,
+      "reason": "float32 head reloaded as float64",
+      "resolved": true
+    },
+    {
+      "check": "first_clean_process",
+      "reason": "60 second cold import timeout",
+      "resolved_on_subsequent_verification": true
+    }
+  ],
+  "human_review_complete": false,
+  "label_corrections_applied": false,
+  "model_trained": true,
+  "next_phase_started": false,
+  "pending_review_records": 41,
+  "reports": {
+    "ml/reports/goal02-provisional-v2.json": "b0d359771769be9f983370eec8599b7be13a6b55c4bc274259694a317eef3715",
+    "ml/reports/goal02-verification-clean-v2.json": "83badc9b60efee32a448bd3489dd79a97bd29eec9d92cea58e068a88d6286659",
+    "ml/reports/goal02-verification-v2.json": "41ff82b6a4577ac548c929c7e7baa0f97bd555c288d71d9785269e5c33554bba"
+  },
+  "review_sha256": "7cf04370060bc86e58349a06dc04fc82de680b0404e17eb44b4babe34a30a70c",
+  "selected_artifact": {
+    "file": "ml/artifacts/goal02-provisional-v2/tfidf_c2.0.json",
+    "reload_max_score_difference": 0.0,
+    "repeat_training_hash_identical": true,
+    "sha256": "7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa"
+  },
+  "selected_model": "tfidf_c2.0",
+  "status": "provisional_training_and_evaluation_verified",
+  "timezone": "Europe/Prague",
+  "user_authorization": "Explicit permission for provisional training on original labels despite incomplete audit."
+}

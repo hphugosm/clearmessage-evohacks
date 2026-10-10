@@ -1,0 +1,37 @@
+{
+  "authorization": {
+    "basis": "User explicitly authorized provisional training on original labels despite incomplete human review in Codex conversation.",
+    "date": "2026-10-10",
+    "human_review_complete": false,
+    "label_corrections_applied": false
+  },
+  "conflict_rows_excluded": 98,
+  "counts": {
+    "test": {
+      "ham": 726,
+      "smishing": 88,
+      "spam": 66
+    },
+    "train": {
+      "ham": 3391,
+      "smishing": 412,
+      "spam": 309
+    },
+    "validation": {
+      "ham": 727,
+      "smishing": 88,
+      "spam": 66
+    }
+  },
+  "data_split_ready": false,
+  "format_version": 1,
+  "limitations": [
+    "Automatic grouping cannot establish true campaigns or time separation.",
+    "Source labels and language coverage remain unverified by a human.",
+    "Experimental training permitted by user; incomplete human audit and two requested label corrections remain unresolved. Not approved ground truth."
+  ],
+  "parent_candidate_file": "mendeley-v1.split.candidate.json",
+  "parent_candidate_sha256": "51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0",
+  "seed": 20261010,
+  "status": "provisional_original_labels_user_authorized"
+}

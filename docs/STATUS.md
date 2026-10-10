@@ -1,29 +1,127 @@
 # Stav projektu
 
-Poslední změna: **10. 10. 2026, Europe/Prague — Goal 02 BLOKOVÁN chybějícím
-schválením Goal 01 dat.** Raw archiv existuje, ale 45 lidských kontrol je pending,
-schválení odložení konfliktů je prázdné a finální manifest chybí. Candidate má
-`data_split_ready=false`. Přidán spustitelný preflight, anglický MODEL_CARD a
-strojový report blokátoru. Žádný model ani metriky nevznikly; Goal 02 není HOTOVO.
+Poslední změna: **10. 10. 2026, Europe/Prague — Goal 02 provizorní trénink a
+evaluace skutečně provedeny na výslovné povolení uživatele.** Původní labely;
+audit nedokončený. Nejde o schválený detektor ani EN/CZ validaci. Uložen model,
+reporty, ověřena offline inference v nových procesech. API integrace / Goal 03
+nezahájeny; schválená Goal 01 data jsou nadále blokovaná.
 
 | Oblast | Stav | Důkaz / blokátor |
 |---|---|---|
 | Pravidla a harmonogram | Původní podklady zachovány | AGENTS.md, PROJECT_PLAN.md, RESEARCH.md, ACCEPTANCE.md a prompty beze změn. Reuse stále čeká na vyjasnění pořadatelem. |
 | Frontend / API | Ověřeno lokálně | Skutečný POST přes Vite proxy i frontend build servírovaný FastAPI; 12 Playwright testů. |
 | Kontrakt | Ověřeno | Pydantic → docs/openapi.json → generovaný TypeScript; kontroly driftu prošly. |
-| Model | Není připraven | `review`, `analysis_complete=false`, `headline_key=model_not_ready`, prázdná evidence, `model_version=null`. |
-| Testy / build | Dostupné kontroly prošly | Nyní 78 pytest (31 API + 38 data/format/real-manifest + 9 training preflight). Pip/OpenAPI/TypeScript/Vite prošly v předchozím Goal 01; frontend/backend/locky v tomto kroku nezměněny. Frontend build/Vitest/Playwright neopakovány. |
+| Model | Provizorní lokální artefakt, API dosud bez něj | TF-IDF/LR natrénován; API stále review/model_not_ready, analysis_complete=false, model_version=null. |
+| Testy / build | PASS dostupných kontrol | 89 pytest (předchozích 78 + 11 ML), 1 existující warning. ML pip check/hash locks a čistá baseline instalace prošly. Frontend/backend/jejich locky beze změn, jejich buildy neopakovány. |
 | Docker | Připraven, neověřený build/run | Docker CLI ani daemon nejsou dostupné; base image manifesty/digesty ověřeny pouze čtením registry. |
 | Deployment účet | Nepotvrzen | Žádná existující projektová konfigurace s cílovým účtem/serverem; globální HF CLI nefunguje. |
 | Veřejné nasazení | Neprovedeno | Žádné publikování, platby ani čtení přihlašovacích údajů. |
-| Dataset | Importován; label review BLOKOVÁN | Archiv od uživatele, raw/CSV hash, skutečných 5 971 řádků (4 844 ham / 489 spam / 638 smishing). 45 lidských review a schválení konfliktů chybí. DATA_SOURCES.md. |
+| Dataset | Importován; review nedokončen | 5 971 řádků. Uložena 4 rozhodnutí: 2 shody, 2 návrhy smishing → spam; 41 pending. Atribuce/jazyky a schválení konfliktů chybí. Původní labely zachovány. |
 | Datové nástroje | Ověřeno i nad skutečnými daty | CSV/ZIP import → audit → candidate skupinový split → verify + testy skutečného manifestu. Finální freeze odmítá pending review, žádný reviewed finální split. |
 | České development / challenge | Pouze formát a postup | Pydantic + JSON Schema, nezávislá tvorba/kontrola, rodiny/provenance; 0 skutečných příkladů. Blind odpovědi nečteny. |
-| Trénink | BLOKOVÁN schválením dat | Preflight exit 2, 0/45 potvrzených review a chybějící finální manifest. Žádný model, artefakt, metriky, sklearn ani encoder; docs/MODEL_CARD.md, ml/reports/goal02-status.json. |
+| Trénink | Provizorní experiment ověřen | Na výslovné povolení původních labelů: 2 TF-IDF + 2 frozen-MiniLM/LR kandidáti, majority, validation selection, test až poté. Schválený preflight zůstává blokován. |
 | Git / commit | Lokální repo | Na výslovný požadavek commitu v Goal 01 založen nový Git, bez remote. Lokální commit tohoto kroku ověřit `git log -1`; původní soubory zahrnuty, raw/cache ignorovány. |
 | Devpost / video / OCR / sdílení | Nezahájeno | Mimo Goal 00. |
 
-## Goal 02 — training preflight a doložený blokátor
+## Goal 02 — provizorní trénink po výslovném povolení
+
+Uživatel přerušil review a výslovně zvolil „Povoluji provizorní trénink na
+původních labelech; audit označit jako nedokončený“. Čtyři uložená rozhodnutí
+zachována (2 shody, 2 požadované změny smishing → spam; 41 pending).
+Žádná automatická lidská potvrzení ani approved freeze. Před změnami čistý Git
+strom; frontend/backend a původní kandidátní split beze změn.
+
+Neměnný provizorní authorization manifest odkazuje na původní candidate hash,
+zachovává seed 20261010 a skupiny/řádky **4 112 / 881 / 880**, nadále
+`data_split_ready=false`. Trénink vyžaduje explicitní CLI flag. Schvalovací
+preflight nebyl oslaben; schválený manifest stále chybí.
+
+- Sklearn Pipeline: word/char TF-IDF → balanced LogisticRegression, C=0.5/2.0.
+  Slovník/IDF/head fit jen train; majority baseline rovněž jen train.
+- Frozen multilingual MiniLM, Apache-2.0, revize
+  `e8f8c211226b894fcb81acc59f3b34ba3efd5f42`, vlastní LR head C=0.5/2.0.
+  CPU, bez fine-tuning/pretraining. Nejdříve 32 train zpráv benchmarkováno:
+  **0.116693 s**; až potom embeddings. Jen veřejné train/validation cache.
+- Tokenizování bez truncation, limit **128 včetně special tokens**. Coverage:
+  train 4 103/4 112, validation 880/881, test 880/880. Overflow zůstává review.
+  Metriky používají zveřejněné covered denominátory, výběr penalizuje coverage.
+- Validation vybrala **TF-IDF C=2**, macro-F1 **0.876209**, interní threshold
+  **0.60** z pevné mřížky podle validation warning F1. Selection uložen před
+  test featurization/scoring; CSV parser předtím routuje veřejné řádky podle ID.
+- Test source-label macro-F1: vybraný TF-IDF **0.863645**, majority **0.301370**,
+  MiniLM C=0.5 **0.848873**, MiniLM C=2 **0.852579**. Test neovlivnil výběr.
+  Nejde o ground-truth fraud výkon; EN/CZ výsledky nejsou dostupné, jazyky
+  zdroje neověřeny. Blind challenge neotevřena.
+- Provizorní policy test: **75 suspicious / 805 review / 0 no_strong_signals**,
+  všechny analysis_complete=false; 68 source-smishing warnings, 7 FP,
+  20 source-smishing bez explicitního warning. Abstention 0.914773,
+  dokončené coverage 0. Žádné uživatelské fraud procento.
+- Projektové JSON, encoder safetensors, NPY bez pickle; hash loaderů/assets
+  ověřeny. Reload score rozdíl **0**; opakovaný TF-IDF fit byte-identický,
+  opakovaný head fit na fixních embeddings identický. Nezávisle přepočítáno 32
+  encoder vektorů: max rozdíl 3.88e-7 při jiném padding batchi. Cross-platform
+  byte identita se netvrdí.
+- **Apple M5, macOS arm64, 24 GiB, CPU/4 threads**: vybraný model median
+  **0.424 ms**, p95 **0.640 ms**, 32 validation zpráv včetně policy, bez load.
+  Batch throughput zvlášť. Všechny 4 modely prošly offline fresh-process
+  inference; TF-IDF i v čistém wheel-hash prostředí.
+
+Doklady: `docs/MODEL_CARD.md`, anglický `docs/MODEL_REPORT.md`,
+`ml/reports/goal02-provisional-v2.json`, `goal02-verification-v2.json`,
+`goal02-verification-clean-v2.json`, aktuální index `goal02-latest.json`.
+Per-class metriky, confusion matrices, FP/FN a error IDs skutečně spočítány;
+raw texty, nebezpečné odkazy, váhy a cache nejsou v commitu. Původní blocker
+report je historický. Projektová distribuční licence zatím nebyla zvolena.
+
+### Skutečné příkazy Goal 02 — provizorní běh
+
+```sh
+.venv/bin/python scripts/lock_ml_dependencies.py
+.venv/bin/python -m pip install --only-binary=:all: --require-hashes -r ml/requirements-encoder.txt
+.venv/bin/python scripts/setup_encoder.py
+.venv/bin/python scripts/train.py \
+  --allow-provisional-original-labels --encoder-directory ml/artifacts/encoder \
+  --output ml/artifacts/goal02-provisional-v2 --report ml/reports/goal02-provisional-v2.json
+python3 -m venv .cache/ml-verify
+.cache/ml-verify/bin/python -m pip install --only-binary=:all: --require-hashes -r ml/requirements.txt
+.venv/bin/python scripts/verify_model.py \
+  --report ml/reports/goal02-provisional-v2.json --output ml/reports/goal02-verification-v2.json
+.venv/bin/python scripts/verify_model.py \
+  --report ml/reports/goal02-provisional-v2.json --output ml/reports/goal02-verification-clean-v2.json \
+  --fresh-python .cache/ml-verify/bin/python
+.venv/bin/python scripts/write_model_report.py \
+  --report ml/reports/goal02-provisional-v2.json --verification ml/reports/goal02-verification-v2.json \
+  --output docs/MODEL_REPORT.md
+.venv/bin/python scripts/training_preflight.py
+.venv/bin/python -m pip check
+.venv/bin/python -m pytest -q
+```
+
+Původní ověřené install kroky před generováním locků:
+
+```sh
+.venv/bin/python -m pip install --only-binary=:all: scikit-learn==1.9.1 numpy==2.5.3 scipy==1.18.1 joblib==1.6.0 threadpoolctl==3.7.0
+.venv/bin/python -m pip install --only-binary=:all: sentence-transformers==6.1.0 torch==2.14.1 transformers==5.19.0 'huggingface-hub>=1.31.0,<2.0.0' safetensors==0.8.0
+```
+
+| Kontrola | Skutečný výsledek |
+|---|---|
+| První encoder install s hub 2.2.0 | **FAIL resolver**, ST vyžaduje hub <2; opraveno podle metadata, hub 1.33.0. |
+| ML locks / čistý baseline install | **PASS**, ověřené verze/wheel hash; 7 baseline + 34 encoder balíčků, pip check bez konfliktů. |
+| Explicitní encoder setup | **PASS**, 11 allowlisted souborů, revize/licence/hashi; žádný pickle či cizí kód. |
+| První training v1 | **FAIL před testem**, reload změnil float32 hlavu na float64. Žádné test skóre z pokusu, částečné ignored artefakty zachovány. |
+| Training v2 | **PASS**, zachován původní dtype, reload parity 0, skutečný fit/selection/test. |
+| První clean fresh-process ověření | **TIMEOUT 60 s** při cold importu; nezapočítán jako úspěch. Následný clean import a opakované ověření PASS v clean reportu. |
+| Offline fresh-process / hash / overflow / latency | **PASS**, všechny 4 modely, síť zakázána; žádný runtime download, overflow nedokončené review. |
+| Plný pytest | **PASS 89 testů, 1 existující Starlette/httpx warning**, 1.89 s; 11 ML testů navíc. |
+| Approved Goal 01 preflight | **OČEKÁVANĚ BLOKOVÁN exit 2**, 2 confirmed bez atribuce, 41 pending, 2 disagreed; žádný final manifest. |
+| Frontend / Docker / deployment / API integrace | **NEPROVEDENO**, frontend/backend nezměněny, Docker dříve nedostupný; mimo tento krok. |
+
+Reprodukci spouštět s novými output/report cestami podle MODEL_CARD; známý test
+při dalším ladění označit jako development. Lokální commit ověřit `git log -1`;
+žádný remote/publikování. Schválený detektor a Goal 03 nejsou součástí výsledku.
+
+## Goal 02 — historie prvního blokovaného běhu: training preflight
 
 Před změnami čistý Git strom na commitu `92142ab`; cizí změny nebyly přepsány.
 Čteny pravidla, plán, rešerše, acceptance, aktuální status, veřejný audit/provenance
