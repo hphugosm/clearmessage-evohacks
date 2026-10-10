@@ -1,10 +1,10 @@
 # Stav projektu
 
-Poslední změna: **10. 10. 2026, Europe/Prague — Goal 01 raw import a automatický
-audit ověřeny, finální data BLOKOVÁNA lidskou kontrolou.** Uživatel dodal archiv;
-5 971 řádků a jejich hash/label počty jsou skutečně změřeny. Neměnný návrh splitů
-má nulový průnik skupin, ale `data_split_ready=false`. Model se netrénoval.
-Goal 02 nebyl zahájen.
+Poslední změna: **10. 10. 2026, Europe/Prague — Goal 02 BLOKOVÁN chybějícím
+schválením Goal 01 dat.** Raw archiv existuje, ale 45 lidských kontrol je pending,
+schválení odložení konfliktů je prázdné a finální manifest chybí. Candidate má
+`data_split_ready=false`. Přidán spustitelný preflight, anglický MODEL_CARD a
+strojový report blokátoru. Žádný model ani metriky nevznikly; Goal 02 není HOTOVO.
 
 | Oblast | Stav | Důkaz / blokátor |
 |---|---|---|
@@ -12,16 +12,67 @@ Goal 02 nebyl zahájen.
 | Frontend / API | Ověřeno lokálně | Skutečný POST přes Vite proxy i frontend build servírovaný FastAPI; 12 Playwright testů. |
 | Kontrakt | Ověřeno | Pydantic → docs/openapi.json → generovaný TypeScript; kontroly driftu prošly. |
 | Model | Není připraven | `review`, `analysis_complete=false`, `headline_key=model_not_ready`, prázdná evidence, `model_version=null`. |
-| Testy / build | Dostupné kontroly prošly | Nyní 69 pytest (31 API + 38 data/format/real-manifest). Pip/OpenAPI/TypeScript/Vite prošly v předchozím běhu Goal 01 kolem 20:08; frontend/backend/locky v tomto pokračování nezměněny. Vitest/Playwright z Goal 00 neopakovány. |
+| Testy / build | Dostupné kontroly prošly | Nyní 78 pytest (31 API + 38 data/format/real-manifest + 9 training preflight). Pip/OpenAPI/TypeScript/Vite prošly v předchozím Goal 01; frontend/backend/locky v tomto kroku nezměněny. Frontend build/Vitest/Playwright neopakovány. |
 | Docker | Připraven, neověřený build/run | Docker CLI ani daemon nejsou dostupné; base image manifesty/digesty ověřeny pouze čtením registry. |
 | Deployment účet | Nepotvrzen | Žádná existující projektová konfigurace s cílovým účtem/serverem; globální HF CLI nefunguje. |
 | Veřejné nasazení | Neprovedeno | Žádné publikování, platby ani čtení přihlašovacích údajů. |
 | Dataset | Importován; label review BLOKOVÁN | Archiv od uživatele, raw/CSV hash, skutečných 5 971 řádků (4 844 ham / 489 spam / 638 smishing). 45 lidských review a schválení konfliktů chybí. DATA_SOURCES.md. |
 | Datové nástroje | Ověřeno i nad skutečnými daty | CSV/ZIP import → audit → candidate skupinový split → verify + testy skutečného manifestu. Finální freeze odmítá pending review, žádný reviewed finální split. |
 | České development / challenge | Pouze formát a postup | Pydantic + JSON Schema, nezávislá tvorba/kontrola, rodiny/provenance; 0 skutečných příkladů. Blind odpovědi nečteny. |
-| Trénink | Nezahájen | Žádný model, artefakt, metriky, sklearn ani encoder. |
+| Trénink | BLOKOVÁN schválením dat | Preflight exit 2, 0/45 potvrzených review a chybějící finální manifest. Žádný model, artefakt, metriky, sklearn ani encoder; docs/MODEL_CARD.md, ml/reports/goal02-status.json. |
 | Git / commit | Lokální repo | Na výslovný požadavek commitu v Goal 01 založen nový Git, bez remote. Lokální commit tohoto kroku ověřit `git log -1`; původní soubory zahrnuty, raw/cache ignorovány. |
 | Devpost / video / OCR / sdílení | Nezahájeno | Mimo Goal 00. |
+
+## Goal 02 — training preflight a doložený blokátor
+
+Před změnami čistý Git strom na commitu `92142ab`; cizí změny nebyly přepsány.
+Čteny pravidla, plán, rešerše, acceptance, aktuální status, veřejný audit/provenance
+a manifest metadata. Kontrola lokálního review potvrdila **0/45 confirmed**, bez
+atribuce a s prázdným `exclusions_approved_by`. Název `review.completed.json`
+neznamená, že review proběhlo. Význam labelů nebyl lidsky schválen; není vytvořen
+náhradní korpus ani automaticky vyplněna lidská potvrzení.
+
+`ml/training_preflight.py` a CLI `scripts/training_preflight.py` odmítají pending
+review/candidate ještě před načtením zdrojových bajtů nebo textů pro trénink.
+Pro schválené vstupy ověřují hash manifestu/review/archivu, datovou verzi,
+atribuci/jazyky 15 kontrol každé třídy, train zařazení kontrolovaných ID, schválení
+odložení, počty tříd a nulový průnik skupin. Výstup používá pevné diagnostické
+kódy bez review poznámek nebo zpráv. Úspěšný preflight by znamenal pouze
+připravenost dat, nikoli správnost modelu.
+
+Anglický `docs/MODEL_CARD.md` a `ml/reports/goal02-status.json` uvádějí skutečné
+počty, seed, hash/provenance, prostředí a chybějící výsledky jako **null / not
+computed**. Většinová train třída ham vychází pouze z candidate metadata;
+majority baseline nebyla vyhodnocena. Žádné testové ani blind texty nebyly v tomto
+kroku otevřeny. Jazyk datasetu stále není ověřen; žádná EN/CZ metrika se netvrdí.
+
+### Skutečné příkazy a výsledky Goal 02
+
+```sh
+.venv/bin/python scripts/training_preflight.py
+.venv/bin/python scripts/training_preflight.py \
+  --manifest ml/manifests/mendeley-v1.split.candidate.json
+.venv/bin/python -m pytest tests/test_training_preflight.py -q
+.venv/bin/python -m pytest -q
+```
+
+| Kontrola | Skutečný výsledek |
+|---|---|
+| Preflight výchozího finálního manifestu | **BLOKOVÁNO, exit 2**: `approved_manifest_missing`, `human_label_review_incomplete`, `human_review_requires_15_per_class`. |
+| Preflight candidate manifestu | **BLOKOVÁNO, exit 2**: `manifest_not_approved` a stejné human-review blokátory; SHA candidate odpovídá. |
+| Targeted preflight pytest | **PASS 9 testů**, pouze fiktivní schválení v testech; tampering, pending review, leakage a bez echo poznámek. |
+| Plný pytest | **PASS 78 testů, 1 warning**, existující Starlette/httpx deprecation; 1.76 s. Nejde o modelové metriky. |
+| TF-IDF/LR fit, validation selection, majority/test metrics | **NEPROVEDENO**, neschválená vstupní data; žádný fitted Pipeline, žádné prahy. |
+| Encoder/revision/license acquisition a small-batch benchmark | **NEPROVEDENO**, stejný datový blokátor; žádný download, cache ani nový balíček. |
+| Tokenizer coverage, reload parity, fresh-process inference, retraining reproducibility | **NEPROVEDENO**, modelový artefakt neexistuje. |
+| Frontend build / Docker / deployment | **NEOPAKOVÁNO / NEPROVEDENO**; frontend/backend nezměněny, Docker dříve nedostupný; žádné zveřejnění. |
+
+**Požadovaný vstup k odblokování:** skutečně vyplněný a připsaný lidský review
+JSON (45 label/language kontrol a rozhodnutí o konfliktech), následně finální
+freeze podle `docs/DATA_PREPARATION.md`. Teprve potom lze zahájit skutečný
+trénink a výběr na validation před jednorázovou test evaluací. Přesný kontrolní
+příkaz je výše; funkční retraining příkaz zatím neexistuje. Lokální commit tohoto
+kroku ověřit `git log -1`; bez remote/publikování. Další goal nebyl zahájen.
 
 ## Goal 01 — pokračování po dodání archivu uživatelem
 

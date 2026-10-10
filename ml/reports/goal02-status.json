@@ -1,0 +1,135 @@
+{
+  "architecture": {
+    "encoder_acquired": false,
+    "encoder_benchmark": null,
+    "encoder_revision": null,
+    "fitted": false,
+    "optional_encoder": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "requested_baseline": "word/character TF-IDF + LogisticRegression in a scikit-learn Pipeline"
+  },
+  "artifact_hash": null,
+  "candidate_preflight": {
+    "blockers": [
+      "manifest_not_approved",
+      "human_label_review_incomplete",
+      "human_review_requires_15_per_class"
+    ],
+    "facts": {
+      "human_reviews_confirmed": 0,
+      "manifest_sha256": "51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0",
+      "review_records": 45
+    },
+    "held_out_messages_opened": false,
+    "message_text_loaded": false,
+    "metrics_computed": false,
+    "model_trained": false,
+    "status": "blocked",
+    "training_allowed": false
+  },
+  "checked_date": "2026-10-10",
+  "checks_not_run": [
+    "model_training",
+    "encoder_benchmark",
+    "tokenizer_full_coverage",
+    "artifact_reload_parity",
+    "fresh_process_model_inference",
+    "retraining_reproducibility",
+    "validation_selection",
+    "held_out_evaluation"
+  ],
+  "data": {
+    "candidate_counts": {
+      "test": {
+        "ham": 726,
+        "smishing": 88,
+        "spam": 66
+      },
+      "train": {
+        "ham": 3391,
+        "smishing": 412,
+        "spam": 309
+      },
+      "validation": {
+        "ham": 727,
+        "smishing": 88,
+        "spam": 66
+      }
+    },
+    "excluded_conflicting_groups": 46,
+    "excluded_conflicting_rows": 98,
+    "grouping_seed": 20261010,
+    "language_verified": false,
+    "original_counts": {
+      "ham": 4844,
+      "smishing": 638,
+      "spam": 489
+    },
+    "source_id": "mendeley-f45bkkt8pr-v1"
+  },
+  "environment": {
+    "architecture": "arm64",
+    "installed_versions": {
+      "numpy": null,
+      "pydantic": "2.14.0",
+      "pytest": "9.1.1",
+      "scikit-learn": null,
+      "scipy": null,
+      "sentence-transformers": null,
+      "torch": null
+    },
+    "python": "3.13.1",
+    "system": "Darwin"
+  },
+  "evaluation": {
+    "abstention": null,
+    "blind_challenges_opened": false,
+    "confusion_matrices": null,
+    "coverage": null,
+    "czech_results": null,
+    "english_results": null,
+    "false_negatives": null,
+    "false_positives": null,
+    "held_out_message_text_opened": false,
+    "latency_ms": null,
+    "model_metrics": null,
+    "per_class_precision_recall_f1": null,
+    "policy_metrics": null
+  },
+  "final_preflight": {
+    "blockers": [
+      "approved_manifest_missing",
+      "human_label_review_incomplete",
+      "human_review_requires_15_per_class"
+    ],
+    "facts": {
+      "human_reviews_confirmed": 0,
+      "review_records": 45
+    },
+    "held_out_messages_opened": false,
+    "message_text_loaded": false,
+    "metrics_computed": false,
+    "model_trained": false,
+    "status": "blocked",
+    "training_allowed": false
+  },
+  "goal": "02",
+  "majority_baseline": {
+    "fitted": false,
+    "metrics": null,
+    "training_majority_label_from_candidate_metadata": "ham"
+  },
+  "model_artifact": null,
+  "model_version": null,
+  "required_next_inputs": [
+    "45 actual attributed human label/language reviews",
+    "Approval or documented resolution of excluded conflicting groups",
+    "Final hash-pinned reviewed Goal 01 manifest"
+  ],
+  "selection": {
+    "candidate": null,
+    "thresholds": null,
+    "validation_used_for_selection": false
+  },
+  "status": "blocked_unapproved_goal01_data",
+  "timezone": "Europe/Prague"
+}
