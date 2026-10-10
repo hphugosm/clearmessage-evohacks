@@ -26,7 +26,7 @@ def closure(names):
     return found
 
 
-runtime = closure(["fastapi", "pydantic", "uvicorn"])
+runtime = closure(["fastapi", "pydantic", "uvicorn", "scikit-learn", "tldextract"])
 development = closure(["pytest", "httpx"])
 for filename, packages, prefix in [
     ("requirements.txt", runtime, ""),

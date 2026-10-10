@@ -13,3 +13,4 @@ frontend/playwright-report/
 !.env.example
 ml/data/
 ml/artifacts/
+build/

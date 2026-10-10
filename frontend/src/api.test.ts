@@ -6,8 +6,8 @@ const missingModel = {
   status: 'review', analysis_complete: false, headline_key: 'model_not_ready',
   evidence: [], action_keys: ['verify_independently'],
   limitations: ['model_not_ready', 'language_not_evaluated', 'not_a_safety_confirmation'],
-  message_language: 'en', model_version: null, policy_version: 'foundation-1',
-  contract_version: '1.0.0', share_summary_keys: [],
+  message_language: 'en', model_version: null, policy_version: 'analysis-policy-1',
+  contract_version: '1.1.0', share_summary_keys: ['analysis_not_completed', 'help_verify_independently'],
 };
 afterEach(() => { vi.unstubAllGlobals(); });
 
@@ -51,5 +51,28 @@ describe('input limits and incomplete results', () => {
   it('replaces transport exception text with a fixed key', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('FIKTIVNI_PRIVATE_TEXT')));
     await expect(analyze({ text: 'Fictional sample', message_language: 'auto' })).rejects.toThrow(/^unavailable$/);
+  });
+});
+
+describe('real analysis response boundaries', () => {
+  const provisional = { ...missingModel, model_version: 'clearmessage-sparse-v1:7fe727cfb786', headline_key: 'review_required',
+    limitations: ['human_review_incomplete', 'language_not_evaluated', 'policy_not_validated', 'not_a_safety_confirmation'] };
+  const warning = { ...provisional, status: 'suspicious', headline_key: 'suspicious_signals', evidence: [{ key: 'request_for_secret', basis: 'observed_text_signal' }] };
+  it('accepts honest limited model and observed rule warnings', () => {
+    expect(parseResponse(provisional)).toEqual(provisional);
+    expect(parseResponse(warning)).toEqual(warning);
+  });
+  it.each([
+    { ...provisional, analysis_complete: true },
+    { ...warning, evidence: [] },
+    { ...warning, evidence: [{ key: 'request_for_secret', basis: 'classifier' }] },
+    { ...warning, evidence: [{ key: 'request_for_secret', basis: 'observed_text_signal', snippet: 'PRIVATE_CANARY' }] },
+    { ...warning, share_summary_keys: ['PRIVATE_CANARY'] },
+    { ...provisional, source_text: 'PRIVATE_CANARY' },
+    { ...provisional, status: 'no_strong_signals', headline_key: 'no_strong_signals' },
+    { ...provisional, share_summary_keys: [] },
+    { ...provisional, limitations: ['incomplete_coverage', 'not_a_safety_confirmation'], status: 'suspicious', headline_key: 'suspicious_signals', evidence: [{key: 'model_signal', basis: 'classifier'}] },
+  ])('rejects drift, invented evidence, private payloads or false completion', value => {
+    expect(() => parseResponse(value)).toThrow(AnalysisError);
   });
 });

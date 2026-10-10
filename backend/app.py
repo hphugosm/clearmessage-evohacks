@@ -11,19 +11,20 @@ from starlette.staticfiles import StaticFiles
 
 from backend.contracts import (
     AnalyzeRequest, AnalyzeResponse, CONTRACT_VERSION, ErrorResponse,
-    HealthResponse, MAX_BODY_BYTES, MAX_TEXT_LENGTH, POLICY_VERSION, Status,
+    HealthResponse, MAX_BODY_BYTES, MAX_TEXT_LENGTH, POLICY_VERSION,
 )
-from backend.inference import Classifier, UnavailableClassifier
+from backend.inference import Classifier, load_classifier
+from backend.policy import analyze_text
 from backend.privacy import PrivacyBoundary, error_response
 
 
-def create_app(frontend_dir: Path | None = None) -> PrivacyBoundary:
+def create_app(frontend_dir: Path | None = None, classifier: Classifier | None = None) -> PrivacyBoundary:
     api = FastAPI(
         title="Klidná zpráva", version=CONTRACT_VERSION, docs_url=None,
         redoc_url=None, openapi_url="/api/openapi.json", redirect_slashes=False,
         telemetry={"tracing": False, "metrics": False, "logs": False, "operation_spans": False, "auto_configure": False},
     )
-    classifier: Classifier = UnavailableClassifier()
+    classifier = classifier if classifier is not None else load_classifier()
 
     @api.exception_handler(RequestValidationError)
     async def invalid_input(_request: Request, _exc: RequestValidationError):
@@ -41,15 +42,14 @@ def create_app(frontend_dir: Path | None = None) -> PrivacyBoundary:
 
     @api.get("/api/health", response_model=HealthResponse)
     async def health() -> HealthResponse:
-        return HealthResponse(service_status="ok", model_ready=classifier.ready, model_version=classifier.version, evaluated_message_languages=[], policy_version=POLICY_VERSION, contract_version=CONTRACT_VERSION, max_text_length=MAX_TEXT_LENGTH, max_body_bytes=MAX_BODY_BYTES)
+        return HealthResponse(service_status="ok", model_ready=classifier.ready, model_version=classifier.version, evaluated_message_languages=list(classifier.evaluated_languages), human_review_complete=classifier.human_review_complete, policy_version=POLICY_VERSION, contract_version=CONTRACT_VERSION, max_text_length=MAX_TEXT_LENGTH, max_body_bytes=MAX_BODY_BYTES)
 
     errors = {status: {"model": ErrorResponse} for status in (400, 413, 415, 422, 500)}
 
     @api.post("/api/analyze", response_model=AnalyzeResponse, responses=errors)
-    async def analyze(payload: AnalyzeRequest) -> AnalyzeResponse:
-        # No inference is performed in Goal 00. These describe service state,
-        # not findings about the submitted text. Never synthesize evidence.
-        return AnalyzeResponse(status=Status.review, analysis_complete=False, headline_key="model_not_ready", evidence=[], action_keys=["verify_independently", "do_not_send_secrets", "ask_trusted_person"], limitations=["model_not_ready", "language_not_evaluated", "not_a_safety_confirmation"], message_language=payload.message_language, model_version=classifier.version, policy_version=POLICY_VERSION, contract_version=CONTRACT_VERSION, share_summary_keys=["analysis_not_completed", "help_verify_independently"])
+    def analyze(payload: AnalyzeRequest) -> AnalyzeResponse:
+        # Worker pool keeps bounded CPU inference off the event loop.
+        return analyze_text(payload, classifier)
 
     dist = frontend_dir or Path(os.environ.get("FRONTEND_DIST", str(Path(__file__).resolve().parents[1] / "frontend" / "dist")))
     if (dist / "index.html").is_file():

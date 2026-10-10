@@ -38,3 +38,9 @@ footer { border-top: 1px solid #c4cdc9; padding: 28px 0 40px; font-size: .8rem; 
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 @media (max-width: 560px) { .page { padding: 0 20px; } header { flex-wrap: wrap; padding: 24px 0; } main { margin: 32px auto; } .field-note { flex-wrap: wrap; gap: 6px; } .result { padding: 20px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+.help-button { color: #203c42; background: #fff; border: 1px solid #718780; border-radius: 8px; padding: 12px 18px; margin-top: 18px; width: 100%; }
+.help-preview { margin-top: 24px; }
+.help-preview p { font-size: .85rem; }
+.clicked-advice { margin-top: 32px; }
+summary { cursor: pointer; min-height: 48px; padding: 10px 0; font-weight: 700; }

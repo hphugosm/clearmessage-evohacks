@@ -56,7 +56,7 @@ export interface components {
         /** AnalyzeResponse */
         AnalyzeResponse: {
             /** Action Keys */
-            action_keys: ("verify_independently" | "do_not_send_secrets" | "ask_trusted_person")[];
+            action_keys: ("verify_independently" | "do_not_send_secrets" | "pause_payment" | "ask_trusted_person")[];
             /** Analysis Complete */
             analysis_complete: boolean;
             /** Contract Version */
@@ -69,7 +69,7 @@ export interface components {
              */
             headline_key: "model_not_ready" | "review_required" | "suspicious_signals" | "no_strong_signals";
             /** Limitations */
-            limitations: ("model_not_ready" | "language_not_evaluated" | "not_a_safety_confirmation" | "inference_unavailable" | "incomplete_coverage")[];
+            limitations: ("model_not_ready" | "language_not_evaluated" | "not_a_safety_confirmation" | "inference_unavailable" | "incomplete_coverage" | "human_review_incomplete" | "rules_only" | "insufficient_text" | "language_unspecified" | "policy_not_validated")[];
             /**
              * Message Language
              * @enum {string}
@@ -93,7 +93,7 @@ export interface components {
             analysis_complete: false;
             /**
              * Contract Version
-             * @default 1.0.0
+             * @default 1.1.0
              */
             contract_version: string;
             /**
@@ -121,6 +121,8 @@ export interface components {
             contract_version: string;
             /** Evaluated Message Languages */
             evaluated_message_languages: ("cs" | "en")[];
+            /** Human Review Complete */
+            human_review_complete: boolean;
             /** Max Body Bytes */
             max_body_bytes: number;
             /** Max Text Length */

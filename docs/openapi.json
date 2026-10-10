@@ -36,6 +36,7 @@
               "enum": [
                 "verify_independently",
                 "do_not_send_secrets",
+                "pause_payment",
                 "ask_trusted_person"
               ],
               "type": "string"
@@ -78,7 +79,12 @@
                 "language_not_evaluated",
                 "not_a_safety_confirmation",
                 "inference_unavailable",
-                "incomplete_coverage"
+                "incomplete_coverage",
+                "human_review_incomplete",
+                "rules_only",
+                "insufficient_text",
+                "language_unspecified",
+                "policy_not_validated"
               ],
               "type": "string"
             },
@@ -119,6 +125,7 @@
               ],
               "type": "string"
             },
+            "maxItems": 2,
             "title": "Share Summary Keys",
             "type": "array"
           },
@@ -152,7 +159,7 @@
             "type": "boolean"
           },
           "contract_version": {
-            "default": "1.0.0",
+            "default": "1.1.0",
             "title": "Contract Version",
             "type": "string"
           },
@@ -224,6 +231,10 @@
             "title": "Evaluated Message Languages",
             "type": "array"
           },
+          "human_review_complete": {
+            "title": "Human Review Complete",
+            "type": "boolean"
+          },
           "max_body_bytes": {
             "title": "Max Body Bytes",
             "type": "integer"
@@ -262,6 +273,7 @@
           "model_ready",
           "model_version",
           "evaluated_message_languages",
+          "human_review_complete",
           "policy_version",
           "contract_version",
           "max_text_length",
@@ -283,7 +295,7 @@
   },
   "info": {
     "title": "Klidná zpráva",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "openapi": "3.1.0",
   "paths": {

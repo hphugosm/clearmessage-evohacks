@@ -7,8 +7,8 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 MAX_TEXT_LENGTH = 2000
 MAX_BODY_BYTES = 32768
-CONTRACT_VERSION = "1.0.0"
-POLICY_VERSION = "foundation-1"
+CONTRACT_VERSION = "1.1.0"
+POLICY_VERSION = "analysis-policy-1"
 
 
 class ContractModel(BaseModel):
@@ -44,13 +44,13 @@ class AnalyzeResponse(ContractModel):
     analysis_complete: bool
     headline_key: Literal["model_not_ready", "review_required", "suspicious_signals", "no_strong_signals"]
     evidence: list[Evidence] = Field(max_length=3)
-    action_keys: list[Literal["verify_independently", "do_not_send_secrets", "ask_trusted_person"]] = Field(min_length=1, max_length=3)
-    limitations: list[Literal["model_not_ready", "language_not_evaluated", "not_a_safety_confirmation", "inference_unavailable", "incomplete_coverage"]] = Field(min_length=1)
+    action_keys: list[Literal["verify_independently", "do_not_send_secrets", "pause_payment", "ask_trusted_person"]] = Field(min_length=1, max_length=3)
+    limitations: list[Literal["model_not_ready", "language_not_evaluated", "not_a_safety_confirmation", "inference_unavailable", "incomplete_coverage", "human_review_incomplete", "rules_only", "insufficient_text", "language_unspecified", "policy_not_validated"]] = Field(min_length=1)
     message_language: Literal["auto", "cs", "en", "other"]
     model_version: str | None
     policy_version: str
     contract_version: str
-    share_summary_keys: list[Literal["analysis_not_completed", "help_verify_independently"]]
+    share_summary_keys: list[Literal["analysis_not_completed", "help_verify_independently"]] = Field(max_length=2)
 
     @model_validator(mode="after")
     def no_reassurance_without_analysis(self) -> "AnalyzeResponse":
@@ -62,8 +62,24 @@ class AnalyzeResponse(ContractModel):
             raise ValueError("incomplete_analysis_cannot_reassure")
         if self.status == Status.no_strong_signals and "not_a_safety_confirmation" not in self.limitations:
             raise ValueError("safety_limitation_required")
-        if "model_not_ready" in self.limitations and self.analysis_complete:
-            raise ValueError("missing_model_cannot_complete_analysis")
+        if self.analysis_complete and (not self.model_version or any(key != "not_a_safety_confirmation" for key in self.limitations)):
+            raise ValueError("limited_analysis_cannot_complete")
+        if "not_a_safety_confirmation" not in self.limitations:
+            raise ValueError("safety_limitation_required")
+        expected_headline = "model_not_ready" if self.status == Status.review and "model_not_ready" in self.limitations else {Status.review: "review_required", Status.suspicious: "suspicious_signals", Status.no_strong_signals: "no_strong_signals"}[self.status]
+        if self.headline_key != expected_headline:
+            raise ValueError("headline_status_mismatch")
+        for item in self.evidence:
+            if (item.key == "model_signal") != (item.basis == "classifier"):
+                raise ValueError("evidence_basis_mismatch")
+            if item.basis == "classifier" and (not self.model_version or any(key in self.limitations for key in ("model_not_ready", "inference_unavailable", "incomplete_coverage"))):
+                raise ValueError("unavailable_classifier_cannot_supply_evidence")
+        if (self.status == Status.suspicious) != bool(self.evidence):
+            raise ValueError("evidence_status_mismatch")
+        if len({item.key for item in self.evidence}) != len(self.evidence):
+            raise ValueError("duplicate_evidence")
+        if ("analysis_not_completed" in self.share_summary_keys) == self.analysis_complete:
+            raise ValueError("share_completion_mismatch")
         return self
 
 
@@ -72,6 +88,7 @@ class HealthResponse(ContractModel):
     model_ready: bool
     model_version: str | None
     evaluated_message_languages: list[Literal["cs", "en"]]
+    human_review_complete: bool
     policy_version: str
     contract_version: str
     max_text_length: int

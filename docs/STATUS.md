@@ -1,18 +1,22 @@
 # Stav projektu
 
-Poslední změna: **10. 10. 2026, Europe/Prague — Goal 02 provizorní trénink a
-evaluace skutečně provedeny na výslovné povolení uživatele.** Původní labely;
-audit nedokončený. Nejde o schválený detektor ani EN/CZ validaci. Uložen model,
-reporty, ověřena offline inference v nových procesech. API integrace / Goal 03
-nezahájeny; schválená Goal 01 data jsou nadále blokovaná.
+Poslední změna: **10. 10. 2026, Europe/Prague — Goal 03 skutečný analyzační tok
+lokálně implementován a ověřen.** Frontend → vlastní Goal02 model → verzovaná
+policy/pravidla → CZ/EN postup a neutrální návrh pomoci. Žádný další trénink,
+freeze, otevření held-out/blind zpráv, publikování ani další goal.
+
+**Model zůstává provizorní:** 41 pending lidských kontrol, původní labely,
+jazykový výkon neověřen. API načte skutečný hashově ověřený model, ale vrací
+vždy `analysis_complete=false`; pouze `suspicious` s pravdivým podkladem nebo
+`review`. `no_strong_signals` je zablokován, nikoli simulován.
 
 | Oblast | Stav | Důkaz / blokátor |
 |---|---|---|
 | Pravidla a harmonogram | Původní podklady zachovány | AGENTS.md, PROJECT_PLAN.md, RESEARCH.md, ACCEPTANCE.md a prompty beze změn. Reuse stále čeká na vyjasnění pořadatelem. |
-| Frontend / API | Ověřeno lokálně | Skutečný POST přes Vite proxy i frontend build servírovaný FastAPI; 12 Playwright testů. |
+| Frontend / API | Ověřeno lokálně | Skutečný POST přes Vite proxy i frontend build servírovaný FastAPI; 14 Playwright testů v Goal03. |
 | Kontrakt | Ověřeno | Pydantic → docs/openapi.json → generovaný TypeScript; kontroly driftu prošly. |
-| Model | Provizorní lokální artefakt, API dosud bez něj | TF-IDF/LR natrénován; API stále review/model_not_ready, analysis_complete=false, model_version=null. |
-| Testy / build | PASS dostupných kontrol | 89 pytest (předchozích 78 + 11 ML), 1 existující warning. ML pip check/hash locks a čistá baseline instalace prošly. Frontend/backend/jejich locky beze změn, jejich buildy neopakovány. |
+| Model | Skutečný provizorní artefakt připojen | TF-IDF/LR, ověřený SHA, interní skóre; analysis_complete=false, model_version se skutečným hash prefixem. Při chybě rules-only. |
+| Testy / build | PASS dostupných kontrol | 140 pytest, 26 Vitest, 14 Playwright, build/kontrakt/pip check; 82 API/policy testů také v čistém prostředí. Stávající warning zachován. |
 | Docker | Připraven, neověřený build/run | Docker CLI ani daemon nejsou dostupné; base image manifesty/digesty ověřeny pouze čtením registry. |
 | Deployment účet | Nepotvrzen | Žádná existující projektová konfigurace s cílovým účtem/serverem; globální HF CLI nefunguje. |
 | Veřejné nasazení | Neprovedeno | Žádné publikování, platby ani čtení přihlašovacích údajů. |
@@ -21,7 +25,107 @@ nezahájeny; schválená Goal 01 data jsou nadále blokovaná.
 | České development / challenge | Pouze formát a postup | Pydantic + JSON Schema, nezávislá tvorba/kontrola, rodiny/provenance; 0 skutečných příkladů. Blind odpovědi nečteny. |
 | Trénink | Provizorní experiment ověřen | Na výslovné povolení původních labelů: 2 TF-IDF + 2 frozen-MiniLM/LR kandidáti, majority, validation selection, test až poté. Schválený preflight zůstává blokován. |
 | Git / commit | Lokální repo | Na výslovný požadavek commitu v Goal 01 založen nový Git, bez remote. Lokální commit tohoto kroku ověřit `git log -1`; původní soubory zahrnuty, raw/cache ignorovány. |
-| Devpost / video / OCR / sdílení | Nezahájeno | Mimo Goal 00. |
+| Pomoc / sdílení | Ověřeno lokálně | Pevné CZ/EN šablony, náhled, samostatné gesto, ruční kopírování; žádný clipboard API ani zdrojová zpráva. |
+| Devpost / video / OCR | Nezahájeno | Mimo aktuální Goal03. |
+
+
+## Goal 03 — model, pravidla, postup a prosba o pomoc
+
+Navázáno na čistý commit `570f2f0`; cizí změny nebyly přítomné. Pravidla a
+podklady AGENTS/PROJECT_PLAN/RESEARCH/ACCEPTANCE zachovány. Auditní JSON zůstal
+beze změny: SHA `7cf04370060bc86e58349a06dc04fc82de680b0404e17eb44b4babe34a30a70c`.
+Model beze změny: SHA
+`7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa`.
+
+- `backend/inference.py`: malé score/coverage rozhraní, skutečný hashově ověřený
+  projektový JSON, jednorázové načtení, jeden neblokující inference slot. Žádný
+  pickle/download/fallback ML. Sparse vstup se nezkracuje; pokrytí celého textu
+  není tvrzení o porozumění všem slovům. False coverage a chyby nepovolí
+  klasifikátorové varování ani úplnost, ale skutečné pravidlo může varovat.
+- `analysis-policy-1`, `observed-requests-1`, kontrakt `1.1.0`: pravidla žádosti o
+  heslo/OTP, okamžitou platbu a utajení; negace, běžná upozornění, kontrastní
+  věty, URL masking. Interní offsets dokazují match, žádné citace ve sdílení.
+  Spam/HTTPS/TLD/krátký odkaz/pravopis nejsou samy pravidlovým důkazem podvodu.
+- Modelový EN warning má validation threshold **0.60** z nezměněného Goal02
+  reportu. CZ/other/nezadaný jazyk dostávají konkrétní pravidlová varování nebo
+  review. EN modelový warning zůstává provizorní; výkon není ověřen ani v EN.
+  Nízká větev policy je výslovně nevalidovaná a vypnutá. Test-only modely
+  zkoušejí hypotetický budoucí nízký výsledek, nejsou v aplikaci.
+- `tldextract==5.4.0`: `suffix_list_urls=()`, `cache_dir=None`, bundled snapshot,
+  žádný DNS/HTTP/WHOIS/redirect ani disk cache. Instalováno jen lokálně a
+  zafixováno skutečné řešení: 28 runtime + 7 dev-only verzí s wheel hashi.
+  Licence balíčků + BSD-3-Clause tldextract / MPL-2.0 PSL notice/hash v
+  `docs/runtime-licenses.json`. Sparse runtime nepotřebuje torch/ST/encoder.
+- CZ/EN důvody a kroky nejvýše tři; observed signal odlišen od obecného
+  klasifikátorového výstupu. Bez konkrétní evidence poctivé obecné omezení.
+  Preview prosby z pevných neutrálních šablon, další gesto pro Web Share,
+  ruční kopírování bez clipboard API. Žádný source/evidence/URL/jméno/účet/kód
+  v payloadu. Tři stručné rady „už jsem klikl/a“, bez dalšího formuláře/tajemství.
+- Dockerfile obsahuje sparse runtime a explicitně připravený vlastní model;
+  `scripts/prepare_model.py` zkontroluje model/report/threshold a připraví
+  ignorovaný build asset. Raw data, encoder a uživatelské zprávy se nekopírují.
+
+### Skutečné příkazy a výsledky Goal03
+
+```sh
+.venv/bin/python -m pip install --only-binary=:all: tldextract==5.4.0
+.venv/bin/python scripts/lock_dependencies.py
+python3 -m venv .cache/goal03-runtime
+.cache/goal03-runtime/bin/python -m pip install --only-binary=:all: --require-hashes -r backend/requirements-dev.txt
+.cache/goal03-runtime/bin/python -m pip check
+.cache/goal03-runtime/bin/python -m pytest tests/test_analysis.py tests/test_api.py -q
+.venv/bin/python scripts/export_contract.py
+npm --prefix frontend run contract:generate
+.venv/bin/python scripts/prepare_model.py
+sh scripts/test.sh
+.venv/bin/python -m pytest tests/test_analysis.py tests/test_api.py -q
+npm --prefix frontend run build
+.venv/bin/python scripts/verify_analysis.py
+git diff --check
+```
+
+| Kontrola | Skutečný výsledek |
+|---|---|
+| Install/lock/čisté prostředí | **PASS**, pouze lokálně, hash-verified wheels, pip check bez konfliktů. |
+| Čistý API/policy pytest | **PASS 82**, 73.17 s včetně prvního studeného importu; 1 existující Starlette/httpx warning. Fresh-process API uvnitř testu prošlo. |
+| `sh scripts/test.sh` | **PASS exit 0**: pip check, OpenAPI/TS drift, **140 pytest** (2.88 s), **26 Vitest**, TypeScript/Vite build, **14 Playwright** (5.1 s). |
+| Finální cílená kontrola po zpřesnění coverage/úklidu copy | **PASS 82**, TypeScript/Vite build znovu prošel; nezměněné frontend testy nebyly zbytečně opakovány. |
+| No-egress | **PASS**: skutečný model volán, DNS/socket/requests zakázány, studený PSL i opakované URL; **0 pokusů**. Také localhost/privátní IP/IPv6/IDNA/@/HTML/instrukce jako data. |
+| Konflikty, legitimní upozornění, reklama, žádost bez URL, absence/výpadek/invalid scores/overflow/busy/input limits | **PASS**, fikční/inertní fixtures; žádné blind/held-out příklady. |
+| Canary logy / odpovědi / sdílení | **PASS**, stdout/stderr/caplog i browser console, žádná soukromá canary ve výstupu/share. Native share ve browser testu test-only stub, API/model skutečné. |
+| Model reload/maximum input/API v novém procesu | **PASS**, scores shodné s Goal02 JSON loaderem; 2 000 znaků celé, 2 001 odmítnuto. |
+| Offline příprava `build/model.json` | **PASS**, přesný artefakt/selection report/threshold; nic nestaženo či trénováno. |
+| Docker COPY layout v čistém Python prostředí | **PASS**, pouze soubory skutečně kopírované Dockerfile; frontend/API/model fungují. **Není to Docker build**. |
+| Docker CLI/daemon/build/run | **NETESTOVÁNO**, `command -v docker` nenalezl CLI; žádný daemon nebyl instalován/měněn. |
+| Diff/hash/ignore kontrola | **PASS**, bez whitespace chyb; review/model hash zachován, build/raw/cache mimo staging. |
+| Nasazení / další goal / model retraining | **NEPROVEDENO**, není součást tohoto kroku. |
+
+Strojový integrační report: `ml/reports/goal03-integration.json`; dokumentace
+`docs/API.md`, `docs/POLICY.md`, aktualizovaný `docs/MODEL_CARD.md` a README.
+Měřeno na macOS 26.6.2 arm64, Python 3.13.1, Apple M5 z Goal02. **25 in-process
+requestů s načteným modelem**, včetně HTTP/ASGI/pravidel a studeného PSL, bez
+prvního importu: p50 **0.893 ms**, p95 **3.396 ms**, maximum **30.606 ms**, process
+peak RSS **178 503 680 B**. Továrna aplikace v již importovaném procesu **15.819 ms**.
+To není měření síťové latence, Docker výkonu ani jazykové přesnosti.
+
+Pět vlastních syntetických development smoke případů: CZ žádost bez URL a EN
+okamžitá platba → suspicious s observed evidence; EN bezpečnostní upozornění,
+reklama a školní zpráva → review bez evidence. Všech pět neúplné; nejsou to
+modelové metriky či real-world validace. Held-out výsledky Goal02 zůstávají
+historickým měřením modelu, nová kombinovaná pravidlová policy na nich nebyla laděna.
+
+**Zbývající omezení:** lidský review a schválený finální split, chybějící EN/CZ
+benchmark, konečná pattern pravidla (možné chyby u složité negace/kontextu),
+Docker/Linux/Safari/Firefox a hosting privacy/HTTPS neověřeny. Skutečné native
+sdílení závisí na browseru/secure context; odeslání člověkem nebylo provedeno.
+Nový klon potřebuje vlastní vybraný Goal02 artefakt se stejným SHA, jinak
+příprava modelu hlásí blokátor a API přizná rules-only. Warning Starlette/httpx
+ani NO_COLOR/FORCE_COLOR z prostředí nebyly potlačeny. Jedna první patch operace
+byla odmítnuta pro dvojí cíl souboru (žádné částečné změny); opraveno standardním
+update. Žádná neúspěšná kontrola není označena jako úspěch.
+
+Lokální commit Goal03 ověřit `git log -1`; bez remote/publikování. **Další goal
+nezahájen.** Následující oddíly jsou historické reporty předchozích goalů.
 
 ## Goal 02 — provizorní trénink po výslovném povolení
 

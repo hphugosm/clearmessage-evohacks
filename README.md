@@ -1,18 +1,19 @@
 # Klidná zpráva — EVOHACKS 2026
 
-Spustitelná kostra z Goal 00. React + TypeScript + Vite skutečně volá FastAPI +
-Pydantic. Backend umí v jednom procesu obsloužit frontend build i API.
-**Model není připraven; žádná zpráva zatím neprochází klasifikací.** Platný vstup
-vrátí `review / model_not_ready`, `analysis_complete: false`, bez nálezů a bez
-procent. Výstup nepotvrzuje bezpečnost zprávy.
+Skutečný lokální tok: React + TypeScript + Vite → FastAPI/Pydantic → náš
+Goal02 TF-IDF + LogisticRegression → pozorovaná textová pravidla → CZ/EN rady
+a neutrální prosba o pomoc. Backend servíruje frontend build i API v jednom procesu.
 
-Čeština je výchozí UI, dostupný je anglický překlad. Jazyk zprávy se nastavuje
-samostatně. Neexistuje důkaz modelového výkonu v češtině ani angličtině.
+**Model je provizorní, audit není dokončen a jazykový výkon není ověřen.**
+Aktuální API může vydat `suspicious` se skutečným podkladem nebo `review`, vždy
+`analysis_complete=false`. Nevydává `no_strong_signals`, procenta ani záruky
+bezpečnosti. Bez modelu přizná `model_not_ready/rules_only`. [Policy](docs/POLICY.md)
+a [model card](docs/MODEL_CARD.md) popisují rozsah, zdroje, metriky a licence.
+
+Čeština je výchozí UI, angličtina překlad. Jazyk zprávy se nastavuje samostatně.
 Žádná databáze, účet, historie, analytika, externí LLM ani přístup do schránky.
-Sdílení, OCR a ML trénink patří do pozdějších samostatných goalů. Datové nástroje
-jsou připravené; původní archiv uživatel dodal a import/audit proběhly. Existuje
-neměnný návrh splitů, ale finální data čekají na lidskou kontrolu labelů a
-odložení konfliktů. Model není natrénovaný.
+Zprávy se zpracují jen v RAM našeho backendu; žádné odchozí síťové dotazy při
+analýze. Sdílení vyžaduje náhled a další lidské gesto, přebírá jen pevné věty.
 
 ## Požadavky
 
@@ -56,7 +57,7 @@ npm --prefix frontend run dev
 Otevřete [lokální frontend](http://127.0.0.1:5173). Vite proxy předává `/api` na
 port 8000. Žádné CORS ani externí adresy nejsou potřeba. Nevkládejte skutečné
 heslo ani kód. Pro ověření stačí vlastní fiktivní text: po kliknutí musí přijít
-skutečná odpověď API a viditelná informace „Kontrola neprovedena“.
+skutečná odpověď API a viditelná informace o omezené analýze.
 
 ## Test
 
@@ -74,7 +75,9 @@ Browser traces, video a automatické screenshoty jsou vypnuté.
 
 Zdroj/licence a skutečný stav: [DATA_SOURCES.md](DATA_SOURCES.md). Offline import,
 audit, lidská kontrola a následné neměnné 70/15/15 skupinové dělení:
-[DATA_PREPARATION.md](docs/DATA_PREPARATION.md). Žádné nové ML závislosti.
+[DATA_PREPARATION.md](docs/DATA_PREPARATION.md). Vlastní provizorní model a
+reprodukovatelný trénink popisují [MODEL_CARD.md](docs/MODEL_CARD.md) a
+[ML instrukce](ml/README.md). V tomto kroku se žádný další model netrénuje.
 
 ```sh
 .venv/bin/python scripts/prepare_data.py audit \
@@ -129,17 +132,18 @@ curl --fail http://127.0.0.1:7860/api/analyze \
 ## Docker — připraveno, build/run zatím neověřeno
 
 ```sh
+.venv/bin/python scripts/prepare_model.py
 docker info
-docker build --tag klidna-zprava:foundation .
+docker build --tag klidna-zprava:analysis .
 docker run --rm --name klidna-zprava --read-only \
   --tmpfs /tmp:rw,noexec,nosuid,size=16m --cap-drop ALL \
-  --security-opt no-new-privileges --memory 256m --cpus 1 \
-  -p 127.0.0.1:7860:7860 klidna-zprava:foundation
+  --security-opt no-new-privileges --memory 512m --cpus 1 \
+  -p 127.0.0.1:7860:7860 klidna-zprava:analysis
 ```
 
 Jeden finální kontejner, neprivilegovaný uživatel 10001, port 7860, jeden Uvicorn
 proces. Node sestaví frontend jen v první fázi. Finální image neobsahuje Node,
-testy, data ani model. Base images jsou zafixované registry digesty. Jejich
+testy, raw data ani encoder. Obsahuje hashově ověřený vybraný sparse model. Base images jsou zafixované registry digesty. Jejich
 dostupnost byla ověřena čtením registry; to není důkaz sestavení kontejneru.
 Healthcheck testuje běh služby, nikoli dostupnost detektoru.
 
@@ -156,8 +160,31 @@ projektová konfigurace neobsahovala vazbu na poskytovatele; nebyly čteny token
 pořizovány platby ani publikován obsah. Veřejné nasazení potřebuje samostatné
 explicitní schválení uživatele a ověření logování/HTTPS hostingu.
 
-Adresář při zahájení nebyl Git repozitář, proto nevznikl lokální commit.
+Projekt je nyní lokální Git repozitář; každý aktuální goal má lokální commit,
+bez zveřejnění.
 Původní README je beze změn zachováno jako [plánovací poznámky](docs/PLANNING_NOTES.md).
 Plán a pravidla zůstávají v [PROJECT_PLAN](docs/PROJECT_PLAN.md),
 [RESEARCH](docs/RESEARCH.md), [ACCEPTANCE](docs/ACCEPTANCE.md) a `AGENTS.md`.
 Skutečné výsledky a neprovedené kontroly jsou v [STATUS](docs/STATUS.md).
+
+## Příprava artefaktu a ověření skutečné analýzy
+
+```sh
+.venv/bin/python scripts/prepare_model.py
+.venv/bin/python scripts/verify_analysis.py
+.venv/bin/python -m pytest tests/test_analysis.py tests/test_api.py -q
+```
+
+`prepare_model.py` offline zkontroluje vybraný artefakt a report Goal02, pak
+připraví ignorovaný `build/model.json` pro Docker. Nic netrénuje ani nestahuje.
+Artefakt `ml/artifacts/goal02-provisional-v2/tfidf_c2.0.json` není v Gitu:
+nový checkout jej musí obnovit z vlastního důvěryhodného Goal02 výstupu podle
+zaznamenaného SHA. Bez něj API funguje jen v přiznaném rules-only režimu a
+příprava image s modelem selže; nejde o dokončený detektor. Pokyny reprodukce
+Goal02 mají explicitní provizorní autorizaci, ne schválený finální freeze.
+
+`verify_analysis.py` uloží měřené výsledky vlastních fiktivních development
+příkladů v `ml/reports/goal03-integration.json`, bez textů. Nejde o skutečnou
+CZ/EN validaci, held-out data ani blind challenge. Základní modelové metriky
+zůstávají reportem Goal02; v Goal03 se nedolaďují. Model artefakt při analýze
+nikdy nezmění ani nestahuje. Další goal se automaticky nezahajuje.

@@ -17,7 +17,7 @@ CANARY = "FIKTIVNI_CANARY_731_ZadnySkutecnyUdaj"
 
 @pytest.fixture
 def client(tmp_path):
-    with TestClient(create_app(tmp_path)) as client:
+    with TestClient(create_app(tmp_path, classifier=UnavailableClassifier())) as client:
         yield client
 
 
@@ -26,8 +26,8 @@ def test_health_separates_service_from_model(client):
     assert response.status_code == 200
     assert response.json() == {
         "service_status": "ok", "model_ready": False, "model_version": None,
-        "evaluated_message_languages": [], "policy_version": "foundation-1",
-        "contract_version": "1.0.0", "max_text_length": 2000, "max_body_bytes": 32768,
+        "evaluated_message_languages": [], "human_review_complete": False, "policy_version": "analysis-policy-1",
+        "contract_version": "1.1.0", "max_text_length": 2000, "max_body_bytes": 32768,
     }
     assert response.headers["cache-control"] == "no-store"
 
@@ -57,7 +57,7 @@ def test_missing_model_never_produces_findings(client, language):
 def test_invalid_input_has_private_fixed_error(client, payload, capsys, caplog):
     response = client.post("/api/analyze", json=payload)
     assert response.status_code == 422
-    assert response.json() == {"error_key": "invalid_input", "analysis_complete": False, "contract_version": "1.0.0"}
+    assert response.json() == {"error_key": "invalid_input", "analysis_complete": False, "contract_version": "1.1.0"}
     assert response.headers["cache-control"] == "no-store"
     captured = capsys.readouterr()
     assert CANARY not in response.text + captured.out + captured.err + caplog.text
@@ -129,7 +129,7 @@ def test_no_outbound_network_or_text_echo(client, monkeypatch, capsys, caplog):
 
 
 def test_internal_error_is_sanitized_and_not_reraised_to_server(tmp_path, capsys, caplog):
-    app = create_app(tmp_path)
+    app = create_app(tmp_path, classifier=UnavailableClassifier())
 
     @app.api.post("/api/test-only-error")
     async def failing_route():
@@ -176,7 +176,7 @@ def test_response_contract_rejects_incomplete_reassurance(client):
 
 def test_contract_snapshot_and_telemetry_disabled(tmp_path, monkeypatch):
     monkeypatch.setenv("FASTAPI_OTEL_AUTO_CONFIGURE", "true")
-    api = create_app(tmp_path).api
+    api = create_app(tmp_path, classifier=UnavailableClassifier()).api
     expected = json.loads((Path(__file__).resolve().parents[1] / "docs" / "openapi.json").read_text())
     assert api.openapi() == expected
     assert all(api._telemetry[key] is False for key in ("tracing", "metrics", "logs", "operation_spans", "auto_configure"))
@@ -188,7 +188,7 @@ def test_one_process_serves_frontend_and_api(tmp_path):
     (tmp_path / "index.html").write_text("<!doctype html><h1>Test-only frontend</h1>")
     (tmp_path / "assets").mkdir()
     (tmp_path / "assets" / "test.js").write_text("/* inert test asset */")
-    with TestClient(create_app(tmp_path)) as client:
+    with TestClient(create_app(tmp_path, classifier=UnavailableClassifier())) as client:
         assert "Test-only frontend" in client.get("/").text
         assert client.get("/assets/test.js").status_code == 200
         assert client.get("/api/unknown").status_code == 404

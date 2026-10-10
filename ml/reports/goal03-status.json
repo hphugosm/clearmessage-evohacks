@@ -1,0 +1,38 @@
+{
+  "checks": {
+    "canary_logs_share": "passed",
+    "clean_environment_api_policy_pytest": {
+      "result": "passed",
+      "tests": 82
+    },
+    "docker_build_run": "not_tested_cli_unavailable",
+    "docker_copy_layout": "passed_without_docker",
+    "final_api_policy_pytest": {
+      "result": "passed",
+      "tests": 82
+    },
+    "full_test_script": {
+      "build": "passed",
+      "contract_drift": "passed",
+      "playwright": 14,
+      "pytest": 140,
+      "result": "passed",
+      "vitest": 26
+    },
+    "no_egress": {
+      "network_attempts": 0,
+      "result": "passed"
+    }
+  },
+  "date": "2026-10-10",
+  "deployment_performed": false,
+  "held_out_or_blind_messages_opened": false,
+  "human_review_complete": false,
+  "model_trained_in_this_phase": false,
+  "next_goal_started": false,
+  "no_strong_signals_enabled": false,
+  "pending_review": 41,
+  "production_analysis_complete_enabled": false,
+  "status": "real_provisional_model_api_verified",
+  "timezone": "Europe/Prague"
+}

@@ -1,0 +1,10 @@
+{
+  "artifact_path": "ml/artifacts/goal02-provisional-v2/tfidf_c2.0.json",
+  "sha256": "7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa",
+  "human_review_complete": false,
+  "evaluated_languages": [],
+  "warning_threshold": 0.6,
+  "reassurance_policy_validated": false,
+  "selection_report": "ml/reports/goal02-provisional-v2.json",
+  "selection_report_sha256": "b0d359771769be9f983370eec8599b7be13a6b55c4bc274259694a317eef3715"
+}
