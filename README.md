@@ -10,8 +10,9 @@ procent. Výstup nepotvrzuje bezpečnost zprávy.
 samostatně. Neexistuje důkaz modelového výkonu v češtině ani angličtině.
 Žádná databáze, účet, historie, analytika, externí LLM ani přístup do schránky.
 Sdílení, OCR a ML trénink patří do pozdějších samostatných goalů. Datové nástroje
-jsou připravené, ale původní dataset a lidský audit zatím blokuje nedostupný
-download. Není vytvořen reálný split ani natrénován model.
+jsou připravené; původní archiv uživatel dodal a import/audit proběhly. Existuje
+neměnný návrh splitů, ale finální data čekají na lidskou kontrolu labelů a
+odložení konfliktů. Model není natrénovaný.
 
 ## Požadavky
 
@@ -69,7 +70,7 @@ Porty 8000 a 5173 musí být volné; E2E nepřebírá cizí běžící servery.
 Testy používají pouze fiktivní texty a inertní `.invalid` adresy.
 Browser traces, video a automatické screenshoty jsou vypnuté.
 
-## Tréninková data — bez tréninku, aktuálně blokovaná
+## Tréninková data — importovaná, lidská kontrola čeká
 
 Zdroj/licence a skutečný stav: [DATA_SOURCES.md](DATA_SOURCES.md). Offline import,
 audit, lidská kontrola a následné neměnné 70/15/15 skupinové dělení:
@@ -77,14 +78,18 @@ audit, lidská kontrola a následné neměnné 70/15/15 skupinové dělení:
 
 ```sh
 .venv/bin/python scripts/prepare_data.py audit \
-  --input ml/data/raw/Dataset_5971.zip --output ml/data/mendeley-v1
+  --input ml/data/raw/Dataset_5971.zip --output ml/data/mendeley-v1-audit-v2 \
+  --expected-sha256 9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3
 .venv/bin/python -m pytest tests/test_data_prep.py tests/test_czech_format.py -q
 ```
 
-První příkaz vyžaduje původní soubor. V tomto prostředí download vrací HTTP 403;
-bez něj příkaz správně skončí `file_missing`, nikoli úspěšným auditem. Freeze
-vyžaduje skutečný hash a 45 potvrzených lidských kontrol. Raw texty/preview se
-necommitují. České development/blind soubory mají zatím pouze formát a nezávislé
+Původní soubor je nyní uložen v ignorovaném `ml/data/raw/` a obsahuje 5 971
+záznamů (4 844 ham / 489 spam / 638 smishing). Po odložení 98 řádků z 46
+konfliktních skupin má návrh 5 873 záznamů a prázdné průniky skupin. Candidate
+manifest je neměnný, ale **`data_split_ready=false`**. Finální freeze vyžaduje
+45 skutečných lidských kontrol a schválení odložení. Raw texty/preview se
+necommitují. Automatický download v minulém kroku vracel 403; nový checkout
+potřebuje původní soubor získat stejným explicitním lokálním importem. České development/blind soubory mají zatím pouze formát a nezávislé
 instrukce, žádné skutečné odpovědi nebyly použity.
 
 ## Jednotlivé kontroly

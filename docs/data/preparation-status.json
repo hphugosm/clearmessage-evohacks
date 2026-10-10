@@ -1,22 +1,60 @@
 {
-  "source_id": "mendeley-f45bkkt8pr-v1",
+  "acquisition_date": "2026-10-10",
+  "candidate_split_manifest": "ml/manifests/mendeley-v1.split.candidate.json",
+  "candidate_split_manifest_created": true,
+  "candidate_split_manifest_sha256": "51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0",
   "checked_date": "2026-10-10",
-  "status": "blocked",
-  "raw_file_downloaded": false,
-  "input_sha256": null,
-  "csv_sha256": null,
-  "observed_rows": null,
-  "observed_class_counts": null,
-  "human_label_reviews_completed": 0,
-  "split_manifest_created": false,
-  "real_dataset_leakage_test": "not_run: raw file unavailable",
-  "model_trained": false,
+  "conflict_rows_excluded": 98,
+  "conflicting_groups": 46,
+  "csv_sha256": "649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e",
+  "data_split_ready": false,
   "download_attempts": [
-    {"method": "Python urllib GET original page", "result": "HTTP 403"},
-    {"method": "Python urllib GET public metadata API", "result": "HTTP 403"},
-    {"method": "Python urllib GET original archive URL observed in public page", "result": "HTTP 403"},
-    {"method": "Browser public archive download link", "result": "timeout after 30 seconds"}
+    {
+      "method": "Python urllib GET original page",
+      "result": "HTTP 403"
+    },
+    {
+      "method": "Python urllib GET public metadata API",
+      "result": "HTTP 403"
+    },
+    {
+      "method": "Python urllib GET original archive URL observed in public page",
+      "result": "HTTP 403"
+    },
+    {
+      "method": "Browser public archive download link",
+      "result": "timeout after 30 seconds"
+    }
   ],
-  "required_next_inputs": ["Original CSV or Dataset_5971.zip", "45 attributed human label/language reviews; exclusion approval if needed"],
-  "no_fallback_corpora": true
+  "eligible_class_counts": {
+    "ham": 4844,
+    "smishing": 588,
+    "spam": 441
+  },
+  "human_label_reviews_completed": 0,
+  "human_review_sample_counts": {
+    "ham": 15,
+    "smishing": 15,
+    "spam": 15
+  },
+  "input_sha256": "9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3",
+  "model_trained": false,
+  "no_fallback_corpora": true,
+  "observed_class_counts": {
+    "ham": 4844,
+    "smishing": 638,
+    "spam": 489
+  },
+  "observed_rows": 5971,
+  "raw_file_acquisition": "User-provided local archive; automated HTTP 403 history retained below.",
+  "raw_file_available": true,
+  "raw_file_downloaded_by_agent": false,
+  "real_dataset_leakage_test": "passed on candidate eligible records; all row/group/text/normalized/template intersections empty; not a reviewed final split",
+  "required_next_inputs": [
+    "45 attributed human label/language reviews",
+    "Human approval or documented resolution of 46 conflicting groups (98 excluded rows)"
+  ],
+  "source_id": "mendeley-f45bkkt8pr-v1",
+  "split_manifest_created": false,
+  "status": "blocked_human_review_pending"
 }

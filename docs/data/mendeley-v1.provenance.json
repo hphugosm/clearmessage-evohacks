@@ -1,0 +1,44 @@
+{
+  "authors": [
+    "Sandhya Mishra",
+    "Devpriya Soni"
+  ],
+  "csv_member": "Dataset_5971.csv",
+  "csv_sha256": "649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e",
+  "declared_counts": {
+    "ham": 4844,
+    "smishing": 638,
+    "spam": 489,
+    "total": 5971
+  },
+  "encoding": "utf-8-sig",
+  "families_sha256": null,
+  "grouping_parameters": {
+    "character_similarity_min": 0.9,
+    "max_candidates": 2000000,
+    "token_jaccard_min": 0.85
+  },
+  "input_bytes": 244698,
+  "input_sha256": "9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3",
+  "label_mapping": {
+    "ham": "ham",
+    "smishing": "smishing",
+    "spam": "spam"
+  },
+  "license": "CC-BY-4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "observed_counts": {
+    "ham": 4844,
+    "smishing": 638,
+    "spam": 489
+  },
+  "pipeline_code_sha256": "85481cd7b14bab7eacd7294ab6766b37546d57b59931c2f76290edacd3bfc274",
+  "pipeline_version": "data-prep-v2",
+  "python_version": "3.13.1",
+  "seed": 20261010,
+  "source_doi": "10.17632/f45bkkt8pr.1",
+  "source_id": "mendeley-f45bkkt8pr-v1",
+  "source_url": "https://data.mendeley.com/datasets/f45bkkt8pr/1",
+  "source_version": 1,
+  "unicode_version": "15.1.0"
+}

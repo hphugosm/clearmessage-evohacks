@@ -13,7 +13,7 @@ import pytest
 
 from ml.data_prep import (
     DataError, SEED, assert_no_leakage, audit, digest, freeze, group_rows,
-    import_rows, json_bytes, prepare, read_input, review_text, split_rows, write_new,
+    import_rows, json_bytes, plan_split, prepare, read_input, review_text, split_rows, write_new,
 )
 
 
@@ -272,3 +272,31 @@ def test_zip_expansion_bomb_rejected_without_extraction(tmp_path):
         stream.writestr("example.csv", "LABEL,TEXT\n" + "x" * 100000)
     with pytest.raises(DataError, match="archive_expansion_limit"):
         read_input(path, None, "utf-8-sig")
+
+
+def test_observed_yes_no_indicators_are_binary_not_labels():
+    payload = b"LABEL,TEXT,URL,EMAIL,PHONE\nham,Fictional reply,No,yes,No\nspam,Fictional advert,yes,No,yes\n"
+    rows, report = import_rows(payload, "utf-8-sig")
+    assert [row.label for row in rows] == ["ham", "spam"]
+    assert report["nonbinary_indicator_counts"] == {}
+    assert report["indicator_counts"] == {"URL": {"0": 1, "1": 1}, "EMAIL": {"0": 1, "1": 1}, "PHONE": {"0": 1, "1": 1}}
+
+
+def test_candidate_manifest_is_immutable_and_not_approved_for_training(prepared, tmp_path):
+    source, (provenance, rows, review, report, mapping) = prepared
+    path = tmp_path / "candidate.json"
+    manifest = plan_split(provenance, rows, review, report, mapping, path)
+    assert manifest["status"] == "candidate_pending_human_review"
+    assert manifest["data_split_ready"] is False
+    assert manifest["human_label_reviews_completed"] == 0
+    assert all(not values for values in manifest["leakage_intersections"].values())
+    assert plan_split(provenance, rows, review, report, mapping, path) == manifest
+    checked = subprocess.run([sys.executable, "scripts/prepare_data.py", "verify", "--input", str(source), "--manifest", str(path)],
+                             capture_output=True, text=True)
+    assert checked.returncode == 0
+    assert json.loads(checked.stdout)["status"] == "candidate_pending_human_review"
+    assert json.loads(checked.stdout)["data_split_ready"] is False
+    approved = tmp_path / "fictional-approved.json"
+    approved.write_bytes(json_bytes(approved_review(review)))
+    final = freeze(provenance, rows, review, report, mapping, approved, tmp_path / "final.json")
+    assert final["records"] == manifest["records"]

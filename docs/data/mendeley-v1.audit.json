@@ -1,0 +1,185 @@
+{
+  "accepted_counts": {
+    "ham": 4844,
+    "smishing": 638,
+    "spam": 489
+  },
+  "conflict_rows_excluded": 98,
+  "conflicting_groups": [
+    "group-05bcf4813f6687717e953486",
+    "group-098f77dffaf5c5e17b986db5",
+    "group-0a2b171d0d4e7b3c058fb4a3",
+    "group-0c30bac940863f9814d72fc3",
+    "group-0d59c7687b9e79e3ee3170a5",
+    "group-12f6d31925ec4779364e019f",
+    "group-1555be072affc619727d50f2",
+    "group-1bfcb2cb1b9ef0da81918744",
+    "group-3159389cf6576a027a24bf26",
+    "group-468e168d986865f24a2b27ed",
+    "group-483c98e1b36113b53e9353f9",
+    "group-4d5797a0e9239e8e10e386b9",
+    "group-4ed50355c6ae29d10c1c2377",
+    "group-506dc8c44c7de68af1249e9c",
+    "group-5cf200afc87f6b68d35a9df7",
+    "group-5f9bbacb1d90eba8fbd4a287",
+    "group-7446e6de84f9c37b45560606",
+    "group-7823edb543e3db6e7f894ad5",
+    "group-791e0a497a91e90de039fb18",
+    "group-7a29fd13c9d43e9b6d6e2d41",
+    "group-83a72aa7a06f2edf39f889e9",
+    "group-8be62fbaaa35a74ec1df154c",
+    "group-8e306523dc28c8bcd90a1985",
+    "group-92bb94d789fadaf943bd3af3",
+    "group-9723b8c8f2e5647399a62ae7",
+    "group-9c08e68b013967737af12ff6",
+    "group-9ef3e89196a57cb962eda2be",
+    "group-ad3b36467b301db4456337d8",
+    "group-ad5768ee9692cf2ebbc1a37f",
+    "group-b060978914ea98805a1dcf3f",
+    "group-bee36e0653d9d771c5e3119f",
+    "group-c2b2f18ea7290ea03c9dccb0",
+    "group-c3533d0ac0cd1f276e969f47",
+    "group-c937d11013c5dc414cf64c7a",
+    "group-cb32c60512fdc43fd2271604",
+    "group-cb82972f7b2721e411222233",
+    "group-ce8e40517198d468f0e38b5b",
+    "group-d12c5d721013752f05ec3fa5",
+    "group-d27e68f38262ac071e23c425",
+    "group-d2eb19afdad0f8c80ac5e60f",
+    "group-d610eded8ce45e07d199d73c",
+    "group-df21a98a97e0af603a878f5f",
+    "group-dfb422bbdd3cc3f067762b5c",
+    "group-e1ae77502b4eb8984e158126",
+    "group-e28cf94e058bc76907518cdd",
+    "group-fbff0a3b7b966a90afbd2bf9"
+  ],
+  "counts": {
+    "raw_rows": 5971
+  },
+  "eligible_counts": {
+    "ham": 4844,
+    "smishing": 588,
+    "spam": 441
+  },
+  "excluded": [],
+  "grouping": {
+    "group_size_histogram": {
+      "1": 5412,
+      "16": 1,
+      "2": 171,
+      "3": 21,
+      "4": 9,
+      "5": 7,
+      "6": 3,
+      "7": 7
+    },
+    "groups": 5631,
+    "near_copy_candidates": 19245,
+    "union_edges": {
+      "near_copy": 90,
+      "normalized_duplicate": 140,
+      "template": 110
+    }
+  },
+  "headers": [
+    "LABEL",
+    "TEXT",
+    "URL",
+    "EMAIL",
+    "PHONE"
+  ],
+  "human_review_sample": {
+    "ham": [
+      "row-002882",
+      "row-001607",
+      "row-002546",
+      "row-005397",
+      "row-002692",
+      "row-001372",
+      "row-005324",
+      "row-003948",
+      "row-005506",
+      "row-001939",
+      "row-001136",
+      "row-000867",
+      "row-002290",
+      "row-005154",
+      "row-000244"
+    ],
+    "smishing": [
+      "row-003734",
+      "row-005600",
+      "row-005144",
+      "row-004657",
+      "row-002354",
+      "row-000490",
+      "row-001593",
+      "row-004498",
+      "row-001324",
+      "row-000188",
+      "row-000711",
+      "row-004597",
+      "row-000810",
+      "row-003654",
+      "row-003032"
+    ],
+    "spam": [
+      "row-000891",
+      "row-005455",
+      "row-005106",
+      "row-000565",
+      "row-001291",
+      "row-002915",
+      "row-003088",
+      "row-001078",
+      "row-004805",
+      "row-003347",
+      "row-001392",
+      "row-005131",
+      "row-001145",
+      "row-003848",
+      "row-003706"
+    ]
+  },
+  "human_review_status": "pending",
+  "indicator_counts": {
+    "EMAIL": {
+      "0": 5952,
+      "1": 19
+    },
+    "PHONE": {
+      "0": 5127,
+      "1": 844
+    },
+    "URL": {
+      "0": 5764,
+      "1": 207
+    }
+  },
+  "indicator_mapping": {
+    "0": 0,
+    "1": 1,
+    "no": 0,
+    "yes": 1
+  },
+  "language_counts": {
+    "unverified": 5971
+  },
+  "missing_by_column": {},
+  "nonbinary_indicator_counts": {},
+  "normalized_duplicate_extra_rows": 140,
+  "pipeline_version": "data-prep-v2",
+  "script_counts": {
+    "latin_unknown": 5906,
+    "mixed_unknown": 1,
+    "too_short_unknown": 64
+  },
+  "source_label_counts": {
+    "ham": 4844,
+    "smishing": 638,
+    "spam": 489
+  },
+  "suspected_missing_markers_by_column": {},
+  "time_campaign_split": "unavailable: source description lacks per-row timestamps/campaign IDs; header names do not establish semantics",
+  "training_ready": false
+}

@@ -1,9 +1,10 @@
 # Stav projektu
 
-Poslední změna: **10. 10. 2026, Europe/Prague — Goal 01 datové nástroje ověřeny,
-skutečný dataset BLOKOVÁN.** Goal 00 zůstává funkční kostrou; model není připraven.
-Původní raw soubor vrací 403, skutečné hash/počty/label audit/split nejsou hotové.
-Goal 02 (trénink) nebyl zahájen.
+Poslední změna: **10. 10. 2026, Europe/Prague — Goal 01 raw import a automatický
+audit ověřeny, finální data BLOKOVÁNA lidskou kontrolou.** Uživatel dodal archiv;
+5 971 řádků a jejich hash/label počty jsou skutečně změřeny. Neměnný návrh splitů
+má nulový průnik skupin, ale `data_split_ready=false`. Model se netrénoval.
+Goal 02 nebyl zahájen.
 
 | Oblast | Stav | Důkaz / blokátor |
 |---|---|---|
@@ -11,18 +12,113 @@ Goal 02 (trénink) nebyl zahájen.
 | Frontend / API | Ověřeno lokálně | Skutečný POST přes Vite proxy i frontend build servírovaný FastAPI; 12 Playwright testů. |
 | Kontrakt | Ověřeno | Pydantic → docs/openapi.json → generovaný TypeScript; kontroly driftu prošly. |
 | Model | Není připraven | `review`, `analysis_complete=false`, `headline_key=model_not_ready`, prázdná evidence, `model_version=null`. |
-| Testy / build | Dostupné kontroly prošly | Aktuálně 65 pytest (31 API + 34 data/format), pip check, OpenAPI check a TypeScript/Vite build. 13 Vitest + 12 Playwright z Goal 00 v tomto datovém kroku znovu nespouštěny. |
+| Testy / build | Dostupné kontroly prošly | Nyní 69 pytest (31 API + 38 data/format/real-manifest). Pip/OpenAPI/TypeScript/Vite prošly v předchozím běhu Goal 01 kolem 20:08; frontend/backend/locky v tomto pokračování nezměněny. Vitest/Playwright z Goal 00 neopakovány. |
 | Docker | Připraven, neověřený build/run | Docker CLI ani daemon nejsou dostupné; base image manifesty/digesty ověřeny pouze čtením registry. |
 | Deployment účet | Nepotvrzen | Žádná existující projektová konfigurace s cílovým účtem/serverem; globální HF CLI nefunguje. |
 | Veřejné nasazení | Neprovedeno | Žádné publikování, platby ani čtení přihlašovacích údajů. |
-| Dataset | BLOKOVÁN | Metadata Mendeley V1/CC BY 4.0 ověřena, raw download HTTP 403 / browser timeout; skutečné počty/hash/45 lidských review/split chybí. DATA_SOURCES.md. |
-| Datové nástroje | Ověřeno na fiktivních datech | CSV/ZIP import → audit → lidský review gate → deterministické skupiny/splity → verify; nulové průniky v testech, žádný skutečný manifest. |
+| Dataset | Importován; label review BLOKOVÁN | Archiv od uživatele, raw/CSV hash, skutečných 5 971 řádků (4 844 ham / 489 spam / 638 smishing). 45 lidských review a schválení konfliktů chybí. DATA_SOURCES.md. |
+| Datové nástroje | Ověřeno i nad skutečnými daty | CSV/ZIP import → audit → candidate skupinový split → verify + testy skutečného manifestu. Finální freeze odmítá pending review, žádný reviewed finální split. |
 | České development / challenge | Pouze formát a postup | Pydantic + JSON Schema, nezávislá tvorba/kontrola, rodiny/provenance; 0 skutečných příkladů. Blind odpovědi nečteny. |
 | Trénink | Nezahájen | Žádný model, artefakt, metriky, sklearn ani encoder. |
 | Git / commit | Lokální repo | Na výslovný požadavek commitu v Goal 01 založen nový Git, bez remote. Lokální commit tohoto kroku ověřit `git log -1`; původní soubory zahrnuty, raw/cache ignorovány. |
 | Devpost / video / OCR / sdílení | Nezahájeno | Mimo Goal 00. |
 
-## Goal 01 — co bylo připraveno a co zůstává blokované
+## Goal 01 — pokračování po dodání archivu uživatelem
+
+Download blokátor byl odstraněn lokálním vstupem; HTTP 403 se nepřeklasifikovalo
+na úspěšné automatické stažení. Uživatelská složka v Downloads a její soubory
+zůstaly beze změny. Z přiloženého ZIP se v RAM četl jen CSV člen; přiložené
+Python soubory/PDF nebyly spuštěny a žádná URL ze zpráv nebyla otevřena.
+
+- Archiv `Dataset_5971.zip`: **244 698 B**, SHA-256
+  `9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3`.
+- CSV člen `Dataset_5971.csv`: **595 987 B**, SHA-256
+  `649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e`.
+- **5 971** skutečných řádků, **4 844 ham / 489 spam / 638 smishing**. Zdrojová
+  case varianta `Smishing/smishing`, `Spam/spam` se explicitně normalizuje.
+  Sloupce jsou LABEL/TEXT/URL/EMAIL/PHONE, striktní UTF-8.
+- Indikátory skutečně obsahují **No/yes**. Opraven audit schématu `data-prep-v2`
+  a přidán test: format binary valid, nikoli phishing label ani modelová feature.
+  První lokální audit V1 nesprávně hlásil tyto hodnoty jako nebinární a je
+  zachován v jiné cestě; canonical nový audit jej nepoužívá ani nepřepisuje.
+- Chybějící buňky/NA/unknown labels/invalid indicator values: **0**.
+  Normalizovaných duplicate extra rows **140**; po grouping **5 631 skupin**.
+  **46 konfliktních skupin / 98 řádků** odloženo (48 spam, 50 smishing).
+  Eligible **5 873 řádků / 5 585 skupin**. Nejde o automatické přeznačení tříd.
+- Jazyk pořád **neověřen u všech 5 971**. Script hints 5 906 Latin unknown,
+  1 mixed unknown, 64 too short unknown. Časová/kampaňová/jazyková metadata
+  nejsou ve skutečné CSV hlavičce. Úplná upstream row lineage neověřena.
+- Připraveno 15 ID každé třídy, lokální `review-preview.txt` a
+  `conflict-preview.txt` s rozbitými odkazy/markup. `review.completed.json` je
+  jen nevyplněná kopie pending formuláře: **0 skutečných lidských kontrol**.
+- Candidate návrh fixuje seed/skupiny/kód/hash vstupu, má nulové průniky skutečných
+  ID/skupin/textových/normalizovaných/template hashů. Candidate SHA-256:
+  `51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0`.
+  Stav **candidate_pending_human_review**, **data_split_ready=false**;
+  `ml/manifests/mendeley-v1.split.json` (finální) nevznikl.
+
+| Třída | Candidate train | Candidate validation | Candidate test |
+|---|---:|---:|---:|
+| ham | 3 391 | 727 | 726 |
+| spam | 309 | 66 | 66 |
+| smishing | 412 | 88 | 88 |
+| Celkem | 4 112 | 881 | 880 |
+
+Text-free veřejné artefakty: `docs/data/mendeley-v1.audit.json`,
+`docs/data/mendeley-v1.provenance.json`, source config a
+`ml/manifests/mendeley-v1.split.candidate.json` + `.sha256`. Raw, texty a
+previews jen v ignorovaném `ml/data/`, nejsou v commitu. Čeština zůstává pouze
+formát a nezávislý postup, žádné blind odpovědi nebyly vytvořeny/čteny.
+
+### Skutečné příkazy pokračování (10. 10. 2026, Europe/Prague)
+
+```sh
+.venv/bin/python scripts/prepare_data.py audit \
+  --input ml/data/raw/Dataset_5971.zip \
+  --output ml/data/mendeley-v1-audit-v2 \
+  --expected-sha256 9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3
+
+.venv/bin/python scripts/prepare_data.py plan-split \
+  --input ml/data/raw/Dataset_5971.zip \
+  --output ml/data/mendeley-v1-audit-v2 \
+  --expected-sha256 9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3 \
+  --manifest ml/manifests/mendeley-v1.split.candidate.json
+
+.venv/bin/python scripts/prepare_data.py verify \
+  --input ml/data/raw/Dataset_5971.zip \
+  --manifest ml/manifests/mendeley-v1.split.candidate.json
+
+.venv/bin/python scripts/prepare_data.py freeze \
+  --input ml/data/raw/Dataset_5971.zip \
+  --output ml/data/mendeley-v1-audit-v2 \
+  --expected-sha256 9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3 \
+  --review ml/data/mendeley-v1-audit-v2/review.completed.json \
+  --manifest ml/manifests/mendeley-v1.split.json
+
+.venv/bin/python -m pytest -q
+```
+
+| Kontrola | Skutečný výsledek |
+|---|---|
+| Před změnami `git status --short` | Čistý strom; navázáno na commit `9d1e6c6`. |
+| Lokální raw copy + archive/CSV hash | **PASS**, neměnná kopie obdrženého archivu; bez extrakce/scripts. |
+| `audit` s explicitním SHA | **PASS**, 5 971 řádků, 15 review každé třídy; source mapping a formát ověřeny automaticky, lidský audit pending. |
+| `plan-split` s explicitním SHA | **PASS**, výše uvedené skutečné candidate počty, all intersections empty; **NE reviewed final data**. |
+| `verify` candidate | **PASS integrity/leakage**, stále `candidate_pending_human_review`, `data_split_ready=false`. |
+| `freeze` s nevyplněným review | **OČEKÁVANĚ BLOKOVÁNO**, exit 2 `human_label_review_pending_or_disagreed`; finální manifest neexistuje. |
+| Targeted data/format pytest | **PASS**, 36 testů; poté přidány 2 nezávislé testy skutečného candidate manifestu. |
+| Plný pytest | **PASS 69 testů**, 1 stávající nepotlačený Starlette/httpx warning. |
+| Diff / ignore kontrola | Pouze dataset tooling/docs/testy/text-free artefakty; frontend/backend/locky beze změn; raw/previews mimo staging. |
+| Docker / deployment / model | **NEPROVEDENO**, mimo pokračování; Docker není dostupný z předchozí kontroly, žádný model ani zveřejnění. |
+
+**Stále blokované HOTOVO:** 45 skutečných lidských label/language kontrol,
+lidský zápis o odložení konfliktů a následný finální freeze. Toto plyne z
+původního zadání: nezkontrolovaný label je blokátor. Agent nepředstírá lidskou
+kontrolu a nedává návrh do tréninku. Návod/konkrétní soubory v
+`docs/DATA_PREPARATION.md`; model ani další goal se nespouští. Lokální commit
+pokračování ověřit `git log -1`, bez remote/publikování.
+
+## Goal 01 — historie prvního běhu bez souboru (před jeho dodáním)
 
 **HOTOVO nejsou skutečná tréninková data.** Stažení původního souboru a skutečný
 lidský audit jsou nezbytné blokátory. Žádné deklarované počty vydavatele nebyly

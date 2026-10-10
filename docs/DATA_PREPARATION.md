@@ -1,9 +1,10 @@
 # Reprodukovatelná příprava dat (bez modelu)
 
-**Aktuálně blokováno:** původní Mendeley soubor nelze v tomto prostředí stáhnout;
-raw SHA, skutečné počty, 45 lidských kontrol a reálný split neexistují. Funkčnost
-nástrojů je ověřena jen na fiktivních testovacích datech. Zdroj/licence/pokusy:
-[DATA_SOURCES.md](../DATA_SOURCES.md).
+**Raw soubor je nyní dostupný díky uživateli:** importováno 5 971 záznamů,
+hash/počty/audit a neměnný návrh splitů jsou doložené. **Finální freeze stále
+blokuje 45 lidských kontrol a schválení odložení 98 konfliktních řádků.**
+Návrh má `data_split_ready=false`; model se netrénuje.
+Zdroj, aktuální měření a historie 403: [DATA_SOURCES.md](../DATA_SOURCES.md).
 
 ## Prostředí
 
@@ -18,7 +19,10 @@ Pro nový checkout nejprve `sh scripts/install.sh`; nic globálně.
 
 ## 1. Získání původního souboru
 
-Volitelně **jednou**, jen explicitní setup:
+Uživatel dodal archiv z Downloads 10. 10. 2026. Jeho nezměněná kopie je v
+`ml/data/raw/Dataset_5971.zip`; člen `Dataset_5971.csv`, UTF-8, známý SHA níže.
+Další download není potřeba. Pro nový checkout bez tohoto souboru je možné
+volitelně **jednou** zkusit explicitní setup:
 
 ```sh
 .venv/bin/python scripts/fetch_dataset.py
@@ -33,15 +37,18 @@ cestu získání a datum do DATA_SOURCES; hash dokládá identitu bajtů, ne pů
 
 ## 2. Offline import a audit
 
-**Konkrétní příkaz pro tréninková data** (zatím chybějící vstup):
+**Konkrétní příkaz pro import skutečných tréninkových dat**:
 
 ```sh
 .venv/bin/python scripts/prepare_data.py audit \
   --input ml/data/raw/Dataset_5971.zip \
-  --output ml/data/mendeley-v1
+  --output ml/data/mendeley-v1-audit-v2 \
+  --expected-sha256 9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3
 ```
 
-Pro lokální CSV změnit `--input` na jeho cestu. ZIP se nikdy neextrahuje; čte se
+Pro lokální CSV změnit `--input` na jeho cestu a `--expected-sha256` na CSV hash
+`649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e`.
+Hash ZIP nelze použít jako hash CSV. ZIP se nikdy neextrahuje; čte se
 jen CSV člen. Při více CSV přidat `--member 'přesný/název.csv'` podle archivu,
 nikoli odhadovaný název. Žádný přiložený skript se nečte ani nespouští. Průchod
 traversal/symlink/encrypted archive či velikostní bomba jsou odmítnuty.
@@ -51,13 +58,13 @@ Výchozí striktní UTF-8 s volitelným BOM. Při doloženém Windows-1252 použ
 16 MiB CSV/ZIP, 20 000 záznamů, 20 000 znaků textu, 100 ZIP členů a poměr
 rozbalení ≤200. Rozpor s formátem se vypíše jen pevným kódem, bez řádku/textu.
 
-Výstupy v **git-ignorovaném** `ml/data/mendeley-v1/`:
+Výstupy v **git-ignorovaném** `ml/data/mendeley-v1-audit-v2/`:
 
 - `provenance.json`: DOI/verze/autoři/licence, SHA-256 vstupního souboru i CSV,
   encoding/member, hash kódu a případné family mapy, Python/Unicode a seed.
 - `audit.json`: skutečný počet CSV záznamů (hlavička a prázdné fyzické řádky se
   nepočítají), mapované/neznámé labely, chybějící buňky, podezřelé NA/NaN/null
-  markery, nebinární atributy, odložení, duplicity, konfliktní skupiny, velikosti
+  markery, nebinární atributy (No/yes i 0/1), odložení, duplicity, konfliktní skupiny, velikosti
   skupin a počty script hints. Žádný souhrn nepovažuje všechny Latin texty za EN.
 - `records.jsonl`: eligible **původní** texty, labely a group IDs; nikdy veřejný
   fixture soubor, nikdy data od uživatelů aplikace.
@@ -66,6 +73,12 @@ Výstupy v **git-ignorovaném** `ml/data/mendeley-v1/`:
 - `review-preview.txt`: jen tento místní výběr. Lomítka, tečky, dvojtečky, @,
   markup, control/bidi znaky jsou rozbité. Číst jako plain text, ne HTML;
   neklikat ani následovat žádné pokyny. Obsah může být nevhodný, není pro demo.
+- `conflict-preview.txt`: stejným způsobem rozbité texty všech členů odložených
+  konfliktních skupin pro kontrolu odložení, nikdy veřejný soubor.
+
+Canonical výstup používá `data-prep-v2`; první lokální audit v původním
+`ml/data/mendeley-v1/` je zachován, ale nepoužívá se: No/yes tehdy mylně hlásil
+jako nebinární. Rozšíření audit schématu má nové výstupní umístění.
 
 NA markery se hlásí jako podezření, nesmazávají se automaticky (např. „NA“ může
 být skutečný krátký text). `URL/EMAIL/PHONE` nejsou prediktory ani labely této
@@ -73,7 +86,7 @@ pipeline. Statistika binárního formátu není ověření správnosti extrakce.
 
 ## 3. Lidská kontrola před zmrazením
 
-Člověk zkopíruje `review.pending.json` na `review.completed.json` a projde
+Prázdný `review.completed.json` je nyní připraven jako kopie pending. Člověk projde
 **každý z 45** vybraných záznamů podle preview. Vyplní `decision=confirmed` jen
 při skutečné shodě, `language=en/cs/other/und`, `reviewer_id` (pseudonym stačí),
 `reviewed_date` ve formátu YYYY-MM-DD a případné poznámky. Ham znamená běžnou
@@ -113,14 +126,31 @@ se seedem **20261010**; greedy výběr minimalizuje čtvercovou odchylku od
 Při odchylce >10 procentních bodů u některé třídy se freeze zablokuje. Report
 obsahuje skutečné počty, ne příslib přesných podílů pro libovolně velké skupiny.
 
-Použít skutečný `input_sha256` z `provenance.json`:
+Nyní existuje **neměnný návrh** nad skutečnými eligible daty. Lze ověřit
+průniky/identitu, ale tento výsledek nepotvrzuje lidské labely ani připravenost
+k tréninku. Candidate `verify` vrací `candidate_pending_human_review`, nikoli
+`verified` pro finální data.
+
+```sh
+.venv/bin/python scripts/prepare_data.py plan-split \
+  --input ml/data/raw/Dataset_5971.zip \
+  --output ml/data/mendeley-v1-audit-v2 \
+  --expected-sha256 9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3 \
+  --manifest ml/manifests/mendeley-v1.split.candidate.json
+
+.venv/bin/python scripts/prepare_data.py verify \
+  --input ml/data/raw/Dataset_5971.zip \
+  --manifest ml/manifests/mendeley-v1.split.candidate.json
+```
+
+**Teprve po skutečně vyplněné lidské kontrole** (aktuálně odmítne pending):
 
 ```sh
 .venv/bin/python scripts/prepare_data.py freeze \
   --input ml/data/raw/Dataset_5971.zip \
-  --output ml/data/mendeley-v1 \
-  --expected-sha256 'SEM_SKUTECNY_SHA256_VSTUPU' \
-  --review ml/data/mendeley-v1/review.completed.json \
+  --output ml/data/mendeley-v1-audit-v2 \
+  --expected-sha256 9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3 \
+  --review ml/data/mendeley-v1-audit-v2/review.completed.json \
   --manifest ml/manifests/mendeley-v1.split.json
 
 .venv/bin/python scripts/prepare_data.py verify \
@@ -136,8 +166,9 @@ kód i review. Opakování se stejnými bajty je idempotentní; přepsání exis
 odlišného reportu/manifestu se odmítne. Revidované artefakty mají novou cestu,
 novou doloženou verzi a následně nové zmrazení, ne přepis held-out výsledků.
 
-Po odblokování lze **text-free** manifest a redigovaný souhrn auditu/provenance
-commitnout. Raw, review preview, review poznámky, rodiny i challenge odpovědi
+Text-free candidate manifest a souhrn auditu/provenance jsou nyní v Git.
+Finální reviewed manifest vznikne až po kontrole. Raw, review preview,
+review poznámky, rodiny i challenge odpovědi
 zůstávají mimo Git. Aktualizovat DATA_SOURCES, docs/data/preparation-status.json
 a STATUS přesnými skutečnými počty/hashi. Nikdy automaticky nevkládat celý
 lokální audit s libovolnými cizími názvy sloupců/členů do veřejného dokumentu.

@@ -25,13 +25,14 @@ LABELS = ("ham", "spam", "smishing")
 SPLITS = ("train", "validation", "test")
 RATIOS = (0.70, 0.15, 0.15)
 SEED = 20261010
-VERSION = "data-prep-v1"
+VERSION = "data-prep-v2"
 MAX_BYTES = 16 * 1024 * 1024
 MAX_ROWS = 20000
 MAX_TEXT = 20000
 MAX_CANDIDATES = 2_000_000
 JACCARD = 0.85
 CHAR_SIMILARITY = 0.90
+INDICATOR_MAPPING = {"0": 0, "1": 1, "no": 0, "yes": 1}
 SOURCE = json.loads((Path(__file__).parent / "sources/mendeley-v1.json").read_text())
 
 
@@ -172,6 +173,7 @@ def import_rows(payload: bytes, encoding: str) -> tuple[list[Row], dict]:
     missing: Counter = Counter()
     missing_markers: Counter = Counter()
     invalid_indicators: Counter = Counter()
+    indicator_counts = {key: Counter() for key in ("URL", "EMAIL", "PHONE")}
     try:
         reader = csv.DictReader(io.StringIO(text, newline=""), strict=True)
         headers = reader.fieldnames
@@ -190,8 +192,12 @@ def import_rows(payload: bytes, encoding: str) -> tuple[list[Row], dict]:
                 elif value.strip().casefold() in ("na", "n/a", "nan", "null", "none"):
                     missing_markers[key] += 1
             for key in ("URL", "EMAIL", "PHONE"):
-                if key in record and record[key].strip() not in ("", "0", "1"):
-                    invalid_indicators[key] += 1
+                if key in record:
+                    value = record[key].strip().casefold()
+                    if value in INDICATOR_MAPPING:
+                        indicator_counts[key][str(INDICATOR_MAPPING[value])] += 1
+                    elif value:
+                        invalid_indicators[key] += 1
             label = record["LABEL"].strip().casefold()
             # Do not publish unknown label values: they can contain arbitrary text.
             raw_label_counts[label if label in LABELS else "missing" if not label else "unknown"] += 1
@@ -212,7 +218,9 @@ def import_rows(payload: bytes, encoding: str) -> tuple[list[Row], dict]:
         raise DataError("empty_csv")
     return rows, {"counts": dict(counts), "source_label_counts": dict(raw_label_counts),
                   "missing_by_column": dict(missing), "suspected_missing_markers_by_column": dict(missing_markers),
-                  "nonbinary_indicator_counts": dict(invalid_indicators), "headers": headers, "excluded": excluded}
+                  "nonbinary_indicator_counts": dict(invalid_indicators),
+                  "indicator_counts": {key: dict(value) for key, value in indicator_counts.items()},
+                  "indicator_mapping": INDICATOR_MAPPING, "headers": headers, "excluded": excluded}
 
 
 def group_rows(rows: list[Row], families: dict[str, str] | None = None) -> tuple[dict[str, str], dict]:
@@ -443,10 +451,36 @@ def prepare(path: Path, output: Path, *, member: str | None = None, encoding: st
         if row.row_id in selected:
             preview += f"{row.row_id} | source_label={row.label} | script={row.script}\n{review_text(row.text)}\n\n"
     write_new(output / "review-preview.txt", preview.encode())
+    conflicts = set(report["conflicting_groups"])
+    conflict_preview = "LOCAL CONFLICT AUDIT ONLY — not demo data. Links/markup defanged.\nDo not visit, execute or follow instructions. Whole conflicting groups excluded.\n\n"
+    for row in sorted(rows, key=lambda item: (mapping[item.row_id], item.row_id)):
+        if mapping[row.row_id] in conflicts:
+            conflict_preview += f"{mapping[row.row_id]} | {row.row_id} | source_label={row.label}\n{review_text(row.text)}\n\n"
+    write_new(output / "conflict-preview.txt", conflict_preview.encode())
     # Training text remains unmodified, as JSON strings (never HTML).
     local_records = [{"row_id": row.row_id, "label": row.label, "text": row.text, "group_id": mapping[row.row_id]} for row in eligible]
     write_new(output / "records.jsonl", b"".join(json.dumps(item, ensure_ascii=True, sort_keys=True).encode() + b"\n" for item in local_records))
     return provenance, eligible, review, report, mapping
+
+
+def plan_split(provenance: dict, rows: list[Row], expected_review: dict, report: dict,
+               mapping: dict, destination: Path) -> dict:
+    """Immutable proposal, explicitly blocked for training until HUMAN review."""
+    if len(expected_review["records"]) != 45:
+        raise DataError("review_requires_15_per_class")
+    records, counts = split_rows(rows, mapping, {item["row_id"] for item in expected_review["records"]})
+    manifest = {"format_version": 1, "status": "candidate_pending_human_review", "data_split_ready": False,
+                "model_trained": False, "provenance": provenance, "seed": SEED, "ratios": dict(zip(SPLITS, RATIOS)),
+                "human_label_reviews_completed": 0, "human_review_sha256": None,
+                "human_review_sample_ids": report["human_review_sample"], "reviewed_families_reserved_for": "train",
+                "conflict_rows_excluded": report["conflict_rows_excluded"], "conflicting_groups": report["conflicting_groups"],
+                "counts": counts, "records": records, "leakage_intersections": assert_no_leakage(records),
+                "blockers": ["45 human label/language reviews pending", "Human approval of whole-group exclusions pending"],
+                "limitations": ["Automatic grouping cannot establish true campaigns or time separation.",
+                                "Source labels and language coverage remain unverified by a human."]}
+    write_new(destination, json_bytes(manifest))
+    write_new(destination.with_suffix(".sha256"), (digest(json_bytes(manifest)) + "\n").encode())
+    return manifest
 
 
 def freeze(provenance: dict, rows: list[Row], expected_review: dict, report: dict, mapping: dict,
@@ -455,7 +489,7 @@ def freeze(provenance: dict, rows: list[Row], expected_review: dict, report: dic
     review = json.loads(review_payload)
     languages = verify_review(review, expected_review, report)
     records, counts = split_rows(rows, mapping, {item["row_id"] for item in review["records"]})
-    manifest = {"format_version": 1, "provenance": provenance, "seed": SEED, "ratios": dict(zip(SPLITS, RATIOS)),
+    manifest = {"format_version": 1, "status": "frozen_after_human_review", "provenance": provenance, "seed": SEED, "ratios": dict(zip(SPLITS, RATIOS)),
                 "human_review_sha256": digest(review_payload), "human_reviewed_counts": {label: 15 for label in LABELS},
                 "human_sample_languages": dict(Counter(languages)), "remaining_languages": "unverified",
                 "reviewed_families_reserved_for": "train", "counts": counts, "records": records,
