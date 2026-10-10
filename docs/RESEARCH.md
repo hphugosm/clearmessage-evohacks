@@ -1,138 +1,61 @@
-# Rešerše — zdroje, licence a rozhodnutí
+# ClearMessage sources and reuse decisions
 
-Ověřeno v primárních veřejných popisech 10. 10. 2026. Uvedení licence na stránce
-nenahrazuje kontrolu staženého souboru, původu kombinovaných dat a podmínek akce.
-Binární soubory ani dataset nebyly při přípravě tohoto balíčku staženy či otestovány.
+English revision: 10 October 2026. The owner-supplied English planning package records prior checks of key event, primary-dataset, hosting and contrast references. This migration did not recheck external rules, pricing or availability. The entries below retain those dated research leads, not a fresh exhaustive audit; recheck changing event/hosting terms before release. This is a research inventory, not an implementation report. Actual local acquisition, hashes and provisional training results are recorded in DATA_SOURCES, MODEL_CARD and STATUS; they must not be confused with the older planning assumptions. Published licenses and counts must be checked against acquired files and upstream provenance before use. The entries summarize sources; they do not reproduce source text.
 
-## Akce
+## Event
 
-**R1 — pravidla:** https://evohackathon2026.devpost.com/rules
-Pravidla uvádějí 11. 10. 2026 11:59 PDT, tedy 20:59 Praha. Hlavička uvádí
-12:00 PDT (21:00 Praha). Použít dřívější čas. Čtyři kritéria mají po 25 %:
-užitečnost/dopad, technické provedení, kreativita, prezentace. Nová práce má vznikat
-během akce; přesné povolení předtrénovaných částí či veřejných dat vyjasnit s pořadatelem.
+[R1 — Official rules](https://evohackathon2026.devpost.com/rules): 11 October 2026 at 11:59 PDT, or 20:59 Europe/Prague. The page header uses 12:00 PDT/21:00. Choose the earlier deadline and target 19:00 internally. Live judging is listed for 12:00–13:00 PDT/21:00–22:00 Prague. The four criteria are impact/utility, technical execution, creativity and presentation, each 25%. The rules require new code/assets during the official event; this package contains no organizer clarification permitting reused data/models/components.
 
-**R2 — submission:** https://evohackathon2026.devpost.com/
-Popis, veřejný zdrojový kód, 2–3min demo a live deployment nebo lokální instrukce.
+[R2 — Event overview](https://evohackathon2026.devpost.com/): consult the required submission fields for the repository, description, demo video and project availability. The original plan specifies a 2–3 minute demo and a live app or local instructions. Confirm fields before submission.
 
-## Data
+## Data candidates
 
-**D1 — primární dataset, doporučeno:**
-https://data.mendeley.com/datasets/f45bkkt8pr/1
-SMS PHISHING DATASET FOR MACHINE LEARNING AND PATTERN RECOGNITION;
-Sandhya Mishra, Devpriya Soni; 20. 6. 2022; DOI 10.17632/f45bkkt8pr.1;
-**CC BY 4.0**. Popis uvádí 5 971 záznamů: 4 844 ham, 489 spam, 638 smishing.
-Sloupce LABEL, TEXT, URL, EMAIL, PHONE. Výhoda: reklamu/spam nerozpouští automaticky
-v phishingu. Omezení: krátké zprávy, stáří a původ dat, jazykový přenos do češtiny,
-možné překryvy se zdroji typu SMS Spam Collection. Soubor a labely musí projít auditem.
+[D1 — Primary short-message dataset](https://data.mendeley.com/datasets/f45bkkt8pr/1): Sandhya Mishra and Devpriya Soni; published 20 June 2022; DOI 10.17632/f45bkkt8pr.1; version 1; CC BY 4.0. Its description reports 5,971 records (4,844 ham, 489 spam, 638 smishing) and LABEL/TEXT/URL/EMAIL/PHONE fields. These are source-reported numbers, not imported counts. Preserve the distinction between advertising and phishing. Audit label definitions, age, languages, origins and possible overlap with SMS Spam Collection.
 
-**D2 — kandidát pro pozdější e-mailovou větev:**
-https://figshare.com/articles/dataset/11_Phising_Email_Datasets/25437178
-11 Phising Email Datasets; stránka/index uvádí **CC BY 4.0**. Při rešerši byl přímý
-fetch omezený; celý obsah souborů a skutečný rozsah povolení nebyly ověřeny.
-Není závislost MVP. Prověřit význam labelů spam vs phishing a opakované zdroje.
+[D2 — Email candidate](https://figshare.com/articles/dataset/11_Phising_Email_Datasets/25437178): the supplied research records CC BY 4.0 and restricted direct access. File contents and the complete scope of reuse are not verified here. Not an MVP dependency. Check spam/phishing distinctions and repeated upstream sources.
 
-**D3 — doplňkový zdroj, ne samostatná phishing ground truth:**
-https://archive.ics.uci.edu/dataset/228/sms+spam+collection
-UCI SMS Spam Collection; **CC BY 4.0**. Ham/spam není benign/phishing.
-Při spojení s D1 hrozí překryv, proto nejdříve deduplikace a kontrola původu.
+[D3 — Supplemental spam data](https://archive.ics.uci.edu/dataset/228/sms+spam+collection): the supplied research records CC BY 4.0. ham/spam is not benign/phishing ground truth. Check provenance and deduplicate before any combination with D1; more rows alone are not a reason to merge.
 
-**D4 — samostatný URL projekt, nyní odložit:**
-https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset
-PhiUSIIL; **CC BY 4.0**; popis uvádí 235 795 URL a 54 features. Část features je
-z HTML stránky, ne ze samotné URL. Label **1 = legitimní, 0 = phishing**. Bez
-ověření dostupnosti stejných features při inference nepřebírat hotový notebook.
-Naše aplikace stránky nestahuje. Druhý URL model by zbytečně zvětšil rozsah.
+[D4 — Deferred URL project](https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset): source descriptions in the supplied research report CC BY 4.0, 235,795 URLs, 54 features and label 1 for legitimate, 0 for phishing. Some features require HTML, which our runtime does not fetch. Do not import an incompatible notebook or add this second model to the MVP.
 
-**D5 — nedoporučeno převzít bez auditu:**
-https://huggingface.co/datasets/zefang-liu/phishing-email-dataset
-Karta uvádí LGPL-3.0. V náhledu jsou pod phishingem i reklamní/spamové zprávy.
-Není vhodné slepě interpretovat tuto cílovou proměnnou jako potvrzený podvod.
+[D5 — Audit before considering](https://huggingface.co/datasets/zefang-liu/phishing-email-dataset): the supplied card research reports LGPL-3.0 and examples mixing advertising/spam with phishing. Do not treat its target variable as verified fraud without an audit.
 
-**D6 — kombinovaný zdroj, nyní vynechat:**
-https://huggingface.co/datasets/ealvaradob/phishing-dataset
-Kombinuje URL, HTML, SMS a e-mail. Karta zmiňuje Apache-2.0, ale je nutné
-prověřit licence jednotlivých zdrojů. Návod používá trust_remote_code=True;
-pro tento projekt to není potřeba ani žádoucí. Volíme jednoduchý raw CSV zdroj.
+[D6 — Excluded combined source](https://huggingface.co/datasets/ealvaradob/phishing-dataset): the supplied research records an Apache-2.0 card and mixed URL/HTML/SMS/email sources. Audit each upstream license rather than assuming the aggregate card covers everything. The project does not execute remote dataset code or use `trust_remote_code=True`.
 
-**Čeština:** během této rešerše nebyl ověřen vhodný hotový veřejný český korpus
-pro náš přesný účel. To není tvrzení, že žádný neexistuje. Pro hackathon navrhujeme
-oddělené ručně kontrolované české vývojové a challenge příklady a přiznané omezení.
+No suitable public Czech corpus for this exact task was verified in the original research. This does not establish that none exists. Any additional-language development and blind challenge inputs require independent review and separately labeled results. All authoring/reporting remains English; do not translate source examples to disguise language limits.
 
-## Model a komponenty
+## Model and implementation candidates
 
-**M1 — doporučený zmrazený encoder:**
-https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
-Oficiální modelová karta: **Apache-2.0**, 50 jazyků, 384dimenzionální embeddingy.
-Natrénujeme vlastní jednoduchý klasifikátor nad těmito vektory. Nepředstíráme,
-že jsme vytvořili encoder od nuly. Podporu a kvalitu na češtině měříme odděleně.
-Zafixovat revizi, tokenizer, maximální tokeny a hash artefaktů.
+[M1 — Frozen multilingual encoder](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2): the supplied model-card research records Apache-2.0, 50 languages and 384-dimensional vectors. Pin the actual revision, tokenizer, token limit and artifact hashes. The team trains the classification head, not the encoder. Multilingual pretraining does not establish phishing performance in any language.
 
-**C1 — ML pipeline a prevence úniku dat:**
-https://scikit-learn.org/stable/common_pitfalls.html
-Použít Pipeline a dělit před fitováním předzpracování. Sklearn není zdrojem labelů
-ani důkazem spolehlivosti našeho modelu. Model a všechny prahy sami vyhodnotíme.
+[C1 — scikit-learn leakage guidance](https://scikit-learn.org/stable/common_pitfalls.html): split before fitting learned preprocessing and use a Pipeline. Report our own evaluation; library use is not proof of reliability.
 
-**C2 — přístupné UI stavebnice:** https://github.com/shadcn-ui/ui
-**MIT**. Vzít pouze malé komponenty typu tlačítko, pole, karta a stav chyby.
-Použití knihovny samo o sobě nepotvrzuje přístupnost celé aplikace.
+[C2 — Optional small UI components](https://github.com/shadcn-ui/ui): the supplied research records MIT. Native HTML is adequate for this foundation. Using a component library does not certify the app's accessibility.
 
-**C3 — volitelný screenshot OCR:** https://github.com/naptha/tesseract.js
-**Apache-2.0**; běží v prohlížeči/Node, OCR obrázků. Není to PDF parser.
-Modely/jazyková data mají mít doložený původ a licence. Preferovat self-hosted
-WASM/worker/languages, žádné odesílání screenshotu. Uživatel opraví text před analýzou.
+[C3 — Optional browser OCR](https://github.com/naptha/tesseract.js): the supplied research records Apache-2.0. Use self-hosted worker/WASM/language assets with recorded provenance. Images stay in the browser; editable recognized text is sent only after user confirmation. It is not a PDF parser.
 
-**C4 — syntaktické zpracování domén:**
-https://github.com/john-kurkowski/tldextract
-Použít `tldextract.TLDExtract(suffix_list_urls=())` pro vypnutí síťového načítání PSL.
-Nejde o reputační databázi ani důkaz vlastnictví domény. URL a IDNA validovat zvlášť.
-Ověřit konkrétní verzi a její licenční soubor při přidání závislosti.
+[C4 — Domain syntax](https://github.com/john-kurkowski/tldextract): configure `TLDExtract(suffix_list_urls=())` to avoid network PSL refresh. This is syntax parsing, not reputation or ownership verification. Check the chosen version/license before adding it.
 
-**C5 — sdílení uživatelem:**
-https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
-Web Share má omezenou dostupnost podle prohlížeče a potřebuje zabezpečený kontext
-/user gesture. Proto ponechat kopírování jako rovnocenný fallback. Předat jen pevné
-neutrální shrnutí, žádnou zprávu či původní URL.
+[C5 — Native user sharing](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share): availability varies and secure context/user activation matter. Keep copying as an equal fallback and share only fixed neutral wording.
 
-## Přístupnost a bezpečné rady
+[C6 — Inter font](https://rsms.me/inter/): the official project provides Inter under the SIL Open Font License. If bundled, retain the full upstream license, pin the acquired file and record its hash in THIRD_PARTY_NOTICES and the package manifest. Serve the font from the application's own origin; never introduce runtime font-CDN requests.
 
-**A1 — kontrast:**
-https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html
-Normální text nejméně 4.5:1, velký text 3:1 podle příslušného kritéria.
+## Accessibility and advice
 
-**A2 — větší ovládací cíle:**
-https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html
-44 × 44 CSS px je enhanced kritérium; naše volba 48px tlačítek je produktový návrh,
-ne tvrzení, že takovou hodnotu obecně vyžaduje WCAG AA.
+[A1 — W3C contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html): normal text needs at least 4.5:1 and qualifying large text 3:1. Measure actual pairs; amber/green indicator colors are not suitable as small text on white.
 
-**A3 — bezpečný postup u phishingu:**
-https://consumer.ftc.gov/articles/how-recognize-avoid-phishing-scams
-Ověřovat jinou známou cestou, nepřebírat kontakt či link z podezřelé zprávy.
-Texty našeho průvodce musí odpovídat tomu, co uživatel skutečně udělal.
+[A2 — W3C enhanced target size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html): 44px is the enhanced criterion. Our at-least-48px controls are a product decision, not a claim that WCAG AA universally requires 48px.
 
-## Hosting
+[A3 — FTC phishing guidance](https://consumer.ftc.gov/articles/how-recognize-avoid-phishing-scams): verify through a known independent channel rather than a contact/link from the suspicious message. Advice should match the user's situation and remain general. Do not request their credentials or imply the app can recover an account.
 
-**H1 — Docker Spaces:** https://huggingface.co/docs/hub/spaces-sdks-docker
-Vhodná cílová forma pro jeden FastAPI/frontend kontejner, není jediná možnost.
+## Hosting and project prompts
 
-**H2 — aktuální podmínky:** https://huggingface.co/docs/hub/spaces-overview
-Dokumentace při ověření uvádí placený plán pro vytvoření Docker/Gradio Spaces;
-CPU Basic přitom nemá hodinový poplatek. Není korektní slibovat všem hosting zdarma.
-Preferovat již dostupný účet/server. Nová platba vždy vyžaduje souhlas uživatele.
+[H1 — Docker Spaces](https://huggingface.co/docs/hub/spaces-sdks-docker): a candidate destination for one frontend/API container, not the only hosting option.
 
-## Codex
+[H2 — Current Spaces overview](https://huggingface.co/docs/hub/spaces-overview): creating Docker/Gradio compute Spaces requires a paid plan; CPU Basic having no hourly fee does not make account creation universally free. Use an already authorized host or a documented local fallback. No purchase is authorized by a build prompt.
 
-**X1 — cíle a ověřitelné dokončení:** https://learn.chatgpt.com/docs/long-running-work
-Dokumentace popisuje /goal v desktopu, Codex CLI a IDE. Uvést výsledek, omezení a
-ověření. Goal automaticky nerozšiřuje oprávnění ani neobchází approval režim.
+The supplied Codex goal syntax is preserved as a project workflow. CODEX_GOALS also provides plain prompts if the current client does not expose that command. Repository instructions and active status remain authoritative for the implementation; a goal prompt does not expand publishing or billing authorization.
 
-**X2 — instrukce repozitáře:**
-https://learn.chatgpt.com/docs/agent-configuration/agents-md
-Sdílená pravidla uložit do AGENTS.md. Postup a aktuální stav patří do docs/STATUS.md.
+## What the team creates
 
-## Co je naše vlastní práce
-
-Naše jsou aplikace, zpracování a audit dat, trénink klasifikační hlavy, výběr policy,
-české srozumitelné vysvětlení, workflow bezpečné pomoci, evaluace, testy a prezentace.
-Převzaté jsou řádně uvedené datasetové zdroje, encoder a knihovny. Použití Codexu
-se přiznává. Vlastní model neznamená vytrénovat velký jazykový model od nuly.
+Application code, data audit and split pipeline, trained classification head, decision policy, English explanations, neutral help workflow, evaluation, tests and presentation. Credit reused datasets, pretrained encoders, fonts and libraries accurately, and disclose Codex use. A trained classifier does not mean the team pretrained a large language model. No reuse approval or legal clearance is inferred from this inventory.

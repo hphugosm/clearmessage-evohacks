@@ -1,71 +1,327 @@
-# Stav projektu
+# ClearMessage project status
 
-Poslední změna: **10. 10. 2026, Europe/Prague — Goal 03 skutečný analyzační tok
-lokálně implementován a ověřen.** Frontend → vlastní Goal02 model → verzovaná
-policy/pravidla → CZ/EN postup a neutrální návrh pomoci. Žádný další trénink,
-freeze, otevření held-out/blind zpráv, publikování ani další goal.
+Updated **10 October 2026, Europe/Prague**. Active work: complete the English
+ClearMessage / approved Style A migration **before Goal 04**. This does not start
+Goal 04, retrain a model, freeze data, inspect blind/held-out messages or publish.
 
-**Model zůstává provizorní:** 41 pending lidských kontrol, původní labely,
-jazykový výkon neověřen. API načte skutečný hashově ověřený model, ale vrací
-vždy `analysis_complete=false`; pouze `suspicious` s pravdivým podkladem nebo
-`review`. `no_strong_signals` je zablokován, nikoli simulován.
+The real Goal 02 sparse model remains integrated with `analysis-policy-1` and
+`observed-requests-1`, contract **1.1.0**. It is provisional: **41 human reviews
+pending**, original source labels, no verified language performance. Current
+results are `suspicious` with actual basis or `review`, always
+`analysis_complete=false`. Production `no_strong_signals` is disabled.
 
-| Oblast | Stav | Důkaz / blokátor |
-|---|---|---|
-| Pravidla a harmonogram | Původní podklady zachovány | AGENTS.md, PROJECT_PLAN.md, RESEARCH.md, ACCEPTANCE.md a prompty beze změn. Reuse stále čeká na vyjasnění pořadatelem. |
-| Frontend / API | Ověřeno lokálně | Skutečný POST přes Vite proxy i frontend build servírovaný FastAPI; 14 Playwright testů v Goal03. |
-| Kontrakt | Ověřeno | Pydantic → docs/openapi.json → generovaný TypeScript; kontroly driftu prošly. |
-| Model | Skutečný provizorní artefakt připojen | TF-IDF/LR, ověřený SHA, interní skóre; analysis_complete=false, model_version se skutečným hash prefixem. Při chybě rules-only. |
-| Testy / build | PASS dostupných kontrol | 140 pytest, 26 Vitest, 14 Playwright, build/kontrakt/pip check; 82 API/policy testů také v čistém prostředí. Stávající warning zachován. |
-| Docker | Připraven, neověřený build/run | Docker CLI ani daemon nejsou dostupné; base image manifesty/digesty ověřeny pouze čtením registry. |
-| Deployment účet | Nepotvrzen | Žádná existující projektová konfigurace s cílovým účtem/serverem; globální HF CLI nefunguje. |
-| Veřejné nasazení | Neprovedeno | Žádné publikování, platby ani čtení přihlašovacích údajů. |
-| Dataset | Importován; review nedokončen | 5 971 řádků. Uložena 4 rozhodnutí: 2 shody, 2 návrhy smishing → spam; 41 pending. Atribuce/jazyky a schválení konfliktů chybí. Původní labely zachovány. |
-| Datové nástroje | Ověřeno i nad skutečnými daty | CSV/ZIP import → audit → candidate skupinový split → verify + testy skutečného manifestu. Finální freeze odmítá pending review, žádný reviewed finální split. |
-| České development / challenge | Pouze formát a postup | Pydantic + JSON Schema, nezávislá tvorba/kontrola, rodiny/provenance; 0 skutečných příkladů. Blind odpovědi nečteny. |
-| Trénink | Provizorní experiment ověřen | Na výslovné povolení původních labelů: 2 TF-IDF + 2 frozen-MiniLM/LR kandidáti, majority, validation selection, test až poté. Schválený preflight zůstává blokován. |
-| Git / commit | Lokální repo | Na výslovný požadavek commitu v Goal 01 založen nový Git, bez remote. Lokální commit tohoto kroku ověřit `git log -1`; původní soubory zahrnuty, raw/cache ignorovány. |
-| Pomoc / sdílení | Ověřeno lokálně | Pevné CZ/EN šablony, náhled, samostatné gesto, ruční kopírování; žádný clipboard API ani zdrojová zpráva. |
-| Devpost / video / OCR | Nezahájeno | Mimo aktuální Goal03. |
+| Area | Actual state / evidence |
+|---|---|
+| Naming/language | ClearMessage; English UI, instructions, docs, metadata and public demos. Czech evaluation data remains separate. Migration verification below. |
+| Brand | Approved Style A: shared blue/navy tokens, white rounded cards, local Inter, passive local mark/illustration, input-first mobile layout. |
+| Frontend/API | Real model-backed POST via Vite and FastAPI-served build; no demo verdicts. |
+| Contract | Pydantic → OpenAPI → TypeScript; title migrated, fields/enums/versions unchanged. |
+| Model/policy | Real hash-verified project JSON; incomplete results and rules-only errors remain explicit. |
+| Dataset | 5,971 original rows; 4 explicit human decisions (2 agreements, 2 requested smishing → spam changes); 41 pending, attribution/languages and conflict approval incomplete. |
+| Data split | Immutable candidate, empty intersections; no approved final freeze. Provisional authorization preserves original assignments and `data_split_ready=false`. |
+| Czech development/challenge | Format and independent instructions; zero actual challenge records. Existing synthetic Czech regression inputs preserved, not a benchmark. |
+| Sharing | Fixed English templates, preview and separate gesture; selectable manual-copy fallback. No clipboard API or source content. |
+| Docker | Source prepared; CLI/daemon unavailable. Build/run/healthcheck **untested**. |
+| Deployment | Account/destination unconfirmed; no publishing, credential collection or purchase. |
+| Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
+| OCR/submission/video/Goal 04 | Not started by this migration. |
 
+## ClearMessage migration
 
-## Goal 03 — model, pravidla, postup a prosba o pomoc
+Started from clean commit `5295124`. During discovery the owner uploaded
+`clearmessage-evohacks/`, an approved English Style A reference package from a
+separate task. Its brand bible was read before interface changes. Design assets,
+tokens, font/license and English planning translations were incorporated;
+**older foundation code and obsolete model/status claims were not substituted
+for the current trained integration**. The uploaded folder remains untouched and
+excluded from active Git/Docker source. See [MIGRATION_REPORT](MIGRATION_REPORT.md).
 
-Navázáno na čistý commit `570f2f0`; cizí změny nebyly přítomné. Pravidla a
-podklady AGENTS/PROJECT_PLAN/RESEARCH/ACCEPTANCE zachovány. Auditní JSON zůstal
-beze změny: SHA `7cf04370060bc86e58349a06dc04fc82de680b0404e17eb44b4babe34a30a70c`.
-Model beze změny: SHA
-`7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa`.
+Translated/reconciled README, data-source/preparation/ML instructions, API/status,
+planning/research/acceptance, goal prompts and Codex instructions. Single English
+copy dictionary and help templates replace UI locales; `message_language=cs`
+remains valid input metadata. Backend changes are branding only. No dependency
+versions, learned preprocessing, weights, thresholds, manifests, raw records or
+review decisions changed. Public demo fixtures alone became English; evaluation
+inputs were not converted into demo material or removed.
 
-- `backend/inference.py`: malé score/coverage rozhraní, skutečný hashově ověřený
-  projektový JSON, jednorázové načtení, jeden neblokující inference slot. Žádný
-  pickle/download/fallback ML. Sparse vstup se nezkracuje; pokrytí celého textu
-  není tvrzení o porozumění všem slovům. False coverage a chyby nepovolí
-  klasifikátorové varování ani úplnost, ale skutečné pravidlo může varovat.
-- `analysis-policy-1`, `observed-requests-1`, kontrakt `1.1.0`: pravidla žádosti o
-  heslo/OTP, okamžitou platbu a utajení; negace, běžná upozornění, kontrastní
-  věty, URL masking. Interní offsets dokazují match, žádné citace ve sdílení.
-  Spam/HTTPS/TLD/krátký odkaz/pravopis nejsou samy pravidlovým důkazem podvodu.
-- Modelový EN warning má validation threshold **0.60** z nezměněného Goal02
-  reportu. CZ/other/nezadaný jazyk dostávají konkrétní pravidlová varování nebo
-  review. EN modelový warning zůstává provizorní; výkon není ověřen ani v EN.
-  Nízká větev policy je výslovně nevalidovaná a vypnutá. Test-only modely
-  zkoušejí hypotetický budoucí nízký výsledek, nejsou v aplikaci.
-- `tldextract==5.4.0`: `suffix_list_urls=()`, `cache_dir=None`, bundled snapshot,
-  žádný DNS/HTTP/WHOIS/redirect ani disk cache. Instalováno jen lokálně a
-  zafixováno skutečné řešení: 28 runtime + 7 dev-only verzí s wheel hashi.
-  Licence balíčků + BSD-3-Clause tldextract / MPL-2.0 PSL notice/hash v
-  `docs/runtime-licenses.json`. Sparse runtime nepotřebuje torch/ST/encoder.
-- CZ/EN důvody a kroky nejvýše tři; observed signal odlišen od obecného
-  klasifikátorového výstupu. Bez konkrétní evidence poctivé obecné omezení.
-  Preview prosby z pevných neutrálních šablon, další gesto pro Web Share,
-  ruční kopírování bez clipboard API. Žádný source/evidence/URL/jméno/účet/kód
-  v payloadu. Tři stručné rady „už jsem klikl/a“, bez dalšího formuláře/tajemství.
-- Dockerfile obsahuje sparse runtime a explicitně připravený vlastní model;
-  `scripts/prepare_model.py` zkontroluje model/report/threshold a připraví
-  ignorovaný build asset. Raw data, encoder a uživatelské zprávy se nekopírují.
+The attached workspace path is retained because moving it would invalidate local
+environments and attachment paths. New clone/delivery slug is
+`clearmessage-evohacks`; npm/container identity is `clearmessage`.
 
-### Skutečné příkazy a výsledky Goal03
+### Commands and results for this migration
+
+```sh
+.venv/bin/python scripts/export_contract.py
+npm --prefix frontend run contract:generate
+python3 scripts/audit_migration.py
+sh scripts/test.sh
+sh -n scripts/install.sh scripts/test.sh
+.venv/bin/python scripts/prepare_model.py
+git diff --check
+```
+
+| Final check | Actual result |
+|---|---|
+| `python3 scripts/audit_migration.py` | **PASS**, 124 owned files; exact input exceptions retained; metadata/assets/font/license/local links checked |
+| `sh scripts/test.sh` | **PASS exit 0**: pip check, OpenAPI/TS drift, **140 pytest** (2.74 s), **26 Vitest**, TypeScript/Vite build, **16 Playwright** (5.2 s) |
+| Browser/API coverage | PASS in built-FastAPI and Vite-proxy modes; actual model version, English UI with Czech input, no external browser requests, private-share/log canaries, failure/limits/inert HTML |
+| Build | PASS, Vite 8.3.4; 21 modules; JS 233.15 kB / gzip 73.28 kB; local SVG/font emitted under unchanged CSP |
+| `sh -n scripts/install.sh scripts/test.sh` | PASS |
+| `scripts/prepare_model.py` | PASS, exact selected SHA; no download/retraining |
+| Preservation hashes | PASS, 73 of 74 protected files byte-identical; only public-demo expectation changed in the remaining test, original Czech string constants identical; archive/model/review/manifests unchanged |
+| Desktop/mobile visual inspection | PASS, actual 1360px form and 360px model-backed result inspected; desktop input card 604.797px; assets/font render |
+| 320px / 200% text enlargement | PASS, no horizontal overflow at 320px or 640px with root text enlarged to 200%; **not a native page-zoom audit** |
+| Reduced motion / console / assets | PASS, submit transition 0s with reduced motion, no page errors, same-origin requests only |
+| Contrast calculation | PASS for measured used pairs, minimum 4.759:1; detailed pairs in MIGRATION_REPORT; **not full WCAG conformance** |
+| Docker CLI/daemon/build/run | **UNTESTED**; `command -v docker` returned no executable; no installation/daemon changes |
+| Diff | First check caught one trailing blank line; removed; final `git diff --check` PASS |
+| Deployment / training / Goal 04 | **NOT PERFORMED** |
+
+No installation or download was required for this migration. Existing local
+locks/environments were reused; no dependency versions or model artifacts changed.
+
+Initial verification: **139 Python tests passed, 1 failed** because the public
+fictional-demo check still required both UI languages; the new English-demo
+expectation preserves all Czech evaluation inputs. **26 client tests passed**.
+Initial browser run: **7 passed, 1 failed, 8 not run**, due to the illustration
+check requiring an explicit `aria-hidden` on the image; fixed without relaxing
+CSP. A temporary documentation export helper failed on a CommonJS variable-name
+collision, was corrected and rerun successfully. These failures are not counted
+as passed checks. Existing Starlette/httpx and NO_COLOR/FORCE_COLOR warnings are
+retained, not suppressed.
+
+## Goal 03 — integrated model, observed rules and help
+
+Historical implementation commit **5295124**, based on clean `570f2f0`.
+Review/model hashes preserved. LocalClassifier loads project-generated verified
+JSON once, with one nonblocking model slot. No pickle, runtime download or fake
+ML fallback. Sparse coverage checks full allowed text; incomplete coverage and
+inference failures cannot give model warnings or reassuring outcomes. Actual
+rules may still warn, with their limited basis disclosed.
+
+Rules recognize requests to disclose passwords/codes, immediate-payment pressure
+and concealment from someone trusted, in Czech/English message data. They handle
+negation, ordinary safety notices, contrasting clauses and URL masking. Internal
+character offsets support matches; no evidence snippets are shared. Advertising,
+HTTPS, TLD, short links or spelling alone are not fraud evidence. Complex context
+and negation remain limitations of finite rules.
+
+EN provisional model warning threshold **0.60** is unchanged from validation
+selection. Czech/other/unspecified input receives observed-rule warnings or
+review, without claims of model performance. The low-finding policy is explicitly
+unvalidated/disabled; hypothetical approved models exist only in tests.
+`tldextract==5.4.0` uses `suffix_list_urls=()`, `cache_dir=None`, bundled PSL
+without refresh or DNS/HTTP/WHOIS/redirects. Dependency solution: 28 runtime + 7
+dev-only pinned versions with wheel hashes; runtime licenses/PSL notices recorded.
+
+At most three supported reasons/actions. Neutral help preview plus explicit
+native-share gesture, manual-copy fallback, no clipboard API. Three brief
+recovery steps collect no secrets. Docker source includes explicitly prepared
+sparse model; no raw data/encoder/user messages.
+
+Historical actual checks:
+
+| Check | Recorded result |
+|---|---|
+| Local dependency lock/clean install | PASS, hash-verified wheels and pip check |
+| Clean runtime API/policy tests | **82 passed**, 73.17 s including first cold import; existing warning |
+| Full `sh scripts/test.sh` | **140 pytest, 26 Vitest, 14 Playwright passed**, contract/build/pip check; Python 2.88 s, browser 5.1 s |
+| Final targeted API/policy/build | **82 passed**, TypeScript/Vite passed |
+| Real-model no-egress | PASS, DNS/socket/requests blocked, cold PSL/repeated URLs, **zero attempts** |
+| Contradictions/notices/advertising/no-URL request/failure/overflow/busy/limits | PASS with fictional/inert development inputs |
+| Canary logs/responses/share | PASS, no canary in logs/errors/preview/share; native share stub confined to tests |
+| Fresh-process API/reload/maximum input | PASS, Goal 02 loader parity; 2,000 allowed, 2,001 rejected |
+| Offline `prepare_model.py` | PASS, artifact/report/threshold verified, nothing trained/downloaded |
+| Docker COPY layout in clean Python environment | PASS; **not a Docker build** |
+| Docker build/run | UNTESTED, no CLI/daemon |
+| Publishing/retraining/next goal | NOT PERFORMED |
+
+`ml/reports/goal03-integration.json`: macOS 26.6.2 arm64, Python 3.13.1, Apple M5.
+25 in-process HTTP/ASGI/model/rules requests, including cold PSL but excluding
+initial imports: p50 **0.893 ms**, p95 **3.396 ms**, maximum **30.606 ms**, peak RSS
+**178,503,680 bytes**. App factory in already imported process: **15.819 ms**.
+These are not network/Docker latency or language accuracy. Five fictional
+synthetic development smoke cases: Czech secret request and English immediate
+payment warned; English safety notice, advertising and school message reviewed.
+All incomplete, no real-world validation or tuning from blind/held-out data.
+A duplicate-target patch attempt was rejected without partial edits and repaired.
+
+## Goal 02 — provisional training after explicit permission
+
+Historical commit **570f2f0**. The user paused review and explicitly authorized
+provisional original-label training with incomplete audit disclosed. Four human
+decisions preserved; no invented approvals or relabeling. Immutable provisional
+manifest references the candidate and seed **20261010** with identical
+**4,112 / 881 / 880** assignments; `data_split_ready=false`. An explicit CLI flag
+is required. The approved preflight remains blocked.
+
+Sklearn Pipeline: train-fitted word/character TF-IDF and balanced LR, predefined
+C=0.5/2.0; train-fitted majority baseline. Frozen multilingual MiniLM,
+Apache-2.0, revision `e8f8c211226b894fcb81acc59f3b34ba3efd5f42`, with our LR head
+C=0.5/2.0 on the same splits. CPU only, no encoder pretraining/fine-tuning.
+First 32 train messages benchmarked: **0.116693 s**. Only public train/validation
+embeddings cached. Full tokenizer limit **128 including special tokens**, no
+truncation; coverage train 4,103/4,112, validation 880/881, test 880/880. Overflow
+stays review; covered denominators and selection coverage penalty disclosed.
+
+Validation selected **TF-IDF C=2**, macro-F1 **0.876209**, warning threshold
+**0.60** from a fixed grid. Selection saved before test featurization/scoring.
+Test source-label macro-F1: selected TF-IDF **0.863645**, majority **0.301370**,
+MiniLM C=0.5 **0.848873**, MiniLM C=2 **0.852579**. No selection from test. These
+are agreement with unapproved source annotations, not fraud ground truth. Source
+languages unverified: separate English/Czech results unavailable, not combined
+into a language-performance claim. Blind challenge was not opened.
+
+Provisional test policy: **75 suspicious / 805 review / 0 no_strong_signals**, all
+incomplete; 68 source-smishing warnings, 7 false positives, 20 source-smishing
+without explicit warning. Abstention **0.914773**, complete coverage zero.
+Scores never appear as user-facing fraud probabilities.
+
+Verified project JSON, local encoder safetensors and non-pickle NPY with hashes.
+Reload difference **0**; repeated TF-IDF training byte-identical, repeated head
+fit on fixed embeddings identical. Independently recomputed 32 encoder vectors:
+max difference **3.88e-7** with a different padding batch. Cross-platform byte
+identity is not claimed. Apple M5, macOS arm64, 24 GiB, CPU/4 threads: selected
+model median **0.424 ms**, p95 **0.640 ms**, 32 validation messages including
+policy, excluding load. All four candidates passed offline fresh-process inference.
+
+Evidence: [MODEL_CARD](MODEL_CARD.md), [MODEL_REPORT](MODEL_REPORT.md),
+`ml/reports/goal02-provisional-v2.json`, `goal02-verification-v2.json`,
+`goal02-verification-clean-v2.json`, `goal02-latest.json`. Per-class metrics,
+confusion matrices, false positives/negatives and error IDs were computed.
+Raw text/links/weights/cache are not committed. Distribution license undecided.
+
+Historical execution: 7 baseline / 34 encoder locked packages; 11 allowlisted
+encoder assets acquired explicitly. Full Python run **89 passed**, one warning,
+1.89 s. Failures preserved: first encoder install with hub 2.2.0 failed resolver
+(ST required hub <2; resolved to 1.33.0); training v1 failed reload parity before
+test (float32 head restored as float64; fixed dtype in v2); first clean-process
+verification timed out after 60 s on cold import, then clean verification passed.
+Approved preflight remained **blocked exit 2**; no frontend/API integration or
+Docker/deployment happened in that goal.
+
+## Goal 02 — initial approval blocker
+
+Historical commit **d14f63f**, clean base `92142ab`. At that time 0/45 reviewed,
+no attribution or exclusion approval; the name `review.completed.json` did not
+establish completion. Preflight rejects pending/candidate input before reading
+training text. Approved data checks pin manifest/review/archive, preparation
+version, 15 attributed reviews per class, train assignment of review families,
+exclusion approval, counts and empty group intersections. Fixed diagnostics echo
+neither messages nor notes. Success would mean data readiness, not model quality.
+
+Initial default preflight **blocked exit 2**: `approved_manifest_missing`,
+`human_label_review_incomplete`, `human_review_requires_15_per_class`. Candidate
+also blocked `manifest_not_approved`. **9 preflight tests passed; full 78 passed**,
+one warning, 1.76 s. No fit, metrics, encoder acquisition, coverage or inference
+was performed before the later explicit provisional permission. Initial blocker
+report `ml/reports/goal02-status.json` retains null/not-computed historical results.
+
+## Goal 01 — owner-supplied archive and automatic audit
+
+Historical commit **92142ab**, clean base `9d1e6c6`. Local input resolved the
+403 acquisition blocker without redefining failure as a successful download.
+Only CSV was read from ZIP in RAM; scripts/PDF/embedded URLs were not executed
+or opened. Original Downloads files preserved.
+
+Actual archive/CSV sizes, hashes, counts and audit: [DATA_SOURCES](../DATA_SOURCES.md).
+Strict UTF-8 header LABEL/TEXT/URL/EMAIL/PHONE; correct No/yes audit in new
+`data-prep-v2` path. Older erroneous V1 audit preserved, not used/overwritten.
+5,971 rows, 140 duplicate extras, 5,631 groups; 46 conflicts / 98 rows quarantined;
+5,873 eligible rows / 5,585 groups. No missing cells, NA markers, unknown labels
+or invalid mapped indicators. All source languages unverified; temporal/campaign
+metadata absent. Fifteen review entries per class selected with defanged local
+previews. At that time zero real human decisions; four were supplied later.
+
+Candidate created with seed/code/source/group hashes, empty row/group/text/
+normalized/template intersections. Counts: train 3,391 ham / 309 spam / 412
+smishing; validation 727 / 66 / 88; test 726 / 66 / 88. Candidate checksum below.
+No final `ml/manifests/mendeley-v1.split.json`. Freeze expectedly **blocked exit 2**,
+`human_label_review_pending_or_disagreed`. Targeted data tests **36 passed**,
+then two actual-manifest tests added; full **69 passed**, one warning. No model,
+Docker or deployment in that continuation. Raw data/previews remained ignored.
+
+## Goal 01 — first acquisition failure and tooling
+
+Historical commit **9d1e6c6**. No Git initially (exit 128); 54 original files
+snapshotted outside project, then local `git init -b main` explicitly authorized.
+Original GET/API/archive failed HTTP 403 and browser download timed out at 30 s.
+`fetch_dataset.py` **blocked exit 2**, `http_error`, `http_status=403`;
+`prepare_data.py audit` **blocked exit 2**, `file_missing`. No fake hash/counts,
+substitute corpus, real leakage success or annotation approval claimed.
+
+Bounded offline importer, audit, grouped candidate/freeze and Czech format
+implemented. Full **65 pytest passed**, one warning; early targeted 30 then 34
+data/format tests. Fictional 100/class round trip produced 70/15/15 per class,
+empty intersections and tamper rejection. Dependency/contract/build checks passed;
+Vite 8.3.4, 18 modules. No new dependency/global install. Only intended README,
+ML README/status changes affected original files; raw unavailable and Docker
+untested. Actual corpus leakage was not tested until owner acquisition.
+
+## Goal 00 — historical runnable foundation
+
+Before local Git existed: commit skipped, `git status` exit 128. Python 3.13.1,
+Node 25.8.2/npm 11.11.1, isolated venv/npm dependencies and Chromium 156.0.8078.4,
+Playwright revision 1248 installed. Initially 14 runtime + 8 dev-only packages
+locked with wheel hashes; later model integration legitimately expanded these.
+Clean wheel installation and npm ci verified. No global install.
+
+Real frontend/API, independent message-language hints, 2,000-code-point/32 KiB
+limits, fixed no-echo errors, no-store/CSP/nosniff/no-referrer, no storage/analytics/
+HTML execution/egress, 32 connections. FastAPI telemetry/autoconfiguration
+explicitly disabled even under FASTAPI_OTEL_AUTO_CONFIGURE=true; required
+OpenTelemetry API dependency has no SDK/exporter/instrumentation. No model then;
+truthful model_not_ready, not a fabricated detector. Original bilingual UI and
+old branding are historical and superseded by the English migration.
+
+Final foundation suite **31 Python / 13 client / 12 browser passed**, one warning;
+E2E 4.7 s. TypeScript/Vite build 228.78 kB JS / 72.30 kB gzip. Shell syntax passed;
+install steps verified individually, not initially as a complete install script.
+Local build 7860 and mobile 360px visually inspected; no horizontal overflow/page
+error, real POST/incomplete response. Historical old-palette contrast pairs:
+10.78, 6.07, 4.67, 11.76, 9.52, 7.39; these do not describe migrated Style A or
+full WCAG compliance. Seventeen original files snapshotted; intended README/status
+changes only. Initial planning README was byte-identical before this translation;
+Git history retains its original language.
+
+Failures repaired: first build exited 2 for missing language values/test import
+location; E2E directory/import adjusted. Initial browser run had 12 launch
+failures because relative browser cache resolved from another cwd; corrected
+absolute path and all 12 passed. Tests/security were not disabled. Later invariant
+repair rejected blank model version for completed low finding; 31 tests and both
+contract checks passed again. npm found unrelated empty extraneous directories
+ending in ` 2`; not included in locks or build context.
+
+Global `hf --help` failed on Typer's unknown `suggest_commands`; no global fix or
+credential/account probing. Read-only project configuration did not establish a
+provider/destination. Missing Docker CLI, no daemon installation, no build/run.
+Registry checks pinned available base-image manifests/digests, not execution.
+No publication, purchase or access to credentials.
+
+## Integrity pins and remaining limitations
+
+| Artifact | SHA-256 |
+|---|---|
+| Selected sparse model | `7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa` |
+| Human review | `7cf04370060bc86e58349a06dc04fc82de680b0404e17eb44b4babe34a30a70c` |
+| Candidate split | `51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0` |
+| Provisional authorization | `21b3089b3e0aa56d076efef258f16cf4a2b8e9a4a27494d0ecf902a02bf2f9f5` |
+
+Human audit/final freeze, verified EN/Czech benchmark, complex rule contexts,
+Docker/Linux/Safari/Firefox, native sharing behavior, actual screen reader and
+full native page-zoom/privacy/accessibility audits remain incomplete. Hosting
+proxy logs/HTTPS are unverified. New clones require trusted model restoration,
+not runtime downloads. Blind data remains reserved for an independently frozen
+audit. The migration stops before Goal 04.
+
+## Historical command ledger
+
+These commands were recorded in the pre-migration STATUS at commit `5295124`.
+They are retained as execution history, not instructions to retrain or restart
+completed goals. Outcomes and failures appear in the English history above.
+Current setup uses README; reproducing training requires deliberate authorization.
+
+### Recorded command block 1
 
 ```sh
 .venv/bin/python -m pip install --only-binary=:all: tldextract==5.4.0
@@ -84,100 +340,7 @@ npm --prefix frontend run build
 git diff --check
 ```
 
-| Kontrola | Skutečný výsledek |
-|---|---|
-| Install/lock/čisté prostředí | **PASS**, pouze lokálně, hash-verified wheels, pip check bez konfliktů. |
-| Čistý API/policy pytest | **PASS 82**, 73.17 s včetně prvního studeného importu; 1 existující Starlette/httpx warning. Fresh-process API uvnitř testu prošlo. |
-| `sh scripts/test.sh` | **PASS exit 0**: pip check, OpenAPI/TS drift, **140 pytest** (2.88 s), **26 Vitest**, TypeScript/Vite build, **14 Playwright** (5.1 s). |
-| Finální cílená kontrola po zpřesnění coverage/úklidu copy | **PASS 82**, TypeScript/Vite build znovu prošel; nezměněné frontend testy nebyly zbytečně opakovány. |
-| No-egress | **PASS**: skutečný model volán, DNS/socket/requests zakázány, studený PSL i opakované URL; **0 pokusů**. Také localhost/privátní IP/IPv6/IDNA/@/HTML/instrukce jako data. |
-| Konflikty, legitimní upozornění, reklama, žádost bez URL, absence/výpadek/invalid scores/overflow/busy/input limits | **PASS**, fikční/inertní fixtures; žádné blind/held-out příklady. |
-| Canary logy / odpovědi / sdílení | **PASS**, stdout/stderr/caplog i browser console, žádná soukromá canary ve výstupu/share. Native share ve browser testu test-only stub, API/model skutečné. |
-| Model reload/maximum input/API v novém procesu | **PASS**, scores shodné s Goal02 JSON loaderem; 2 000 znaků celé, 2 001 odmítnuto. |
-| Offline příprava `build/model.json` | **PASS**, přesný artefakt/selection report/threshold; nic nestaženo či trénováno. |
-| Docker COPY layout v čistém Python prostředí | **PASS**, pouze soubory skutečně kopírované Dockerfile; frontend/API/model fungují. **Není to Docker build**. |
-| Docker CLI/daemon/build/run | **NETESTOVÁNO**, `command -v docker` nenalezl CLI; žádný daemon nebyl instalován/měněn. |
-| Diff/hash/ignore kontrola | **PASS**, bez whitespace chyb; review/model hash zachován, build/raw/cache mimo staging. |
-| Nasazení / další goal / model retraining | **NEPROVEDENO**, není součást tohoto kroku. |
-
-Strojový integrační report: `ml/reports/goal03-integration.json`; dokumentace
-`docs/API.md`, `docs/POLICY.md`, aktualizovaný `docs/MODEL_CARD.md` a README.
-Měřeno na macOS 26.6.2 arm64, Python 3.13.1, Apple M5 z Goal02. **25 in-process
-requestů s načteným modelem**, včetně HTTP/ASGI/pravidel a studeného PSL, bez
-prvního importu: p50 **0.893 ms**, p95 **3.396 ms**, maximum **30.606 ms**, process
-peak RSS **178 503 680 B**. Továrna aplikace v již importovaném procesu **15.819 ms**.
-To není měření síťové latence, Docker výkonu ani jazykové přesnosti.
-
-Pět vlastních syntetických development smoke případů: CZ žádost bez URL a EN
-okamžitá platba → suspicious s observed evidence; EN bezpečnostní upozornění,
-reklama a školní zpráva → review bez evidence. Všech pět neúplné; nejsou to
-modelové metriky či real-world validace. Held-out výsledky Goal02 zůstávají
-historickým měřením modelu, nová kombinovaná pravidlová policy na nich nebyla laděna.
-
-**Zbývající omezení:** lidský review a schválený finální split, chybějící EN/CZ
-benchmark, konečná pattern pravidla (možné chyby u složité negace/kontextu),
-Docker/Linux/Safari/Firefox a hosting privacy/HTTPS neověřeny. Skutečné native
-sdílení závisí na browseru/secure context; odeslání člověkem nebylo provedeno.
-Nový klon potřebuje vlastní vybraný Goal02 artefakt se stejným SHA, jinak
-příprava modelu hlásí blokátor a API přizná rules-only. Warning Starlette/httpx
-ani NO_COLOR/FORCE_COLOR z prostředí nebyly potlačeny. Jedna první patch operace
-byla odmítnuta pro dvojí cíl souboru (žádné částečné změny); opraveno standardním
-update. Žádná neúspěšná kontrola není označena jako úspěch.
-
-Lokální commit Goal03 ověřit `git log -1`; bez remote/publikování. **Další goal
-nezahájen.** Následující oddíly jsou historické reporty předchozích goalů.
-
-## Goal 02 — provizorní trénink po výslovném povolení
-
-Uživatel přerušil review a výslovně zvolil „Povoluji provizorní trénink na
-původních labelech; audit označit jako nedokončený“. Čtyři uložená rozhodnutí
-zachována (2 shody, 2 požadované změny smishing → spam; 41 pending).
-Žádná automatická lidská potvrzení ani approved freeze. Před změnami čistý Git
-strom; frontend/backend a původní kandidátní split beze změn.
-
-Neměnný provizorní authorization manifest odkazuje na původní candidate hash,
-zachovává seed 20261010 a skupiny/řádky **4 112 / 881 / 880**, nadále
-`data_split_ready=false`. Trénink vyžaduje explicitní CLI flag. Schvalovací
-preflight nebyl oslaben; schválený manifest stále chybí.
-
-- Sklearn Pipeline: word/char TF-IDF → balanced LogisticRegression, C=0.5/2.0.
-  Slovník/IDF/head fit jen train; majority baseline rovněž jen train.
-- Frozen multilingual MiniLM, Apache-2.0, revize
-  `e8f8c211226b894fcb81acc59f3b34ba3efd5f42`, vlastní LR head C=0.5/2.0.
-  CPU, bez fine-tuning/pretraining. Nejdříve 32 train zpráv benchmarkováno:
-  **0.116693 s**; až potom embeddings. Jen veřejné train/validation cache.
-- Tokenizování bez truncation, limit **128 včetně special tokens**. Coverage:
-  train 4 103/4 112, validation 880/881, test 880/880. Overflow zůstává review.
-  Metriky používají zveřejněné covered denominátory, výběr penalizuje coverage.
-- Validation vybrala **TF-IDF C=2**, macro-F1 **0.876209**, interní threshold
-  **0.60** z pevné mřížky podle validation warning F1. Selection uložen před
-  test featurization/scoring; CSV parser předtím routuje veřejné řádky podle ID.
-- Test source-label macro-F1: vybraný TF-IDF **0.863645**, majority **0.301370**,
-  MiniLM C=0.5 **0.848873**, MiniLM C=2 **0.852579**. Test neovlivnil výběr.
-  Nejde o ground-truth fraud výkon; EN/CZ výsledky nejsou dostupné, jazyky
-  zdroje neověřeny. Blind challenge neotevřena.
-- Provizorní policy test: **75 suspicious / 805 review / 0 no_strong_signals**,
-  všechny analysis_complete=false; 68 source-smishing warnings, 7 FP,
-  20 source-smishing bez explicitního warning. Abstention 0.914773,
-  dokončené coverage 0. Žádné uživatelské fraud procento.
-- Projektové JSON, encoder safetensors, NPY bez pickle; hash loaderů/assets
-  ověřeny. Reload score rozdíl **0**; opakovaný TF-IDF fit byte-identický,
-  opakovaný head fit na fixních embeddings identický. Nezávisle přepočítáno 32
-  encoder vektorů: max rozdíl 3.88e-7 při jiném padding batchi. Cross-platform
-  byte identita se netvrdí.
-- **Apple M5, macOS arm64, 24 GiB, CPU/4 threads**: vybraný model median
-  **0.424 ms**, p95 **0.640 ms**, 32 validation zpráv včetně policy, bez load.
-  Batch throughput zvlášť. Všechny 4 modely prošly offline fresh-process
-  inference; TF-IDF i v čistém wheel-hash prostředí.
-
-Doklady: `docs/MODEL_CARD.md`, anglický `docs/MODEL_REPORT.md`,
-`ml/reports/goal02-provisional-v2.json`, `goal02-verification-v2.json`,
-`goal02-verification-clean-v2.json`, aktuální index `goal02-latest.json`.
-Per-class metriky, confusion matrices, FP/FN a error IDs skutečně spočítány;
-raw texty, nebezpečné odkazy, váhy a cache nejsou v commitu. Původní blocker
-report je historický. Projektová distribuční licence zatím nebyla zvolena.
-
-### Skutečné příkazy Goal 02 — provizorní běh
+### Recorded command block 2
 
 ```sh
 .venv/bin/python scripts/lock_ml_dependencies.py
@@ -201,54 +364,14 @@ python3 -m venv .cache/ml-verify
 .venv/bin/python -m pytest -q
 ```
 
-Původní ověřené install kroky před generováním locků:
+### Recorded command block 3
 
 ```sh
 .venv/bin/python -m pip install --only-binary=:all: scikit-learn==1.9.1 numpy==2.5.3 scipy==1.18.1 joblib==1.6.0 threadpoolctl==3.7.0
 .venv/bin/python -m pip install --only-binary=:all: sentence-transformers==6.1.0 torch==2.14.1 transformers==5.19.0 'huggingface-hub>=1.31.0,<2.0.0' safetensors==0.8.0
 ```
 
-| Kontrola | Skutečný výsledek |
-|---|---|
-| První encoder install s hub 2.2.0 | **FAIL resolver**, ST vyžaduje hub <2; opraveno podle metadata, hub 1.33.0. |
-| ML locks / čistý baseline install | **PASS**, ověřené verze/wheel hash; 7 baseline + 34 encoder balíčků, pip check bez konfliktů. |
-| Explicitní encoder setup | **PASS**, 11 allowlisted souborů, revize/licence/hashi; žádný pickle či cizí kód. |
-| První training v1 | **FAIL před testem**, reload změnil float32 hlavu na float64. Žádné test skóre z pokusu, částečné ignored artefakty zachovány. |
-| Training v2 | **PASS**, zachován původní dtype, reload parity 0, skutečný fit/selection/test. |
-| První clean fresh-process ověření | **TIMEOUT 60 s** při cold importu; nezapočítán jako úspěch. Následný clean import a opakované ověření PASS v clean reportu. |
-| Offline fresh-process / hash / overflow / latency | **PASS**, všechny 4 modely, síť zakázána; žádný runtime download, overflow nedokončené review. |
-| Plný pytest | **PASS 89 testů, 1 existující Starlette/httpx warning**, 1.89 s; 11 ML testů navíc. |
-| Approved Goal 01 preflight | **OČEKÁVANĚ BLOKOVÁN exit 2**, 2 confirmed bez atribuce, 41 pending, 2 disagreed; žádný final manifest. |
-| Frontend / Docker / deployment / API integrace | **NEPROVEDENO**, frontend/backend nezměněny, Docker dříve nedostupný; mimo tento krok. |
-
-Reprodukci spouštět s novými output/report cestami podle MODEL_CARD; známý test
-při dalším ladění označit jako development. Lokální commit ověřit `git log -1`;
-žádný remote/publikování. Schválený detektor a Goal 03 nejsou součástí výsledku.
-
-## Goal 02 — historie prvního blokovaného běhu: training preflight
-
-Před změnami čistý Git strom na commitu `92142ab`; cizí změny nebyly přepsány.
-Čteny pravidla, plán, rešerše, acceptance, aktuální status, veřejný audit/provenance
-a manifest metadata. Kontrola lokálního review potvrdila **0/45 confirmed**, bez
-atribuce a s prázdným `exclusions_approved_by`. Název `review.completed.json`
-neznamená, že review proběhlo. Význam labelů nebyl lidsky schválen; není vytvořen
-náhradní korpus ani automaticky vyplněna lidská potvrzení.
-
-`ml/training_preflight.py` a CLI `scripts/training_preflight.py` odmítají pending
-review/candidate ještě před načtením zdrojových bajtů nebo textů pro trénink.
-Pro schválené vstupy ověřují hash manifestu/review/archivu, datovou verzi,
-atribuci/jazyky 15 kontrol každé třídy, train zařazení kontrolovaných ID, schválení
-odložení, počty tříd a nulový průnik skupin. Výstup používá pevné diagnostické
-kódy bez review poznámek nebo zpráv. Úspěšný preflight by znamenal pouze
-připravenost dat, nikoli správnost modelu.
-
-Anglický `docs/MODEL_CARD.md` a `ml/reports/goal02-status.json` uvádějí skutečné
-počty, seed, hash/provenance, prostředí a chybějící výsledky jako **null / not
-computed**. Většinová train třída ham vychází pouze z candidate metadata;
-majority baseline nebyla vyhodnocena. Žádné testové ani blind texty nebyly v tomto
-kroku otevřeny. Jazyk datasetu stále není ověřen; žádná EN/CZ metrika se netvrdí.
-
-### Skutečné příkazy a výsledky Goal 02
+### Recorded command block 4
 
 ```sh
 .venv/bin/python scripts/training_preflight.py
@@ -258,72 +381,7 @@ kroku otevřeny. Jazyk datasetu stále není ověřen; žádná EN/CZ metrika se
 .venv/bin/python -m pytest -q
 ```
 
-| Kontrola | Skutečný výsledek |
-|---|---|
-| Preflight výchozího finálního manifestu | **BLOKOVÁNO, exit 2**: `approved_manifest_missing`, `human_label_review_incomplete`, `human_review_requires_15_per_class`. |
-| Preflight candidate manifestu | **BLOKOVÁNO, exit 2**: `manifest_not_approved` a stejné human-review blokátory; SHA candidate odpovídá. |
-| Targeted preflight pytest | **PASS 9 testů**, pouze fiktivní schválení v testech; tampering, pending review, leakage a bez echo poznámek. |
-| Plný pytest | **PASS 78 testů, 1 warning**, existující Starlette/httpx deprecation; 1.76 s. Nejde o modelové metriky. |
-| TF-IDF/LR fit, validation selection, majority/test metrics | **NEPROVEDENO**, neschválená vstupní data; žádný fitted Pipeline, žádné prahy. |
-| Encoder/revision/license acquisition a small-batch benchmark | **NEPROVEDENO**, stejný datový blokátor; žádný download, cache ani nový balíček. |
-| Tokenizer coverage, reload parity, fresh-process inference, retraining reproducibility | **NEPROVEDENO**, modelový artefakt neexistuje. |
-| Frontend build / Docker / deployment | **NEOPAKOVÁNO / NEPROVEDENO**; frontend/backend nezměněny, Docker dříve nedostupný; žádné zveřejnění. |
-
-**Požadovaný vstup k odblokování:** skutečně vyplněný a připsaný lidský review
-JSON (45 label/language kontrol a rozhodnutí o konfliktech), následně finální
-freeze podle `docs/DATA_PREPARATION.md`. Teprve potom lze zahájit skutečný
-trénink a výběr na validation před jednorázovou test evaluací. Přesný kontrolní
-příkaz je výše; funkční retraining příkaz zatím neexistuje. Lokální commit tohoto
-kroku ověřit `git log -1`; bez remote/publikování. Další goal nebyl zahájen.
-
-## Goal 01 — pokračování po dodání archivu uživatelem
-
-Download blokátor byl odstraněn lokálním vstupem; HTTP 403 se nepřeklasifikovalo
-na úspěšné automatické stažení. Uživatelská složka v Downloads a její soubory
-zůstaly beze změny. Z přiloženého ZIP se v RAM četl jen CSV člen; přiložené
-Python soubory/PDF nebyly spuštěny a žádná URL ze zpráv nebyla otevřena.
-
-- Archiv `Dataset_5971.zip`: **244 698 B**, SHA-256
-  `9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3`.
-- CSV člen `Dataset_5971.csv`: **595 987 B**, SHA-256
-  `649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e`.
-- **5 971** skutečných řádků, **4 844 ham / 489 spam / 638 smishing**. Zdrojová
-  case varianta `Smishing/smishing`, `Spam/spam` se explicitně normalizuje.
-  Sloupce jsou LABEL/TEXT/URL/EMAIL/PHONE, striktní UTF-8.
-- Indikátory skutečně obsahují **No/yes**. Opraven audit schématu `data-prep-v2`
-  a přidán test: format binary valid, nikoli phishing label ani modelová feature.
-  První lokální audit V1 nesprávně hlásil tyto hodnoty jako nebinární a je
-  zachován v jiné cestě; canonical nový audit jej nepoužívá ani nepřepisuje.
-- Chybějící buňky/NA/unknown labels/invalid indicator values: **0**.
-  Normalizovaných duplicate extra rows **140**; po grouping **5 631 skupin**.
-  **46 konfliktních skupin / 98 řádků** odloženo (48 spam, 50 smishing).
-  Eligible **5 873 řádků / 5 585 skupin**. Nejde o automatické přeznačení tříd.
-- Jazyk pořád **neověřen u všech 5 971**. Script hints 5 906 Latin unknown,
-  1 mixed unknown, 64 too short unknown. Časová/kampaňová/jazyková metadata
-  nejsou ve skutečné CSV hlavičce. Úplná upstream row lineage neověřena.
-- Připraveno 15 ID každé třídy, lokální `review-preview.txt` a
-  `conflict-preview.txt` s rozbitými odkazy/markup. `review.completed.json` je
-  jen nevyplněná kopie pending formuláře: **0 skutečných lidských kontrol**.
-- Candidate návrh fixuje seed/skupiny/kód/hash vstupu, má nulové průniky skutečných
-  ID/skupin/textových/normalizovaných/template hashů. Candidate SHA-256:
-  `51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0`.
-  Stav **candidate_pending_human_review**, **data_split_ready=false**;
-  `ml/manifests/mendeley-v1.split.json` (finální) nevznikl.
-
-| Třída | Candidate train | Candidate validation | Candidate test |
-|---|---:|---:|---:|
-| ham | 3 391 | 727 | 726 |
-| spam | 309 | 66 | 66 |
-| smishing | 412 | 88 | 88 |
-| Celkem | 4 112 | 881 | 880 |
-
-Text-free veřejné artefakty: `docs/data/mendeley-v1.audit.json`,
-`docs/data/mendeley-v1.provenance.json`, source config a
-`ml/manifests/mendeley-v1.split.candidate.json` + `.sha256`. Raw, texty a
-previews jen v ignorovaném `ml/data/`, nejsou v commitu. Čeština zůstává pouze
-formát a nezávislý postup, žádné blind odpovědi nebyly vytvořeny/čteny.
-
-### Skutečné příkazy pokračování (10. 10. 2026, Europe/Prague)
+### Recorded command block 5
 
 ```sh
 .venv/bin/python scripts/prepare_data.py audit \
@@ -351,216 +409,14 @@ formát a nezávislý postup, žádné blind odpovědi nebyly vytvořeny/čteny.
 .venv/bin/python -m pytest -q
 ```
 
-| Kontrola | Skutečný výsledek |
-|---|---|
-| Před změnami `git status --short` | Čistý strom; navázáno na commit `9d1e6c6`. |
-| Lokální raw copy + archive/CSV hash | **PASS**, neměnná kopie obdrženého archivu; bez extrakce/scripts. |
-| `audit` s explicitním SHA | **PASS**, 5 971 řádků, 15 review každé třídy; source mapping a formát ověřeny automaticky, lidský audit pending. |
-| `plan-split` s explicitním SHA | **PASS**, výše uvedené skutečné candidate počty, all intersections empty; **NE reviewed final data**. |
-| `verify` candidate | **PASS integrity/leakage**, stále `candidate_pending_human_review`, `data_split_ready=false`. |
-| `freeze` s nevyplněným review | **OČEKÁVANĚ BLOKOVÁNO**, exit 2 `human_label_review_pending_or_disagreed`; finální manifest neexistuje. |
-| Targeted data/format pytest | **PASS**, 36 testů; poté přidány 2 nezávislé testy skutečného candidate manifestu. |
-| Plný pytest | **PASS 69 testů**, 1 stávající nepotlačený Starlette/httpx warning. |
-| Diff / ignore kontrola | Pouze dataset tooling/docs/testy/text-free artefakty; frontend/backend/locky beze změn; raw/previews mimo staging. |
-| Docker / deployment / model | **NEPROVEDENO**, mimo pokračování; Docker není dostupný z předchozí kontroly, žádný model ani zveřejnění. |
-
-**Stále blokované HOTOVO:** 45 skutečných lidských label/language kontrol,
-lidský zápis o odložení konfliktů a následný finální freeze. Toto plyne z
-původního zadání: nezkontrolovaný label je blokátor. Agent nepředstírá lidskou
-kontrolu a nedává návrh do tréninku. Návod/konkrétní soubory v
-`docs/DATA_PREPARATION.md`; model ani další goal se nespouští. Lokální commit
-pokračování ověřit `git log -1`, bez remote/publikování.
-
-## Goal 01 — historie prvního běhu bez souboru (před jeho dodáním)
-
-**HOTOVO nejsou skutečná tréninková data.** Stažení původního souboru a skutečný
-lidský audit jsou nezbytné blokátory. Žádné deklarované počty vydavatele nebyly
-zaměněny za naměřené. Reálný test průniku datasetu je **neproveden**, nikoli
-zelený test na prázdných datech. Není vytvořen náhradní korpus ani falešný hash.
-
-- `DATA_SOURCES.md`, `ml/sources/mendeley-v1.json`,
-  `docs/data/preparation-status.json`: autoři, DOI/verze/datum, CC BY 4.0,
-  skutečný původní archive URL z veřejného seznamu, explicitní tři labely,
-  deklarované počty oddělené od `null` pozorovaných hodnot a konkrétní download
-  blokátor. Upstream row provenance ještě není zkontrolována.
-- `ml/data_prep.py`, `scripts/prepare_data.py`: bounded striktní offline CSV/ZIP
-  import, SHA-256 archivu/CSV/kódu/family mapy, audit chybějících hodnot/NA markerů,
-  neznámých labelů, binárních atributů, konfliktů, duplicit a script coverage.
-  Latin texty se neoznačují automaticky za anglické.
-- Normalizované kopie, šablony s variabilními kontakty/čísly, near-copy
-  (Jaccard/SequenceMatcher) a doložené rodiny se sjednocují před splitováním.
-  Celé konfliktní skupiny jsou odloženy. Časová/kampaňová metadata z popisu
-  nedostupná; nedetekované parafráze/překlady jsou přiznané omezení.
-- Výběr ≥15 každé třídy, lokální plain-text preview s rozbitými odkazy/markup a
-  prázdná lidská review pole. Freeze bez potvrzení 45 skutečných kontrol,
-  jazyka/atribuce a případného odložení odmítne. Všechny review rodiny jsou train.
-- Seed 20261010, přibližně 70/15/15 stratifikované skupinové dělení, povinné
-  zastoupení tříd a limit odchylky, hashovaný text-free manifest. Opakovaný
-  identický výstup je povolen; přepsání různých bajtů se odmítá.
-- České JSONL schéma/nezávislé instrukce; překlady musí mít původ a stejnou
-  rodinu, autor si nemůže sám potvrdit český label. Blind sada zatím nevytvořena.
-- Oddělené vlastní public demo fixtures v `tests/fixtures/demo_messages.json`,
-  `.invalid`, bez ground-truth labelů. Žádný raw korpus v UI/demu/commitu.
-
-### Skutečně provedené příkazy Goal 01
-
-macOS arm64, Python 3.13.1 / Unicode 15.1.0; finální kontroly kolem 20:08 Praha
-10. 10. 2026. Žádná nová závislost ani globální instalace.
-
-| Příkaz / kontrola | Skutečný výsledek |
-|---|---|
-| `git status --short` před změnami | Exit 128, repo neexistovalo. 54 původních souborů zachyceno hash snapshotem mimo projekt. |
-| Read-only origin page/API/archive GET | HTTP 403; veřejný browser seznam ukázal přesný původní archive URL. Browser download timeout 30 s. Žádné přihlášení/obcházení. |
-| `.venv/bin/python scripts/fetch_dataset.py` | **BLOKOVÁNO**, exit 2: `http_error`, `http_status=403`. Žádný soubor získán. |
-| `.venv/bin/python scripts/prepare_data.py audit --input ml/data/raw/Dataset_5971.zip` | **BLOKOVÁNO**, exit 2: `file_missing`. Žádný skutečný audit ani split. |
-| `.venv/bin/python -m pytest tests/test_data_prep.py tests/test_czech_format.py -q` | Průběžně 30 testů prošlo; přidané 4 další testy poté zahrnuty v níže uvedeném plném běhu (celkem 34 data/format). |
-| `.venv/bin/python -m pytest -q` | **PASS: 65 testů**, 1 existující Starlette/httpx deprecation warning; varování nebylo potlačeno. |
-| Audit/freeze/verify CLI round-trip v pytest | **PASS na fiktivním korpusu**: 100 každé třídy → 70/15/15 každé třídy; všechny průniky ID/skupin/textových/normalizovaných/template hashů prázdné. Změna manifestu odmítnuta. |
-| `.venv/bin/python -m pip check` | **PASS**, No broken requirements found. |
-| `.venv/bin/python scripts/export_contract.py --check` | **PASS**, OpenAPI contract matches backend. |
-| `npm --prefix frontend run build` | **PASS**, `tsc --noEmit` + Vite 8.3.4, 18 modules. |
-| Původní soubory vs SHA snapshot + diff | Jen README.md, ml/README.md a aktuální STATUS mají zamýšlené změny. AGENTS/plán/rešerše/acceptance, frontend/backend/locky zachovány. |
-| Docker build/run | **NEPROVEDENO**, Docker CLI/daemon nejsou dostupné podle Goal 00; v tomto datovém kroku se netvrdí úspěch kontejneru. |
-| Skutečný Mendeley leak test / label kontrola / manifest | **NEPROVEDENO**, chybí raw vstup a 45 skutečných lidských kontrol. |
-| `git init -b main` | **PASS**, výslovný požadavek aktuálního goalu na lokální commit; žádný remote/publikování. |
-
-### Konkrétní další příkaz po získání původního souboru
+### Recorded command block 6
 
 ```sh
 .venv/bin/python scripts/prepare_data.py audit \
   --input ml/data/raw/Dataset_5971.zip --output ml/data/mendeley-v1
 ```
 
-Po lidské kontrole teprve `freeze --expected-sha256 … --review …` a `verify`
-podle `docs/DATA_PREPARATION.md`. Doplnit naměřené hash/počty, nezveřejnit raw
-texty a doložit nevyřešenou source lineage/jazyky. Tento krok **netrénuje model**
-a nepokračuje do Goal 02.
-
-## Goal 00 — historie dokončené kostry
-
-- `frontend/`, `backend/`, `ml/`, `tests/`, `docs/`, `scripts/`; CZ/EN formulář,
-  skutečný fetch, bezpečné chybové stavy a přiznání neprovedené kontroly.
-- Samostatný `message_language` (`auto/cs/en/other`); UI jazyk se neposílá do API.
-  `auto` nyní znamená nezadáno, ne automaticky rozpoznaný jazyk. EN texty jsou
-  přijímány, modelový výkon není ověřen v žádném jazyce.
-- `POST /api/analyze`, `GET /api/health`, `/api/openapi.json`. Kontrakt rezervuje
-  `suspicious/review/no_strong_signals`, evidence s původem, action/limitation keys,
-  verze modelu/policy/kontraktu a pouze pevné share-summary keys.
-- Limit 2 000 Unicode code points; prázdné/bílé vstupy odmítnuty. Tělo nejvýše
-  32 KiB včetně JSON, kontrola streamu i při chybějícím/nepravdivém Content-Length.
-  Dlouhý text se nezkracuje. Zamítnuté vstupy mají `analysis_complete=false`.
-- Pevné chyby bez textu/Pydantic input/loc/ctx; no-store, no-referrer, nosniff, CSP.
-  Žádné HTML vykreslení zprávy, návštěva jejího odkazu, storage, cookies, analytika,
-  externí LLM ani odchozí síť při zpracování. Text jen v RAM vlastního backendu.
-- Launcher vypíná access log a má limit 32 souběžných spojení v jednom procesu.
-  Nativní tracing/metriky/logy/autokonfigurace FastAPI jsou výslovně vypnuty,
-  i při `FASTAPI_OTEL_AUTO_CONFIGURE=true`. OpenTelemetry API je povinná transitivní
-  závislost této FastAPI; žádné SDK, exporter ani instrumentace nebyly přidány.
-- Jeden multi-stage Dockerfile: frontend build → neprivilegovaný Python proces
-  servírující frontend i API. Jeho skutečné sestavení nebylo možné ověřit.
-- README s install/dev/test/build/Docker příkazy, docs/API.md se sdíleným kontraktem.
-  Původní README zůstalo **bajtově shodné** v docs/PLANNING_NOTES.md.
-
-## Skutečně provedené příkazy a výsledky
-
-Běhy na macOS arm64; poslední úplný testovací běh začal 10. 10. 2026 v 19:36 Praha.
-
-| Příkaz | Výsledek |
-|---|---|
-| `git status --short` | Exit 128: není Git repozitář. Commit přeskočen. |
-| `node --version`, `npm --version`, `python3 --version` | 25.8.2, 11.11.1, Python 3.13.1. |
-| `python3 -m venv .venv` | Prošlo; pouze lokální prostředí. |
-| `.venv/bin/python -m pip install -r backend/requirements-dev.in` | Prošlo; vstupní řešení přesných přímých verzí. |
-| `.venv/bin/python scripts/lock_dependencies.py` | Prošlo; 14 runtime + 8 výhradně dev balíčků, přesné verze a SHA-256 wheelů z PyPI. Pouze explicitní setup, nikdy request. |
-| `.venv/bin/python -m pip install --only-binary=:all: --require-hashes -r backend/requirements-dev.txt` | Prošlo; již instalované stejné verze. |
-| `python3 -m venv .cache/venv-check` | Prošlo; nové projektové kontrolní prostředí. |
-| `.cache/venv-check/bin/python -m pip install --only-binary=:all: --require-hashes -r backend/requirements-dev.txt` | Prošlo; čistá instalace včetně ověření hashů, bez zdrojového buildu. |
-| `npm install --prefix frontend --no-audit --no-fund` | Prošlo; vytvořen package-lock.json. |
-| `npm ci --prefix frontend --no-audit --no-fund` | Prošlo z locku. Žádná globální instalace. |
-| `PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" frontend/node_modules/.bin/playwright install chromium` | Prošlo; Chromium 156.0.8078.4 / Playwright revision 1248, projektová cache. |
-| `.venv/bin/python scripts/export_contract.py` | Prošlo; vytvořen OpenAPI snapshot. |
-| `npm --prefix frontend run contract:generate` | Prošlo; TypeScript z OpenAPI. |
-| `sh scripts/test.sh` | **Finální běh exit 0**; všechny následující kontroly prošly. |
-| `.venv/bin/python -m pip check` | `No broken requirements found.` |
-| `.venv/bin/python scripts/export_contract.py --check` | `OpenAPI contract matches backend.` |
-| `npm --prefix frontend run contract:check` | Prošlo; generované TS typy aktuální. |
-| `.venv/bin/python -m pytest -q` | **31 passed**, jeden nepotlačený StarletteDeprecationWarning. |
-| `npm --prefix frontend test` | **13 passed**. |
-| `npm --prefix frontend run build` | TypeScript prošel; Vite 8.3.4 build prošel, JS 228.78 kB / gzip 72.30 kB. |
-| `npm --prefix frontend run test:e2e` | **12 passed**: 6 proti skutečnému jednomu serveru + 6 přes Vite proxy; finální běh 4.7 s. |
-| `sh -n scripts/install.sh scripts/test.sh` | Shell syntax prošla. Install skript odpovídá výše ověřeným krokům; nebyl spuštěn samostatně jako celek. |
-| `.venv/bin/python scripts/serve.py --port 7860` | Lokální build spuštěn na 127.0.0.1:7860 pro náhled; skutečný browser POST HTTP 200, review, neprovedená analýza, no-store. |
-| `npm ls --prefix frontend --depth=0` | Přímé verze odpovídají locku. Navíc nalezeny nepoužívané prázdné adresáře s příponou ` 2` označené npm jako extraneous; nepatří do locku/build kontextu. |
-| `hf --help` | Selhalo v existující globální instalaci: `Typer.__init__()` nezná `suggest_commands`. Nic se neopravovalo globálně; účet nebyl dotazován. |
-
-Backendové testy pokrývají chybějící model, EN/CZ/other, prázdný a dlouhý text,
-Unicode limit, neplatné typy/extra fields/JSON, no-store, body limit i stream,
-pevnou vnitřní chybu, canary bez úniku do odpovědi/stdout/stderr/logů,
-zablokované DNS a socket connect, bezpečnostní invariant výsledku, schéma a static serving.
-
-Vitest pokrývá limity a drift vůči OpenAPI, POST tělo, chybějící model,
-odmítnutí falešných výsledků, zákaz requestu při invalidním vstupu a privátní chyby.
-Playwright ověřuje skutečné API, oddělení UI/message language, empty/overlong,
-síťovou chybu, vadný payload, mobil/klávesnici a inertní HTML. Normální průchod
-nemá mock odpovědi; mocks jsou pouze v testech chybových stavů. Zkontrolovány
-cookies/storage a nulové externí browser requesty. E2E traces/video jsou vypnuté.
-
-## Selhání během práce — opravena, nejsou vydávána za úspěch
-
-- První `npm --prefix frontend run build`: exit 2; dvě chybějící jazykové hodnoty
-  v testech a rozlišení Playwright importu z vnějšího testového adresáře. Testy
-  upraveny, E2E přesunuto pod frontend/tests, další build i finální script prošly.
-- První celý `sh scripts/test.sh`: backend, Vitest a build prošly, E2E skončilo
-  s 12 launch failures. Relativní PLAYWRIGHT_BROWSERS_PATH se vyhodnotilo proti
-  jiné pracovní cestě. Opraveno na absolutní cestu v npm skriptu; všech 12 E2E
-  v následném i finálním běhu prošlo. Testy ani bezpečnostní kontroly nebyly vypnuty.
-
-## Kontrola změn / vizuální ověření
-
-Protože není Git, před změnami vznikl dočasný snapshot 17 původních souborů.
-Porovnání hashů potvrdilo zachování všech původních podkladů kromě zamýšlených
-úprav README a STATUS. Nové zdrojové soubory a změna README byly prohlédnuty
-jako unified diff; generované typy/schéma ověřeny kontrolou driftu, locky čistou
-instalací. Žádné cizí existující implementační změny nebyly přepsány.
-
-Desktopový formulář a mobilní výsledek byly vizuálně prohlédnuty z lokálního buildu.
-360 px: žádný horizontální přesah, žádná pageerror, label/focus/klávesnice fungují.
-Poměry kontrastu změřeny sRGB výpočtem pro hlavní používané textové kombinace:
-10.78:1 (text/pozadí), 6.07:1 (sekundární text), 4.67:1 (placeholder),
-11.76:1 (tlačítko), 9.52:1 (stav), 7.39:1 (chyba). Není to úplný audit WCAG.
-
-Závěrečná kontrola zpřesnila invariant výsledku: dokončený `no_strong_signals`
-nesmí mít ani prázdnou/bílou verzi modelu. Po této změně znovu proběhlo
-`.venv/bin/python -m pytest -q` (**31 passed**) a obě kontroly kontraktu (**prošly**).
-Frontend a schéma se touto kontrolou neměnily. Závěrečný hash check původních
-souborů potvrdil změny pouze README.md a docs/STATUS.md.
-
-## Neprovedené kontroly a zbývající omezení
-
-- **Docker build/run/healthcheck netestovány:** `docker` není v PATH. Nebyl
-  instalován Docker ani měněn daemon. Přesné příkazy pro stroj s Dockerem jsou v README.
-  Registry čtení ověřilo manifesty Node 24 a Python 3.13 a zafixovalo jejich digesty;
-  architekturní kompatibilita image/npm/native wheelů zatím nebyla spuštěním ověřena.
-- **Veřejné nasazení a účet nepotvrzeny:** `.git/config`, `.vercel/project.json`,
-  vercel.json, fly.toml, render.yaml, railway.json/toml a compose.yaml chyběly.
-  HF cache existuje, ale její existence neprokazuje účet/oprávnění/placený plán.
-  Tokeny se nečetly; nebyly volány remote identity/billing endpointy. Globální HF CLI
-  je rozbité a nebylo obcházeno. Žádná cílová adresa nebyla schválena.
-- **Commit nevznikl:** neexistuje Git repo. Současný zdroj není verzovaný lokálním
-  commitem; žádné nové repo ani veřejné repo se automaticky nezakládalo.
-- **Model a kvalita:** bez modelu, pravidel, dat, metrik a jazykové detekce.
-  Žádný skutečný tokenový limit ani inference concurrency zatím nelze měřit.
-  Před ML integrací musí být ověřen hash, jazyky, úplné pokrytí a limit souběhu.
-- **Provoz:** HTTPS/proxy/hosting logy nebyly ověřeny; současná pravdivá tvrzení
-  platí pro tento kód a jeho lokální launcher. Server vrací no-store; browser pole
-  drží právě vložený text v RAM do obnovení/zavření stránky.
-- **Testovací warning:** Starlette 1.7.0 označuje httpx 0.28.1 TestClient za deprecated.
-  Funguje a není potlačen; případný přechod na httpx2 vyžaduje vědomé ověření.
-  Playwright navíc hlásil neškodný konflikt NO_COLOR/FORCE_COLOR z prostředí nástrojů.
-- Testy proběhly v Chromium/macOS arm64. Firefox/Safari, plný 200% zoom/čtečka,
-  lidské testy, kompletní privacy/ML/UX přejímka a čistý Docker patří do dalších goalů.
-
-## Jak stav reprodukovat
+### Recorded command block 7
 
 ```sh
 sh scripts/install.sh
@@ -568,7 +424,3 @@ PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" frontend/node_modules/.bin/pla
 sh scripts/test.sh
 .venv/bin/python scripts/serve.py --port 7860
 ```
-
-Otevřít http://127.0.0.1:7860, vložit fiktivní krátký text a stisknout tlačítko.
-Očekávat skutečný POST a „Kontrola neprovedena / Model zatím není připraven“.
-Další připravené zadání je Goal 01 (data); **nebylo zahájeno**.

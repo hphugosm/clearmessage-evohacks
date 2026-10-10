@@ -1,31 +1,36 @@
-# ML — skutečný provizorní model, audit nedokončen
+# ClearMessage ML — provisional model, incomplete review
 
-Mendeley V1 import: 5 971 řádků, raw/CSV hash, ham/spam/smishing, doložený
-automatický audit. Candidate nad 5 873 eligible řádky má nulové průniky skupin.
-46 konfliktních skupin / 98 řádků odloženo. Čtyři explicitní review rozhodnutí
-uložena: 2 shody, 2 požadované změny; 41 pending, atribuce/jazyky chybí.
+The original Mendeley V1 archive contains 5,971 rows. Audit/hash/label mapping are
+recorded. The candidate has 5,873 eligible rows and empty group intersections;
+46 conflicting groups / 98 rows are quarantined. Four explicit human decisions
+are saved: two agreements, two requested changes. 41 entries remain pending;
+attribution/languages and exclusion approval are incomplete.
 
-Uživatel výslovně povolil **provizorní trénink na původních labelech**.
-Authorization manifest odkazuje na nezměněný candidate; data_split_ready=false,
-žádný approved freeze. Schvalovací training_preflight zůstává blokován.
+The user explicitly authorized **provisional training on original labels**.
+An immutable authorization manifest references the unchanged candidate and exact
+assignments. `data_split_ready=false`; no approved freeze. Approved training
+preflight remains blocked and has not been weakened.
 
-Skutečně natrénován sklearn Pipeline word/char TF-IDF + LR i vlastní LR head nad
-frozen MiniLM. Validation vybrala TF-IDF C=2, uložen hashově ověřený JSON.
-Audit/jazyky neověřeny: experiment proti source labelům, nikoli schválený detektor.
-API dosud není propojeno a stále pravdivě hlásí model_not_ready.
+Word/character TF-IDF + LogisticRegression and our LogisticRegression head over
+frozen MiniLM were genuinely trained on train only. Validation selected TF-IDF
+C=2; the project JSON artifact is hash verified. These are experiments against
+source labels, not an approved detector or language benchmark. Goal 03 integrates
+the selected real sparse model with the API; all current checks are incomplete.
 
-- Install/setup/train/verification příkazy: [MODEL_CARD](../docs/MODEL_CARD.md).
-- Anglický měřený [MODEL_REPORT](../docs/MODEL_REPORT.md) a [JSON](reports/goal02-provisional-v2.json).
-- Aktuální stav/index: [goal02-latest.json](reports/goal02-latest.json).
-- Zdroj/licence/counts: [DATA_SOURCES](../DATA_SOURCES.md).
-- Audit/freeze postup: [DATA_PREPARATION](../docs/DATA_PREPARATION.md).
-- České development/blind formáty: [czech/README.md](czech/README.md), 0 záznamů.
+- Setup, training and verification commands: [MODEL_CARD](../docs/MODEL_CARD.md).
+- Actual metrics: [MODEL_REPORT](../docs/MODEL_REPORT.md), [JSON](reports/goal02-provisional-v2.json).
+- Experiment index: [goal02-latest.json](reports/goal02-latest.json).
+- Source/license/counts: [DATA_SOURCES](../DATA_SOURCES.md).
+- Audit/freeze workflow: [DATA_PREPARATION](../docs/DATA_PREPARATION.md).
+- Preserved Czech-input development/blind format: [czech/README.md](czech/README.md), currently zero real challenge records.
 
-`scripts/infer_model.py` načte náš model jen s očekávaným SHA-256, čte JSON ze
-stdin a nevrací zprávu ani interní skóre. Provizorní policy neprodukuje
-no_strong_signals ani analysis_complete=true. Encoder používá jen ověřené místní
-safetensors a odmítá token overflow; žádný runtime download nebo pickle.
+`scripts/infer_model.py` verifies our artifact's expected SHA-256, reads JSON from
+stdin and returns neither input nor internal scores. Provisional policy cannot
+produce `no_strong_signals` or `analysis_complete=true`. Encoder inference uses
+verified local safetensors and rejects full-tokenizer overflow. No runtime
+model download, untrusted pickle or remote dataset code.
 
-Raw texty, review poznámky, cache a váhy jsou Git-ignorovány. Veřejné reporty mají
-pouze metriky, hash/IDs a provenance; žádný datasetový obsah v demo fixtures.
-No/yes indikátory nejsou modelové features. Třídy nejsou stavy API.
+Raw content, review notes, caches and weights are ignored by Git. Public reports
+contain metrics, IDs/hashes and provenance, not dataset text or user inputs.
+No/yes indicators are not model features. Classes are not API statuses.
+The interface is English; original multilingual evaluation data is preserved.

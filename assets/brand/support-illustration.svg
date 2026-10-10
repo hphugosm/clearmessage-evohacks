@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520" fill="none">
+  <title>Two generations understanding a message together</title>
+  <desc>A calm vector scene of an older adult and a younger person looking at a smartphone together.</desc>
+  <path d="M70 139C114 65 208 71 279 89c71 18 156 48 166 134 10 85-21 189-115 210-95 21-219-1-261-79C27 276 26 214 70 139Z" fill="#EEF2FF"/>
+  <circle cx="409" cy="114" r="18" fill="#DDDFFD"/>
+  <circle cx="91" cy="384" r="11" fill="#DBEAFE"/>
+  <path d="M93 434h343" stroke="#DCE3EF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M106 429v-75c0-72 39-105 85-105 52 0 95 39 95 108v72H106Z" fill="#173DA5"/>
+  <path d="M175 246v33c0 17 32 17 32 0v-38" fill="#E6AF89"/>
+  <path d="M145 173c0-45 24-67 51-67 35 0 55 22 55 67v36c0 38-23 58-53 58-32 0-53-24-53-58v-36Z" fill="#F0C4A0"/>
+  <path d="M146 184c-12-25-17-68 19-88 29-17 69-6 85 20 9 15 12 37 4 60l-9-31c-31 5-62-2-72-18-4 23-9 39-27 57Z" fill="#C6CCD6"/>
+  <path d="M144 188c-11-8-18-1-17 11 1 12 8 17 18 15M250 188c12-8 18-1 17 11-1 12-8 17-18 15" fill="#F0C4A0"/>
+  <g stroke="#172033" stroke-width="2.4" stroke-linecap="round">
+    <rect x="157" y="176" width="30" height="22" rx="8"/>
+    <rect x="205" y="176" width="30" height="22" rx="8"/>
+    <path d="M187 184h18M145 182l12 3M235 184l15-3"/>
+    <path d="M169 183v4M218 183v4M193 190l-3 13h8M182 219c9 6 20 6 29-1"/>
+  </g>
+  <path d="M151 282l29 26 29-28" stroke="#B6C7F1" stroke-width="4" stroke-linecap="round"/>
+  <path d="M147 334c11 26 36 40 61 43l51 4" stroke="#12317F" stroke-width="38" stroke-linecap="round"/>
+  <path d="M215 371l48 6c16 1 24-11 23-24-1-9-7-14-17-14h-26" fill="#F0C4A0"/>
+  <path d="M288 431v-77c0-64 24-93 66-93 43 0 72 32 72 96v74H288Z" fill="#8E92DC"/>
+  <path d="M338 248v30c0 14 29 14 29 0v-32" fill="#BF805C"/>
+  <path d="M307 172c0-36 20-61 49-61 32 0 52 24 52 62v34c0 33-20 52-51 52-29 0-50-21-50-54v-33Z" fill="#CD926B"/>
+  <path d="M307 191c-16-35-11-71 14-87 28-18 61-9 74 10 22 6 27 43 12 70l-9-35c-27 8-49 2-60-13-3 20-16 37-31 55Z" fill="#39435A"/>
+  <path d="M307 186c-11-7-16-1-16 10 0 12 8 17 17 14M407 186c11-7 17-1 17 10 0 12-8 17-17 14" fill="#CD926B"/>
+  <g stroke="#172033" stroke-width="2.4" stroke-linecap="round">
+    <path d="M328 182v5M378 182v5M351 189l-3 13h7M341 219c9 5 19 5 27-1"/>
+  </g>
+  <path d="M327 320c-16 14-24 31-25 52l-37 11" stroke="#777DC9" stroke-width="35" stroke-linecap="round"/>
+  <path d="M305 377l-30 7c-12 3-22-4-24-14-2-10 4-20 15-22l21-4" fill="#CD926B"/>
+  <g transform="rotate(-8 266 337)">
+    <rect x="242" y="289" width="58" height="102" rx="10" fill="#172033"/>
+    <rect x="248" y="298" width="46" height="79" rx="5" fill="#FFFFFF"/>
+    <path d="M260 308h23M257 327h25M257 335h20M257 343h24" stroke="#A2B7E3" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="271" cy="383" r="3" fill="#64748B"/>
+  </g>
+  <path d="M372 291l-17 12-17-13" stroke="#D6D7F6" stroke-width="4" stroke-linecap="round"/>
+  <path d="M98 143h45v30h-30l-15 10v-40Z" fill="#FFFFFF"/>
+  <path d="M108 153h24M108 161h17" stroke="#6366F1" stroke-width="3" stroke-linecap="round"/>
+</svg>

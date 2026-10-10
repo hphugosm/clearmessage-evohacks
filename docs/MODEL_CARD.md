@@ -1,12 +1,12 @@
-# ClearMessage / Klidná zpráva — provisional model card
+# ClearMessage — provisional model card
 
 Updated **2026-10-10, Europe/Prague**. A genuine short-message classifier has
 been trained, saved and evaluated. **It is experimental: human label review is
 incomplete, source languages are unverified, and it is not an approved detector.**
 Goal03 now connects the verified sparse artifact to the application API.
 `model_ready=true` means the asset loaded; all actual results still have
-`analysis_complete=false`. No language has verified performance, no human review
-was completed, and production `no_strong_signals` is disabled. The model still
+`analysis_complete=false`. No language has verified performance, the human review
+remains incomplete, and production `no_strong_signals` is disabled. The model still
 has its Goal02 scope and original-label provenance; integration does not improve
 its measured quality. See [API](API.md), [policy](POLICY.md) and the separate
 synthetic integration report `ml/reports/goal03-integration.json`.

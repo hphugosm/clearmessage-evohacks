@@ -1,121 +1,121 @@
-# Data sources — Klidná zpráva
+# ClearMessage data sources
 
-Ověření metadat a lokální import: **10. 10. 2026**. Uživatel dodal původní archiv;
-**raw soubor a automatický audit jsou dostupné, finální data blokuje lidská
-kontrola labelů a odložení konfliktů**. Žádný jiný korpus ani trénink modelu.
+Metadata verification and local acquisition: **10 October 2026**. The owner
+supplied the original archive after automatic acquisition failed. Actual data and
+automatic audit are available; human label review and conflict approval remain
+incomplete. A separately authorized provisional experiment uses original labels;
+it does not constitute approved training data. No extra corpus was added.
 
-## D1 — původní Mendeley dataset, verze 1
+## D1 — original Mendeley dataset, version 1
 
-| Pole | Doložená hodnota |
+| Field | Recorded value |
 |---|---|
-| Název | SMS PHISHING DATASET FOR MACHINE LEARNING AND PATTERN RECOGNITION |
-| Autoři | Sandhya Mishra, Devpriya Soni |
-| Vydavatel | Mendeley Data |
-| DOI / verze | `10.17632/f45bkkt8pr.1` / V1 |
-| Vydáno | 20. 6. 2022 |
-| Zdroj | [Původní stránka V1](https://data.mendeley.com/datasets/f45bkkt8pr/1) |
-| Raw archiv / CSV člen | `Dataset_5971.zip` / `Dataset_5971.csv` |
-| Původní archive URL | [Archiv z veřejného seznamu](https://data.mendeley.com/public-files/datasets/f45bkkt8pr/files/edb361de-918d-469f-9106-e84823830665/file_downloaded) |
-| Licence na stránce | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
-| Datum získání pro projekt | 10. 10. 2026, dodáno uživatelem z jeho Downloads; přesný čas samotného browser downloadu nezjišťován |
-| Archiv / CSV velikost | **244 698 / 595 987 bajtů** |
-| Archiv SHA-256 | `9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3` |
+| Title | SMS PHISHING DATASET FOR MACHINE LEARNING AND PATTERN RECOGNITION |
+| Authors | Sandhya Mishra; Devpriya Soni |
+| Publisher | Mendeley Data |
+| DOI / version | `10.17632/f45bkkt8pr.1` / V1 |
+| Publication date | 20 June 2022 |
+| Source | [Original V1 page](https://data.mendeley.com/datasets/f45bkkt8pr/1) |
+| Archive / member | `Dataset_5971.zip` / `Dataset_5971.csv` |
+| Published archive | [Original file listing download](https://data.mendeley.com/public-files/datasets/f45bkkt8pr/files/edb361de-918d-469f-9106-e84823830665/file_downloaded) |
+| Published license | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
+| Project acquisition | 10 October 2026; supplied from the owner's Downloads; original browser acquisition time unknown |
+| Archive / CSV bytes | 244,698 / 595,987 |
+| Archive SHA-256 | `9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3` |
 | CSV SHA-256 | `649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e` |
-| Skutečný počet CSV záznamů | **5 971** |
-| Skutečné ham / spam / smishing | **4 844 / 489 / 638** |
-| Lidská kontrola | **0 skutečných kontrol**; vybráno 15 z každé třídy |
-| Skupinový návrh / průnik | Neměnný candidate manifest; průnik skutečných eligible dat **prázdný** |
-| Finální zmrazený split | **Nevytvořen**, čeká na lidskou kontrolu; `data_split_ready=false` |
+| Actual rows | 5,971 |
+| Actual ham / spam / smishing | 4,844 / 489 / 638 |
+| Human sample | 15 entries per class; 4 explicit decisions, 41 pending; attribution/language incomplete |
+| Group proposal | Immutable candidate; all actual eligible-data intersections empty |
+| Approved final split | Absent; `data_split_ready=false` |
 
-Název archivu, CSV člen, sloupce a počty odpovídají původnímu vydání. Nemáme
-nezávislý vydavatelský checksum, takže místní SHA dokládá identitu obdržených
-bajtů, nikoli kryptografický důkaz původu. Původ vychází z uživatelem dodaného
-archivu v pojmenované složce datasetu a shody s veřejnými metadaty V1.
-Původní soubory v Downloads nebyly změněny, přiložené Python skripty nebyly spuštěny.
+Archive name, member, columns and counts match the published description.
+No independent publisher checksum is available: our hashes establish identity of
+received bytes, not cryptographic authenticity. Provenance rests on the supplied
+archive and its agreement with V1 metadata. Downloads originals were untouched;
+attached Python scripts were not executed. CSV was read strictly as UTF-8 data.
+Header: `LABEL,TEXT,URL,EMAIL,PHONE`. Observed counts match the published counts.
 
-Deklarované počty vydavatele jsou shodné s **nyní skutečně změřenými** počty.
-CSV načteno striktním UTF-8; hlavička `LABEL,TEXT,URL,EMAIL,PHONE`.
+## Explicit labels and indicators
 
-## Explicitní mapování labelů a indikátorů
+Only `LABEL.strip().casefold()` maps to `ham`, `spam`, `smishing`. Unknown/blank
+labels block final freeze; none were observed. No numeric aliases or guessing.
 
-Pouze `LABEL.strip().casefold()` → `ham`, `spam`, `smishing`; žádné číselné
-aliasy nebo zaměňování reklamy za phishing.
-
-| Skutečné zdrojové hodnoty | Třída | Počet / význam |
+| Source values | Class | Observed count and meaning |
 |---|---|---|
-| `ham` | `ham` | 4 844; zdrojově běžné/legitimní, nikoli potvrzení bezpečnosti. |
-| `spam` (466), `Spam` (23) | `spam` | 489; nevyžádaná zpráva/reklama, ne automaticky phishing. |
-| `Smishing` (616), `smishing` (22) | `smishing` | 638; zdrojově SMS phishing, lidský audit významu ještě čeká. |
+| `ham` | ham | 4,844; source ordinary/legitimate messages, not a safety confirmation |
+| `spam` (466), `Spam` (23) | spam | 489; unsolicited/advertising content, not automatically phishing |
+| `Smishing` (616), `smishing` (22) | smishing | 638; source SMS phishing annotation, human meaning audit incomplete |
 
-Neznámý/prázdný label se nemapuje odhadem; blokuje finální freeze. V aktuálním
-souboru takové hodnoty nebyly nalezeny. Skupiny s různými platnými labely jsou
-odloženy celé, bez automatického přeznačení. Trénovací třídy nejsou API stavy.
+Whole groups with conflicting valid labels are quarantined without relabeling.
+Training labels are distinct from API statuses. `URL/EMAIL/PHONE` use `No` and
+`yes`, explicitly mapped to 0/1. They are audit-only attributes, neither targets
+nor model features or phishing ground truth. Presence counts: URL 207 / 5,764;
+EMAIL 19 / 5,952; PHONE 844 / 5,127. Format checks do not validate the upstream
+extractors' correctness or completeness.
 
-`URL/EMAIL/PHONE` obsahují skutečně `No` a `yes`, mapované na 0/1. Nejsou labely,
-phishing ground truth ani modelové features této pipeline. Presence counts:
-URL 207 ano / 5 764 ne, EMAIL 19 / 5 952, PHONE 844 / 5 127. Audit ověřil formát,
-nikoli úplnost nebo správnost cizích extrakčních skriptů.
+## Actual automatic audit and candidate splits
 
-## Automatický audit a návrh splitů
+- Missing cells, NA markers, unknown labels, blank/overlong text exclusions and
+  invalid mapped indicators: **0**.
+- Normalized duplicates: **140 extra rows**. Normalized copies, conservative
+  templates and near-copies form **5,631 groups**; union edges: 140 normalized,
+  110 template and 90 near-copy.
+- **46 conflicting groups / 98 rows** quarantined: 48 spam and 50 smishing.
+  These are identified family conflicts, not necessarily identical texts.
+  Eligible: **5,873 rows / 5,585 groups**.
+- Script hints: 5,906 Latin unknown, 1 mixed unknown, 64 too-short unknown.
+  All 5,971 message languages remain unverified; Latin script is not English.
+- No language, time or campaign metadata in the CSV. Upstream row lineage,
+  translations, paraphrases and real campaign separation remain unverified.
 
-- Prázdné buňky, NA markery, neznámé labely, odložené prázdné/příliš dlouhé texty:
-  **0**. Nebinární indikátory po explicitním mapování No/yes: **0**.
-- Normalizované duplicity: **140 nadbytečných řádků**. Po sjednocení přesných
-  normalizovaných kopií, konzervativních šablon a near-copy: **5 631 skupin**;
-  union edges 140 normalizovaných + 110 šablonových + 90 near-copy.
-- **46 skupin / 98 řádků** má po grouping různé labely: odloženo 48 spam a 50
-  smishing. Jsou to konflikty identifikovaných rodin, ne tvrzení, že všechny
-  jejich texty jsou přesně stejné. Eligible: **5 873 řádků / 5 585 skupin**.
-- Script hints: 5 906 Latin unknown, 1 mixed unknown, 64 too short unknown.
-  **Žádných 5 971 jazyků nebylo lidsky potvrzeno**; Latin není automaticky EN.
-- CSV nemá jazyková, časová ani kampaňová metadata. Parafráze, překlady a skutečné
-  kampaně nelze plně ověřit automatickými heuristikami.
+Seed **20261010**, whole-group splitting; all human-review families reserved for
+train. This is an unapproved candidate, not a reviewed final split:
 
-Seed **20261010**, rozdělení celých skupin. Všechny rodiny review vzorku jsou
-rezervované pro train. **Návrh, stále ne finální reviewed training split:**
-
-| Třída | Train | Validation | Test | Eligible celkem |
+| Class | Train | Validation | Test | Eligible |
 |---|---:|---:|---:|---:|
-| ham | 3 391 | 727 | 726 | 4 844 |
+| ham | 3,391 | 727 | 726 | 4,844 |
 | spam | 309 | 66 | 66 | 441 |
 | smishing | 412 | 88 | 88 | 588 |
-| Celkem | 4 112 | 881 | 880 | 5 873 |
+| Total | 4,112 | 881 | 880 | 5,873 |
 
-Průnik row IDs, group IDs, původních/normalizovaných/template hashů mezi všemi
-páry splitů je prázdný **nad skutečným návrhem dat**. Manifest je zafixován SHA:
+Row IDs, group IDs and original/normalized/template hashes have empty
+intersections across every split pair. Candidate SHA-256:
 `51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0`.
-[Candidate manifest](ml/manifests/mendeley-v1.split.candidate.json) má
-`candidate_pending_human_review`, **`data_split_ready=false`**, 0 lidských kontrol.
-To není potvrzení labelů. Finální freeze s nevyplněnou kontrolou skutečně skončil
-`human_label_review_pending_or_disagreed`; žádný finální split nevznikl.
+[Candidate manifest](ml/manifests/mendeley-v1.split.candidate.json) records the
+historical pending review at creation, not later human decisions. The unchanged
+candidate remains `candidate_pending_human_review`, `data_split_ready=false`.
+Final freeze failed with `human_label_review_pending_or_disagreed`; no final
+approved manifest was produced. Two subsequent source-label agreements and two
+requested smishing → spam changes are saved locally; they were not silently
+applied to original-label training. Exclusion approval is still empty.
 
-Text-free měření: [audit](docs/data/mendeley-v1.audit.json),
+Text-free evidence: [audit](docs/data/mendeley-v1.audit.json),
 [provenance](docs/data/mendeley-v1.provenance.json),
-[aktuální stav](docs/data/preparation-status.json). Raw, původní texty, review
-poznámky a plain-text previews zůstávají v ignorovaném `ml/data/`.
+[preparation status at import](docs/data/preparation-status.json).
+Raw text, review notes and defanged previews remain in ignored `ml/data/`.
+Current experiment and authorization: [MODEL_CARD](docs/MODEL_CARD.md).
 
-## Licence, původ a atribuce
+## License, provenance and attribution
 
-Citace vydavatele: mishra, sandhya; Soni, Devpriya (2022), *SMS PHISHING DATASET
-FOR MACHINE LEARNING AND PATTERN RECOGNITION*, Mendeley Data, V1,
-doi:10.17632/f45bkkt8pr.1. Copyright Sandhya Mishra a Devpriya Soni, 2022.
-Při použití zachovat atribuci, zdroj/licenci a popsat úpravy. Naše úpravy jsou
-audit, odložení celých konfliktů, normalizace pro grouping a návrh skupinového
-dělení. Modelový text zůstává původní, žádný raw obsah není zveřejněn.
+Publisher citation: mishra, sandhya; Soni, Devpriya (2022), *SMS PHISHING DATASET
+FOR MACHINE LEARNING AND PATTERN RECOGNITION*, Mendeley Data V1,
+doi:10.17632/f45bkkt8pr.1. Copyright Sandhya Mishra and Devpriya Soni, 2022.
+Retain attribution, license/source and changes when using the data. Our changes:
+audit, conflict quarantine, normalization for grouping and proposed group splits.
+Original model text is preserved; raw corpus content is not published.
 
-Vydavatel popisuje internetové obrázky/screenshoty převedené na text a labelování
-podle zdroje. Děkuje Tiago A. Almeida a Dr. Gunikhan Sonowal za zprávy. Podrobný
-původ/oprávnění každého převzatého řádku zatím neověřen. Licence na stránce není
-potvrzení labelů ani úplný upstream audit. UCI ani jiný korpus nebyly přidány.
+The publisher describes internet pictures/screenshots converted to text and
+source-based labeling, thanking Tiago A. Almeida and Dr. Gunikhan Sonowal.
+Complete provenance/permissions for every reused row are unverified. A page
+license does not establish annotation quality or full upstream clearance.
+UCI or other corpora were not added.
 
-## Historie odstraněného download blokátoru
+## Acquisition history
 
-Automatické GET původní stránky/API/archive URL vrátily HTTP 403 a browser
-archive download timeout 30 s. Tento neúspěch zůstává v historii, nebyl vydáván
-za úspěšný download. Nyní jej odstranilo **lokální dodání souboru uživatelem**;
-není nutné zkoušet stahování znovu, měnit ochrany nebo hledat mirror.
-
-Reprodukovatelné příkazy a lidská kontrola: [DATA_PREPARATION.md](docs/DATA_PREPARATION.md).
-Aktuální canonical audit má verzi `data-prep-v2`; zachovaný lokální první audit
-V1 mylně považoval No/yes za nebinární, není používán. Změna formátu auditů má
-novou cestu, staré soubory nebyly přepsány. Žádný model se ještě netrénoval.
+Automatic original page/API/archive GET returned HTTP 403; browser archive
+download timed out after 30 seconds. These were failures, not successful
+acquisition. Owner-supplied local bytes resolved that blocker; no mirror or
+bypass was used. Canonical preparation is `data-prep-v2`; preserved initial V1
+audit incorrectly treated No/yes as invalid and is not used or overwritten.
+Reproducible import/review commands: [DATA_PREPARATION](docs/DATA_PREPARATION.md).

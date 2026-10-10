@@ -1,17 +1,17 @@
-# 03 — Analýza, důvody a bezpečná automatizace
+# 03 — Real analysis and safer next steps
 
-Celý následující blok vlož do Codexu, nebo ho nech načíst z tohoto souboru.
+Paste the following block into Codex, or ask Codex to read this file. If /goal is unavailable, use the text after /goal as a normal task request.
 
 ```text
-/goal Implementuj skutečný analyzační tok Klidné zprávy: text → vlastní model z goal 02 → transparentní pravidla → srozumitelný bezpečný postup a návrh prosby o pomoc. Dodrž AGENTS.md; nebuduj externí agenty ani integrace.
+/goal Integrate ClearMessage's real flow: text → Goal 02 model → transparent observed-signal rules → plain English guidance and a neutral help-request draft. Read AGENTS.md, docs/API.md, docs/BRAND_BIBLE.md and docs/UI_COPY.md. No external agents or integrations.
 
-Připoj reálný model přes malé rozhraní a verzuj policy. Rozliš stav suspicious, review a no_strong_signals a samostatně analysis_complete. Rozhodnutí nezalož jen na nejvyšší třídě: respektuj nastavené prahy, jazykový rozsah, neúplné pokrytí tokenizerem a chyby. Při chybě modelu nemůže vzniknout uklidňující výsledek. Spojení pravidel a modelu musí být vysvětlitelné a testované. Když fungují jen pravidla, přiznej omezenou kontrolu.
+Connect the real model behind a small interface and version the policy. Preserve suspicious/review/no_strong_signals and separate analysis_complete. Respect validation-selected thresholds, language scope, full coverage and service state rather than selecting the highest class blindly. A failed model cannot reassure. Describe rule-only checks as incomplete where appropriate. Deliberately expand the foundation frontend gate only after contract/integration tests.
 
-Vytvoř malý soubor pravidel s důkazem v textu: žádost o sdělení hesla/OTP, nátlak na okamžitou platbu, utajení před důvěryhodnou osobou. Dbej na negaci a běžná bezpečnostní upozornění. Samotný spam, HTTPS, konkrétní TLD, pravopisná chyba či krátký odkaz nejsou důkaz podvodu. URL pouze syntakticky parsuj; tldextract musí mít vypnuté načítání PSL. Žádné navštěvování, DNS, WHOIS, screenshoty webů ani rozbalování přesměrování.
+Implement a small evidence-supported rule set: requests for passwords/codes, immediate-payment pressure and secrecy. Handle negation and routine security notices. Spam, HTTPS, TLD, spelling or shortened links alone do not establish fraud. Parse URLs only; disable tldextract PSL refresh. No visits, DNS, WHOIS, redirects or reputation crawling.
 
-Připrav CZ/EN šablony nejvýše tří důvodů a tří kroků. Každý konkrétní důvod musí odpovídat skutečnému signálu, nikoli vymyšlenému vysvětlení ML. Není-li konkrétní důkaz, dej obecnou poctivou formulaci a omezení. Doporuč ověření nezávislou známou cestou, ne linkem/telefonem ze zprávy. Nízký nález nikdy nenazývej bezpečím.
+Use English templates from UI_COPY, at most three reasons and three actions. A specific reason requires observed evidence. Classifier-only reasons remain general; do not invent model attribution. Recommend a familiar independent channel. No safety labels or risk percentages. Style A's amber/red suspicious presentations must follow documented policy; review remains a separate uncertain/incomplete state.
 
-Návrh prosby o pomoc sestav jen z neutrálních schválených šablon. Nikdy do sdíleného payloadu nevkládej zdrojovou zprávu, evidence snippet, URL, jméno, účet či kód. Odeslání musí zůstat lidským rozhodnutím. Přidej stručné ručně kontrolovatelné rady pro situaci „už jsem klikl/a“ bez sběru dalších tajných údajů.
+Build help-request previews exclusively from approved neutral templates. No source message, snippet, URL, name, account or code in copy/share. Sending remains the user's decision. Add general reviewed guidance for someone who already clicked/shared, without collecting secrets.
 
-HOTOVO: integrovaná API analýza funguje na reálném modelu; jsou otestované konfliktní signály, reklamní i legitimní zprávy, požadavek bez URL, výpadek a překročení limitu. Test no-egress potvrzuje nulové síťové dotazy při analýze. Přidej canary testy logů/sdílení, aktualizuj STATUS.md a commit.
+DONE: real inference/API integration works; test negation, conflicts, advertising, ordinary messages, code request without URL, unavailable inference, limits and unsupported scope. No-egress and log/share canary checks pass. Update docs/STATUS.md and commit if permitted.
 ```

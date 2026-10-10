@@ -1,15 +1,15 @@
 [
   {
-    "id": "demo-cz-school",
-    "language": "cs",
+    "id": "demo-en-school",
+    "language": "en",
     "origin": "manual_fictional_demo_only",
-    "text": "Zítra začíná výuka v devět. Informace najdete na https://skola.invalid/rozvrh ."
+    "text": "Fictional example: school starts at nine tomorrow. Details: https://school.invalid/schedule ."
   },
   {
-    "id": "demo-cz-offer",
-    "language": "cs",
+    "id": "demo-en-offer",
+    "language": "en",
     "origin": "manual_fictional_demo_only",
-    "text": "Fiktivní obchod nabízí slevu na batohy. Podrobnosti: https://obchod.invalid/nabidka ."
+    "text": "Fictional example: a shop offers a discount on backpacks. Details: https://shop.invalid/offer ."
   },
   {
     "id": "demo-en-demand",

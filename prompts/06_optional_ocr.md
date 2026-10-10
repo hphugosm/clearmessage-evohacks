@@ -1,15 +1,15 @@
-# 06 — Bonus: screenshot bez kamery a bez cloud OCR
+# 06 — Optional browser screenshot text extraction
 
-Celý následující blok vlož do Codexu, nebo ho nech načíst z tohoto souboru.
+Paste the following block into Codex, or ask Codex to read this file. If /goal is unavailable, use the text after /goal as a normal task request.
 
 ```text
-/goal Tento goal je nepovinný. Nejdříve ověř v STATUS.md a testech, že textové MVP, skutečný model, bezpečná policy a odevzdatelné spuštění jsou funkční. Pokud ne, OCR nepřidávej a vysvětli důvod. Jinak přidej pouze screenshot PNG/JPEG → editovatelný text pomocí Tesseract.js v prohlížeči.
+/goal This goal is optional. First verify from docs/STATUS.md and checks that text input, the genuine model, safe policy and reproducible release work. If not, skip OCR and explain why. Otherwise add only PNG/JPEG screenshot → editable text using Tesseract.js in the browser, behind a feature flag.
 
-Dodrž AGENTS.md. Žádný přístup ke kameře, PDF, cizí webové screenshoty, cloud OCR ani externí multimodální API. Uživatel ručně vybere soubor, obraz zůstane v prohlížeči. Ověř skutečnou dostupnost českých a anglických jazykových dat a jejich licence. Worker, WASM a jazyky pokud možno servíruj z vlastního originu; stáhni je při přípravě, ne z URL ve zprávě.
+Read AGENTS.md, BRAND_BIBLE and UI_COPY. No camera access, PDF, external website screenshotting, cloud OCR or multimodal API. The user selects a file and the image stays in the browser. Verify English language-data availability/license and any additional language chosen for input support. Worker/WASM/language assets are acquired at setup and served from the app origin.
 
-Omez velikost souboru i dekódovaného obrazu, akceptuj pouze skutečné PNG/JPEG. Rozpoznaný text se musí zobrazit v editovatelném poli, aby ho uživatel opravil a sám potvrdil odeslání do analyzátoru. Nepouštěj model automaticky nad skrytým OCR výstupem. Prázdný, rozmazaný nebo nesmyslný výsledek nabídne ruční vložení. OCR nejistota nikdy nesmí skončit falešným uklidněním.
+Bound file bytes and decoded pixel count; validate actual PNG/JPEG content. Display recognized text for editing and explicit Use this text/submission. Do not automatically analyze hidden OCR output. Blank/blurred/nonsensical results offer manual input and cannot reassure. English controls and errors must match real implemented limits.
 
-Uvolňuj object URLs/worker a paměť; žádné lokální uchovávání screenshotů mezi návštěvami. Za feature flagem musí stále fungovat původní textová aplikace. Neprováděj velký refactoring ostatních částí.
+Release object URLs, worker and memory; store no screenshots between visits. Text MVP works with the flag off. Avoid broad unrelated refactoring.
 
-HOTOVO: testy na několika umělých CZ/EN screenshotech včetně rozmazaného obrázku a chybného formátu; ověřeno, že obraz neopouští browser, text se odesílá až po potvrzení a fallback funguje. Při potížích bonus vypni a zachovej textové MVP. Reportuj skutečnou kvalitu, aktualizuj STATUS.md a commit.
+DONE: test fictional screenshots, blur, wrong format and bounds; verify images never leave the browser, text is submitted only after confirmation and manual fallback works. On trouble disable the bonus. Record actual OCR quality and remaining limits, update docs/STATUS.md and commit if permitted.
 ```

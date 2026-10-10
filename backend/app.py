@@ -20,7 +20,7 @@ from backend.privacy import PrivacyBoundary, error_response
 
 def create_app(frontend_dir: Path | None = None, classifier: Classifier | None = None) -> PrivacyBoundary:
     api = FastAPI(
-        title="Klidná zpráva", version=CONTRACT_VERSION, docs_url=None,
+        title="ClearMessage", version=CONTRACT_VERSION, docs_url=None,
         redoc_url=None, openapi_url="/api/openapi.json", redirect_slashes=False,
         telemetry={"tracing": False, "metrics": False, "logs": False, "operation_spans": False, "auto_configure": False},
     )

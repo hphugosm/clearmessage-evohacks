@@ -1,261 +1,121 @@
-# Klidná zpráva — kompletní plán do konce EVOHACKS
+# ClearMessage project plan through EVOHACKS submission
 
-**Stav dokumentu:** návrh z 10. 10. 2026. Není to zpráva o hotové implementaci.
-Všechny časové údaje jsou Europe/Prague. Ověřené zdroje a licence jsou v RESEARCH.md.
+Planning version: 10 October 2026. All times use Europe/Prague. This is a development plan, not proof that planned features work. See STATUS for actual implementation and RESEARCH for sources.
 
-## 1. Produkt jednou větou
+## Product and intended users
 
-Vlož krátkou zprávu a aplikace ti srozumitelně ukáže její varovné znaky a bezpečný
-postup, případně připraví stručnou prosbu o pomoc někomu, komu důvěřuješ.
+Paste a short message, understand its warning signs and choose a safer next step. Optional help sharing prepares a neutral request for someone the user trusts. ClearMessage serves children, teenagers, adults and seniors without requiring age, accounts or technical knowledge. English is the project's sole authored language.
 
-Nejde o antivirus, ověření identity odesílatele ani potvrzení bezpečnosti odkazu.
-MVP pracuje s textem SMS, krátkého chatu nebo krátkého e-mailu. Kvalita na dlouhých
-mailech, přílohách, celých konverzacích a jiných jazycích se nesmí předstírat.
+The initial scope is SMS, short chat messages and short emails. Attachments, long email threads, sender identity and website reputation are not evaluated. Automate interpretation, signal prioritization and preparation of advice; do not automate account access, contacting people or blocking messages.
 
-### Proč tento rozsah
+## Product flow
 
-Chceme vlastní ML a reálnou automatizaci. Automatizujeme čtení, hledání signálů,
-prioritizaci a přípravu dalšího kroku. Nepotřebujeme rizikový přístup do schránky.
-Těžiště demonstrace není barevné procento, ale okamžik, kdy uživatel rozumí tomu,
-co nemá posílat a jak si tvrzení ověřit bez použití kontaktu z podezřelé zprávy.
+1. A two-column desktop hero says **Understand messages. Make safer decisions.** The left side contains the input and primary action; a decorative intergenerational illustration sits on the right. Mobile uses one column with the interaction first.
+2. Before submission, explain that text is sent to the application's server, processed in memory and not stored or used for training. Tell users not to paste passwords or codes. Hosting configuration must support these claims before release.
+3. Validate input, run the trained classifier, observe supported textual signals and apply a versioned policy with coverage and service checks.
+4. Show one headline, up to three supported reasons, up to three next steps and visible limitations. Use approved English copy.
+5. **Ask someone for help** previews a neutral summary built only from approved fixed templates. Copying or native sharing requires a user action. Never include the original message, snippets, URL or private identifiers.
+6. A small **I already clicked or shared something** section offers situation-specific general next steps without asking for secrets.
 
-### Přesný průchod
+The current implementation includes real provisional classification, observed rule evidence and sanitized help sharing. All results remain incomplete. Goal 04 is not started; STATUS records the actual scope and remaining review/language blockers.
 
-1. Úvod: „Přišla vám zpráva, kterou si nejste jistí?“ a jedna velká textová plocha.
-   Hlavní tlačítko „Zkontrolovat zprávu“. Volitelně tři zřetelně označené příklady.
-2. Krátké upozornění před odesláním: nevkládat hesla a ověřovací kódy; text se
-   zpracuje na našem serveru, neukládá se do historie ani nepoužívá k trénování.
-   Toto tvrzení musí odpovídat skutečné konfiguraci aplikace a logování hostingu.
-3. Analýza: syntaktické zpracování, skutečný model, pravidla, kontrola omezení.
-4. Výsledek: jedna věta, nejvýše tři důvody a nejvýše tři bezpečné kroky.
-5. Volitelné „Požádat někoho o pomoc“ připraví neutrální shrnutí bez soukromého
-   obsahu. Uživatel ho nejdříve uvidí a sám zkopíruje nebo sdílí.
-6. Malý rozbalovací oddíl „Už jsem klikl/a nebo něco poslal/a“ poskytne předem
-   zkontrolovanou obecnou radu podle situace. Nevyžaduje zadání údajů o účtu.
+## Result policy and Style A
 
-### Tři výsledky
-
-**suspicious:** „Zpráva má podezřelé znaky. Zatím nic neposílejte.“ Důvody musí být
-skutečně nalezené. Pokud je jediným podkladem klasifikátor, říci to obecně; nevymýšlet
-konkrétní doménu, žádost o heslo ani telefonát, které text neobsahuje.
-
-**review:** „Tuto zprávu neumíme spolehlivě posoudit. Ověřte ji jinou cestou.“ Tento
-stav je správný u nejistoty, ne chybou produktu. Výpadek služby se navíc jasně označí
-jako neprovedená kontrola, nikoli jako úspěšně dokončené hodnocení.
-
-**no_strong_signals:** „Nenašli jsme výrazné varovné znaky. To nepotvrzuje bezpečnost
-zprávy.“ Jen při dokončené analýze a v deklarovaném rozsahu. Žádný zelený štít se
-slovem bezpečné. Ani tento stav neopravňuje nabídnout kliknutí na původní odkaz.
-
-Příklady signálů: požadavek na předání hesla nebo kódu, nátlak na okamžitou platbu,
-žádost o utajení před blízkými. Samotná reklama, chyba v češtině, HTTPS, krátký odkaz,
-slovo „banka“ nebo internacionalizovaná doména nesmějí rozhodovat o podvodu.
-Pravidla musí rozlišovat žádost o sdělení kódu od věty „svůj kód nikomu nesdělujte“.
-
-## 2. Co ano a co ne
-
-| Priorita | Rozsah |
-|---|---|
-| Povinné | Vložení textu, vlastní natrénovaný klasifikátor, tři výsledky včetně nejistoty, pravdivé důvody, bezpečné další kroky, kopie bezpečného shrnutí, CZ/EN UI, testy, spuštění podle README, Devpost a demo. |
-| Bonus po funkčním jádru | Screenshot PNG/JPEG → lokální OCR → kontrola rozpoznaného textu uživatelem. |
-| Vynechat | Přihlášení, historie, databáze, Gmail/WhatsApp integrace, telefonní aplikace navíc, automatické blokování, přílohy/PDF, reputační crawling, vlastní LLM, druhý URL model, hlasový asistent, placené externí inference API. |
-
-Screenshot není fyzická kamera. Nepotřebuje vlastní hardware. Přesto není podmínkou
-odevzdání; obtížné OCR by nemělo ohrozit textové MVP.
-
-## 3. Harmonogram
-
-Časy jsou rozpočty práce a kontrolní body, ne příslib rychlosti agenta. Pokud se
-začne později, škrtají se bonusy. Model bez ověření ani video bez aplikace se
-nevydávají za dokončený projekt.
-
-### Sobota 10. 10. — od aktuální chvíle
-
-| Blok | Činnost | Co musí existovat na konci |
+| API state | Meaning | Visual treatment |
 |---|---|---|
-| 0–20 min | Potvrdit rozsah, otevřít repo, založit koncept Devpostu, poslat dotaz organizátorovi, zvolit dostupný hosting. | Jedna věta produktu, cesta k repu, známé omezení hostingu. |
-| Dalších 45–60 min | Goal 00. | Frontend skutečně volá API; Docker sestaví kostru; absence modelu se přiznává. |
-| Dalších 45–75 min | Goal 01. | Stažená a zkontrolovaná data nebo doložený datový blokátor, licence a pevné dělení dat. |
-| Dalších 60–90 min | Goal 02. | Natrénovaný baseline, první skutečné metriky; porovnání embeddingové varianty v omezeném rozsahu. |
-| Do přibližně 23:30 | Goal 03 a jednoduché propojení. | Skutečný model → API → důvody a postup. Alespoň lokální end-to-end průchod. |
+| `no_strong_signals` | Completed, in-scope analysis with no strong warning signs. Always include the safety limitation. | Soft green accent, text label and checkmark; no safe badge |
+| `suspicious` | Supported warning signs. Specific reasons must exist in the message; a classifier-only reason stays general. | Amber **Suspicious message**; red **Potential scam** only under a separately documented and validated stronger-warning policy |
+| `review` | Insufficient evidence, unsupported scope or uncertainty. A service/model failure separately says analysis was not performed. | Amber/neutral **We couldn't assess this reliably** or **Analysis not performed**; never substitute a suspicious verdict |
 
-Do noci neslibujeme hotové OCR ani mnoho integrací. Přerušit práci v uloženém,
-reprodukovatelném stavu a vyspat se je součástí plánu.
+The Style A red card is a presentation of `suspicious`, not a fourth API class or permission to invent confidence. Current provisional responses cannot show a completed low-finding card; the production branch remains disabled. ham/spam/smishing are training labels, not these UI states. Preserve that distinction.
 
-### Neděle 11. 10.
+Observe requests to reveal passwords/codes, immediate payment pressure and secrecy. Rules distinguish **Send me your code** from **Never share your code**. Advertising, grammar, HTTPS, a common top-level domain, a short link or a named institution alone do not establish fraud. A message without a link can still contain a concerning request.
 
-| Čas | Priorita |
+## Scope
+
+Required: pasted text, a genuinely trained classifier, uncertainty-aware policy, supported reasons, safer next steps, preview and manual copy of a neutral help summary, English UI, tests, reproducible setup, documentation and submission materials.
+
+Optional after the core: PNG/JPEG screenshot → browser OCR → user-edited text → explicit submission. No camera access is needed.
+
+Excluded: accounts, history, database, inbox integrations, extension, separate phone app, attachment/PDF analysis, crawling, automatic blocking, automatic reporting, a new large language model, a second URL model, voice assistant and paid remote inference.
+
+## Schedule and gates
+
+The source plan allocates work budgets rather than guaranteeing agent speed. Resume from the current trained integration rather than rebuilding Goal 00. Original data acquisition and a candidate split exist; human review and approved final freeze remain blocked. Preserve the existing four decisions and provisional authorization. Inspect DATA_PREPARATION and STATUS before continuing. If work starts late, cut OCR and additional-language experiments first. Preserve reproducible checkpoints.
+
+Saturday 10 October: resolve scope, reuse permission and host availability; Goal 01 data audit/split (45–75 minutes); Goal 02 baseline and limited encoder comparison (60–90 minutes); Goal 03 real inference integration and guidance, aiming for a local full flow around 23:30. A previously prepared foundation is not evidence of a trained detector. Save the state before stopping.
+
+| Sunday 11 October | Work |
 |---|---|
-| 09:00–10:30 | Goal 04: dokončit jednoduché CZ/EN UI a srozumitelné texty. |
-| 10:30–12:00 | Goal 05: otestovat skutečné nasazení nebo čistý lokální Docker jako odevzdatelnou zálohu. |
-| 12:00–13:00 | Pouze je-li jádro zelené: Goal 06 OCR. Jinak chyby, model a čitelnost. |
-| 13:00–14:30 | Goal 07: nezávislé české příklady, funkční/bezpečnostní testy, několik skutečných uživatelských pozorování, je-li kdo dostupný. |
-| 14:30–15:00 | Opravit kritické problémy a zmrazit funkce/model/policy. Po zásahu do modelu přiznat, které testy byly použity pro ladění. |
-| 15:00–17:00 | Goal 08: README, model card, licence, popis Devpostu, záznam 2–3min videa. |
-| 17:00–19:00 | Nahrát, projít jako anonymní porotce, ověřit veřejnost repa, přehrání videa a odkaz/aplikaci. **Odevzdat do 19:00.** |
-| 19:00–20:59 | Rezerva pro chyby odevzdání; ne stavba nových funkcí. |
-| 21:00–22:00 | Být připraven na živé hodnocení podle pravidel a pokynů organizátora. |
+| 09:00–10:30 | Goal 04: English Style A UI, accessibility and copy |
+| 10:30–12:00 | Goal 05: deployment or a verified clean local container fallback |
+| 12:00–13:00 | Goal 06 only if the text core passes; otherwise repair core issues |
+| 13:00–14:30 | Goal 07: model/privacy/UX audit and any available human observations |
+| 14:30–15:00 | Critical repairs; freeze features, model and policy |
+| 15:00–17:00 | Goal 08: README, model card, licenses, submission draft and 2–3 minute video |
+| 17:00–19:00 | Upload, check anonymous access and playback, submit by 19:00 |
+| 19:00–20:59 | Submission-error buffer; no new features |
+| 21:00–22:00 | Live judging readiness according to event instructions |
 
-## 4. Data a poctivý ML experiment
+Rules list 11 October at 11:59 PDT, which is 20:59 Prague. The header lists 12:00 PDT/21:00. Use the earlier limit. The internal target is 19:00. Confirm current notices and reuse permission; no permission has been received in this package.
 
-### Hlavní dataset
+## Data and honest model development
 
-Mishra/Soni, Mendeley, DOI 10.17632/f45bkkt8pr.1. Popis uvádí 5 971 zpráv:
-4 844 ham, 489 spam a 638 smishing. Pole zahrnují LABEL, TEXT a indikátory URL,
-EMAIL, PHONE. Licence CC BY 4.0. Při implementaci zkontrolovat skutečný soubor,
-počet řádků, chybějící hodnoty, jazyk a shodu s dokumentací; nepředpokládat je.
+Primary candidate: Mishra/Soni, Mendeley DOI 10.17632/f45bkkt8pr.1. The source description reports 5,971 messages: 4,844 ham, 489 spam and 638 smishing, with LABEL, TEXT, URL, EMAIL and PHONE fields and CC BY 4.0. The real imported file now matches these published counts; DATA_SOURCES records actual hashes/audit and label-meaning limitations. Human approval remains incomplete. Provisional original-label training was separately authorized; it does not approve the dataset.
 
-Záměrně začínáme krátkými zprávami. Není to validační sada dlouhých e-mailů ani
-současných českých rodinných/chatových podvodů. Rozšíření e-mailovými korpusy
-odložit, dokud nejsou vyřešené jejich labely, překryvy a licence.
+1. Import raw CSV as data. Record URL, author, date, revision, checksum, license and actual counts in docs/DATA_SOURCES.md.
+2. Audit missing values, conflicts, languages and at least 15 sampled records per class. Quarantine unclear labels. Keep inappropriate raw content out of the public demo.
+3. Group duplicates, near-duplicates, translations and recognizable templates. Preserve useful message characters in the model input. Report limitations of campaign/time separation.
+4. Split groups approximately 70/15/15 into train/validation/test with fixed seed, reasonable class balance and frozen manifests. Group/ID/hash intersections must be empty.
+5. Train a majority baseline and word/character TF-IDF plus logistic regression in a scikit-learn Pipeline. Fit all learned transforms only on train.
+6. If permitted and feasible, compare frozen `paraphrase-multilingual-MiniLM-L12-v2` embeddings plus our logistic-regression head. Benchmark a small batch first. Pin revision, tokenizer and hashes; no full-transformer training or broad search.
+7. Choose the candidate and policy thresholds from validation, latency and errors. Use a small declared candidate set and identical splits. Scores are internal measurements, not user-facing fraud probabilities.
+8. Open the held-out test after selection. Report actual precision/recall/F1, confusion matrices, false positives/negatives, abstention and coverage. Separate model from policy results and record hardware/latency. If test data informs tuning, relabel it development and obtain a new independent test where possible.
 
-### Pipeline
+English interface support is not evidence of English model performance. Optional Czech input support similarly needs separate evaluation. The original scope suggested about 30 Czech development examples and 60 independently reviewed challenge examples (20 per class). Preserve this only as a future language experiment, with English instructions and reports. Label synthetic/translated origins, group families together and keep the blind set hidden from development. Never imply representative real-world performance from a synthetic set.
 
-A. Import raw CSV bez vykonávání kódu; zdroj, datum, verze, hash, licence, autor.
-B. Audit alespoň 15 náhodných zpráv z každé třídy, konfliktní labely odložit.
-C. Kanonizace pro deduplikaci, shluky opakovaných šablon; text pro model zachovat
-   tak, aby se nesmazaly bezpečnostně významné znaky. Duplicitní varianty držet spolu.
-D. Skupinové dělení přibližně 70 % trénink / 15 % validace / 15 % test při zachování
-   rozumného zastoupení tříd. Pokud metadata dovolí, ověřit i držení zdrojů odděleně.
-   Uvést, když časové/kampaňové oddělení nelze z dat spolehlivě zjistit.
-E. TF-IDF word/char + LogisticRegression ve sklearn Pipeline. Výpočet slovníku a
-   další naučené předzpracování pouze na tréninku. Uložit i jednoduchý majoritní baseline.
-F. Alternativa: zmrazený paraphrase-multilingual-MiniLM-L12-v2 → 384D vektor →
-   vlastní LogisticRegression head. Nejdříve malý rychlostní experiment, pak cache
-   veřejných tréninkových embeddingů. Bez jemného dotrénování celého transformeru.
-G. Výběr varianty a rozhodovacích prahů pouze podle validace, chyb a naměřené
-   latence. Žádné rozsáhlé hledání hyperparametrů; nejvýše několik předem stanovených
-   variant a stejné splity pro srovnání.
-H. Finální vyhodnocení na dosud nepoužitém testu; zapsat skutečné počty a výsledky.
-
-Tři trénovací třídy nejsou totéž co tři výstupní stavy UI. Nad modelem je samostatná
-policy zohledňující nejistotu, pravidla, jazyk, pokrytí textu a zdravotní stav služby.
-
-### Čeština
-
-Vícejazyčný encoder je rozumný kandidát, nikoli důkaz, že anglické labely fungují
-v češtině. Doporučení: vytvořit přibližně 30 českých vývojových příkladů a odděleně
-60 nezávislých zkušebních příkladů (20 běžných, 20 spamových, 20 podvodných).
-Zahrnout platné kódy s varováním před sdílením, školní zprávy, reklamní SMS,
-rodinné žádosti, zásilky, platební nátlak, neutrální odkazy a neúplné zprávy.
-
-Tým musí labely ručně zkontrolovat. AI může navrhnout rozmanité příklady, ale ty
-jsou syntetické. Oddělený test nesmí agent při tvorbě pravidel číst. Překlady a
-parafráze stejné zprávy patří do stejné skupiny; nesmějí prosakovat mezi splity.
-Pokud se challenge set použije na opravy, už není slepý test a musí být tak označen.
-Značně slabší čeština znamená přísnější přiznávání nejistoty nebo omezení rozsahu,
-ne nahrazení výsledků pěknou číslicí.
-
-### Co zveřejnit
-
-Počty v každé třídě a splitu, per-class precision/recall/F1, confusion matrix,
-počty false negatives/false positives, výsledky základního modelu i celé policy,
-kolik vstupů končí nejistotou a kolik podezřelých mezi zbylými bylo přehlédnuto.
-EN a CZ zvlášť. Uvést čas inference a zařízení, na němž se měřil. Žádné garantované
-procento přesnosti, žádné tvrzení o ochraně proti všem podvodům.
-
-## 5. Technická architektura
+## Architecture and contract
 
 ```text
-React + TypeScript + Vite (CZ/EN)
-           |
-           | POST /api/analyze (text, language)
-           v
-FastAPI + Pydantic
-   ├── omezení vstupu, normalizace, žádné logování zpráv
-   ├── lokální zpracování URL bez síťových dotazů
-   ├── skutečný ML klasifikátor
-   ├── verzovaná pravidla a rozhodovací policy
-   └── pevné bezpečné texty / shrnutí pro pomoc
+English React / TypeScript / Vite UI
+  -> POST /api/analyze {text, message_language}
+  -> FastAPI / Pydantic validation
+  -> local syntactic parsing + genuine classifier + versioned policy
+  -> fixed English wording, supported evidence keys and neutral help summary
 
-Jeden Docker kontejner: API zároveň servíruje frontend build.
-Žádná DB, žádný externí LLM, žádný přístup do osobní schránky.
+One container serves frontend and API. No database, external LLM or inbox access.
 ```
 
-Doporučené rozhraní: `POST /api/analyze`, `GET /api/health`. Odpověď nese
-`status`, `analysis_complete`, `headline_key`, `evidence`, `action_keys`,
-`limitations`, `model_version`, `policy_version`, `share_summary_keys`.
-Interní skóre lze měřit v testech; uživateli se nepředkládá jako pravděpodobnost podvodu.
-Z UI se nesmí vytvořit odkaz na původní detekovanou URL.
+The canonical contract is backend/contracts.py. It includes status, analysis_complete, headline_key, evidence, action_keys, limitations, message_language, model_version, policy_version, contract_version and share_summary_keys. Current hard limits are 2,000 Unicode code points and a 32 KiB JSON body. Check real tokenizer coverage before inference. Never silently discard the end of a message and show a reassuring result. Chunking requires a separately tested extension. No detected URL becomes clickable.
 
-MVP hard limit navrhnout 2 000 znaků. Před inference ověřit skutečný tokenový limit
-encoderu. Příliš dlouhý text nesmí být tiše oříznut a potom „uklidněn“; vrací review
-s vysvětlením omezení, případně podezřelé znaky z úplně provedených pravidel.
-Chunkování je možné až jako samostatně otestované rozšíření, ne improvizace těsně
-před uzávěrkou. UI jazyk a jazyk zprávy se nesmějí zaměňovat.
+## Accessibility, privacy and operation
 
-### Přístupnost
+Apply BRAND_BIBLE and UI_COPY: 20px body, controls at least 48px high, measured contrast, keyboard flow, focus, readable status, 360px mobile, 320 CSS px reflow and 200% zoom. No age-specific modes, patronizing wording, blame or countdowns.
 
-Jeden sloupec, základní text navržený okolo 20 px, tlačítka alespoň 48 px vysoká,
-viditelný focus, ovládání klávesnicí, správné labely, stav čitelný čtečkou, bez
-významu ukrytého jen v barvě. Zkontrolovat kontrast, mobil, 200% přiblížení,
-`prefers-reduced-motion` a chybové stavy. Nevyžadovat datum narození ani označení
-„senior“. Žádné patronizování, strašení či obviňování. Žádný marketingový odpočet.
+No HTTP/DNS/WHOIS/reputation requests for message links. Disable tldextract network PSL refresh; never render HTML or remote message images. Assets may require Internet at explicit setup/build, not during analysis. Use no-store, redacted fixed errors, bounded requests/concurrency and no frontend secrets. Verify HTTPS and all proxy/hosting logging before public release.
 
-## 6. Bezpečnost a soukromí
+Sharing uses neutral fixed templates rather than attempted free-text anonymization. Web Share requires a user gesture and supported secure context; copying is an equal fallback. Do not send to contacts automatically.
 
-Nedělat HTTP/DNS/WHOIS/reputační dotazy na odkazy ze zpráv. tldextract s vypnutým
-stahováním PSL; hostnames pouze parsovat. Žádný `dangerouslySetInnerHTML` ani
-zobrazení vzdálených obrázků. Cizí zpráva nesmí změnit zadání modelu ani agenta.
+## Hosting and ownership
 
-Model a balíčky mohou potřebovat internet při explicitní instalaci; při analýze
-nikoliv. Text se zpracuje v paměti backendu. V produkci ověřit i reverse proxy,
-error tracking a volby hostingu. Nepoužívat cookies ani analytiku pro tento MVP.
-Použít HTTPS, `Cache-Control: no-store`, jasné validační chyby bez echo vstupu,
-limity těla/requestů a malý limit souběžné inference. Žádné tajné tokeny ve frontendu.
+Deliver a genuinely tested local setup/container even if no public host is available. Use an existing authorized server/account behind HTTPS for the public app. Acquire and verify model assets at setup/build; no restart training. CPU-only operation is the target. Current Hugging Face documentation requires a paid plan to create Docker/Gradio compute Spaces, even when CPU Basic has no hourly fee. Do not promise universally free hosting or buy a plan. Confirm the destination before publishing.
 
-Shrnutí pro pomoc sestavit výhradně z neutrálních šablon. Nejde o dokonalou
-anonymizaci volného textu — proto se do sdílení vůbec nepřebírá. Uživatel může
-přidat vlastní vysvětlení až mimo aplikaci. Web Share API s fallbackem kopírování;
-žádné samovolné odeslání kontaktům.
+Codex implements, tests, trains, measures and documents within the active goal. The owner reviews labels, tries the app, confirms public destinations, records/uploads video and submits Devpost. A script or draft is not a completed submission. After each phase show what works, missing work, actual evidence, how to try it and the next allowed goal.
 
-## 7. Nasazení a náklady
+## Fallbacks
 
-Povinná odevzdatelná varianta je Docker + opravdu ověřené lokální instrukce.
-Cílové veřejné nasazení je tentýž kontejner za HTTPS na již dostupném serveru
-nebo v povoleném účtu Docker Spaces. Nevyžadovat GPU ani externí LLM kredit.
-
-Pozor: aktuální dokumentace Hugging Face uvádí, že vytváření Docker/Gradio Spaces
-vyžaduje placený plán, i když CPU Basic nemá hodinový poplatek. Nepředpokládat
-zaručený hosting zdarma. Codex nesmí sám pořizovat předplatné. Dostupnost účtu
-ověřit hned, ne v neděli večer. Není-li veřejný host včas, Devpost podle zadání
-umožňuje instrukce pro lokální testování; video musí ukazovat skutečnou lokální aplikaci.
-
-## 8. Co dělá člověk a co Codex
-
-Codex: implementuje po malých cílech, píše testy, trénuje, měří, dokumentuje,
-navrhuje opravy a poskytuje skutečné příkazy/výstupy. Člověk: kontroluje labely,
-rozumí chybám modelu, zkouší UI jako uživatel, schvaluje veřejné publikování,
-natočí video a skutečně odešle Devpost. Předplatné, hesla a peníze zůstávají u člověka.
-
-Po každém cíli požadovat: co funguje, co chybí, testy s výsledky, jak to vyzkoušet,
-commit a další povolený cíl. Zbývající problém není důvod k předstírání hotovosti.
-
-## 9. Záložní scénáře
-
-| Problém | Rozhodnutí |
+| Problem | Response |
 |---|---|
-| Dataset nelze stáhnout | Doložit chybu a připravit import souboru ručně získaného z původního zdroje. Nahradit jej jen zdrojem s ověřenými labely a licencí; ne vydávat spam corpus za phishing. |
-| Encoder je moc pomalý/nejde stáhnout | Zachovat reálně trénovaný TF-IDF baseline, otevřeně omezit jazyky a výkon, CZ bez odpovídajícího ověření pouze review / pravidlová upozornění. |
-| Model má mnoho falešných uklidnění | Opravit integraci a zkontrolovat únik dat; zvýšit míru review podle validace, ukázat skutečné limity, neskrývat chyby z výsledků. |
-| OCR je nespolehlivé | Vypnout feature flag; textové MVP zůstává plně funkční. |
-| Nestíhá se UI | Jeden čistý formulář a výsledek; žádné grafy, animace ani další stránka statistik. |
-| Nestíhá se hosting | Ověřit lokální Docker a README; pravdivé video a lokální instrukce. |
-| Organizátor nepovolí předtrénované části | Nepoužít je; přehodnotit proveditelnost baseline a doložit zdroje. Změnu netajit. |
+| Dataset unavailable | Record the failure; provide a local raw-file import. Substitute only a verified source with compatible labels/license |
+| Encoder unavailable or too slow | Keep the trained TF-IDF baseline, disclose limits and abstain for unevaluated languages |
+| False reassurance | Inspect leakage/integration, revise policy using validation, disclose failures and rerun affected checks |
+| OCR unreliable | Disable the feature flag; retain working text input |
+| UI time limited | Keep a clear form, result and next step; omit extra decoration |
+| Hosting unavailable | Verify local instructions/container and show the real local app in the demo |
+| Reuse disallowed | Remove the disallowed resource and document the revised feasible approach |
 
-## 10. Odevzdání a demo 2:30
+## Submission and a 2:30 demo
 
-0:00–0:20: člověk dostane naléhavou zprávu a neví, jak postupovat.
-0:20–1:05: skutečný podezřelý příklad → důvody → bezpečný postup → shrnutí pro pomoc.
-1:05–1:30: běžná nebo reklamní zpráva; žádné ztotožnění reklamy s podvodem.
-1:30–1:45: neúplný vstup nebo chyba; aplikace přizná, že kontrolu nezvládla.
-1:45–2:15: krátký pohled na kód inference, vlastní training pipeline a skutečné
-metriky; přesně odlišit předtrénovaný encoder od našeho klasifikátoru.
-2:15–2:30: komu aplikace pomáhá, co automatizuje, její omezení a funkční odkaz.
+0:00–0:20 problem; 0:20–1:05 genuine suspicious example, reasons, steps and user-initiated neutral help summary; 1:05–1:30 ordinary/advertising example; 1:30–1:45 honest uncertainty or failure; 1:45–2:15 inference/training code and real metrics; 2:15–2:30 audience, automation, limitations and availability.
 
-Všechny ukázky jsou označené jako demonstrační. Žádné živé podvodné odkazy,
-žádná citlivá data a žádná sestříhaná obrazovka předstírající neexistující funkci.
-
-Devpost obsahuje: veřejný repozitář, video 2–3 min, podrobný popis využití AI a
-postupu, live URL nebo funkční instalační instrukce, licence/zdroje a přiznané použití
-Codexu. Nevykazovat počty uživatelů, úspory času ani ochranu před podvody bez měření.
+All examples are visibly fictional. Do not use live malicious links or sensitive data. If the model remains unavailable, demonstrate only the foundation and disclose that limitation. Submission materials include the repository, 2–3 minute video, accurate AI/automation description, live app or working local instructions, sources/licenses and Codex disclosure. Never invent user counts, time saved or prevented losses.

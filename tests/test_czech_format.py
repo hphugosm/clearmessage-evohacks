@@ -48,7 +48,7 @@ def test_czech_schema_has_not_drifted():
 
 def test_public_demo_fixtures_are_fictional_inert_and_not_ground_truth():
     records = json.loads(Path("tests/fixtures/demo_messages.json").read_text())
-    assert {row["language"] for row in records} == {"cs", "en"}
+    assert {row["language"] for row in records} == {"en"}  # Public copy; Czech evaluation inputs above remain unchanged.
     for row in records:
         assert row["origin"] == "manual_fictional_demo_only"
         assert "label" not in row

@@ -58,7 +58,7 @@ No synthetic test accuracy is presented as real-world validation.
 
 ## Guidance and help
 
-Fixed CZ/EN steps advise independent verification using a contact/address already
+Fixed English steps advise independent verification using a contact/address already
 known to the user, not contact details from the message. The priority action is
 not disclosing secrets or pausing payment, then asking someone trusted. If both
 payment and disclosure requests match, secret protection is the displayed priority

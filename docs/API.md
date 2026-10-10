@@ -1,7 +1,7 @@
-# API kontrakt 1.1.0 — analysis-policy-1
+# ClearMessage API contract 1.1.0 — analysis-policy-1
 
-Zdrojem je `backend/contracts.py`; `docs/openapi.json` a generovaný
-`frontend/src/api.schema.ts` se kontrolují na drift. Aktualizace:
+The source is `backend/contracts.py`; `docs/openapi.json` and generated
+`frontend/src/api.schema.ts` are checked for drift. Regenerate explicitly:
 
 ```sh
 .venv/bin/python scripts/export_contract.py
@@ -14,12 +14,13 @@ npm --prefix frontend run contract:generate
 {"text":"Please send me your password.","message_language":"en"}
 ```
 
-JSON, 1–2 000 Unicode code points, nebílý text, nejvýše 32 768 bajtů těla
-včetně JSON. Žádné tiché zkrácení. Neplatné typy/extra fields/query se odmítají.
-`message_language` je `auto/cs/en/other`. `auto` znamená nezadáno; UI jazyk
-se neposílá, není detekcí jazyka a neopravňuje k českým/anglickým tvrzením o výkonu.
+JSON contains 1–2,000 Unicode code points of nonblank text. Body limit: 32,768
+bytes including JSON. No silent shortening. Invalid types, extra fields and query
+strings are rejected. `message_language` accepts `auto/cs/en/other`; `auto` means
+unspecified, not detected. The interface is English and does not set this hint
+implicitly or establish performance in English/Czech.
 
-Příklad skutečné odpovědi uloženého Goal02 modelu (nejde o vložený fixture verdict):
+Example from the real saved Goal 02 artifact, not a fixture verdict:
 
 ```json
 {
@@ -37,73 +38,73 @@ Příklad skutečné odpovědi uloženého Goal02 modelu (nejde o vložený fixt
 }
 ```
 
-`status` je doporučený výstup, nikoli datasetový label:
+Statuses are guidance states, distinct from training labels:
 
-- `suspicious`: pozorovaný textový požadavek nebo omezené klasifikátorové varování.
-- `review`: další nezávislé ověření; také nejisté skóre, samotný spam, chybějící
-  model, chyby, nedostatek textu, nepodporovaný jazyk či neúplné pokrytí.
-- `no_strong_signals`: rezervovaný nízký nález, který **není v této verzi povolen**.
-  Vyžaduje dokončenou analýzu, ověřený model/jazyk/policy a nulovou evidence.
+- `suspicious`: an observed textual request or limited genuine model warning.
+- `review`: independent verification needed; also uncertainty, spam alone,
+  missing/failed model, insufficient text, unevaluated language or partial coverage.
+- `no_strong_signals`: reserved low finding, **disabled in this release**. It
+  requires complete analysis, verified model/language/policy and no evidence.
 
-`analysis_complete` je nezávislý stav úplnosti. Aktuální artefakt vždy vrací
-`false`: 41 lidských review pending, jazykový výkon neověřen, nízká policy
-nevalidovaná. Pozitivní pravidlo může varovat i při výpadku modelu, ale odpověď
-pak přizná `inference_unavailable/rules_only`. HTTP 200 ≠ dokončené posouzení.
-Při neexistujícím/poškozeném artefaktu je `model_version=null` a `model_not_ready`.
+`analysis_complete` is separate. The current artifact always returns `false`:
+41 human reviews pending, language performance unverified, reassuring policy
+unvalidated. A rule can warn during model failure, with
+`inference_unavailable/rules_only` disclosed. HTTP 200 does not mean complete
+assessment. Missing/corrupt artifact yields `model_version=null`, `model_not_ready`.
 
-Evidence obsahuje nejvýše tři pevné klíče, žádné citace, URL či skóre:
-`request_for_secret`, `payment_pressure`, `secrecy_request` mají
-`observed_text_signal`; `model_signal` má `classifier` a jen obecnou formulaci
-podobnosti s tréninkovou třídou, nikoli vymyšlené důležité slovo. Samotný spam
-se nemění na phishing. Podrobnosti a omezení: `docs/POLICY.md`.
+Evidence contains at most three fixed keys, no snippets, URLs or scores.
+`request_for_secret`, `payment_pressure`, `secrecy_request` use
+`observed_text_signal`; `model_signal` uses `classifier` and general similarity
+wording, never invented word attribution. Spam is not phishing. See [POLICY](POLICY.md).
 
-Nejvýše tři `action_keys`: nezávislé ověření známou cestou, podle signálu
-nesdělit tajný údaj nebo zastavit platbu, požádat důvěryhodnou osobu.
-`limitations` vždy obsahují `not_a_safety_confirmation`. Podoba CZ/EN je pevná.
-Klient kontroluje celý kontrakt, evidence basis i invariant úplnosti;
-neznámá či poškozená odpověď zobrazí neprovedenou kontrolu.
+At most three `action_keys` describe independent familiar-channel verification,
+not sharing secrets or pausing payment when relevant, and help from someone
+trusted. `limitations` always include `not_a_safety_confirmation`. English
+presentation is fixed in `frontend/src/copy.ts`. The client checks the whole
+contract, evidence basis and completion invariants; unknown/corrupt responses
+produce an honest service error, never a reassuring fallback.
 
-`share_summary_keys` umožňují pouze dvě neutrální pevné věty. Po explicitním
-otevření náhledu může uživatel ručně kopírovat nebo dalším gestem otevřít systémový
-Web Share dialog. Payload má **jen `text` sestavený z pevných šablon**: žádný
-zdrojový text, status, evidence, URL, příjemce ani osobní údaje. Zrušení dialogu
-není chyba analýzy. Žádný clipboard API, automatické odeslání ani integrace.
+`share_summary_keys` select only two neutral fixed sentences. The user opens a
+preview, manually copies text or makes another gesture to invoke native Web Share.
+The payload contains **only `text` from allowlisted templates**: no source,
+status, evidence, URL, recipient or personal details. Cancellation is not an
+analysis error. No clipboard API, automatic sending or external integration.
 
-## Chyby a health
+## Errors and health
 
-Pevné chyby mají `analysis_complete=false`, `error_key`, `contract_version`;
-nikdy Pydantic input/loc/ctx, text výjimky či zdrojovou zprávu.
+Fixed error bodies contain `analysis_complete=false`, `error_key`,
+`contract_version`, never Pydantic input/loc/ctx, exception text or source content.
 
-| HTTP | error_key | Situace |
+| HTTP | error_key | Situation |
 |---|---|---|
-| 400 | unexpected_query / invalid_input / request_rejected | Query nebo poškozený požadavek |
-| 413 | body_too_large | Tělo přes 32 KiB |
-| 415 | json_required | Nesprávný Content-Type |
-| 422 | invalid_input | Prázdný/dlouhý text, typy, extra fields, JSON |
-| 404 / 405 | not_found / method_not_allowed | Cesta/metoda |
-| 500 | service_unavailable | Sanitizovaná vnitřní chyba |
+| 400 | unexpected_query / invalid_input / request_rejected | Query string or malformed request |
+| 413 | body_too_large | Body over 32 KiB |
+| 415 | json_required | Wrong Content-Type |
+| 422 | invalid_input | Empty/long text, types, extra fields, JSON |
+| 404 / 405 | not_found / method_not_allowed | Path/method |
+| 500 | service_unavailable | Sanitized internal failure |
 
-Inference chyba/obsazený slot vrátí HTTP 200 s omezeným review nebo konkrétním
-pravidlovým varováním. Klient má timeout 10 s a nikdy z timeoutu nevytvoří nález.
-Změna textu nebo jazyka zprávy odstraní předchozí výsledek i share preview.
+Inference failure/busy slot returns HTTP 200 with limited review or actual rule
+warning. The client times out after 10 seconds, with no synthesized verdict.
+Editing text or input-language hint clears the result and help preview.
 
-`GET /api/health`: `service_status=ok`, `model_ready` znamená načtený hashově
-ověřený artefakt, **nikoli schválenou kvalitu detektoru**.
-Aktuálně `human_review_complete=false`, `evaluated_message_languages=[]`.
-Health vrací verze a limity. `/api/openapi.json` nevyžaduje externí CDN.
+`GET /api/health` returns `service_status=ok`. `model_ready` means a verified
+artifact loaded, **not approved detector quality**. Currently
+`human_review_complete=false`, `evaluated_message_languages=[]`. Health includes
+versions/limits. `/api/openapi.json` needs no external CDN.
 
-## Soukromí a provoz
+## Privacy and operation
 
-Text jen v RAM vlastního backendu; žádná historie, user cache, telemetry,
-trénink z uživatelských vstupů, třetí API, cookies nebo browser storage.
-Launcher vypíná access log; všechny odpovědi mají no-store/nosniff/no-referrer/CSP.
-API odmítá query string. Souběh: jeden proces, 32 přijatých spojení a jeden
-neblokující modelový slot, bez fronty soukromých textů na inference.
+Source text stays in RAM of our backend. No history, user cache, telemetry,
+training from user messages, third-party APIs, cookies or browser storage.
+The launcher disables access logs. Responses use no-store/nosniff/no-referrer/CSP.
+The API rejects query strings. One process accepts at most 32 concurrent
+connections and has one nonblocking inference slot, with no private-text queue.
 
-Sparse model zpracuje celý povolený text bez tokenizer cap; to není tvrzení,
-že rozumí každému slovu. Interface výslovně přenáší full_text_coverage; false
-nedovolí klasifikátorové varování ani dokončený nízký nález. URL se jen syntakticky
-parsují. `tldextract` má `suffix_list_urls=()`, `cache_dir=None`, vestavěný PSL
-snapshot bez refresh/DNS/HTTP. Doména, HTTPS ani zkracovač nejsou fraud evidence.
-Při analýze se nic nestahuje. Hosting/proxy logy a HTTPS vyžadují ověření před
-případným zvlášť schváleným nasazením; v tomto kroku žádné neproběhlo.
+The sparse model handles full allowed text without a transformer token cap;
+this does not imply it understands every word. `full_text_coverage=false`
+prevents a model warning or completed low finding. URL syntax uses `urlsplit`
+and `tldextract` with `suffix_list_urls=()`, `cache_dir=None`, bundled snapshot.
+No refresh, DNS, HTTP, WHOIS or redirects. HTTPS/TLD/shorteners are not fraud
+evidence. No downloads occur during analysis. Hosting logs/proxies/HTTPS require
+verification before a separately authorized deployment; none occurred here.

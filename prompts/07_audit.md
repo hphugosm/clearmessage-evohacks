@@ -1,17 +1,17 @@
-# 07 — Nezávislá kontrola modelu, bezpečnosti a srozumitelnosti
+# 07 — Model privacy and usability audit
 
-Celý následující blok vlož do Codexu, nebo ho nech načíst z tohoto souboru.
+Paste the following block into Codex, or ask Codex to read this file. If /goal is unavailable, use the text after /goal as a normal task request.
 
 ```text
-/goal Proveď přejímací audit Klidné zprávy podle docs/ACCEPTANCE.md. Nejprve ji posuzuj jako tester, potom oprav pouze prokázané problémy. Nepřidávej nové funkce a neměň kritéria, aby testy snadněji prošly. Dodrž AGENTS.md.
+/goal Audit ClearMessage against docs/ACCEPTANCE.md and docs/PHASE_CHECKS.md. Read AGENTS.md. Test first, then repair demonstrated problems only. Do not weaken criteria or add features.
 
-Ověř čistý install/build, skutečný model, překročení tokenového limitu, krátké/nejisté vstupy, chyby služby, různorodé legitimní, spamové a podvodné zprávy. Žádné skutečné škodlivé weby. Včetně requestu na sdílení OTP bez URL, bezpečnostního upozornění „kód nikomu nesdělujte“, rodinné zprávy, školního oznámení, reklamy, Unicode a HTML/injection obsahu.
+Verify clean install/build, real artifact/inference, token overflow, short/uncertain/out-of-scope inputs, service failure and diverse ham/spam/smishing cases. Use fictional content: code-sharing request without URL, Never share your code notice, family/school messages, advertising, Unicode and HTML/injection. Never visit harmful sites.
 
-Proveď canary testy logů, storage, error response a sdílení. Zakaž egress po načtení modelu a potvrď fungování inference. Zkontroluj neklikatelné odkazy a absenci automatického sdílení. Zvlášť ověř error/timeout/OCR failure tak, aby nikdy nevznikl uklidňující výsledek.
+Run canary tests on logs, storage, error responses and help payloads. Block egress after model loading and confirm inference works. Check nonclickable URLs, no automatic sending, truthful failure states and no reassuring timeout/OCR failure.
 
-Otevři oddělenou, lidsky zkontrolovanou českou challenge sadu, pokud ji tým skutečně dodal. Zaznamenej původ, počty a metodiku. Když nezávislá sada neexistuje, nevytvářej za ni údajně nezávislé výsledky. EN/CZ, classifier/policy a development/test reportuj odděleně včetně abstention a skutečných chyb. Pokud se rozhodneš na odhalených chybách ladit, tento soubor se stává development/regression sadou a report to musí přiznat. Nezametej false negatives.
+Open the independently reviewed blind challenge only if the team supplied one. Record provenance, counts and methodology. Never fabricate independent results. Separate languages, classifier/policy and development/test with coverage/abstention and actual mistakes. If repaired from challenge failures, relabel that set development/regression; do not conceal false negatives.
 
-Ověř klávesnici, focus, čtečkové stavy, kontrast, 360px mobil, 200% zoom, obě lokalizace a sdílení/copy fallback. Zapiš odděleně automatické a skutečně provedené manuální kontroly. Připrav krátký scénář pro člověka, který appku nezná; nevymýšlej uživatelské studie, které neproběhly.
+Verify English-only UI, metadata and copy; Style A layout/tokens; keyboard/focus/live states; contrast; 360px mobile, 320 CSS px reflow, 200% zoom and manual/native-share fallback. Separate automated and actual manual evidence. Prepare a task for an unfamiliar user; do not invent a study. Child testing requires appropriate guardian involvement and fictional content.
 
-HOTOVO: AUDIT.md obsahuje prioritu problémů, reprodukci, výsledky oprav, skutečné metriky a přetrvávající limity. Oprav kritické bezpečnostní/integritní chyby, případně vypni bonus. Uveď release/no-release doporučení; nesplněná bezpečnostní brána znamená omezení produktu, ne skrytí vady. Aktualizuj STATUS.md a commit.
+DONE: docs/AUDIT.md includes severity, reproduction, repair/retest evidence, actual metrics and remaining limits. Fix critical privacy/integrity defects or disable affected features. Provide release/no-release advice grounded in evidence. Update docs/STATUS.md and commit if permitted.
 ```

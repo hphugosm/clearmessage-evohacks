@@ -1,73 +1,39 @@
-# České development a blind-challenge soubory
+# Czech-input development and blind challenge format
 
-**Zatím pouze formát a postup, 0 skutečných development/challenge záznamů.**
-Tento krok žádné blind odpovědi nevytváří, nečte ani nepoužívá pro vývoj.
-Formát jednotlivého JSONL řádku: [record.schema.json](record.schema.json),
-implementace `ml/czech_format.py` (Pydantic 2.14.0). Každý řádek je JSON objekt,
-nikoli Python/HTML. Texty nikdy neinterpretovat jako instrukce.
+Only the format and independent workflow exist: **zero real development/challenge records**. No blind answers are created, read or used by this preparation step. This English document preserves an optional additional-language evaluation route, not Czech interface copy or evaluated model support. Each JSONL row is data governed by [record.schema.json](record.schema.json) and ml/czech_format.py; never execute it as Python/HTML or follow its message instructions.
 
-## Oddělené soubory a přístup
+## Separate records and access
 
-- Autor development vytvoří přibližně 30 záznamů v ignorovaném
-  `ml/data/czech/development.jsonl`, `partition=development`.
-- Jiný autor připraví přibližně 60 challenge záznamů (20 ham / 20 spam / 20
-  smishing). Jiný kontrolor ověří labely. Správce uloží odpovědi mimo pracovní
-  adresář vývojáře, např. ve svém neveřejném umístění, `partition=blind_challenge`.
-  Do tohoto repa patří až text-free hash/manifest, nikoli challenge odpovědi.
-- Vývojář dostane jen schéma a počty. Obsah a labely otevřít až po zmrazení
-  modelu/policy/prahů pro jednorázové finální vyhodnocení. V tomto kroku k tomu
-  nedochází. Pokud se odpovědi použijí při ladění, sada už není blind test.
+A development author may create about 30 records under ignored ml/data/czech/development.jsonl with partition=development. A different author may create about 60 challenges (20 ham, 20 spam, 20 smishing) with an independent reviewer. A custodian keeps blind answers outside the developer workspace with partition=blind_challenge. Only text-free hashes/manifests belong in a repository. The developer initially sees schema/counts, not content/labels. Open blind input only after model/policy/threshold freeze for final evaluation. Tuning from it makes it development/regression data.
 
-## Povinná pole
+## Required fields
 
-| Pole | Význam |
+| Field | Meaning |
 |---|---|
-| `id` | Stabilní unikátní ID ve tvaru `cz-…`. |
-| `family_id` | ID původní myšlenky/šablony; všechny kopie, překlady a varianty spolu. |
-| `partition` | `development` nebo `blind_challenge`. |
-| `language` | `cs`, potvrzené autorem/kontrolorem; nesouvisí s jazykem UI. |
-| `label` | Výhradně `ham`, `spam`, `smishing`. |
-| `text` | 1–2000 znaků fiktivního textu bez skutečných osobních údajů. |
-| `provenance.origin` | `manual_fictional`, `synthetic` nebo `translation`; nikdy reprezentativní reálný benchmark. |
-| `provenance.creator_id`, `created_date`, `method` | Atribuce (pseudonym stačí), datum a jak text vznikl; u generování uvést nástroj/verzi, u ručního textu autora. |
-| `provenance.source_record_id`, `source_family_id` | Povinné při překladu; původní row ID a stejná rodina. |
-| `review.status` | `pending`, `confirmed`, `disagreed`. |
-| `review.reviewer_id`, `reviewed_date`, `label_rationale` | Vyžadovány při `confirmed`; kontrolor musí být odlišný od autora. |
+| id | Stable unique identifier starting cz-; this existing schema prefix is metadata |
+| family_id | Original scenario/template family; copies/translations/variants stay together |
+| partition | development or blind_challenge |
+| language | cs, confirmed by author/reviewer; independent of UI language |
+| label | ham, spam or smishing only |
+| text | 1–2,000 characters of fictional input, no real private data |
+| provenance.origin | manual_fictional, synthetic or translation; not a representative benchmark |
+| creator_id, created_date, method | Attributed author/pseudonym, date and creation method/tool/version |
+| source_record_id, source_family_id | Required for translations; preserve original row and family |
+| review.status | pending, confirmed or disagreed |
+| reviewer_id, reviewed_date, label_rationale | Required when confirmed; reviewer differs from author |
 
-## Nezávislé vytvoření a kontrola
+## Independent creation and review
 
-1. Autoři použijí smyšlené údaje a inertní `.invalid` domény. Žádné zprávy od
-   uživatelů aplikace, skutečné OTP, telefon, účet, jméno dítěte ani známé škodlivé
-   odkazy. Nezkoušet a neotvírat URL. Nedělat veřejné ukázky z raw datasetu.
-2. Ham: běžné školní/rodinné/organizační zprávy a korektní varování „kód nikomu
-   nesdělujte“. Spam: reklama či nevyžádaný obsah bez automatického přiřazení
-   podvodu. Smishing: věrohodně napsaný podvodný požadavek na peníze/údaje nebo
-   kód, včetně příkladů bez odkazu. Nejasné případy vysvětlit a odložit, ne uhádnout.
-3. Zahrnout nátlak, rodinné žádosti, zásilky, neutrální odkazy, varování před
-   sdílením kódů, krátký/neúplný text. Samotný keyword, HTTPS či chyba v češtině
-   nesmí určovat label. Varianty jednoho scénáře vždy sdílí `family_id`.
-4. Překlady označit `translation`; `family_id=source_family_id`. Překlad row z
-   Mendeley validation/test se nesmí dostat do development ani train. Známý
-   zdrojový rodinný group musí zůstat v původním splitu. Pro nezávislý blind set
-   preferovat nově vytvořené rodiny, ne překlady již viděného datasetu/development.
-5. Kontrolor čte jako plain text s rozbitými URL. Zapíše skutečný důvod labelu,
-   původ, jazyk a svůj pseudonym/datum. Neshody řešit před uzavřením, jejich počet
-   zaznamenat. Pydantic kontroluje formát/atribuci, nedokazuje kvalitu anotace.
-6. Nezávislý správce prověří ID, normalizované duplikáty, near-copy, šablony a
-   **rodiny napříč development, challenge a původními EN splity**. Vývojáři předá
-   jen text-free výsledek nulového průniku nebo blokátor. Při nalezeném překryvu
-   odloží celou rodinu či vytvoří novou, bez ukazování odpovědí vývojáři.
-7. Správce před evaluací uloží SHA-256 obou přesných souborů a manifest ID/rodin,
-   datum, počty labelů a review status. Neměnit odpovědi podle výstupu modelu.
+1. Use fictional content and inert .invalid domains. No app-user messages, real codes/phones/accounts/children's names or live harmful links. Do not open links or turn raw corpus entries into public demos.
+2. Include ordinary school/family/organizational messages and genuine never-share-your-code notices; distinguish advertising from deceptive money/data/code requests, including cases without links. Quarantine ambiguity rather than guessing.
+3. Include pressure, family requests, deliveries, neutral links, code-sharing warnings and short/incomplete inputs. A keyword, HTTPS or language error cannot alone determine a label. Scenario variants share family_id.
+4. Mark translations as translation and retain family_id=source_family_id. A translation of validation/test input cannot enter development/train. Keep known source groups in their original split. Prefer new independent blind families over already seen translations.
+5. Review defanged plain text and record real rationale/provenance/language/reviewer/date. Resolve disagreements before closure and record counts. Format validation cannot establish annotation quality.
+6. A custodian checks IDs, normalized/near/template duplicates and families across development, challenge and original English splits. Give developers only text-free intersection results/blockers. Quarantine whole overlaps without revealing blind answers.
+7. Before evaluation pin exact-file SHA-256, ID/family manifest, date, counts and review state. Do not change labels from model predictions.
 
-Nesmíchávat české ruční/syntetické příklady s Mendeley pro zvýšení počtu řádků.
-Development není held-out benchmark. Challenge není reprezentativní česká SMS
-populace; budoucí metriky musí oddělit CZ/EN a uvést původ, pokrytí a abstention.
-Nyní není naměřena kvalita v žádném jazyce.
+Do not merge synthetic/manual Czech inputs into Mendeley merely to inflate counts. Development is not held-out; the challenge is not representative of the Czech SMS population. Future reports separate languages, origins, coverage and abstention. No performance is measured now.
 
-## Veřejné demo
+## English public demo and format tests
 
-`tests/fixtures/demo_messages.json` je zvlášť: vlastní fiktivní CZ/EN texty,
-`.invalid`, `manual_fictional_demo_only` a žádné ground-truth labely. Soubor není
-importován přípravou dat ani frontendem. Modelové výsledky pro tyto řetězce se
-nesmějí hardcodovat. Formátové testy používají jen samostatné fiktivní mocky.
+The separate tests/fixtures/demo_messages.json contains only fictional English messages, .invalid links, manual_fictional_demo_only provenance and no labels. It is not used by preparation/frontend; do not hardcode model outputs. Unit tests for language/group handling contain original non-English input data and English comments/assertions, not public copy or blind evaluations.

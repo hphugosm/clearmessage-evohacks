@@ -1,17 +1,17 @@
-# 08 — Odevzdání, dokumentace a důvěryhodné demo
+# 08 — Accurate submission and demo materials
 
-Celý následující blok vlož do Codexu, nebo ho nech načíst z tohoto souboru.
+Paste the following block into Codex, or ask Codex to read this file. If /goal is unavailable, use the text after /goal as a normal task request.
 
 ```text
-/goal Připrav finální odevzdávací materiály Klidné zprávy pro EVOHACKS 2026 ze skutečného stavu repozitáře a auditních výsledků. Funkce už nepřidávej. Dodrž AGENTS.md a nepublikuj ani neodesílej nic bez výslovného souhlasu uživatele.
+/goal Prepare ClearMessage's EVOHACKS 2026 submission materials from the actual repository and audit. Read AGENTS.md and docs/LANGUAGE_POLICY.md. Add no features. Publish or submit only with authorization.
 
-Vytvoř čitelné README v angličtině s krátkou českou verzí: co aplikace řeší, jak ji spustit od čistého klonu, skutečné požadavky/modelové artefakty, architektura, trénink a evaluace, omezení a soukromí. Doplň MODEL_CARD.md, DATA_SOURCES.md, THIRD_PARTY_NOTICES.md a skutečné příkazy testů. Rozliš naše trénovaná klasifikační hlava vs převzatý encoder/knihovny/data. Použití Codexu uveď otevřeně. Nedávej všem cizím součástem automaticky naši licenci.
+Write an English-only README with purpose, clean setup, actual dependencies/artifacts, architecture, training/evaluation, limitations/privacy and real test commands. No short translated version. Complete docs/MODEL_CARD.md, docs/DATA_SOURCES.md and docs/THIRD_PARTY_NOTICES.md with actual evidence. Distinguish our trained head from reused encoder/data/libraries/fonts. Disclose Codex use and preserve upstream licensing; do not blanket-license third-party work.
 
-Připrav DEVPOST_DRAFT.md: Inspiration, What it does, How we built it, Challenges, Accomplishments, What we learned, What's next a jasný odstavec k AI for Automation. Popiš skutečnou automatizaci od interpretace k bezpečnému postupu a návrhu pomoci. Použij pouze reálné metriky s denominátory a oddělenými jazyky. Nepřipisuj projektu automatické blokování/ochranu inboxu ani zabráněné škody.
+Write docs/DEVPOST_DRAFT.md with Inspiration, What it does, How we built it, Challenges, Accomplishments, What we learned, What's next and an AI for Automation paragraph. Describe actual interpretation-to-guidance/help automation. Use measured metrics with denominators and separate languages. Do not claim inbox protection, automatic blocking or prevented loss.
 
-Připrav DEMO_SCRIPT.md pro 2:30: problém; funkční podezřelá zpráva; bezpečný postup a ručně sdílené neutrální shrnutí; legitimní/reklamní příklad; poctivá nejistota; krátký pohled na kód a reálné ML výsledky; limity a dostupnost. Všechny ukázky jsou umělé a tak označené. Pokud OCR nefunguje, ve scénáři není. Když nedokážeš nahrát video, dodej scénář a přesný checklist, nikdy netvrď, že video bylo vytvořené.
+Write docs/DEMO_SCRIPT.md for 2:30: problem; genuine suspicious case; reasons/steps and user-initiated neutral help summary; ordinary/advertising case; honest uncertainty; code and real model evaluation; limitations/availability. Examples are visibly fictional. Omit disabled OCR and unimplemented sharing. If only the foundation exists, disclose it and demonstrate no analysis. A script is not a recorded video; provide an exact recording/playback checklist if recording cannot be done.
 
-Připrav RELEASE_CHECKLIST.md pro člověka: přístup k veřejnému repu, funkční URL nebo lokální instrukce, přehrání 2–3min videa, vyplnění všech povinných polí, kontrola licence/reuse, uložení a skutečné odeslání. Náš termín je 11. 10. 2026 19:00 Europe/Prague; pravidla uvádějí 20:59, hlavička Devpostu 21:00, používej dřívější limit. Živé hodnocení je 21:00–22:00 podle pravidel.
+Write docs/RELEASE_CHECKLIST.md: anonymous repository/app access or local instructions, actual 2–3 minute video playback, required fields, sources/licenses/reuse, saving and genuine submission. Internal target: 11 October 2026 at 19:00 Europe/Prague. Rules list 20:59; header 21:00; use the earlier limit. Judging is listed for 21:00–22:00. Recheck notices.
 
-HOTOVO: dokumentace neobsahuje placeholders vydávané za hotová tvrzení, odpovídá repu a projde závěrečný smoke test. Shrň neprovedené ruční úkony pro uživatele, aktualizuj STATUS.md a vytvoř poslední lokální commit. Nepředstírej odevzdání, publikaci nebo naměřené výsledky.
+DONE: docs match implemented behavior, no unfilled placeholders appear as claims, smoke checks pass and remaining manual owner steps are explicit. Run the package audit, update docs/STATUS.md and commit if permitted. Never claim unperformed publication, video creation, submission or measurements.
 ```

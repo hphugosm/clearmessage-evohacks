@@ -1,17 +1,17 @@
-# 05 — Reprodukovatelné spuštění a včasné nasazení
+# 05 — Reproducible release and hosting
 
-Celý následující blok vlož do Codexu, nebo ho nech načíst z tohoto souboru.
+Paste the following block into Codex, or ask Codex to read this file. If /goal is unavailable, use the text after /goal as a normal task request.
 
 ```text
-/goal Připrav a ověř odevzdatelnou verzi Klidné zprávy v jednom Docker kontejneru. Použij již implementovaný model/API/frontend, nepřidávej nové funkce. Dodrž AGENTS.md a odděl ověřené lokální spuštění od veřejného nasazení.
+/goal Prepare and verify ClearMessage in one container using the implemented model/API/frontend. Do not add features. Read AGENTS.md and distinguish verified local execution from public deployment.
 
-Dokonči multi-stage build, v němž FastAPI servíruje frontend i /api. Model a tokenizer připrav při explicitním setup/build kroku s fixovanou revizí a hashem, ne při každé analýze. Netrénuj model při requestu nebo každém restartu. Nevyžaduj GPU. Změř skutečný start, paměť a latenci; nastav rozumnou malou souběžnost, limity requestů a zdravotní kontrolu modelu.
+Complete the multi-stage build with FastAPI serving frontend and /api. Acquire pinned model/tokenizer assets during explicit setup/build with hashes, not analysis/restarts. Do not retrain on requests or require GPU. Measure startup, memory and latency; bound concurrency and requests. Health must distinguish service liveness from actual model readiness. Revise foundation resource limits from measured model needs.
 
-Vytvoř reprodukovatelné instrukce od čistého klonu. Pokud modelový artefakt není v repu, popiš jednoznačný způsob jeho získání či lokálního tréninku a integritní kontrolu. Nespouštěj cizí pickle. Nezaměňuj lokální testy za nasazení na cizím účtu. README musí uvádět skutečně vyzkoušené příkazy a všechny limity.
+Document a clean-clone setup. If artifacts are absent, provide a precise acquisition or local-training path with integrity checks. Never load untrusted pickles. README commands and English privacy/scope claims must match actual execution; a Dockerfile alone is not a passed container test.
 
-Pro veřejný host použij pouze již známý a uživatelem autorizovaný server/účet. Ověř HTTPS, veřejnou dostupnost porotci, no-store, absence logování těl i v proxy a zákaz egress při analýze. Nikdy nevytvářej placený plán ani nezveřejňuj repozitář bez souhlasu. Aktuální dokumentace Hugging Face uvádí placený plán pro vytvoření Docker Spaces, proto neslibuj univerzálně bezplatné nasazení. Není-li přístup vyřešený, připrav konfiguraci, dolož blokátor a dokonči lokální variantu; Devpost umožňuje lokální instrukce.
+Publish only to an existing destination authorized in this session. Verify HTTPS, anonymous access, no-store and no body logging in application/proxy/hosting. Verify no analysis egress. Do not buy subscriptions or publish repositories without authorization. Hugging Face compute Spaces may require a paid plan; recheck current conditions. If access is unresolved, prepare configuration and a verified local fallback, recording the actual blocker.
 
-Projeď tři end-to-end příklady a chybu modelu v čistém prostředí. Zkontroluj, že produkce nepoužívá fixture model ani mock API. Diagnostika nesmí zveřejňovat texty zpráv, interní cesty či tajné proměnné.
+Run genuine ordinary/suspicious/review flows and a failed-model case in a clean environment. Ensure production has no fixture model or mock API. Diagnostics must not leak message text, secrets or internal paths. Serve fonts/illustrations locally and use ClearMessage names everywhere.
 
-HOTOVO: existuje opravdu otestované spuštění a deployment report se skutečnou URL, pouze pokud se nasazení uskutečnilo. Jinak explicitní blokátor a plně doložený lokální fallback. Aktualizuj STATUS.md a commit; nepředstírej veřejnou dostupnost a automaticky nic neposílej na Devpost.
+DONE: reproducible execution is actually tested. A deployment report includes a real URL only if deployed; otherwise state the blocker and local evidence. Update docs/STATUS.md and commit if permitted. Do not submit Devpost automatically.
 ```

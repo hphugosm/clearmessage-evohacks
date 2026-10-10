@@ -1,43 +1,22 @@
-# Reprodukovatelná příprava dat (bez modelu)
+# ClearMessage reproducible data preparation
 
-**Raw soubor je nyní dostupný díky uživateli:** importováno 5 971 záznamů,
-hash/počty/audit a neměnný návrh splitů jsou doložené. **Finální freeze stále
-blokuje 45 lidských kontrol a schválení odložení 98 konfliktních řádků.**
-Návrh má `data_split_ready=false`; model se netrénuje.
-Zdroj, aktuální měření a historie 403: [DATA_SOURCES.md](../DATA_SOURCES.md).
+**Original data imported; human approval incomplete.** The real Mendeley archive, audit and immutable candidate exist. Four explicit decisions are saved (two agreements, two requested changes); 41 entries remain pending. Attribution/language and exclusion approval are incomplete. No approved final split exists. The user separately authorized provisional original-label training; this did not complete Goal 01. See [data sources](../DATA_SOURCES.md), [model card](MODEL_CARD.md) and [status](STATUS.md). This preparation workflow itself trains no model.
 
-## Prostředí
+## Environment and scope
 
-Z kořene projektu; existující lokální `.venv`, Python 3.13.1 (Unicode 15.1.0),
-Pydantic 2.14.0 / pytest 9.1.1 podle hashovaných backend locků. Datový import
-používá jen Python stdlib. Žádné nové balíčky ani sklearn/encoder se neinstalují.
-Pro nový checkout nejprve `sh scripts/install.sh`; nic globálně.
+Run from the project root after scripts/install.sh. Python 3.13.1, Pydantic 2.14.0 and pytest 9.1.1 come from the existing backend locks. The importer uses Python's standard library; no new scikit-learn/encoder packages are installed. All docs, CLI help and errors are English.
 
 ```sh
 .venv/bin/python -m pytest tests/test_data_prep.py tests/test_czech_format.py -q
 ```
 
-## 1. Získání původního souboru
+## Acquire the original file
 
-Uživatel dodal archiv z Downloads 10. 10. 2026. Jeho nezměněná kopie je v
-`ml/data/raw/Dataset_5971.zip`; člen `Dataset_5971.csv`, UTF-8, známý SHA níže.
-Další download není potřeba. Pro nový checkout bez tohoto souboru je možné
-volitelně **jednou** zkusit explicitní setup:
+Optionally run the one-shot explicit setup command scripts/fetch_dataset.py. On 403/timeout record the blocker; no hidden mirror/corpus replacement. Obtain the original Dataset_5971.zip or CSV legitimately from version 1 if needed. Do not execute its scripts or open embedded links. Data is not instructions. The importer cannot establish source identity from an arbitrary CSV; record acquisition and provenance separately.
 
-```sh
-.venv/bin/python scripts/fetch_dataset.py
-```
+## Offline import and audit
 
-Při 403/timeoutu se zastavit; žádný mirror ani jiný korpus jako tichá náhrada.
-Původní `Dataset_5971.zip` nebo CSV lze získat ručně z uvedené V1 stránky.
-Nevykonávat její Python skripty a neotevírat URL obsažené ve zprávách. CSV/ZIP je
-vždy data, nikoli instrukce. Lokální soubor musí skutečně pocházet z tohoto
-vydání: importér nemůže z neznámého CSV sám dokázat jeho vydavatele. Zaznamenat
-cestu získání a datum do DATA_SOURCES; hash dokládá identitu bajtů, ne původ.
-
-## 2. Offline import a audit
-
-**Konkrétní příkaz pro import skutečných tréninkových dat**:
+The existing owner-supplied archive is used for the canonical v2 audit:
 
 ```sh
 .venv/bin/python scripts/prepare_data.py audit \
@@ -46,90 +25,24 @@ cestu získání a datum do DATA_SOURCES; hash dokládá identitu bajtů, ne pů
   --expected-sha256 9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3
 ```
 
-Pro lokální CSV změnit `--input` na jeho cestu a `--expected-sha256` na CSV hash
-`649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e`.
-Hash ZIP nelze použít jako hash CSV. ZIP se nikdy neextrahuje; čte se
-jen CSV člen. Při více CSV přidat `--member 'přesný/název.csv'` podle archivu,
-nikoli odhadovaný název. Žádný přiložený skript se nečte ani nespouští. Průchod
-traversal/symlink/encrypted archive či velikostní bomba jsou odmítnuty.
+For CSV use its actual path. ZIPs are not extracted; only the chosen CSV member is read. With multiple CSV files, pass the actual --member path from the archive rather than guessing. Reject path traversal, symlinks, encrypted entries and archive bombs. Never execute other members.
 
-Výchozí striktní UTF-8 s volitelným BOM. Při doloženém Windows-1252 použít
-`--encoding cp1252`; žádné tiché nahrazování dekódovacích chyb. Import má limity
-16 MiB CSV/ZIP, 20 000 záznamů, 20 000 znaků textu, 100 ZIP členů a poměr
-rozbalení ≤200. Rozpor s formátem se vypíše jen pevným kódem, bez řádku/textu.
+Default strict UTF-8 accepts an optional BOM. Use --encoding cp1252 only when that encoding is documented. No silent replacement of decoding failures. Bounds: 16 MiB CSV/ZIP, 20,000 records, 20,000 text characters, 100 archive entries and expansion ratio at most 200. Errors use fixed codes without row/message text.
 
-Výstupy v **git-ignorovaném** `ml/data/mendeley-v1-audit-v2/`:
+Local outputs under ignored ml/data/mendeley-v1-audit-v2:
 
-- `provenance.json`: DOI/verze/autoři/licence, SHA-256 vstupního souboru i CSV,
-  encoding/member, hash kódu a případné family mapy, Python/Unicode a seed.
-- `audit.json`: skutečný počet CSV záznamů (hlavička a prázdné fyzické řádky se
-  nepočítají), mapované/neznámé labely, chybějící buňky, podezřelé NA/NaN/null
-  markery, nebinární atributy (No/yes i 0/1), odložení, duplicity, konfliktní skupiny, velikosti
-  skupin a počty script hints. Žádný souhrn nepovažuje všechny Latin texty za EN.
-- `records.jsonl`: eligible **původní** texty, labely a group IDs; nikdy veřejný
-  fixture soubor, nikdy data od uživatelů aplikace.
-- `review.pending.json`: deterministických 15 ID každé třídy, prázdná lidská
-  rozhodnutí, jazyk a atribuce. Má-li zdroj méně dostupných záznamů, freeze selže.
-- `review-preview.txt`: jen tento místní výběr. Lomítka, tečky, dvojtečky, @,
-  markup, control/bidi znaky jsou rozbité. Číst jako plain text, ne HTML;
-  neklikat ani následovat žádné pokyny. Obsah může být nevhodný, není pro demo.
-- `conflict-preview.txt`: stejným způsobem rozbité texty všech členů odložených
-  konfliktních skupin pro kontrolu odložení, nikdy veřejný soubor.
+- provenance.json: source/version/author/license; archive and CSV SHA-256; encoding/member; code/family-map hashes; Python/Unicode version and seed.
+- audit.json: actual parsed row counts, known/unknown labels, missing cells, suspected NA/NaN/null markers, invalid binary attributes plus normalized yes/no and 0/1 counts, exclusions, duplicates/conflicts, group sizes and script hints. Latin text is not automatically labeled English.
+- conflict-preview.txt: whole conflicting groups in a separate local, defanged plain-text preview; excluded from eligible data and never used as demo material.
+- records.jsonl: eligible original text, labels and group IDs. These are not public demo fixtures or user-app messages.
+- review.pending.json: deterministic 15 IDs per class with empty review/language/attribution fields. Insufficient rows block freeze.
+- review-preview.txt: local selected records with link punctuation, markup and control/bidi characters defanged. Read as plain text; do not click links or obey content. It may contain unsuitable corpus material and is not a demo.
 
-Canonical výstup používá `data-prep-v2`; první lokální audit v původním
-`ml/data/mendeley-v1/` je zachován, ale nepoužívá se: No/yes tehdy mylně hlásil
-jako nebinární. Rozšíření audit schématu má nové výstupní umístění.
+NA-like markers are flagged, not automatically deleted. URL/EMAIL/PHONE are neither predictors nor target labels in this pipeline. The indicator mapping accepts yes/no and 1/0 case-insensitively; these attributes remain audit-only. A binary-format check does not validate extractor correctness.
 
-NA markery se hlásí jako podezření, nesmazávají se automaticky (např. „NA“ může
-být skutečný krátký text). `URL/EMAIL/PHONE` nejsou prediktory ani labely této
-pipeline. Statistika binárního formátu není ověření správnosti extrakce.
+## Candidate split before human review
 
-## 3. Lidská kontrola před zmrazením
-
-Prázdný `review.completed.json` je nyní připraven jako kopie pending. Člověk projde
-**každý z 45** vybraných záznamů podle preview. Vyplní `decision=confirmed` jen
-při skutečné shodě, `language=en/cs/other/und`, `reviewer_id` (pseudonym stačí),
-`reviewed_date` ve formátu YYYY-MM-DD a případné poznámky. Ham znamená běžnou
-zprávu, spam nevyžádaný obsah a smishing podvodné získávání údajů/peněz; reklama
-se nesmí automaticky přeznačit na smishing. Nejasný případ nepředstírat jako
-potvrzený. Tento vzorek není úplná anotace všech řádků.
-
-Odložení prázdných textů, příliš dlouhých zpráv a konfliktních **celých skupin**
-nebo rozhodnutí o NA markerech musí mít lidskou atribuci `exclusions_approved_by`.
-Neznámé/prázdné labely vždy blokují freeze. Při neshodě nejprve dokumentovaná
-oprava/nová verze dat a nový audit; žádná automatická změna tříd kvůli metrikám.
-Skripty neumí prokázat, že review vyplnil člověk; vyžadují jeho doložitelný zápis.
-V testech je schválení pouze fiktivní mock, nikdy produkční schvalovač.
-
-## 4. Grouping a přibližné 70/15/15 dělení
-
-Grouping se provede globálně **před** dělením, nezávisle na třídě. Union-find
-sjednocuje transitivně:
-
-1. shodu NFKC + casefold + sjednocení whitespace; původní modelový text se nemění;
-2. shodu konzervativní šablony po nahrazení URL/e-mailů/domén a čísel, jen pokud
-   má alespoň 5 zbývajících slov a 30 znaků;
-3. token-set Jaccard ≥0.85, poměr délek ≥0.90 a znakové SequenceMatcher ≥0.90;
-4. ručně doložené rodiny/překlady, volitelný `--families ml/data/families.json`.
-   Formát: JSON objekt `row-000001` → `rodina-id`; platí pro audit i freeze.
-
-Kandidáty near-copy hledá prefix filtering s jednotným pořadím tokenů. Více než
-2 miliony kandidátů zastaví audit, nepřeskakují se tiše. Parametry, kód i family
-mapa jsou hashované. Nejde o naučené ML předzpracování. Detekce parafrází a
-překladů bez metadat není zaručena; identifikované rodiny spojit ručně. Žádné
-skutečné časové/kampaňové oddělení nelze doložit ze známého popisu sloupců.
-
-Skupiny z lidského vzorku jsou celé rezervované pro **train**, aby při auditu
-nebyl otevřen budoucí held-out text. Zbytek se seřadí podle velikosti a SHA-256
-se seedem **20261010**; greedy výběr minimalizuje čtvercovou odchylku od
-70/15/15 **pro každou třídu**. Validation i test musí mít skupiny všech tříd.
-Při odchylce >10 procentních bodů u některé třídy se freeze zablokuje. Report
-obsahuje skutečné počty, ne příslib přesných podílů pro libovolně velké skupiny.
-
-Nyní existuje **neměnný návrh** nad skutečnými eligible daty. Lze ověřit
-průniky/identitu, ale tento výsledek nepotvrzuje lidské labely ani připravenost
-k tréninku. Candidate `verify` vrací `candidate_pending_human_review`, nikoli
-`verified` pro finální data.
+After acquisition and audit, plan-split can produce an immutable, text-free proposal using the real input hash:
 
 ```sh
 .venv/bin/python scripts/prepare_data.py plan-split \
@@ -137,13 +50,30 @@ k tréninku. Candidate `verify` vrací `candidate_pending_human_review`, nikoli
   --output ml/data/mendeley-v1-audit-v2 \
   --expected-sha256 9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3 \
   --manifest ml/manifests/mendeley-v1.split.candidate.json
-
-.venv/bin/python scripts/prepare_data.py verify \
-  --input ml/data/raw/Dataset_5971.zip \
-  --manifest ml/manifests/mendeley-v1.split.candidate.json
 ```
 
-**Teprve po skutečně vyplněné lidské kontrole** (aktuálně odmítne pending):
+The existing immutable proposal reports candidate_pending_human_review and data_split_ready=false; its creation-time review count is historical. Actual eligible counts are 5,873 rows / 5,585 groups, split 4,112 / 881 / 880. Candidate SHA-256 is 51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0. verify confirms integrity and empty intersections, not label approval. Only genuinely completed attributed review and freeze can create approved training data. Provisional authorization in Goal 02 preserved the candidate and this gate.
+
+## Human review gate
+
+For a new audit only, copy review.pending.json to review.completed.json without overwriting an existing review. The current review.completed.json already contains four explicit decisions: preserve them. Never infer decisions from a file name. A person reviews all 45 selected records. Set decision=confirmed only for genuine agreement; provide language=en/cs/other/und, reviewer_id, reviewed_date (YYYY-MM-DD) and notes where appropriate. ham is ordinary, spam unsolicited, smishing a deceptive attempt to obtain data/money. Advertising alone is not smishing. Quarantine ambiguity; this sample is not complete annotation.
+
+Exclusions of blank/long text, conflict groups or decisions about NA markers require exclusions_approved_by. Unknown/blank labels block freeze. Disagreement needs a documented corrected data revision and new audit, not automatic relabeling for metrics. Scripts require attributed records but cannot prove a human actually reviewed them. Test approvals are fictional mocks, not production consent.
+
+## Grouping and approximately 70/15/15 splitting
+
+Globally group before splitting, independently of class. Union-find joins:
+
+1. NFKC/casefold/whitespace-normalized duplicates while retaining original model text.
+2. Conservative templates after variable URLs/emails/domains/numbers are replaced, with at least five remaining words and 30 characters.
+3. Near-copies with token Jaccard at least 0.85, length ratio at least 0.90 and SequenceMatcher at least 0.90.
+4. Curated translation/template families through an optional --families JSON mapping from row ID to family ID, used consistently for audit/freeze.
+
+Prefix filtering uses a consistent token ordering. More than two million near-copy candidates stops the audit rather than skipping comparisons. Parameters, code and family map are hashed. This is grouping, not learned preprocessing. Paraphrase/translation detection is not guaranteed; merge known families explicitly. Published columns do not establish campaign/time separation.
+
+Entire reviewed families are reserved for train so the audit does not reveal future held-out input. Remaining groups use size/hash ordering with seed 20261010 and a greedy objective for per-class 70/15/15 balance. Validation and test require all classes. A class deviation above 10 percentage points blocks freeze. Report actual counts; arbitrary group sizes cannot guarantee exact ratios.
+
+The commands below use the measured archive hash. Final freeze is a future human-approved action, not authorized by the UI migration. It currently fails because review is incomplete:
 
 ```sh
 .venv/bin/python scripts/prepare_data.py freeze \
@@ -158,26 +88,10 @@ k tréninku. Candidate `verify` vrací `candidate_pending_human_review`, nikoli
   --manifest ml/manifests/mendeley-v1.split.json
 ```
 
-Pro CSV/encoding/member/families použít stejné volby jako při auditu. Manifest
-má všechny eligible row IDs, group IDs, labely, split a hash textu/normalizace/
-šablony; **žádný text zpráv**. U každého páru splitů musí být průnik všech těchto
-ID/hashů prázdný. `.sha256` fixuje přesné bajty manifestu a manifest fixuje vstup,
-kód i review. Opakování se stejnými bajty je idempotentní; přepsání existujícího
-odlišného reportu/manifestu se odmítne. Revidované artefakty mají novou cestu,
-novou doloženou verzi a následně nové zmrazení, ne přepis held-out výsledků.
+Use the same input/member/encoding/families options as the audit. The manifest contains eligible IDs, groups, labels, split and text/normalization/template hashes, not message text. All cross-split ID/hash/group intersections must be empty. Its checksum pins exact bytes; provenance pins source, code and review. Identical output is idempotent; different bytes cannot overwrite an existing artifact. Revisions use a new path/version and fresh freeze rather than overwriting held-out evidence.
 
-Text-free candidate manifest a souhrn auditu/provenance jsou nyní v Git.
-Finální reviewed manifest vznikne až po kontrole. Raw, review preview,
-review poznámky, rodiny i challenge odpovědi
-zůstávají mimo Git. Aktualizovat DATA_SOURCES, docs/data/preparation-status.json
-a STATUS přesnými skutečnými počty/hashi. Nikdy automaticky nevkládat celý
-lokální audit s libovolnými cizími názvy sloupců/členů do veřejného dokumentu.
+After real acquisition/audit, a text-free manifest and redacted source/audit summary may be committed. Raw text, review previews/notes, family inputs and challenge answers stay outside Git. Update DATA_SOURCES, preparation-status and STATUS with measured values; do not publish an unreviewed local audit containing arbitrary upstream columns/member names.
 
-## Čeština a demo
+## Additional-language formats and public examples
 
-Formát a nezávislé vytvoření: [ml/czech/README.md](../ml/czech/README.md).
-`tests/fixtures/demo_messages.json` obsahuje výhradně vlastní fiktivní CZ/EN
-texty s `.invalid`, bez ground-truth labelů. Není importován do tréninku ani UI.
-Blind odpovědi neexistují a žádný přípravný příkaz je nečte. TF-IDF, výběr prahů,
-encoder, model a metriky jsou mimo tento krok. Pozdější learned preprocessing
-fitovat pouze na train a obě varianty porovnat na stejném zmrazeném splitu.
+[Additional Czech-input format instructions](../ml/czech/README.md) are in English. No real development/blind set is bundled or read by preparation. Language-format unit tests retain original non-English input as test data; this is not product copy. Public demo fixtures are now entirely English, fictional, inert and unlabeled; they are imported by neither training nor UI. Do not hardcode predictions for them. Later learned preprocessing uses train only and candidate models share one frozen split.

@@ -1,14 +1,20 @@
-# Codex instructions — Klidná zpráva
+# Codex instructions — ClearMessage
 
 ## Product and scope
-Build a small Czech-first, mobile-friendly web application for understanding
+Build a small English-only, mobile-friendly web application for understanding
 potentially fraudulent short messages. Intended users include older adults and
 children. Read docs/PROJECT_PLAN.md, docs/RESEARCH.md, docs/ACCEPTANCE.md and
-current docs/STATUS.md before a goal. Complete only the active goal, then stop.
+current docs/STATUS.md before a goal. Before interface changes read
+docs/BRAND_BIBLE.md, docs/UI_COPY.md and docs/LANGUAGE_POLICY.md.
+Use approved Style A, shared tokens and same-origin assets. All first-party
+UI, documentation, metadata and instructions use English and ClearMessage.
+Run python3 scripts/audit_migration.py with the relevant test suite.
+Complete only the active goal, then stop.
 
 The MVP is pasted text → a genuinely trained classifier + transparent rules →
 plain-language guidance → optional user-initiated sharing of a sanitized summary.
-English UI is a translation, not evidence of model performance in any language.
+English UI is independent from message language and is not evidence of model
+performance in any language. Preserve Czech evaluation data and provenance.
 Do not build a terminal, inbox integration, browser extension, account system,
 database, malware scanner, automatic message blocking or general-purpose agent.
 OCR is optional, behind a feature flag, and only after a working deployed core.
