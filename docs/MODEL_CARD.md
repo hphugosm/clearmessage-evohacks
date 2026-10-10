@@ -13,10 +13,12 @@ synthetic integration report `ml/reports/goal03-integration.json`.
 
 The user explicitly authorized provisional training on **original** source labels
 after pausing human review. This permits the experiment; it does not invent human
-approval. Four human decisions are saved locally: two agree with source labels,
-two request smishing → spam. 41 sample entries remain pending, reviewer/language
-attribution is missing, and exclusion approval is empty. Corrections were not
-silently applied. The previous blocker report remains as historical evidence.
+approval. At training time four human decisions were saved: two agreements and two
+requested smishing → spam changes, with 41 entries pending. The owner has since
+saved all 45 label decisions: 16 agreements and 29 corrections, zero pending
+labels. All 45 languages and four reviewer/date attributions remain missing;
+conflict exclusion approval is empty. Requested corrections (44 final spam /
+1 ham / 0 smishing) have not been applied to this original-label model or corpus. The previous blocker report remains as historical evidence.
 
 ## Data and licenses
 

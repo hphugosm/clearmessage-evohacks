@@ -2,9 +2,11 @@
 
 The original Mendeley V1 archive contains 5,971 rows. Audit/hash/label mapping are
 recorded. The candidate has 5,873 eligible rows and empty group intersections;
-46 conflicting groups / 98 rows are quarantined. Four explicit human decisions
-are saved: two agreements, two requested changes. 41 entries remain pending;
-attribution/languages and exclusion approval are incomplete.
+46 conflicting groups / 98 rows are quarantined. All 45 label decisions are
+saved: 16 agreements and 29 requested corrections,
+zero pending labels. All 45 languages and four reviewer/date attributions remain
+missing; correction reconciliation and exclusion approval are incomplete.
+Current validation evidence is in docs/STATUS.md.
 
 The user explicitly authorized **provisional training on original labels**.
 An immutable authorization manifest references the unchanged candidate and exact

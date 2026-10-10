@@ -1,13 +1,15 @@
 # ClearMessage project status
 
-Updated **10 October 2026, Europe/Prague**. The standalone local Goal 01 human
-review tool is ready; stop after this deliverable. The English ClearMessage /
-approved Style A migration remains complete. This does not complete human review,
-start Goal 04, retrain a model, freeze data, inspect blind/held-out messages or publish.
+Updated **10 October 2026, Europe/Prague**. The owner supplied the saved Goal 01
+review validation report; its schema/hash/decisions were checked against the
+current review. Zero label decisions are pending, but language/attribution,
+correction reconciliation and conflict approval still block Goal 01 completion.
+The English migration remains complete. No Goal 04, retraining, split freeze,
+blind/held-out input inspection or publication was started.
 
 The real Goal 02 sparse model remains integrated with `analysis-policy-1` and
-`observed-requests-1`, contract **1.1.0**. It is provisional: **41 human reviews
-pending**, original source labels, no verified language performance. Current
+`observed-requests-1`, contract **1.1.0**. It is provisional: **human review requirements remain incomplete**, original
+training labels unchanged, no verified language performance. Current
 results are `suspicious` with actual basis or `review`, always
 `analysis_complete=false`. Production `no_strong_signals` is disabled.
 
@@ -18,7 +20,7 @@ results are `suspicious` with actual basis or `review`, always
 | Frontend/API | Real model-backed POST via Vite and FastAPI-served build; no demo verdicts. |
 | Contract | Pydantic → OpenAPI → TypeScript; title migrated, fields/enums/versions unchanged. |
 | Model/policy | Real hash-verified project JSON; incomplete results and rules-only errors remain explicit. |
-| Dataset | 5,971 original rows; 4 explicit human decisions (2 agreements, 2 requested smishing → spam changes); 41 pending, attribution/languages and conflict approval incomplete. |
+| Dataset | 5,971 original rows; 45 saved label decisions (16 agreements, 29 corrections), zero pending labels; all 45 languages and four attributions missing, conflict approval incomplete. Corrections not applied to source/training. |
 | Data split | Immutable candidate, empty intersections; no approved final freeze. Provisional authorization preserves original assignments and `data_split_ready=false`. |
 | Czech development/challenge | Format and independent instructions; zero actual challenge records. Existing synthetic Czech regression inputs preserved, not a benchmark. |
 | Sharing | Fixed English templates, preview and separate gesture; selectable manual-copy fallback. No clipboard API or source content. |
@@ -27,7 +29,53 @@ results are `suspicious` with actual basis or `review`, always
 | Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
 | OCR/submission/video/Goal 04 | Not started by this migration. |
 
-## Goal 01 — standalone local human review tool
+## Goal 01 — owner-supplied review validation follow-up
+
+The owner supplied
+`ml/data/mendeley-v1-audit-v2/review.validation-2026-10-10-4e674147a8a4.json`.
+Report SHA-256:
+`e362d9a78e20b543aab79bb7515beda33fd1793007631edc1ae2ab1f4a05ece9`.
+Its revision matches the exact current `review.completed.json` SHA-256:
+`4e674147a8a42f144aa90f023430c8e181566da4c8234de52b5b69ca459defa6`.
+This supersedes the older four-decision review state recorded below. Historical
+model/report and migration hashes remain evidence of their original runs.
+
+Read-only verification with `tools.human_review.app.read_review`, `summary` and
+`counters` passed: schema, source hash/version, 45 expected IDs and unchanged
+original labels, all decisions/counters, 41 saved-change after-states and
+language/attribution/exclusion flags match the canonical saved review. No source
+message text was read or exposed and no review decisions were written.
+
+- **16 source-label agreements, 29 requested corrections, zero pending labels.**
+- Requested labels: **44 spam / 1 ham / 0 smishing**. Changes: all 15 source
+  smishing → spam and 14 source ham → spam. The remaining ham and 15 source spam
+  agree with original labels. This is the owner's saved selection, not an
+  automatically corrected corpus. Clarification was requested about the unusual
+  distribution; no alternate decisions were inferred.
+- **45 languages still unconfirmed**; reviewer/date missing on four original
+  entries: `row-000188`, `row-000244`, `row-000490`, `row-000565`.
+- Zero proposed/approved individual exclusions. Existing automatic quarantine
+  of **46 conflicting groups / 98 rows** lacks separate human approval.
+- Corrections need an explicitly authorized, documented data revision and
+  re-audit. The immutable candidate and original-label model remain unchanged.
+  A zero-pending counter is not an approved split or completed Goal 01.
+
+```sh
+.venv/bin/python scripts/training_preflight.py
+.venv/bin/python -m pytest tests/test_review_tool.py tests/test_training_preflight.py -q
+python3 scripts/audit_migration.py
+git diff --check
+```
+
+Actual results: metadata consistency **PASS**; approved preflight **EXPECTEDLY
+BLOCKED, exit 2**, `training_allowed=false`, missing approved manifest, incomplete
+label reconciliation, language and attribution/date/per-class approval. It loaded
+no message text and trained nothing. **27 tests passed**, one existing unsuppressed
+Starlette/httpx warning. No browser/build/full-suite rerun was needed for this
+metadata/documentation follow-up. Migration audit **PASS**, 133 owned files; `git diff --check` **PASS**. No dataset/model assets, policy thresholds, split assignments or
+human files were modified. Training and split freeze were not performed.
+
+## Goal 01 — standalone local human review tool (historical tool-delivery state)
 
 Built on migration commit `0c7f132`. [HUMAN_REVIEW](HUMAN_REVIEW.md) gives launch,
 workflow, schema mapping, verification and limitations. No new dependencies,

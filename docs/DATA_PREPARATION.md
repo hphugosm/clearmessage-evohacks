@@ -1,6 +1,6 @@
 # ClearMessage reproducible data preparation
 
-**Original data imported; human approval incomplete.** The real Mendeley archive, audit and immutable candidate exist. Four explicit decisions are saved (two agreements, two requested changes); 41 entries remain pending. Attribution/language and exclusion approval are incomplete. No approved final split exists. The user separately authorized provisional original-label training; this did not complete Goal 01. See [data sources](../DATA_SOURCES.md), [model card](MODEL_CARD.md) and [status](STATUS.md). This preparation workflow itself trains no model.
+**Original data imported; human approval incomplete.** The real Mendeley archive, audit and immutable candidate exist. All 45 label decisions are saved (16 agreements, 29 requested corrections); zero label decisions remain pending. All 45 languages and four reviewer/date attributions are missing. Attribution/language and exclusion approval are incomplete. No approved final split exists. The user separately authorized provisional original-label training; this did not complete Goal 01. See [data sources](../DATA_SOURCES.md), [model card](MODEL_CARD.md) and [status](STATUS.md). This preparation workflow itself trains no model.
 
 ## Environment and scope
 
@@ -56,7 +56,7 @@ The existing immutable proposal reports candidate_pending_human_review and data_
 
 ## Human review gate
 
-For a new audit only, copy review.pending.json to review.completed.json without overwriting an existing review. The current review.completed.json already contains four explicit decisions: preserve them. Never infer decisions from a file name. A person reviews all 45 selected records. Set decision=confirmed only for genuine agreement; provide language=en/cs/other/und, reviewer_id, reviewed_date (YYYY-MM-DD) and notes where appropriate. ham is ordinary, spam unsolicited, smishing a deceptive attempt to obtain data/money. Advertising alone is not smishing. Quarantine ambiguity; this sample is not complete annotation.
+For a new audit only, copy review.pending.json to review.completed.json without overwriting an existing review. The current review.completed.json contains 45 explicit decisions: preserve them. Never infer decisions from a file name. A person reviews all 45 selected records. Set decision=confirmed only for genuine agreement; provide language=en/cs/other/und, reviewer_id, reviewed_date (YYYY-MM-DD) and notes where appropriate. ham is ordinary, spam unsolicited, smishing a deceptive attempt to obtain data/money. Advertising alone is not smishing. Quarantine ambiguity; this sample is not complete annotation.
 
 Exclusions of blank/long text, conflict groups or decisions about NA markers require exclusions_approved_by. Unknown/blank labels block freeze. Disagreement needs a documented corrected data revision and new audit, not automatic relabeling for metrics. Scripts require attributed records but cannot prove a human actually reviewed them. Test approvals are fictional mocks, not production consent.
 

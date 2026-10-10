@@ -117,7 +117,10 @@ original archive; the earlier automatic download returned 403. No substitute cor
 
 Actual raw counts: 5,971 rows, 4,844 ham / 489 spam / 638 smishing. Excluding
 98 rows in 46 conflicting groups leaves 5,873 candidate rows. Cross-split group
-intersections are empty. Four explicit human decisions exist; 41 remain pending.
+intersections are empty. All 45 label decisions are now saved: 16 agreements and
+29 requested corrections;
+zero pending labels. Language/attribution, correction reconciliation and exclusion
+approval remain incomplete.
 The candidate has `data_split_ready=false`; no approved final freeze exists.
 The user authorized a provisional experiment on original labels, described in
 [MODEL_CARD](docs/MODEL_CARD.md) and [ML instructions](ml/README.md). This migration

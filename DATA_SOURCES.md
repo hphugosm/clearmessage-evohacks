@@ -25,7 +25,7 @@ it does not constitute approved training data. No extra corpus was added.
 | CSV SHA-256 | `649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e` |
 | Actual rows | 5,971 |
 | Actual ham / spam / smishing | 4,844 / 489 / 638 |
-| Human sample | 15 entries per class; 4 explicit decisions, 41 pending; attribution/language incomplete |
+| Human sample | 15 entries per class; 45 decisions: 16 agreements / 29 corrections, zero pending labels; attribution/language incomplete |
 | Group proposal | Immutable candidate; all actual eligible-data intersections empty |
 | Approved final split | Absent; `data_split_ready=false` |
 
@@ -86,9 +86,13 @@ intersections across every split pair. Candidate SHA-256:
 historical pending review at creation, not later human decisions. The unchanged
 candidate remains `candidate_pending_human_review`, `data_split_ready=false`.
 Final freeze failed with `human_label_review_pending_or_disagreed`; no final
-approved manifest was produced. Two subsequent source-label agreements and two
-requested smishing → spam changes are saved locally; they were not silently
-applied to original-label training. Exclusion approval is still empty.
+approved manifest was produced. At provisional training time two agreements and
+two requested smishing → spam
+changes were saved. The owner has since saved 16 agreements and 29 corrections
+across all 45 entries; zero label decisions remain pending. No corrections were
+silently applied to original-label training. All 45 languages and four
+reviewer/date attributions remain missing; current verification is in STATUS.
+Exclusion approval is still empty.
 
 Text-free evidence: [audit](docs/data/mendeley-v1.audit.json),
 [provenance](docs/data/mendeley-v1.provenance.json),

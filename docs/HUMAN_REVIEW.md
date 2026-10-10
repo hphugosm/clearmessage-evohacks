@@ -28,8 +28,10 @@ review notes, backups or reports.
 ## Fast review workflow
 
 1. Enter your reviewer ID; verify the date (default: Europe/Prague today).
-2. The initial view shows the **41 pending entries**, grouped by original label.
-   Use All entries to include the four prior human decisions. Counters cover all
+2. At tool delivery the initial view showed **41 pending entries**, grouped by
+   original label, plus four prior decisions. The owner has since saved all 45
+   label decisions; a zero-pending view is now expected. Use All entries to inspect
+   saved decisions and complete missing language/attribution explicitly. Counters cover all
    45 entries and include staged decisions; the validation report covers saved data.
 3. Expand a message for full text. Use a one-click original/HAM/SPAM/SMISHING
    decision, Propose exclusion or Unsure. HAM does not establish message safety.
