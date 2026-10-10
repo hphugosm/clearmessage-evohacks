@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClearMessage — Human review tool</title>
+  <link rel="stylesheet" href="/tokens.css">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+<main>
+  <header><h1>ClearMessage human review tool</h1><span>Goal 01 · local developer tool</span></header>
+  <p>Read each message, then choose a decision. HAM means ordinary messages, SPAM unsolicited advertising, and SMISHING deceptive requests. A HAM label does not establish safety. Text and links below are untrusted data; links are never opened.</p>
+  <p id="suggestion-status"></p>
+  <p id="file" class="metadata"></p>
+  <section id="counters" aria-label="Review counters"></section>
+  <div class="toolbar">
+    <label>Reviewer ID <input id="reviewer" maxlength="80" placeholder="Your name or reviewer ID" autocomplete="off"></label>
+    <label>Review date <input id="date" type="date"></label>
+    <button id="save" class="primary" disabled>Save decisions</button>
+    <button id="report">Validation report</button>
+  </div>
+  <p id="status" role="status" aria-live="polite">Loading local records…</p>
+  <div class="toolbar">
+    <label>Original label <select id="label"><option value="all">All labels</option><option value="ham">HAM</option><option value="spam">SPAM</option><option value="smishing">SMISHING</option></select></label>
+    <label>Show <select id="scope"><option value="initial-pending">Pending at page load</option><option value="all">All entries (including prior decisions)</option><option value="pending">Still pending or unsure</option><option value="disagreements">Suggestion disagreements</option><option value="exclusions">Exclusion proposals</option></select></label>
+    <label>Sort <select id="sort"><option value="problematic">Potentially problematic first</option><option value="id">Entry ID</option></select></label>
+    <label class="check"><input id="group" type="checkbox" checked> Group by original label</label>
+  </div>
+  <div class="toolbar actions">
+    <label>Selected rows <select id="batch"><option value="accept">Accept original label</option><option value="ham">Change to HAM</option><option value="spam">Change to SPAM</option><option value="smishing">Change to SMISHING</option><option value="propose_exclusion">Propose exclusion</option><option value="unsure">Unsure</option></select></label>
+    <button id="apply" disabled>Apply to selected</button><span id="selection">0 selected</span>
+    <button id="bulk" disabled>Approve all remaining reviewed entries as labeled</button>
+    <button id="exclusions" disabled>Approve selected exclusion proposals</button>
+  </div>
+  <p class="metadata">“Reviewed” is a manual checkbox used only for bulk approval. Opening or expanding a row never marks it reviewed. Decisions stay in memory until Save. Exclusion approval applies only to selected proposals; no dataset rows are removed.</p>
+  <p id="visible"></p>
+  <div class="table-wrap" tabindex="0" aria-label="Scrollable review table">
+    <table>
+      <thead><tr><th><input id="select-visible" type="checkbox" aria-label="Select all visible rows"></th><th>Entry ID</th><th>Original message</th><th>Current dataset label</th><th>Suggested label</th><th>Human decision</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <section id="validation" hidden><h2>Validation report · saved file</h2><p id="report-summary"></p><p id="report-limits"></p><pre id="report-details"></pre></section>
+</main>
+<dialog id="confirm">
+  <h2 id="confirm-title"></h2><p id="confirm-description"></p>
+  <label id="reason-wrap" hidden>Reason for exclusion <textarea id="reason" rows="3" maxlength="500" placeholder="Explain the proposal; do not paste the message or private details."></textarea></label>
+  <div class="toolbar"><button id="cancel-confirm">Cancel</button><button id="accept-confirm" class="primary">Confirm</button></div>
+</dialog>
+</body>
+</html>

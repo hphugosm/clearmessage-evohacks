@@ -1,8 +1,9 @@
 # ClearMessage project status
 
-Updated **10 October 2026, Europe/Prague**. Active work: complete the English
-ClearMessage / approved Style A migration **before Goal 04**. This does not start
-Goal 04, retrain a model, freeze data, inspect blind/held-out messages or publish.
+Updated **10 October 2026, Europe/Prague**. The standalone local Goal 01 human
+review tool is ready; stop after this deliverable. The English ClearMessage /
+approved Style A migration remains complete. This does not complete human review,
+start Goal 04, retrain a model, freeze data, inspect blind/held-out messages or publish.
 
 The real Goal 02 sparse model remains integrated with `analysis-policy-1` and
 `observed-requests-1`, contract **1.1.0**. It is provisional: **41 human reviews
@@ -25,6 +26,63 @@ results are `suspicious` with actual basis or `review`, always
 | Deployment | Account/destination unconfirmed; no publishing, credential collection or purchase. |
 | Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
 | OCR/submission/video/Goal 04 | Not started by this migration. |
+
+## Goal 01 — standalone local human review tool
+
+Built on migration commit `0c7f132`. [HUMAN_REVIEW](HUMAN_REVIEW.md) gives launch,
+workflow, schema mapping, verification and limitations. No new dependencies,
+production application edits, source relabeling or human decisions were made.
+
+```sh
+.venv/bin/python scripts/review_tool.py
+```
+
+The interface runs at **http://127.0.0.1:8765**, with no configurable host. It
+displays all 41 pending rows on one page (14 HAM / 14 SPAM / 13 SMISHING), grouped
+and filterable by original label; All entries includes the four existing decisions.
+Full messages expand as plain text. One-click choices, multiselect, discrepancy
+highlighting/problematic sorting, counters and saved-file validation are available.
+Bulk approval requires manually reviewed rows and an explicit modal confirmation;
+exclusion proposals require reasons, saved proposals and separate explicit approval.
+Nothing is reviewed by opening/expanding a row. Unsure remains pending.
+
+Writes preserve every existing schema key, source label, unknown metadata and prior
+notes. Corrections/proposals use `disagreed` and a versioned annotation in existing
+notes; accepted labels use `confirmed`. Entered reviewer/date apply only to explicit
+changes; unconfirmed languages remain unconfirmed. Backups contain exact pre-save
+bytes; file and directory fsync, same-directory atomic replacement, process/thread
+locks and SHA-256 conflict rejection protect saves. No records are removed, and
+the existing top-level conflict-exclusion approval remains untouched.
+
+Suggestions come only from the existing configured hash-verified TF-IDF artifact,
+loaded once locally. It agrees with all 45 original labels here. The interface
+discloses that audit samples were reserved for training, overlap may bias these
+suggestions, the classifier is provisional and language performance is unverified.
+Disagreements and highlighted rows are capabilities, not invented findings.
+
+| Check / actual command | Result |
+|---|---|
+| `.venv/bin/python -m pytest tests/test_review_tool.py tests/test_data_prep.py tests/test_training_preflight.py -q` | **PASS: 57 tests**, including 18 review-tool tests; existing Starlette/httpx deprecation warning retained |
+| `PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node tests/review_tool_browser.mjs` | **PASS**: fictional temporary-file browser test; filters/sort/highlight, inert HTML/URLs, reviewed flags, bulk cancel/confirm, multiselect, separate exclusion approval, saves/backups, report/reload, 390px reflow before/after save, no external browser requests or page errors |
+| `.venv/bin/python scripts/review_tool.py` + local HTTP/browser read-only smoke | **PASS**: real 45 records / 41 pending, prior 2 agreements / 2 corrections, 45 suggestions; all 41 pending rows visible, label filters 14/14/13; initial Save/bulk disabled, no automatic reviewed flags |
+| Actual review copied to `TemporaryDirectory`, `TestClient` save | **PASS**: fictional test decision only in disposable copy; exact backup, same keys/metadata/source labels, all 45 records retained; original never written |
+| Real `ReviewStore` load with socket connection/DNS functions blocked | **PASS**: 45 suggestions, zero network attempts; no download or training |
+| `lsof -nP -iTCP:8765 -sTCP:LISTEN` | **PASS**: IPv4 `127.0.0.1:8765` only |
+| `python3 scripts/audit_migration.py` | **PASS**: 133 owned files, intentional evaluation-input exceptions preserved |
+| Diff / preservation | `git diff --check` **PASS**; all 63 snapshotted ML files unchanged, including original review, corpus, model and split artifacts |
+| Production/frontend/Docker/full suite | **NOT RERUN**: unchanged; relevant data/preflight/tool tests run. No deployment, freeze, training or new review performed |
+
+Original review SHA-256 remains
+`7cf04370060bc86e58349a06dc04fc82de680b0404e17eb44b4babe34a30a70c`.
+The saved-file report has **zero changes since server start** and **41 pending**.
+All 45 language/reviewer attributions and existing whole-group exclusion approval
+remain incomplete. Corrections and any approved exclusion proposals still need
+separate pipeline reconciliation; this interface does not establish Goal 01 data
+readiness. Unsaved choices disappear on reload; reports retain all saved decisions
+but their changes-since-start list resets with the server. Avoid manual edits during
+saves because outside editors do not participate in the tool lock. Fictional UI
+layout was visually inspected; no full accessibility/screen-reader certification
+is claimed. All executed tool checks passed; no tool check was skipped or failed.
 
 ## ClearMessage migration
 
