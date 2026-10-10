@@ -299,12 +299,30 @@ class ReviewStore:
 
 
 def create_app(review_path: Path = DEFAULT_REVIEW, records_path: Path | None = None,
-               *, port: int = 8765, suggestions: bool = True):
-    store = ReviewStore(review_path, records_path or review_path.parent / "records.jsonl", suggestions)
+               *, port: int = 8765, suggestions: bool = True, validation_hints: Path | None = None,
+               source_path: Path | None = None, candidate_path: Path | None = None):
+    store = ReviewStore(review_path, records_path or review_path.parent / "records.jsonl", suggestions and validation_hints is None)
     origin = f"http://127.0.0.1:{port}"
     api = FastAPI(title="ClearMessage human review tool", docs_url=None, redoc_url=None, openapi_url=None,
                   telemetry={"tracing": False, "metrics": False, "logs": False, "operation_spans": False, "auto_configure": False})
     api.state.store = store
+    workspace = None
+    if validation_hints is not None:
+        from tools.human_review.validation import ValidationWorkspace, Stage, Submit
+        workspace = ValidationWorkspace(store, source_path or ROOT / "ml/data/raw/Dataset_5971.zip",
+                                        candidate_path or ROOT / "ml/manifests/mendeley-v1.split.candidate.json", validation_hints)
+        api.state.workspace = workspace
+        api.add_api_route("/api/validation", workspace.view, methods=["GET"])
+        # Resolve request model annotations without importing the optional workflow
+        # into the production service or relying on local annotation names.
+        def stage(body):
+            return workspace.stage(body)
+        def submit(body):
+            return workspace.submit(body)
+        stage.__annotations__["body"] = Stage
+        submit.__annotations__["body"] = Submit
+        api.add_api_route("/api/validation/stage", stage, methods=["POST"])
+        api.add_api_route("/api/validation/submit", submit, methods=["POST"])
 
     @api.exception_handler(RequestValidationError)
     async def invalid_input(_request, _error):
@@ -316,9 +334,10 @@ def create_app(review_path: Path = DEFAULT_REVIEW, records_path: Path | None = N
 
     @api.get("/")
     def index():
-        return FileResponse(STATIC / "index.html")
+        return FileResponse(STATIC / ("validation.html" if workspace else "index.html"))
 
     for url, path, media in (("/app.js", STATIC / "app.js", "text/javascript"),
+                             ("/validation.js", STATIC / "validation.js", "text/javascript"),
                              ("/style.css", STATIC / "style.css", "text/css"),
                              ("/tokens.css", ROOT / "frontend/src/brand-tokens.css", "text/css")):
         # Default path values are fixed internally, never exposed as query parameters.
@@ -338,6 +357,8 @@ def create_app(review_path: Path = DEFAULT_REVIEW, records_path: Path | None = N
 
     @api.post("/api/save")
     def save(body: Save):
+        if workspace is not None:
+            raise ReviewError("canonical_save_requires_separate_final_approval", 403)
         return store.save(body)
 
     # Outer ASGI boundary: body bounds, DNS-rebinding/CSRF defense and no foreign

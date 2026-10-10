@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClearMessage — Goal 01 validation</title>
+  <link rel="stylesheet" href="/tokens.css"><link rel="stylesheet" href="/style.css">
+  <script src="/validation.js" defer></script>
+</head>
+<body><main>
+  <header><h1>ClearMessage Goal 01 validation</h1><span>Local draft · separate final approval required</span></header>
+  <p id="saved-distribution"></p><p>Recheck the choices below. HAM is ordinary conversation, SPAM is unsolicited promotion, and SMISHING is a deceptive attempt to obtain information or money. A HAM label does not establish safety.</p>
+  <p class="metadata">All messages are untrusted plain text. No links are opened. This workspace changes only a separate draft: canonical review, dataset, production application and split remain untouched.</p>
+  <p id="status" role="status" aria-live="polite">Loading pinned review and conflict analysis…</p>
+  <section id="counters" aria-label="Validation counters"></section>
+  <h2>1. Recheck label changes</h2>
+  <div class="toolbar">
+    <label>Show <select id="scope"><option value="changed">Changed labels</option><option value="all">All 45 entries</option><option value="not-rechecked">Not rechecked</option><option value="high">High attention</option></select></label>
+    <label>Original label <select id="label"><option value="all">All labels</option><option value="ham">HAM</option><option value="spam">SPAM</option><option value="smishing">SMISHING</option></select></label>
+    <label>Selected rows <select id="batch"><option value="current">Confirm current draft labels</option><option value="original">Use original labels</option><option value="ham">HAM</option><option value="spam">SPAM</option><option value="smishing">SMISHING</option></select></label>
+    <button id="apply">Stage selected label decisions</button><span id="selection"></span>
+  </div>
+  <div class="table-wrap" tabindex="0" aria-label="Scrollable label comparison table">
+    <table><thead><tr><th><input type="checkbox" id="select-visible" aria-label="Select all visible review rows"></th><th>Entry ID</th><th>Message text</th><th>Original label</th><th>Saved human label</th><th>Draft label / changed / rechecked</th></tr></thead><tbody id="rows"></tbody></table>
+  </div>
+  <h2>2. Language groups</h2><p id="language-basis" class="metadata"></p>
+  <div id="languages"></div>
+  <h2>3. Missing review history</h2>
+  <p>Four old records have no reviewer or date. Enter known historical facts, or explicitly re-confirm them now. Re-confirming records the actual current time and keeps the old decision as undated history. Existing known review metadata is preserved.</p>
+  <div class="toolbar">
+    <label>Actual reviewer ID <input id="reviewer" maxlength="80" autocomplete="off" placeholder="Who made or re-confirms the decisions?"></label>
+    <label>Metadata mode <select id="metadata-mode"><option value="reconfirm_now">Re-confirm now; old date unknown</option><option value="known_history">Supply known historical reviewer/date</option></select></label>
+    <label>Actual historical date, if known <input id="historical-date" type="date"></label>
+    <button id="metadata">Stage metadata for the four missing records</button>
+  </div><p id="metadata-ids"></p>
+  <h2>4. Conflicting source labels</h2>
+  <p id="conflict-summary"></p><p class="metadata">Recommendation: retain whole conflicting groups in quarantine, excluding them from the approved training/evaluation split while preserving the original archive. Do not guess a label from an identical message carrying two different source labels. Quarantine is reversible; it does not delete data.</p>
+  <button id="quarantine">Propose keeping the 98 conflicting rows quarantined</button>
+  <div id="conflicts"></div>
+  <h2>Related training families affected by corrections</h2>
+  <p>Changing one reviewed row can create a label conflict with its duplicate/template variants. Either revise that sampled label or inspect every family member below and explicitly stage a shared label. No label propagates automatically.</p>
+  <div id="affected"></div>
+  <h2>5. Complete validation summary</h2>
+  <p id="effect"></p><ul id="blockers"></ul>
+  <button id="submit" class="primary" disabled>Submit draft for separate final approval</button>
+  <p class="metadata">Submitting does not approve exclusions, overwrite the review or freeze a split. After the full draft is presented, give separate explicit approval in chat. Only then may the review be saved with backups, the approved split frozen and retraining requirements recorded. No model training is authorized.</p>
+</main>
+<dialog id="confirm"><h2 id="confirm-title"></h2><p id="confirm-description"></p><div class="toolbar"><button id="cancel-confirm">Cancel</button><button id="accept-confirm" class="primary">Confirm and stage</button></div></dialog>
+</body></html>

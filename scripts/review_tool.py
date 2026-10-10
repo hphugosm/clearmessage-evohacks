@@ -16,11 +16,15 @@ def main():
     parser.add_argument("--records", type=Path, help="Defaults to records.jsonl beside the review file")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--no-suggestions", action="store_true")
+    parser.add_argument("--validation-hints", type=Path, help="Open approval preparation mode with pinned local inspection hints")
+    parser.add_argument("--source", type=Path, help="Pinned local dataset archive for conflict analysis")
+    parser.add_argument("--candidate", type=Path, help="Existing candidate manifest; never overwritten")
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535:
         parser.error("port must be between 1024 and 65535")
     try:
-        app = create_app(args.review, args.records, port=args.port, suggestions=not args.no_suggestions)
+        app = create_app(args.review, args.records, port=args.port, suggestions=not args.no_suggestions,
+                         validation_hints=args.validation_hints, source_path=args.source, candidate_path=args.candidate)
     except Exception:
         print("Review tool could not load local files. Check paths and the documented schema; no files changed.", file=sys.stderr)
         return 2
