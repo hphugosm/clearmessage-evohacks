@@ -1,0 +1,55 @@
+import { describe, expect, it, vi, afterEach } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { analyze, AnalysisError, MAX_TEXT_LENGTH, parseResponse, validateText } from './api';
+
+const missingModel = {
+  status: 'review', analysis_complete: false, headline_key: 'model_not_ready',
+  evidence: [], action_keys: ['verify_independently'],
+  limitations: ['model_not_ready', 'language_not_evaluated', 'not_a_safety_confirmation'],
+  message_language: 'en', model_version: null, policy_version: 'foundation-1',
+  contract_version: '1.0.0', share_summary_keys: [],
+};
+afterEach(() => { vi.unstubAllGlobals(); });
+
+describe('input limits and incomplete results', () => {
+  it('keeps the client input limit aligned with the canonical OpenAPI contract', () => {
+    const schema = JSON.parse(readFileSync(new URL('../../docs/openapi.json', import.meta.url), 'utf8'));
+    expect(MAX_TEXT_LENGTH).toBe(schema.components.schemas.AnalyzeRequest.properties.text.maxLength);
+  });
+  it('rejects empty, whitespace and overlong input without truncating Unicode', () => {
+    expect(validateText('')).toBe('empty');
+    expect(validateText(' \n\t')).toBe('empty');
+    expect(validateText('😀'.repeat(2000))).toBeNull();
+    expect(validateText('😀'.repeat(2001))).toBe('too_long');
+  });
+  it('accepts an explicit absence of model', () => {
+    expect(parseResponse(missingModel)).toEqual(missingModel);
+  });
+  it.each([null, {}, { ...missingModel, status: 'no_strong_signals' },
+    { ...missingModel, analysis_complete: true }, { ...missingModel, limitations: [] },
+    { ...missingModel, action_keys: ['unknown_key'] },
+    { ...missingModel, evidence: ['FIKTIVNI_PRIVATE_TEXT'] },
+  ])('rejects malformed or falsely reassuring responses', value => {
+    expect(() => parseResponse(value)).toThrow(AnalysisError);
+  });
+  it('sends a POST body and never includes text in the URL', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify(missingModel)));
+    vi.stubGlobal('fetch', fetchMock);
+    await analyze({ text: 'Fictional English sample', message_language: 'en' });
+    const [url, options] = fetchMock.mock.calls[0];
+    expect(url).toBe('/api/analyze');
+    expect(options.method).toBe('POST');
+    expect(options.cache).toBe('no-store');
+    expect(JSON.parse(options.body).message_language).toBe('en');
+  });
+  it('does not call backend for invalid text', async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
+    await expect(analyze({ text: ' ', message_language: 'auto' })).rejects.toMatchObject({ key: 'empty' });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+  it('replaces transport exception text with a fixed key', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('FIKTIVNI_PRIVATE_TEXT')));
+    await expect(analyze({ text: 'Fictional sample', message_language: 'auto' })).rejects.toThrow(/^unavailable$/);
+  });
+});

@@ -1,0 +1,387 @@
+{
+  "components": {
+    "schemas": {
+      "AnalyzeRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "message_language": {
+            "default": "auto",
+            "enum": [
+              "auto",
+              "cs",
+              "en",
+              "other"
+            ],
+            "title": "Message Language",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "AnalyzeRequest",
+        "type": "object"
+      },
+      "AnalyzeResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "action_keys": {
+            "items": {
+              "enum": [
+                "verify_independently",
+                "do_not_send_secrets",
+                "ask_trusted_person"
+              ],
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "title": "Action Keys",
+            "type": "array"
+          },
+          "analysis_complete": {
+            "title": "Analysis Complete",
+            "type": "boolean"
+          },
+          "contract_version": {
+            "title": "Contract Version",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/Evidence"
+            },
+            "maxItems": 3,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "headline_key": {
+            "enum": [
+              "model_not_ready",
+              "review_required",
+              "suspicious_signals",
+              "no_strong_signals"
+            ],
+            "title": "Headline Key",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "enum": [
+                "model_not_ready",
+                "language_not_evaluated",
+                "not_a_safety_confirmation",
+                "inference_unavailable",
+                "incomplete_coverage"
+              ],
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "message_language": {
+            "enum": [
+              "auto",
+              "cs",
+              "en",
+              "other"
+            ],
+            "title": "Message Language",
+            "type": "string"
+          },
+          "model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Version"
+          },
+          "policy_version": {
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "share_summary_keys": {
+            "items": {
+              "enum": [
+                "analysis_not_completed",
+                "help_verify_independently"
+              ],
+              "type": "string"
+            },
+            "title": "Share Summary Keys",
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Status"
+          }
+        },
+        "required": [
+          "status",
+          "analysis_complete",
+          "headline_key",
+          "evidence",
+          "action_keys",
+          "limitations",
+          "message_language",
+          "model_version",
+          "policy_version",
+          "contract_version",
+          "share_summary_keys"
+        ],
+        "title": "AnalyzeResponse",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "analysis_complete": {
+            "const": false,
+            "default": false,
+            "title": "Analysis Complete",
+            "type": "boolean"
+          },
+          "contract_version": {
+            "default": "1.0.0",
+            "title": "Contract Version",
+            "type": "string"
+          },
+          "error_key": {
+            "enum": [
+              "invalid_input",
+              "body_too_large",
+              "json_required",
+              "unexpected_query",
+              "not_found",
+              "method_not_allowed",
+              "service_unavailable",
+              "request_rejected"
+            ],
+            "title": "Error Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "error_key"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "Evidence": {
+        "additionalProperties": false,
+        "properties": {
+          "basis": {
+            "enum": [
+              "classifier",
+              "observed_text_signal"
+            ],
+            "title": "Basis",
+            "type": "string"
+          },
+          "key": {
+            "enum": [
+              "model_signal",
+              "request_for_secret",
+              "payment_pressure",
+              "secrecy_request"
+            ],
+            "title": "Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "basis"
+        ],
+        "title": "Evidence",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "contract_version": {
+            "title": "Contract Version",
+            "type": "string"
+          },
+          "evaluated_message_languages": {
+            "items": {
+              "enum": [
+                "cs",
+                "en"
+              ],
+              "type": "string"
+            },
+            "title": "Evaluated Message Languages",
+            "type": "array"
+          },
+          "max_body_bytes": {
+            "title": "Max Body Bytes",
+            "type": "integer"
+          },
+          "max_text_length": {
+            "title": "Max Text Length",
+            "type": "integer"
+          },
+          "model_ready": {
+            "title": "Model Ready",
+            "type": "boolean"
+          },
+          "model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Version"
+          },
+          "policy_version": {
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "service_status": {
+            "const": "ok",
+            "title": "Service Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "service_status",
+          "model_ready",
+          "model_version",
+          "evaluated_message_languages",
+          "policy_version",
+          "contract_version",
+          "max_text_length",
+          "max_body_bytes"
+        ],
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "Status": {
+        "enum": [
+          "suspicious",
+          "review",
+          "no_strong_signals"
+        ],
+        "title": "Status",
+        "type": "string"
+      }
+    }
+  },
+  "info": {
+    "title": "Klidná zpráva",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/analyze": {
+      "post": {
+        "operationId": "analyze_api_analyze_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyzeResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unsupported Media Type"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Analyze"
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    }
+  }
+}

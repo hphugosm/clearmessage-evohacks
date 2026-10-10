@@ -1,0 +1,22 @@
+{
+  "source_id": "mendeley-f45bkkt8pr-v1",
+  "checked_date": "2026-10-10",
+  "status": "blocked",
+  "raw_file_downloaded": false,
+  "input_sha256": null,
+  "csv_sha256": null,
+  "observed_rows": null,
+  "observed_class_counts": null,
+  "human_label_reviews_completed": 0,
+  "split_manifest_created": false,
+  "real_dataset_leakage_test": "not_run: raw file unavailable",
+  "model_trained": false,
+  "download_attempts": [
+    {"method": "Python urllib GET original page", "result": "HTTP 403"},
+    {"method": "Python urllib GET public metadata API", "result": "HTTP 403"},
+    {"method": "Python urllib GET original archive URL observed in public page", "result": "HTTP 403"},
+    {"method": "Browser public archive download link", "result": "timeout after 30 seconds"}
+  ],
+  "required_next_inputs": ["Original CSV or Dataset_5971.zip", "45 attributed human label/language reviews; exclusion approval if needed"],
+  "no_fallback_corpora": true
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "demo-cz-school",
+    "language": "cs",
+    "origin": "manual_fictional_demo_only",
+    "text": "Zítra začíná výuka v devět. Informace najdete na https://skola.invalid/rozvrh ."
+  },
+  {
+    "id": "demo-cz-offer",
+    "language": "cs",
+    "origin": "manual_fictional_demo_only",
+    "text": "Fiktivní obchod nabízí slevu na batohy. Podrobnosti: https://obchod.invalid/nabidka ."
+  },
+  {
+    "id": "demo-en-demand",
+    "language": "en",
+    "origin": "manual_fictional_demo_only",
+    "text": "Fictional example: send your verification code immediately at https://account.invalid/form ."
+  }
+]

@@ -1,0 +1,176 @@
+{
+  "$defs": {
+    "HumanReview": {
+      "additionalProperties": false,
+      "properties": {
+        "label_rationale": {
+          "default": "",
+          "maxLength": 1000,
+          "title": "Label Rationale",
+          "type": "string"
+        },
+        "reviewed_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed Date"
+        },
+        "reviewer_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewer Id"
+        },
+        "status": {
+          "default": "pending",
+          "enum": [
+            "pending",
+            "confirmed",
+            "disagreed"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "title": "HumanReview",
+      "type": "object"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "created_date": {
+          "format": "date",
+          "title": "Created Date",
+          "type": "string"
+        },
+        "creator_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Creator Id",
+          "type": "string"
+        },
+        "method": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Method",
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "manual_fictional",
+            "synthetic",
+            "translation"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "source_family_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Family Id"
+        },
+        "source_record_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Record Id"
+        }
+      },
+      "required": [
+        "origin",
+        "creator_id",
+        "created_date",
+        "method"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "family_id": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Family Id",
+      "type": "string"
+    },
+    "id": {
+      "maxLength": 100,
+      "pattern": "^cz-[a-z0-9-]+$",
+      "title": "Id",
+      "type": "string"
+    },
+    "label": {
+      "enum": [
+        "ham",
+        "spam",
+        "smishing"
+      ],
+      "title": "Label",
+      "type": "string"
+    },
+    "language": {
+      "const": "cs",
+      "title": "Language",
+      "type": "string"
+    },
+    "partition": {
+      "enum": [
+        "development",
+        "blind_challenge"
+      ],
+      "title": "Partition",
+      "type": "string"
+    },
+    "provenance": {
+      "$ref": "#/$defs/Provenance"
+    },
+    "review": {
+      "$ref": "#/$defs/HumanReview"
+    },
+    "text": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "family_id",
+    "partition",
+    "language",
+    "label",
+    "text",
+    "provenance",
+    "review"
+  ],
+  "title": "CzechExample",
+  "type": "object"
+}
