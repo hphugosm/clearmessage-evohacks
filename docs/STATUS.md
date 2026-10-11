@@ -2,10 +2,11 @@
 
 Updated **11 October 2026, Europe/Prague**. The owner requested an independent
 assessment of the Goal 01 validation draft. The current workspace is staged in
-RAM, not submitted: 29 labels rechecked, 16 fresh rechecks missing, all 45
+RAM, not submitted: all 45 labels explicitly rechecked, no rechecks missing, all 45
 languages confirmed, four missing attributions explicitly re-confirmed. The
 98-row quarantine is now explicitly proposed; final approval remains withheld.
-The canonical review is unchanged; Goal 01 completion remains blocked.
+The canonical review is unchanged. The draft has zero submission blockers;
+immutable draft submission and separate final approval remain outstanding.
 The English migration remains complete.
 No Goal 04, retraining, split freeze, blind/held-out message inspection or
 publication was started.
@@ -23,7 +24,7 @@ results are `suspicious` with actual basis or `review`, always
 | Frontend/API | Real model-backed POST via Vite and FastAPI-served build; no demo verdicts. |
 | Contract | Pydantic → OpenAPI → TypeScript; title migrated, fields/enums/versions unchanged. |
 | Model/policy | Real hash-verified project JSON; incomplete results and rules-only errors remain explicit. |
-| Dataset | 5,971 original rows. Canonical: 45 saved decisions (16 agreements, 29 corrections), languages/four attributions missing. Staged draft: 15 labels per class, 45 English confirmations, four fresh attributions, 98-row quarantine proposed; 16 rechecks missing. Conditional eligible size 5,873, not approved. Source/training unchanged. |
+| Dataset | 5,971 original rows. Canonical unchanged. Staged draft: 15 HAM / 13 SPAM / 17 SMISHING, all 45 rechecked and English-confirmed, four fresh attributions, 98-row quarantine proposed; zero blockers. Conditional reviewed eligible corpus: 5,873 rows (4,844 HAM / 439 SPAM / 590 SMISHING), not approved. Source/training unchanged. |
 | Data split | Immutable candidate, empty intersections; no approved final freeze. Provisional authorization preserves original assignments and `data_split_ready=false`. |
 | Czech development/challenge | Format and independent instructions; zero actual challenge records. Existing synthetic Czech regression inputs preserved, not a benchmark. |
 | Sharing | Fixed English templates, preview and separate gesture; selectable manual-copy fallback. No clipboard API or source content. |
@@ -32,7 +33,55 @@ results are `suspicious` with actual basis or `review`, always
 | Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
 | OCR/submission/video/Goal 04 | Not started by this migration. |
 
-## Goal 01 — independent staged-draft assessment, 11 October 2026
+## Goal 01 — completed rechecks, awaiting submission and final approval
+
+The owner completed all 45 label rechecks. Read-only verification confirms every
+explicit label/language timestamp and metadata record, no pending rechecks and
+zero workspace blockers. `draft_submitted=false`: no immutable approval-draft
+file exists yet. The user must choose **Submit draft for separate final approval**
+in the existing local workspace; its ready state is not final approval.
+
+Current [REVIEW_DRAFT_ASSESSMENT](REVIEW_DRAFT_ASSESSMENT.md) supersedes the earlier
+29-recheck snapshot below and lists all 45 current decisions and all 98 proposed
+quarantine rows. Review balance is **15 HAM / 13 SPAM / 17 SMISHING**:
+`row-000565` and `row-000891` now explicitly change original SPAM to SMISHING.
+Both belong to singleton train groups. They create no additional mixed family
+and do not alter candidate assignments or expose held-out message bodies.
+
+Compared with the saved canonical review, 14 requested labels would return to
+HAM and 17 would become SMISHING; the other 14 would remain unchanged. Only the
+two identified SPAM → SMISHING decisions override original corpus labels.
+All 45 language confirmations and reviewer metadata remain present: reviewer
+`hugo`, 41 historical dates `2026-10-10`, four explicit re-confirmations
+`2026-10-11`, with original historical date unknown. None are written to canonical.
+
+The quarantine proposal remains **46 groups / 98 rows** (48 original SPAM / 50
+original SMISHING). Conditional reviewed eligible counts are **4,844 HAM /
+439 SPAM / 590 SMISHING**, **5,873 rows / 5,585 groups**, zero mixed eligible
+groups and empty candidate split intersections. The original source archive and
+the current model still retain original labels. The workspace flags retraining
+as required if the two-label revision is approved; no training is authorized or
+performed by this read-only check.
+
+Actual commands and results:
+
+```sh
+PYTHONPATH="$PWD" .venv/bin/python .cache/review-draft-assessment/verify.py
+.venv/bin/python -m pytest tests/test_review_validation.py tests/test_review_tool.py tests/test_training_preflight.py -q
+python3 scripts/audit_migration.py
+git diff --check
+```
+
+Read-only consistency **PASS**, including all 45 staged confirmations, two
+singleton train overrides, 98 quarantine rows and protected before/after hashes.
+**34 tests passed**, one existing Starlette/httpx warning. Migration audit
+**PASS**, 139 owned files; diff whitespace check **PASS**. No runtime/UI changes;
+build/browser/Docker checks not rerun. Only assessment/status documentation is
+committed. Canonical review, raw archive, candidate, configuration and real model
+remain unchanged. No submission, final approval, split freeze or retraining was
+performed on the owner's behalf.
+
+## Goal 01 — earlier staged-draft assessment, 11 October 2026 (historical)
 
 [REVIEW_DRAFT_ASSESSMENT](REVIEW_DRAFT_ASSESSMENT.md) lists all 45 staged decisions,
 their saved/source labels and dates, and every one of the 98 conditional

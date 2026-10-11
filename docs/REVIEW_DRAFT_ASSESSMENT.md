@@ -3,7 +3,7 @@
 Assessed **11 October 2026, Europe/Prague**. This is an independent read-only
 check of the existing approval workspace at `http://127.0.0.1:8767`.
 **No submitted approval-draft file exists.** The workspace reports
-`draft_submitted=false`, `quarantine_proposed=true`, and 16 unrechecked labels.
+`draft_submitted=false`, `quarantine_proposed=true`, and zero unrechecked labels.
 No final approval is inferred from the request to review this draft. Canonical
 review, original archive, candidate assignments and model remain unchanged.
 
@@ -12,16 +12,16 @@ review, original archive, candidate assignments and model remain unchanged.
 | Item | Verified state |
 |---|---|
 | Sample | 45 expected unique IDs, 15 original entries per class; all in candidate train |
-| Staged labels | 15 HAM / 15 SPAM / 15 SMISHING; exactly original source labels |
-| Rechecks | 29 explicitly rechecked; 16 have not been rechecked in this workspace |
+| Staged labels | 15 HAM / 13 SPAM / 17 SMISHING; two original SPAM labels corrected to SMISHING |
+| Rechecks | 45 explicitly rechecked; zero missing |
 | Languages | All 45 explicitly confirmed English; pending → en |
 | Reviewer | hugo for all 45; 41 existing dates preserved as 2026-10-10 |
 | Missing historical metadata | Four explicitly re-confirmed as hugo, 2026-10-11; original date unknown, not backfilled |
 | Individual exclusions | None |
 | Source conflicts | 46 groups / 98 rows, 48 SPAM and 50 SMISHING; quarantine proposed, final approval withheld |
 | Additional eligible conflicts | Zero after current staged labels; saved canonical corrections would create seven groups / 29 rows |
-| Conditional eligible dataset | 5,873 rows / 5,585 groups, HAM 4,844 / SPAM 441 / SMISHING 588 |
-| Submission readiness | Blocked: 16 label rechecks missing |
+| Conditional eligible dataset | 5,873 rows / 5,585 groups, HAM 4,844 / SPAM 439 / SMISHING 590 after two corrections |
+| Submission readiness | Ready to submit: zero blockers; not submitted or finally approved |
 
 The sample balance is distinct from the full-dataset balance. Staged flags are
 human attestations in the tool, not independent proof that every label/language
@@ -29,14 +29,18 @@ is correct. English input confirmation is not an evaluated model-performance cla
 
 ## Exact proposed changes to the saved review
 
-Conditional on completing the missing attestations and separate final approval:
+Conditional on draft submission and separate final approval:
 
 - Restore 14 saved HAM → SPAM corrections to original HAM and 15 saved
   SMISHING → SPAM corrections to original SMISHING. These 29 decisions would
   become agreement with the source label; preserve old notes/history rather than
-  erase earlier decisions. No original corpus `LABEL` or `source_label` changes.
-- Keep one original HAM agreement and all 15 SPAM agreements. Their staged
-  final labels exist, but the 16 fresh rechecks are still missing.
+  erase earlier decisions. Retain the raw archive and original `source_label`;
+  approved corrections belong in a separate reviewed data revision.
+- Change source SPAM entries `row-000565` and `row-000891` to SMISHING.
+  Both are singleton groups reserved for train; no family propagation is needed.
+- Keep one original HAM agreement and the remaining 13 SPAM agreements.
+  All 45 label rechecks are explicitly recorded. These choices would make 31
+  changes to saved requested labels; only two differ from original corpus labels.
 - Change all 45 review `language` fields from `pending` to `en`, using the
   recorded explicit language confirmations.
 - For `row-000188`, `row-000244`, `row-000490`, `row-000565`, fill reviewer
@@ -48,20 +52,21 @@ Conditional on completing the missing attestations and separate final approval:
   until separate final approval.
 
 Canonical saved distribution is currently **1 HAM / 44 SPAM / 0 SMISHING**.
-The staged restoration proposes **15 HAM / 15 SPAM / 15 SMISHING**. The model
-already uses original corpus labels; the draft has **zero corpus label overrides**.
-No retraining is indicated by label changes alone; approval does not by itself
-establish model quality, a final split or permission to train.
+The staged restoration proposes **15 HAM / 13 SPAM / 17 SMISHING**. The model
+still uses original corpus labels. The draft has **two corpus label overrides**.
+The workspace flags retraining as required if this data revision is approved.
+Neither this assessment nor readiness to submit authorizes training, changes
+the existing model or establishes model quality or a final split.
 
 ## All 45 decisions
 
 All rows below have explicitly confirmed language `en` and reviewer `hugo`.
-Dates are the proposed/preserved review dates. “No” marks a missing fresh label
-recheck, not an invented pending canonical decision.
+Dates are the proposed/preserved review dates. All 45 explicit label rechecks
+and language confirmations have recorded timestamps.
 
 | Entry ID | Source | Saved choice | Staged final | Label rechecked | Reviewer date |
 |---|---|---|---|---|---|
-| row-000244 | HAM | HAM | HAM | **No** | 2026-10-11 |
+| row-000244 | HAM | HAM | HAM | Yes | 2026-10-11 |
 | row-000867 | HAM | SPAM | HAM | Yes | 2026-10-10 |
 | row-001136 | HAM | SPAM | HAM | Yes | 2026-10-10 |
 | row-001372 | HAM | SPAM | HAM | Yes | 2026-10-10 |
@@ -91,21 +96,21 @@ recheck, not an invented pending canonical decision.
 | row-004657 | SMISHING | SPAM | SMISHING | Yes | 2026-10-10 |
 | row-005144 | SMISHING | SPAM | SMISHING | Yes | 2026-10-10 |
 | row-005600 | SMISHING | SPAM | SMISHING | Yes | 2026-10-10 |
-| row-000565 | SPAM | SPAM | SPAM | **No** | 2026-10-11 |
-| row-000891 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-001078 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-001145 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-001291 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-001392 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-002915 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-003088 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-003347 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-003706 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-003848 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-004805 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-005106 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-005131 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
-| row-005455 | SPAM | SPAM | SPAM | **No** | 2026-10-10 |
+| row-000565 | SPAM | SPAM | SMISHING | Yes | 2026-10-11 |
+| row-000891 | SPAM | SPAM | SMISHING | Yes | 2026-10-10 |
+| row-001078 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-001145 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-001291 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-001392 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-002915 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-003088 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-003347 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-003706 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-003848 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-004805 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-005106 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-005131 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
+| row-005455 | SPAM | SPAM | SPAM | Yes | 2026-10-10 |
 
 ## Exact 98-row conditional quarantine
 
@@ -179,14 +184,15 @@ propagation of a label was not performed. Each listed row retains its source lab
 |---|---:|---:|---:|---:|
 | Original raw corpus | 4,844 | 489 | 638 | 5,971 |
 | Conditional quarantine | 0 | 48 | 50 | 98 |
-| Conditional eligible corpus | 4,844 | 441 | 588 | 5,873 |
+| Eligible before proposed label corrections | 4,844 | 441 | 588 | 5,873 |
+| Conditional reviewed eligible corpus | 4,844 | 439 | 590 | 5,873 |
 
 Raw corpus still contains its original **46 mixed families**; they would remain
 quarantined. With current staged labels there are **zero mixed families among
 the 5,585 eligible groups**. The seven extra conflicts from the saved 29
 corrections disappear because those corrections are reversed in the staged draft,
-not because a shared label is automatically propagated. No source-label override
-is needed or present in the computed effect.
+not because a shared label is automatically propagated. The two source-label overrides
+affect singleton train groups only and create no additional family conflicts.
 
 Existing candidate totals remain train **4,112**, validation **881**, test **880**.
 Integrity/leakage checks pass, but these assignments remain an unapproved
@@ -203,7 +209,7 @@ approved dataset claim.
 | `ml/data/raw/Dataset_5971.zip` | `9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3` |
 | `ml/manifests/mendeley-v1.split.candidate.json` | `51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0` |
 
-Text-free local assessment SHA-256: `5209de12efbd2fb8ead89229db3577e80c8562cd233eeafaae149bebd94b6619`.
+Text-free local assessment SHA-256: `b0644144df2f738c946b2fec60eaad6e43a0aeeede70fea03df03a507d2373bb`.
 
 Read-only recomputation checked original source/member hash, unchanged sample IDs/
 labels, source/group/text-hash agreement with candidate, candidate checksum,
@@ -222,8 +228,8 @@ git diff --check
 
 Results: read-only consistency **PASS**; **34 tests passed**, one existing
 Starlette/httpx deprecation warning; migration audit **PASS**, 139 owned files;
-diff whitespace check **PASS**. Report tables independently contain exactly
-45 decision rows and 98 unique quarantine row IDs across 46 groups.
+diff whitespace check **PASS**. All 45 sampled IDs and all 98 quarantine IDs
+are unique and match the independently recomputed source groups.
 
 The local verifier and text-free snapshot remain ignored under `.cache/`.
 They read existing first-party data-preparation code and the loopback workspace;
