@@ -44,7 +44,11 @@ def main():
     review = json.loads(review_path.read_text())
     rows = review['records']
     preflight = check_training_inputs(ROOT / 'ml/manifests/mendeley-v1.split.json', review_path, source)
-    manifest, manifest_hash = load_manifest(ROOT / 'ml/manifests/mendeley-v1.split.provisional.json', True)
+    approved = CONFIG['human_review_complete'] is True
+    manifest_path = ROOT / ('ml/manifests/mendeley-v1.split.json' if approved else 'ml/manifests/mendeley-v1.split.provisional.json')
+    manifest, manifest_hash = load_manifest(manifest_path, not approved)
+    if approved:
+        require(preflight['training_allowed'])
     experiment = json.loads((ROOT / CONFIG['selection_report']).read_text())
     classifier = LocalClassifier(ROOT / CONFIG['artifact_path'])
     require(classifier.ready)
@@ -107,8 +111,28 @@ def main():
             },
         }
     require(not events)
+    comparison = None
+    if approved:
+        from ml.sparse_model import SparseModel
+        previous_path = ROOT / 'ml/reports/goal02-provisional-v2.json'
+        require(digest(previous_path.read_bytes()) == 'b0d359771769be9f983370eec8599b7be13a6b55c4bc274259694a317eef3715')
+        previous = json.loads(previous_path.read_text())
+        old_artifact = previous['artifacts'][previous['selection']['model']]
+        old_model = SparseModel(ROOT / old_artifact['file'], old_artifact['sha256'])
+        comparison = {'scope': 'Identical previously evaluated validation/test rows; corrected labels affect train only. Not independent blind validation.',
+                      'previous_report_sha256': digest(previous_path.read_bytes()), 'previous_model_sha256': old_artifact['sha256'], 'splits': {}}
+        for split in ('validation', 'test'):
+            texts, labels, ids = corpus.get(split)
+            old_predictions = old_model.predict(texts)
+            old_metrics = metrics(labels, old_predictions, ids)
+            require(old_metrics == previous['models'][previous['selection']['model']][split])
+            new_metrics = evaluations[split]['classifier']
+            new_predictions = classifier._model.predict(texts)
+            comparison['splits'][split] = {'provisional': old_metrics, 'approved': new_metrics,
+                'macro_f1_delta': new_metrics['macro_f1'] - old_metrics['macro_f1'],
+                'prediction_disagreements': int((new_predictions != old_predictions).sum())}
     result = {
-        'goal': 'Goal 07', 'executed_at_utc': datetime.now(timezone.utc).isoformat(),
+        'goal': 'Approved dataset/ML release' if approved else 'Goal 07', 'executed_at_utc': datetime.now(timezone.utc).isoformat(),
         'training_performed': False, 'selection_or_policy_changed': False,
         'held_out_test_rechecked_after_fixed_selection': True, 'blind_challenges_opened': False,
         'approval_preflight': preflight,
@@ -120,14 +144,15 @@ def main():
             'quarantine_approved': bool(review.get('exclusions_approved_by', '').strip()),
         },
         'approved_final_split_exists': (ROOT / 'ml/manifests/mendeley-v1.split.json').exists(),
-        'provisional_split_sha256': manifest_hash, 'candidate_data_split_ready': manifest['data_split_ready'],
+        'split_sha256': manifest_hash, 'data_split_ready': manifest['data_split_ready'],
         'excluded_conflicting_rows': manifest['conflict_rows_excluded'],
         'conflicting_groups': len(manifest['conflicting_groups']),
         'counts': manifest['counts'], 'model_version': classifier.version,
         'model_sha256': CONFIG['sha256'], 'selection_report_sha256': CONFIG['selection_report_sha256'],
-        'runtime_matches_provisional_goal02': True, 'runtime_matches_approved_final_model': False,
+        'runtime_matches_provisional_goal02': not approved, 'runtime_matches_approved_final_model': approved,
         'language_results': {'english': None, 'czech': None, 'unverified_source_languages': True},
         'evaluations': evaluations, 'outgoing_network_attempts': len(events),
+        'comparison': comparison,
         'passed_consistency_checks': True, 'release_approval': 'blocked',
     }
     write_new(args.output, json_bytes(result))

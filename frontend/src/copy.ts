@@ -26,7 +26,7 @@ export const copy: Copy = {
   illustrationCaption: 'Make sense of it, together.',
   languageHint: 'This describes your message. It does not change the interface or confirm language support.',
   intro: "Not sure whether a message is trustworthy? Paste it here, and we'll help you identify warning signs and understand what to do next.",
-  stage: 'Development version · Our model has an incomplete audit. Performance is unverified for individual languages; checks remain limited.',
+  stage: 'Development version · Performance is unverified for individual languages; checks remain limited.',
   textLabel: 'Message text', placeholder: 'Paste the message here…',
   privacy: 'Do not paste passwords or verification codes. Text is sent to our backend and stays in memory during the request. The application does not store it, log it or use it for training.',
   limit: 'Maximum 2,000 characters. Longer text is never automatically shortened.',

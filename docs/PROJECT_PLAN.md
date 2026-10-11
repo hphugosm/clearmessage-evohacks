@@ -17,7 +17,7 @@ The initial scope is SMS, short chat messages and short emails. Attachments, lon
 5. **Ask someone for help** previews a neutral summary built only from approved fixed templates. Copying or native sharing requires a user action. Never include the original message, snippets, URL or private identifiers.
 6. A small **I already clicked or shared something** section offers situation-specific general next steps without asking for secrets.
 
-The current implementation includes real provisional classification, observed rule evidence and sanitized help sharing. All results remain incomplete. Goal 04 adds gesture-only copying, cancellation guards and verified Style A layout/accessibility checks; STATUS records the actual scope and remaining review/language blockers.
+The current implementation includes real classification trained on the approved dataset, observed rule evidence and sanitized help sharing. All results remain incomplete. Goal 04 adds gesture-only copying, cancellation guards and verified Style A layout/accessibility checks; STATUS records the actual scope and remaining review/language blockers.
 
 ## Result policy and Style A
 
@@ -41,7 +41,7 @@ Excluded: accounts, history, database, inbox integrations, extension, separate p
 
 ## Schedule and gates
 
-The source plan allocates work budgets rather than guaranteeing agent speed. Resume from the current trained integration rather than rebuilding Goal 00. Original data acquisition and a candidate split exist; human review and approved final freeze remain blocked. Preserve the existing four decisions and provisional authorization. Inspect DATA_PREPARATION and STATUS before continuing. If work starts late, cut OCR and additional-language experiments first. Preserve reproducible checkpoints.
+The source plan allocates work budgets rather than guaranteeing agent speed. Resume from the current trained integration rather than rebuilding Goal 00. Original data acquisition, owner-approved review/quarantine and corrected frozen split now exist. Preserve original data, candidate assignments and provisional evaluation history. Inspect DATA_PREPARATION and STATUS before continuing. If work starts late, cut OCR and additional-language experiments first. Preserve reproducible checkpoints.
 
 Saturday 10 October: resolve scope, reuse permission and host availability; Goal 01 data audit/split (45–75 minutes); Goal 02 baseline and limited encoder comparison (60–90 minutes); Goal 03 real inference integration and guidance, aiming for a local full flow around 23:30. A previously prepared foundation is not evidence of a trained detector. Save the state before stopping.
 

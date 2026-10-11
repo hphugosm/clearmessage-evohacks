@@ -1,0 +1,412 @@
+{
+  "exclusions_approved_by": "",
+  "pipeline_version": "data-prep-v2",
+  "records": [
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "Human decision in Codex conversation: S; requested_label=spam. Reviewer attribution and language confirmation pending.",
+      "reviewed_date": "",
+      "reviewer_id": "",
+      "row_id": "row-000188",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "Human decision in Codex conversation: H; requested_label=ham. Reviewer attribution and language confirmation pending.",
+      "reviewed_date": "",
+      "reviewer_id": "",
+      "row_id": "row-000244",
+      "source_label": "ham"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "Human decision in Codex conversation: S; requested_label=spam. Reviewer attribution and language confirmation pending.",
+      "reviewed_date": "",
+      "reviewer_id": "",
+      "row_id": "row-000490",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "Human decision in Codex conversation: S; requested_label=spam. Reviewer attribution and language confirmation pending.",
+      "reviewed_date": "",
+      "reviewer_id": "",
+      "row_id": "row-000565",
+      "source_label": "spam"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000711",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000810",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000867",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000891",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001078",
+      "source_label": "spam"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001136",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001145",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001291",
+      "source_label": "spam"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001324",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001372",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001392",
+      "source_label": "spam"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001593",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001607",
+      "source_label": "ham"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001939",
+      "source_label": "ham"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002290",
+      "source_label": "ham"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002354",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002546",
+      "source_label": "ham"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002692",
+      "source_label": "ham"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002882",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002915",
+      "source_label": "spam"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003032",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003088",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003347",
+      "source_label": "spam"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003654",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003706",
+      "source_label": "spam"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003734",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003848",
+      "source_label": "spam"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003948",
+      "source_label": "ham"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004498",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004597",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004657",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004805",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005106",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005131",
+      "source_label": "spam"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005144",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005154",
+      "source_label": "ham"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005324",
+      "source_label": "ham"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005397",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005455",
+      "source_label": "spam"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005506",
+      "source_label": "ham"
+    },
+    {
+      "decision": "disagreed",
+      "language": "pending",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005600",
+      "source_label": "smishing"
+    }
+  ],
+  "source_input_sha256": "9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3"
+}

@@ -1,0 +1,170 @@
+{
+  "passed": true,
+  "real_model": {
+    "admission": {
+      "overflow_http_status": 503,
+      "remaining_wait_measured_seconds": 4.846,
+      "slots": 8,
+      "slow_body_http_status": 408,
+      "timeout_seconds": 5
+    },
+    "application_logs_empty": true,
+    "browser": {
+      "browser": "156.0.8078.4",
+      "external_requests": 0,
+      "flows": [
+        {
+          "analysis_complete": false,
+          "case": "ordinary",
+          "status": "review"
+        },
+        {
+          "analysis_complete": false,
+          "case": "observed-warning",
+          "status": "suspicious"
+        },
+        {
+          "analysis_complete": false,
+          "case": "unsupported-scope",
+          "status": "review"
+        }
+      ],
+      "local_assets_loaded": true,
+      "page_errors": 0,
+      "passed": true
+    },
+    "concurrency": {
+      "client_workers": 8,
+      "http_200": 32,
+      "http_503": 0,
+      "latency": {
+        "max_ms": 11.961,
+        "p50_ms": 9.298,
+        "p95_ms": 11.532,
+        "requests": 32
+      },
+      "requests": 32
+    },
+    "flows": [
+      {
+        "analysis_complete": false,
+        "case": "ordinary",
+        "evidence_keys": [],
+        "latency_ms": 7.844,
+        "limitations": [
+          "language_not_evaluated",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "review"
+      },
+      {
+        "analysis_complete": false,
+        "case": "observed-warning",
+        "evidence_keys": [
+          "request_for_secret",
+          "payment_pressure",
+          "secrecy_request"
+        ],
+        "latency_ms": 1.675,
+        "limitations": [
+          "language_not_evaluated",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "suspicious"
+      },
+      {
+        "analysis_complete": false,
+        "case": "unsupported-scope",
+        "evidence_keys": [],
+        "latency_ms": 1.142,
+        "limitations": [
+          "language_not_evaluated",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "review"
+      },
+      {
+        "analysis_complete": false,
+        "case": "private-canary",
+        "evidence_keys": [
+          "request_for_secret"
+        ],
+        "latency_ms": 31.591,
+        "limitations": [
+          "language_not_evaluated",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "suspicious"
+      }
+    ],
+    "health": {
+      "contract_version": "1.1.0",
+      "evaluated_message_languages": [],
+      "human_review_complete": true,
+      "max_body_bytes": 32768,
+      "max_text_length": 2000,
+      "model_ready": true,
+      "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
+      "policy_version": "analysis-policy-2",
+      "service_status": "ok"
+    },
+    "liveness_probe_exit": 0,
+    "mode": "real-model",
+    "outgoing_network_attempts": 0,
+    "readiness_probe_exit": 0,
+    "sampled_peak_rss_mib": 162.98,
+    "samples": 120,
+    "sequential_latency": {
+      "max_ms": 4.283,
+      "p50_ms": 1.805,
+      "p95_ms": 2.157,
+      "requests": 100
+    },
+    "startup_to_http_health_seconds": 0.773
+  },
+  "runtime_assets_unchanged": true,
+  "runtime_manifest": {
+    "encoder_required": false,
+    "files": {
+      "DATA_SOURCES.md": "9b2c8ad1024e7b1f0ba2f9755884ba8e5eb0eb92b15f8c17c885f185f0ce1b41",
+      "backend/__init__.py": "e4622f43c16305af46a0e671a78f3dc9aeaada4052d4ad8dc0f79c97a8ebd87c",
+      "backend/app.py": "0cadf47b23dc84c94928799fdf5a1f8dc53fc4c26f30aae5f39afaaa167e8b92",
+      "backend/contracts.py": "4dad82a348ec94f9bad7c7b6f2a21c3fe30a81c4131946effe77f3b66049f6aa",
+      "backend/inference.py": "d2103a47b3a72cbf98ecef76ce42dfb80375b5a6010fe1d68d00baf78287e4a0",
+      "backend/model-config.json": "55e3e4a43f95ee15fe257530f5bf227d0dd103f0ae151aa840402db9cfa23ccd",
+      "backend/policy.py": "d5048316944a1cc82ab71dfd85ed5c336637ab6772247c66c4f00ae705711e4f",
+      "backend/privacy.py": "217ab4ff5b3aaeca672a3ceb9e6b4489e2aa9fa05995f07434dfe923e10e60ca",
+      "backend/requirements.txt": "36a60113c4fa92072736c391397f188680997b823b91c13bd48ec7624b962be5",
+      "backend/rules.py": "ea02185f7caf12728d35da236a14008cdf0cb6098af768145841dfe00a2728db",
+      "backend/runtime.py": "57931050daa327b5628cbef1eb8b804873e487f503a63afe88e380bef6b58d33",
+      "backend/urls.py": "74a6ef53d3ee19ce18579a0c7429ba36f40f3d0ad5d801fac9d50faef6a5938a",
+      "docs/MODEL_CARD.md": "ace07d87a26061fb9dada3960520f9e90ec993b1c4d46f1f31ac214b01e2d13f",
+      "docs/THIRD_PARTY_NOTICES.md": "6bf893242c18f9aa81d615c974b33f9d1d1f6490b436d39042f24ec03ebb3f87",
+      "docs/runtime-licenses.json": "a9af6eec8d559ba4326b079013a57ec13e3b0f599b339882e2c56cd5db970eaf",
+      "frontend/dist/assets/InterVariable-DiVDrmQJ.woff2": "693b77d4f32ee9b8bfc995589b5fad5e99adf2832738661f5402f9978429a8e3",
+      "frontend/dist/assets/index-B4Cxx30z.css": "156553f702062eca9cac722220ee6185696811b39089e16d3a40f3c12eadb09c",
+      "frontend/dist/assets/index-znu-3g5D.js": "21da7c70f785dd5b329f5a16c271881f3e51488f272d06f8479c51e335834290",
+      "frontend/dist/assets/mark-zBSi9m9b.svg": "f7f0c5b1824abdf82a7d245c95995b13f4cd255d4b2b9aad11c7ce5955138269",
+      "frontend/dist/assets/support-illustration-wPV9tU2-.svg": "2cc9e41063362e66416cfea9e8cebe572f0f666fd49128f9455ac013c663e3f0",
+      "frontend/dist/index.html": "b32b691d688dd942e3987bdb7ae70439e4e9bccc535e65d07566d5c5778707fe",
+      "frontend/src/assets/Inter-LICENSE.txt": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a",
+      "ml/artifacts/goal02-approved-v1/tfidf_c2.0.json": "b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1",
+      "ml/data_prep.py": "85481cd7b14bab7eacd7294ab6766b37546d57b59931c2f76290edacd3bfc274",
+      "ml/reports/goal02-approved-v1.json": "3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd",
+      "ml/sources/mendeley-v1.json": "e43f9f86992693b894233e04eb69da77d0b603766a98666183f1c09d2a23d92e",
+      "ml/sparse_model.py": "53aa2ca0423a468e53684389d008517d52c3ff1b297df520a09e51b41f66a67b",
+      "scripts/healthcheck.py": "13767bba3aac80036f0c1f7b123231695387a5207377fc84ef51a87899329654",
+      "scripts/serve.py": "6eedcff8c2e4ab49523b1fcd3beec1deb911bf896ad3d7b6bb615d9d874af4ed"
+    },
+    "format_version": 1,
+    "gpu_required": false,
+    "model_sha256": "b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1",
+    "product": "ClearMessage",
+    "selection_report_sha256": "3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd"
+  },
+  "scope": "Final source snapshot packaged and executed offline using project venv; real HTTP/browser/limits/canaries. Separate clean-install evidence uses prior behavior-equivalent bounded-report loading code. Not Docker."
+}

@@ -93,9 +93,20 @@ def check_training_inputs(manifest_path: Path, review_path: Path, source_path: P
         sample = review["records"]
         if len({row.get("row_id") for row in sample}) != 45:
             block("human_review_duplicate_ids")
-        if any(row.get("row_id") not in lookup or lookup[row["row_id"]]["label"] != row["source_label"]
+        overrides = {r["row_id"]: r["reviewed_label"] for r in manifest.get("label_overrides", [])}
+        if any(row.get("row_id") not in lookup or lookup[row["row_id"]]["label"] != overrides.get(row["row_id"], row["source_label"])
                or lookup[row["row_id"]]["split"] != "train" for row in sample):
             block("human_review_sample_mismatch")
+        if manifest.get("approved_revision_version"):
+            from ml.approved_data import build_revision
+            approval_path, staged_path = Path(manifest["approval_file"]), Path(manifest["staged_file"])
+            if digest(bounded_read(approval_path)) != manifest["approval_sha256"] or digest(bounded_read(staged_path)) != manifest["staged_sha256"]:
+                block("approved_revision_evidence_hash_mismatch")
+            else:
+                candidate = manifest_path.parent / manifest["parent_candidate_file"]
+                rebuilt = build_revision(approval_path, staged_path, review_path, candidate, source_path)[3]
+                if rebuilt != manifest:
+                    block("approved_revision_manifest_mismatch")
         raw_count = sum(provenance["observed_counts"].values())
         if raw_count > len(rows) and not str(review.get("exclusions_approved_by", "")).strip():
             block("human_exclusions_not_approved")

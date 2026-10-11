@@ -29,9 +29,9 @@ Example from the real saved Goal 02 artifact, not a fixture verdict:
   "headline_key": "suspicious_signals",
   "evidence": [{"key":"request_for_secret","basis":"observed_text_signal"}],
   "action_keys": ["verify_independently","do_not_send_secrets","ask_trusted_person"],
-  "limitations": ["language_not_evaluated","human_review_incomplete","policy_not_validated","not_a_safety_confirmation"],
+  "limitations": ["language_not_evaluated","policy_not_validated","not_a_safety_confirmation"],
   "message_language": "en",
-  "model_version": "clearmessage-sparse-v1:7fe727cfb786",
+  "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
   "policy_version": "analysis-policy-2",
   "contract_version": "1.1.0",
   "share_summary_keys": ["analysis_not_completed","help_verify_independently"]
@@ -47,7 +47,7 @@ Statuses are guidance states, distinct from training labels:
   requires complete analysis, verified model/language/policy and no evidence.
 
 `analysis_complete` is separate. The current artifact always returns `false`:
-final reviewed-data approval pending, language performance unverified, low-finding
+language performance unverified, low-finding
 policy unvalidated. A rule can warn during model failure, with
 `inference_unavailable/rules_only` disclosed. HTTP 200 does not mean complete
 assessment. Missing/corrupt artifact yields `model_version=null`, `model_not_ready`.
@@ -101,7 +101,7 @@ Editing text or input-language hint clears the result and help preview.
 
 `GET /api/health` returns `service_status=ok`. `model_ready` means a verified
 artifact loaded, **not approved detector quality**. Currently
-`human_review_complete=false`, `evaluated_message_languages=[]`. Health includes
+`human_review_complete=true` (approved 45-row dataset audit), `evaluated_message_languages=[]`. Health includes
 versions/limits. `/api/openapi.json` needs no external CDN.
 
 ## Privacy and operation

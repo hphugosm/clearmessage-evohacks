@@ -1,0 +1,2391 @@
+{
+  "assessment_date": "2026-10-11",
+  "blockers": [],
+  "canonical_pins": {
+    "backend/model-config.json": "6d995909f71b742b365f05169147d1bc5473f2fc951c47cef1480e5cdd440ecc",
+    "ml/artifacts/goal02-provisional-v2/tfidf_c2.0.json": "7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa",
+    "ml/data/mendeley-v1-audit-v2/review.completed.json": "4e674147a8a42f144aa90f023430c8e181566da4c8234de52b5b69ca459defa6",
+    "ml/data/raw/Dataset_5971.zip": "9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3",
+    "ml/manifests/mendeley-v1.split.candidate.json": "51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0"
+  },
+  "draft_submitted": false,
+  "effect": {
+    "additional_conflict_groups": [],
+    "additional_conflict_rows": 0,
+    "candidate_assignments_preserved": true,
+    "conflict_reason_counts": {
+      "Identical after whitespace/case/Unicode normalization": 32,
+      "Near-copy or a combination of normalized/template/near-copy links": 13,
+      "Same conservative template with variable contacts/numbers": 1
+    },
+    "draft_counts_after_corrections": {
+      "ham": 4844,
+      "smishing": 590,
+      "spam": 439
+    },
+    "eligible_original_counts": {
+      "ham": 4844,
+      "smishing": 588,
+      "spam": 441
+    },
+    "eligible_rows": 5873,
+    "label_overrides": [
+      {
+        "group_id": "group-867f9aaba4a40b6c1b922010",
+        "reviewed_label": "smishing",
+        "row_id": "row-000565",
+        "source_label": "spam"
+      },
+      {
+        "group_id": "group-498607c728ae479d033b6298",
+        "reviewed_label": "smishing",
+        "row_id": "row-000891",
+        "source_label": "spam"
+      }
+    ],
+    "model_trained": false,
+    "original_counts": {
+      "ham": 4844,
+      "smishing": 638,
+      "spam": 489
+    },
+    "original_rows": 5971,
+    "quarantined_counts": {
+      "smishing": 50,
+      "spam": 48
+    },
+    "quarantined_groups": 46,
+    "quarantined_rows": 98,
+    "retraining_required_if_approved": true
+  },
+  "final_approval_given": false,
+  "kind": "read_only_assessment_of_staged_not_submitted_workspace",
+  "label_rechecked_counts": {
+    "True": 45
+  },
+  "metadata_counts": [
+    {
+      "count": 41,
+      "date": "2026-10-10",
+      "reviewer_id": "hugo"
+    },
+    {
+      "count": 4,
+      "date": "2026-10-11",
+      "reviewer_id": "hugo"
+    }
+  ],
+  "original_conflict_groups": [
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-05bcf4813f6687717e953486",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-003442",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-004884",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-098f77dffaf5c5e17b986db5",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-001986",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-003007",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-0a2b171d0d4e7b3c058fb4a3",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000773",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-003534",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-0c30bac940863f9814d72fc3",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000470",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-000484",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-0d59c7687b9e79e3ee3170a5",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-003977",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-004322",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-12f6d31925ec4779364e019f",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-003049",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-005560",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-1555be072affc619727d50f2",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-004244",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-004911",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-1bfcb2cb1b9ef0da81918744",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-001088",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-004138",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-3159389cf6576a027a24bf26",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-004780",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-005339",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 2,
+        "spam": 1
+      },
+      "group_id": "group-468e168d986865f24a2b27ed",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-002547",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-002669",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-003685",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-483c98e1b36113b53e9353f9",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-002858",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-004217",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-4d5797a0e9239e8e10e386b9",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000232",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-002925",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-4ed50355c6ae29d10c1c2377",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-004071",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-004566",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-506dc8c44c7de68af1249e9c",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-001059",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-003643",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-5cf200afc87f6b68d35a9df7",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000752",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-005352",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-5f9bbacb1d90eba8fbd4a287",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-004256",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-005919",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-7446e6de84f9c37b45560606",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000597",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-003503",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-7823edb543e3db6e7f894ad5",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-002145",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-005386",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 2,
+        "spam": 1
+      },
+      "group_id": "group-791e0a497a91e90de039fb18",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-001019",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-001082",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-003653",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 3,
+        "spam": 1
+      },
+      "group_id": "group-7a29fd13c9d43e9b6d6e2d41",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-000958",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-002505",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-003113",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-004238",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-83a72aa7a06f2edf39f889e9",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000068",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-001407",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-8be62fbaaa35a74ec1df154c",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-001326",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-003294",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-8e306523dc28c8bcd90a1985",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-001298",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-004412",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-92bb94d789fadaf943bd3af3",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-002430",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-005677",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-9723b8c8f2e5647399a62ae7",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-001119",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-001487",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-9c08e68b013967737af12ff6",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000382",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-003429",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-9ef3e89196a57cb962eda2be",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000181",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-002449",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-ad3b36467b301db4456337d8",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000333",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-003675",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-ad5768ee9692cf2ebbc1a37f",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000460",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-001036",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-b060978914ea98805a1dcf3f",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-003570",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-003590",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-bee36e0653d9d771c5e3119f",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-002705",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-003353",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-c2b2f18ea7290ea03c9dccb0",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000255",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-000322",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-c3533d0ac0cd1f276e969f47",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-003341",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-004579",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-c937d11013c5dc414cf64c7a",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-000235",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-001164",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-cb32c60512fdc43fd2271604",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000906",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-003814",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-cb82972f7b2721e411222233",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-004659",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-005256",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-ce8e40517198d468f0e38b5b",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-001630",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-002790",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-d12c5d721013752f05ec3fa5",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-005078",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-005734",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-d27e68f38262ac071e23c425",
+      "reason": "Same conservative template with variable contacts/numbers",
+      "rows": [
+        {
+          "row_id": "row-003575",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-003806",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-d2eb19afdad0f8c80ac5e60f",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-003083",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-004789",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-d610eded8ce45e07d199d73c",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-003580",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-004447",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-df21a98a97e0af603a878f5f",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-003061",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-004500",
+          "source_label": "smishing"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-dfb422bbdd3cc3f067762b5c",
+      "reason": "Identical after whitespace/case/Unicode normalization",
+      "rows": [
+        {
+          "row_id": "row-000214",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-001214",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 2
+      },
+      "group_id": "group-e1ae77502b4eb8984e158126",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-001315",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-002931",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-004405",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 2
+      },
+      "group_id": "group-e28cf94e058bc76907518cdd",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-001435",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-002357",
+          "source_label": "spam"
+        },
+        {
+          "row_id": "row-004128",
+          "source_label": "spam"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "smishing": 1,
+        "spam": 1
+      },
+      "group_id": "group-fbff0a3b7b966a90afbd2bf9",
+      "reason": "Near-copy or a combination of normalized/template/near-copy links",
+      "rows": [
+        {
+          "row_id": "row-001047",
+          "source_label": "smishing"
+        },
+        {
+          "row_id": "row-004108",
+          "source_label": "spam"
+        }
+      ]
+    }
+  ],
+  "protected_files_unchanged": true,
+  "quarantine_proposed": true,
+  "records": [
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-10T22:10:11.310508+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": {
+        "historical_date_unknown": true,
+        "mode": "reconfirm_now",
+        "recorded_at": "2026-10-11T07:19:19.467240+00:00"
+      },
+      "reviewed_date": "2026-10-11",
+      "reviewer_id": "hugo",
+      "row_id": "row-000188",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "",
+        "reviewer_id": "",
+        "row_id": "row-000188",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": ""
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-11T07:29:51.070041+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": {
+        "historical_date_unknown": true,
+        "mode": "reconfirm_now",
+        "recorded_at": "2026-10-11T07:19:19.467240+00:00"
+      },
+      "reviewed_date": "2026-10-11",
+      "reviewer_id": "hugo",
+      "row_id": "row-000244",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "ham",
+        "reviewed_date": "",
+        "reviewer_id": "",
+        "row_id": "row-000244",
+        "source_label": "ham",
+        "state": "approved",
+        "tool_action": ""
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:02.679721+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": {
+        "historical_date_unknown": true,
+        "mode": "reconfirm_now",
+        "recorded_at": "2026-10-11T07:19:19.467240+00:00"
+      },
+      "reviewed_date": "2026-10-11",
+      "reviewer_id": "hugo",
+      "row_id": "row-000490",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "",
+        "reviewer_id": "",
+        "row_id": "row-000490",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": ""
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:30:06.099176+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": {
+        "historical_date_unknown": true,
+        "mode": "reconfirm_now",
+        "recorded_at": "2026-10-11T07:19:19.467240+00:00"
+      },
+      "reviewed_date": "2026-10-11",
+      "reviewer_id": "hugo",
+      "row_id": "row-000565",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "",
+        "reviewer_id": "",
+        "row_id": "row-000565",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": ""
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:17:54.355867+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000711",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-000711",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:17:56.852962+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000810",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-000810",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:02.191304+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000867",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-000867",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:30:13.861373+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000891",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-000891",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:25.577059+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001078",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-001078",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:05.324291+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001136",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-001136",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:27.512647+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001145",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-001145",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:28.414880+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001291",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-001291",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:17:57.122000+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001324",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-001324",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:17.141772+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001372",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-001372",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:29.113731+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001392",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-001392",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:01.717713+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001593",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-001593",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:20.150799+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001607",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-001607",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:22.080521+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001939",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-001939",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:30.675576+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002290",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-002290",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:03.918962+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002354",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-002354",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:34.658315+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002546",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-002546",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:36.397663+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002692",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-002692",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:37.839703+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002882",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-002882",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:29.530103+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002915",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-002915",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:04.420329+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003032",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-003032",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:29.888141+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003088",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-003088",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:30.262690+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003347",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-003347",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:06.494780+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003654",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-003654",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:30.591681+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003706",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-003706",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:12.317566+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003734",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-003734",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:30.979491+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003848",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-003848",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:39.585870+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003948",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-003948",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:12.918995+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004498",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-004498",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:13.592775+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004597",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-004597",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:14.253236+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004657",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-004657",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:31.314649+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004805",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-004805",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:31.635262+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005106",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-005106",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:32.138314+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005131",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-005131",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:14.664073+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005144",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-005144",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:09:47.979433+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005154",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-005154",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:11:15.692851+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005324",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-005324",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:11:23.845960+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005397",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-005397",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "spam",
+      "label_confirmed_at": "2026-10-11T07:30:32.617542+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005455",
+      "saved_review": {
+        "decision": "confirmed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-005455",
+        "source_label": "spam",
+        "state": "approved",
+        "tool_action": "spam"
+      },
+      "source_label": "spam"
+    },
+    {
+      "final_label": "ham",
+      "label_confirmed_at": "2026-10-10T22:11:29.205903+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005506",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-005506",
+        "source_label": "ham",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "ham"
+    },
+    {
+      "final_label": "smishing",
+      "label_confirmed_at": "2026-10-11T07:18:15.130639+00:00",
+      "label_rechecked": true,
+      "language": "en",
+      "language_confirmed": true,
+      "language_confirmed_at": "2026-10-11T07:22:58.447724+00:00",
+      "metadata_confirmation": null,
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005600",
+      "saved_review": {
+        "decision": "disagreed",
+        "exclusion_approved_by": "",
+        "exclusion_approved_date": "",
+        "exclusion_reason": "",
+        "language": "pending",
+        "requested_label": "spam",
+        "reviewed_date": "2026-10-10",
+        "reviewer_id": "hugo",
+        "row_id": "row-005600",
+        "source_label": "smishing",
+        "state": "corrected",
+        "tool_action": "spam"
+      },
+      "source_label": "smishing"
+    }
+  ],
+  "review_sample_counts": {
+    "ham": 15,
+    "smishing": 17,
+    "spam": 13
+  },
+  "saved_review_effect_if_applied": {
+    "additional_conflict_groups": [
+      "group-2fad79558f193985abb5b962",
+      "group-9fa2ab5ecbe70f67101c8cfa",
+      "group-c2db71ad4056b51e526e916b",
+      "group-7179a27e53730d90fadd804a",
+      "group-af3580547094a72ac4590235",
+      "group-e36b466c2f39b8cfed16ea3d",
+      "group-838ca6a6687fb04d74799ada"
+    ],
+    "additional_conflict_rows": 29,
+    "candidate_assignments_preserved": true,
+    "conflict_reason_counts": {
+      "Identical after whitespace/case/Unicode normalization": 32,
+      "Near-copy or a combination of normalized/template/near-copy links": 13,
+      "Same conservative template with variable contacts/numbers": 1
+    },
+    "draft_counts_after_corrections": {
+      "ham": 4830,
+      "smishing": 573,
+      "spam": 470
+    },
+    "eligible_original_counts": {
+      "ham": 4844,
+      "smishing": 588,
+      "spam": 441
+    },
+    "eligible_rows": 5873,
+    "label_overrides": [
+      {
+        "group_id": "group-2fad79558f193985abb5b962",
+        "reviewed_label": "spam",
+        "row_id": "row-000188",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-c2db71ad4056b51e526e916b",
+        "reviewed_label": "spam",
+        "row_id": "row-000490",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-9fa2ab5ecbe70f67101c8cfa",
+        "reviewed_label": "spam",
+        "row_id": "row-000711",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-7179a27e53730d90fadd804a",
+        "reviewed_label": "spam",
+        "row_id": "row-000810",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-fa3827185d7b254641006f60",
+        "reviewed_label": "spam",
+        "row_id": "row-000867",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-ed2dc9779b9d7ce8aaefdd39",
+        "reviewed_label": "spam",
+        "row_id": "row-001136",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-04ac596aed72b6db1efc8bc8",
+        "reviewed_label": "spam",
+        "row_id": "row-001324",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-51e3e72dca4936d19641ddb7",
+        "reviewed_label": "spam",
+        "row_id": "row-001372",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-838ca6a6687fb04d74799ada",
+        "reviewed_label": "spam",
+        "row_id": "row-001593",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-e269f4d688ff18d7b899b4be",
+        "reviewed_label": "spam",
+        "row_id": "row-001607",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-09ae9c54465f6d0d79278552",
+        "reviewed_label": "spam",
+        "row_id": "row-001939",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-bd5964b58b7d746bd700af86",
+        "reviewed_label": "spam",
+        "row_id": "row-002290",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-ade23f9329e4a89d3d6597f7",
+        "reviewed_label": "spam",
+        "row_id": "row-002354",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-8cbd0fa11245e824ee6a060c",
+        "reviewed_label": "spam",
+        "row_id": "row-002546",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-18591e30e7a1ec9383ae7640",
+        "reviewed_label": "spam",
+        "row_id": "row-002692",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-bee46cf86cd3d18344a99fc3",
+        "reviewed_label": "spam",
+        "row_id": "row-002882",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-ab1e76bb4d17643da9a502a7",
+        "reviewed_label": "spam",
+        "row_id": "row-003032",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-365b62f8e28aa94b2e75bf18",
+        "reviewed_label": "spam",
+        "row_id": "row-003654",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-cf761949f6d85008f31ac81e",
+        "reviewed_label": "spam",
+        "row_id": "row-003734",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-3fcbe9c77663f695ef23c07c",
+        "reviewed_label": "spam",
+        "row_id": "row-003948",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-cb3a494929afe921a3379bdd",
+        "reviewed_label": "spam",
+        "row_id": "row-004498",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-1b17e158d7554afda393a309",
+        "reviewed_label": "spam",
+        "row_id": "row-004597",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-fbaeee8abedcbeb832271f35",
+        "reviewed_label": "spam",
+        "row_id": "row-004657",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-af3580547094a72ac4590235",
+        "reviewed_label": "spam",
+        "row_id": "row-005144",
+        "source_label": "smishing"
+      },
+      {
+        "group_id": "group-a00d3926385748a37e9a1ec7",
+        "reviewed_label": "spam",
+        "row_id": "row-005154",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-1a35979dbfbeff78527173c4",
+        "reviewed_label": "spam",
+        "row_id": "row-005324",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-04613c9d750745d93dbeff02",
+        "reviewed_label": "spam",
+        "row_id": "row-005397",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-419aed56e5bca470f329a1cb",
+        "reviewed_label": "spam",
+        "row_id": "row-005506",
+        "source_label": "ham"
+      },
+      {
+        "group_id": "group-e36b466c2f39b8cfed16ea3d",
+        "reviewed_label": "spam",
+        "row_id": "row-005600",
+        "source_label": "smishing"
+      }
+    ],
+    "model_trained": false,
+    "original_counts": {
+      "ham": 4844,
+      "smishing": 638,
+      "spam": 489
+    },
+    "original_rows": 5971,
+    "quarantined_counts": {
+      "smishing": 50,
+      "spam": 48
+    },
+    "quarantined_groups": 46,
+    "quarantined_rows": 98,
+    "retraining_required_if_approved": true
+  }
+}

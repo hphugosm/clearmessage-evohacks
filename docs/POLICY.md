@@ -8,8 +8,8 @@ alternative demo classifier. Read `MODEL_CARD.md` for data/license limits.
 Startup verifies the bounded selection-report JSON hash, selected artifact
 path/hash, warning-threshold agreement and recorded validation selection
 (`test_used=false`). Failure disables inference instead of silently using a
-different threshold or model. Threshold **0.60** is unchanged; no new training,
-validation search or held-out selection was performed for policy 2.
+different threshold or model. Threshold **0.60** was selected again using validation after approved-data retraining;
+policy 2 decision logic remains unchanged. Test reuse is disclosed in MODEL_CARD.
 
 ## Decision order
 
@@ -35,7 +35,8 @@ validation search or held-out selection was performed for policy 2.
    not issue model warnings. A user's language hint is not verified language.
 6. Spam alone, uncertain classifier scores or any missing guard yield review.
    The real model cannot issue `no_strong_signals` or `analysis_complete=true`:
-   audit incomplete, no verified language benchmark, low-finding policy disabled.
+   no verified language benchmark, low-finding policy disabled. The 45-row dataset
+   review is now approved; that is not whole-corpus ground-truth verification.
    A reserved future branch has conservative ham/other-class guards, explicitly
    **unvalidated and disabled in production**; test-only reviewed models exercise
    its safety invariants. Enabling it requires a separately validated policy.
@@ -92,7 +93,7 @@ Style A uses **Suspicious message** on amber for supported evidence; **We couldn
 assess this reliably** on a neutral card with an amber accent for review. Model
 failure without observed evidence says **Analysis not performed**. Completion
 is shown separately. Reserved green low findings require the unchanged full
-completion guards and remain unreachable with this provisional artifact. Red
+completion guards and remain unreachable with this language-unverified artifact. Red
 **Potential scam** has no validated stronger-warning policy and stays disabled.
 The client mirrors evidence, scope and completion invariants before rendering;
 its expanded states were checked after the backend contract/integration suite.

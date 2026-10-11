@@ -8,8 +8,8 @@ TF-IDF + LogisticRegression model, and transparent textual rules. The interface,
 documentation and project instructions are English; message language is separate.
 The approved [Style A brand bible](docs/BRAND_BIBLE.md) governs the interface.
 
-**The model is provisional. Human review is incomplete and language performance
-is unverified.** Current analysis returns `suspicious` with an actual basis or
+**The dataset review is approved and the model was retrained. Language performance
+and completed low-finding policy remain unverified.** Current analysis returns `suspicious` with an actual basis or
 `review`, always `analysis_complete=false`. It cannot return `no_strong_signals`.
 No percentages or safety guarantees are shown. Missing or failed inference is
 reported honestly, with rules-only limitations where relevant. See the
@@ -119,20 +119,20 @@ original archive; the earlier automatic download returned 403. No substitute cor
 .venv/bin/python -m pytest tests/test_data_prep.py tests/test_czech_format.py -q
 ```
 
-Actual raw counts: 5,971 rows, 4,844 ham / 489 spam / 638 smishing. Excluding
-98 rows in 46 conflicting groups leaves 5,873 candidate rows. Cross-split group
-intersections are empty. The latest human-review draft and approval blockers are recorded in
-[STATUS](docs/STATUS.md). The canonical review is unchanged; the proposed
-98-row quarantine and final eligible dataset have not been approved.
-The candidate has `data_split_ready=false`; no approved final freeze exists.
-The user authorized a provisional experiment on original labels, described in
-[MODEL_CARD](docs/MODEL_CARD.md) and [ML instructions](ml/README.md). This release
-does not retrain, inspect held-out/blind inputs or alter review decisions.
+Actual raw counts: 5,971 rows, 4,844 ham / 489 spam / 638 smishing. The owner
+explicitly approved all 45 staged review decisions/metadata and reversible quarantine
+of 98 rows in 46 conflicting families. Two SPAM training labels became SMISHING;
+29 incorrectly saved choices were restored. The frozen approved corpus has **5,873
+rows: 4,844 ham / 439 spam / 590 smishing**, with empty group/hash intersections.
+Existing train/validation/test assignments were preserved. The test set was already
+evaluated and is **not fresh blind validation**. English/Czech benchmarks remain
+unavailable; 45 English training confirmations do not establish evaluation language.
 
-The chosen artifact is ignored by Git. A new checkout must restore the project's
-trusted Goal 02 output with the recorded hash or reproduce it using the model
-card's explicitly provisional workflow. Without it the application discloses
-rules-only operation and model preparation fails; a checkout alone is not a detector.
+The selected approved artifact is Git-ignored. Restore this project's trusted
+Goal 02 output with the configured hash or reproduce it via [MODEL_CARD](docs/MODEL_CARD.md).
+No public artifact URL exists. A clean data setup needs only the original pinned
+archive plus tracked approval/history files; exact commands and measured comparisons
+are in the model card. Missing assets cause honest rules-only operation.
 
 ```sh
 # If absent, restore the trusted project output; no public artifact URL is available.
@@ -144,7 +144,7 @@ rules-only operation and model preparation fails; a checkout alone is not a dete
 ```
 
 `prepare_model.py` checks the artifact, report and selection threshold offline,
-then writes ignored `build/model.json`. It neither trains nor downloads.
+then writes ignored `build/model-approved-v1.json`. It neither trains nor downloads.
 `verify_analysis.py` measures fictional development smoke cases without saving
 message text; its results are not language accuracy or real-world validation.
 

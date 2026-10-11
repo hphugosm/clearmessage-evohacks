@@ -27,7 +27,7 @@ class Classifier(Protocol):
 class ModelNotReady(Exception):
     """Fixed exception with no message text."""
 
-def verify_selection() -> None:
+def verify_selection() -> dict:
     """Bind runtime model and warning threshold to our pinned validation choice.
 
     The report is read only at setup, as bounded JSON, never as executable code.
@@ -44,9 +44,12 @@ def verify_selection() -> None:
     if (type(threshold) not in (int, float) or not math.isfinite(threshold)
         or not 0 < threshold <= 1 or threshold != CONFIG["warning_threshold"]
         or selection["test_used"] is not False
+        or report["data_approval"]["human_review_complete"] is not CONFIG["human_review_complete"]
+        or (CONFIG["evaluated_languages"] and report["data_approval"].get("language_performance_verified") is not True)
         or artifact["sha256"] != CONFIG["sha256"]
         or (ROOT / artifact["file"]).resolve() != (ROOT / CONFIG["artifact_path"]).resolve()):
         raise ModelNotReady("model_selection_mismatch")
+    return report
 
 class UnavailableClassifier:
     version = None
@@ -66,7 +69,9 @@ class LocalClassifier:
     def __init__(self, path: Path):
         from ml.sparse_model import SparseModel
         self._model = SparseModel(path, CONFIG["sha256"])
-        verify_selection()
+        report = verify_selection()
+        if self._model.provenance != report["data_approval"]:
+            raise ModelNotReady("model_provenance_mismatch")
         self.version = f"{self._model.version}:{CONFIG['sha256'][:12]}"
         self.human_review_complete = CONFIG["human_review_complete"] is True and self._model.provenance.get("human_review_complete") is True
         self.evaluated_languages = tuple(CONFIG["evaluated_languages"])

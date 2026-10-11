@@ -1,251 +1,259 @@
-# ClearMessage final release audit — Goal 07
+# ClearMessage final release audit — approved dataset and retrained model
 
-11 October 2026 · starting commit `e0323fb` · Apple M5 / macOS arm64.
+11 October 2026 · starting commit `c1a8c9f` · Apple M5 / macOS arm64.
 
-**Recommendation: NO-GO for an approved detector/public release.** The genuine
-provisional text prototype works locally and its technical checks pass. Goal 01
-was **not formally finalized**, no final approved Goal 02 model exists, and no
-public application/model was deployed. Passing software tests does not approve
-human labels, quarantine decisions, language performance or a hosting environment.
-No features, model/policy changes, retraining, review decisions, split freezing,
-deployment, publication or Devpost submission were performed by this audit.
+**GO for a reproducible local research prototype using the approved dataset.**
+**NO-GO for public/production fraud-detector release.** Goal 01 review/quarantine/
+frozen-split approval blockers are resolved; the genuine approved-data model is
+integrated. Independent/language evaluation, completed low-finding validation,
+Docker execution and public-host/privacy controls remain unresolved. No deployment,
+publication, new product feature or Goal 08 was performed.
+
+[Historical pre-approval audit](FINAL_AUDIT-provisional-20261011.md) is retained.
+Passing technical checks and owner approval of the 45-row audit do not independently
+validate every corpus annotation or prove fraud protection.
 
 ## 1. Verified functionality
 
-### Formal Goal 01 and Goal 02 checks first
+The owner explicitly approved the staged review summarized in commit `c1a8c9f`:
+all 45 decisions/languages, metadata/dates, restoration of 29 erroneous saved SPAM
+choices, SPAM→SMISHING for `row-000565` and `row-000891`, and reversible quarantine
+of exactly 98 records in 46 mixed families. No human decisions were invented.
 
-| Evidence | Verified finding |
-|---|---|
-| Canonical `review.completed.json` | 45 saved decisions: **16 confirmed / 29 disagreed**, zero pending label decisions. Disagreements have not been reconciled into approved training labels. |
-| Languages and reviewer metadata | **45 pending language fields**, **four missing attributions**. Approved-data preflight also rejects missing/invalid review dates and incomplete per-class confirmations. |
-| Quarantine | **98 rows in 46 conflicting groups** are automatically omitted from the candidate/provisional corpus; canonical `exclusions_approved_by` is blank. This is not approved human quarantine. |
-| Submitted validation draft | The existing dated validation file explicitly says `goal01_complete=false`, `dataset_exclusions_approved=false` and `split_frozen=false`. The historical RAM-staged draft recorded in STATUS is not durable final approval. |
-| Final frozen split | `ml/manifests/mendeley-v1.split.json` **does not exist**. Candidate/provisional manifests have `data_split_ready=false`. The candidate's row/group/text/normalized/template split intersections are empty; this integrity check does not finalize the split. |
-| Current runtime | Artifact and selection-report hashes match our selected **TF-IDF C=2.0** provisional Goal 02 result; the internal warning threshold remains **0.60**. |
-| Approved final Goal 02 results | **Absent.** Artifact/report provenance explicitly says `human_review_complete=false`, `original_labels=true`, `language_performance_verified=false`. It points to the provisional manifest, not an approved final split. |
-| Deployed model | **None to verify.** There is no public URL or authorized existing destination; local runtime equivalence is verified separately. |
+Canonical schema/source labels/history are retained. Final decisions: 45 confirmed,
+zero pending; final sample 15 HAM / 13 SPAM / 17 SMISHING; all 45 English, reviewer
+hugo, 41 dates 2026-10-10 and four explicit re-confirmations 2026-10-11 (unknown
+original dates not invented). Prior canonical bytes and notes are preserved.
+The raw archive and candidate/provisional manifests/models/reports remain unchanged.
 
-The source archive is hash-verified: 5,971 records, **4,844 ham / 489 spam / 638
-smishing**, Mendeley V1, DOI 10.17632/f45bkkt8pr.1, CC BY 4.0, with provenance in
-[DATA_SOURCES](../DATA_SOURCES.md). The provisional eligible corpus has **5,873**
-records (**4,844 ham / 441 spam / 588 smishing**). These counts use original labels
-and automatic conflict omission, not the proposed reviewed corrections. A final
-approved eligible count cannot yet be certified.
-
-| Provisional split | ham | spam | smishing | Total |
+| Dataset stage | HAM | SPAM | SMISHING | Total |
 |---|---:|---:|---:|---:|
-| Train | 3,391 | 309 | 412 | 4,112 |
+| Original | 4,844 | 489 | 638 | 5,971 |
+| Approved quarantine | 0 | 48 | 50 | 98 |
+| Final eligible | 4,844 | 439 | 590 | 5,873 |
+| Train | 3,391 | 307 | 414 | 4,112 |
 | Validation | 727 | 66 | 88 | 881 |
-| Test | 726 | 66 | 88 | 880 |
+| Previously evaluated test | 726 | 66 | 88 | 880 |
 
-Seed **20261010**. Exact checked identities:
+5,585 eligible groups; zero remaining mixed-label families. Quarantined families:
+32 normalized-identical, one template, 13 near-copy/combined. Exact row IDs and
+reasons remain in the approved staged snapshot; reimporting the untouched archive
+can restore them. No permanent deletion or label propagation. Seed 20261010;
+every existing split/group assignment is retained. Row/group/text/normalized/
+template intersections are all empty. Final manifest is immutable with
+`data_split_ready=true`. Preflight reconstructs the approved revision and refuses
+tampered approval, review, quarantine, labels or assignments.
 
-| Evidence | SHA-256 |
+| Identity | SHA-256 |
 |---|---|
-| Canonical review | `4e674147a8a42f144aa90f023430c8e181566da4c8234de52b5b69ca459defa6` |
-| Raw archive | `9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3` |
-| Candidate manifest | `51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0` |
-| Provisional manifest | `21b3089b3e0aa56d076efef258f16cf4a2b8e9a4a27494d0ecf902a02bf2f9f5` |
-| Selected project JSON | `7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa` |
-| Selected experiment report | `b0d359771769be9f983370eec8599b7be13a6b55c4bc274259694a317eef3715` |
+| Source archive | `9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3` |
+| Previous review | `4e674147a8a42f144aa90f023430c8e181566da4c8234de52b5b69ca459defa6` |
+| Approved stage | `b0644144df2f738c946b2fec60eaad6e43a0aeeede70fea03df03a507d2373bb` |
+| Owner approval | `33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e` |
+| Final canonical review | `0c4748e7400ec54fe7e8dae343f33597a10339e5f68d5453a292b9d255c80b36` |
+| Final dataset split | `9fa155bd267fd5492523b297515b3b1a357832ce19e131357ba81198cf89b988` |
+| Selected model | `b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1` |
+| Training report | `3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd` |
 
-### Local application, safety, privacy and sharing
+Mendeley V1 / DOI 10.17632/f45bkkt8pr.1 / CC BY 4.0, original authors credited in
+[DATA_SOURCES](../DATA_SOURCES.md). Our two label corrections and quarantine are
+documented separately from raw source labels/text. A 45-row audit is not full
+annotation. Time/campaign metadata are unavailable; grouping can miss families.
 
-- Pasted text reaches the actual trained word/character TF-IDF + LogisticRegression
-  classifier and transparent rules through FastAPI. Real production-build and
-  Vite-proxy browser flows pass; no production fixture/model override is used.
-- `suspicious`, `review` and `no_strong_signals` remain distinct from training
-  labels. Current policy 2 always reports `analysis_complete=false`; low findings
-  and stronger red presentations remain disabled. Inference failure/busy,
-  corrupt/missing model, insufficient/unsupported text and coverage failures
-  cannot produce a completed reassuring result. Observed requests can still
-  warn with rules-only limitations during failure.
-- Rules support requests for secrets, immediate payment and secrecy; negation,
-  routine security notices, advertising and conflicting instructions are tested.
-  Specific reasons require actual observed evidence; classifier-only wording is
-  general. Spam, HTTPS/TLD, spelling and short URLs alone are not fraud evidence.
-- Limits are 2,000 code points, 32 KiB body, eight admitted HTTP requests, one
-  inference slot and five-second body receive deadline. Saturation/slow bodies
-  return fixed 503/408 with no-store. Health separates live service from loaded
-  model readiness; corrupt-model liveness succeeds and readiness fails.
-- Application logs/response/browser/share canaries pass; validation and exception
-  bodies do not echo private input. Text stays in backend RAM, not entirely in the
-  browser. No app history/storage/cookies/analytics, user-message cache/training or
-  third-party analysis API. Every tested response uses no-store.
-- Fresh startup, inference, restart and failure run with outgoing socket/DNS/UDP
-  attempts blocked and recorded: **zero attempts**. URL parsing is syntactic;
-  tldextract PSL refresh and cache are disabled. No message URL was visited.
-- Help preview receives only allowlisted keys and fixed neutral English sentences.
-  Actual isolated Chromium copying matches the preview and excludes source text,
-  snippets, links, names/accounts/codes. Preview and separate gestures precede
-  copy/share; cancellation/denial/missing support retain honest manual fallback.
-  Native share cancellation/failure is simulated in tests; actual recipient
-  delivery was not tested or performed.
-- English ClearMessage naming, `lang=en`, one dictionary, metadata/accessibility
-  names and first-party docs pass migration checks. Czech inputs/provenance remain
-  data exceptions, not a bilingual UI. Style A/local Inter/SVG are preserved.
-- Keyboard/focus/live-region assertions, reduced motion, 20px body/18px buttons,
-  controls at least 48px, 14 contrast pairs and seven visual captures pass. All
-  seven fresh fictional-input images were opened and inspected: desktop,
-  360px mobile, 320 CSS px reflow, 200% text enlargement and empty-error state.
-  No horizontal page overflow or hidden result actions/limitations. The neutral
-  preview textarea intentionally scrolls. Native 200% browser zoom evidence is
-  from Goal 04 and was not repeated; real screen-reader speech is unverified.
+Genuine Pipeline: word/character TF-IDF + balanced LogisticRegression; transforms
+fit train only. Same predeclared C grid 0.5/2.0 and thresholds 0.60/0.75/0.90.
+Frozen pinned MiniLM + our LR heads were compared after a small CPU batch benchmark.
+Validation selected TF-IDF C=2.0 and threshold 0.60 again, before test scoring.
+All saved candidates have project-generated JSON, actual reload/fresh-process parity
+and reproducibility checks; encoder has full-tokenizer overflow rejection.
+No untrusted pickle, runtime download, GPU or request-time training.
+
+The API now loads the approved artifact/report, verifies hashes, selection and
+provenance, and exposes review readiness honestly. Policy/rules/contract remain
+`analysis-policy-2` / `observed-requests-2` / `1.1.0`; decision logic and threshold
+are unchanged. Dataset approval does not validate language or low-finding policy:
+**all analysis_complete values remain false**, and no_strong_signals/red stronger
+warnings remain disabled. Failure/coverage/unsupported input cannot reassure.
+Observed requests may warn during model failure, with rules-only limitations.
+
+Existing safe recommendations and fixed neutral help preview/copy remain intact.
+No original text, snippet, URL, name, account/code enters share payloads. English
+copy/status metadata was corrected to remove the outdated incomplete-label-audit
+claim while retaining explicit unverified-language/limited-check notice. No new
+product feature or interface design was added; Style A/local assets remain intact.
 
 ## 2. Actual test results
 
-Executed with project-local locked dependencies; no global installation.
+- **199 Python / 32 Vitest / 34 Playwright PASS** through `sh scripts/test.sh`:
+  dependency checks, contract drift, TypeScript/Vite build, real production-build
+  and Vite-proxy API flow, privacy/log/share canaries, errors, unsupported scope,
+  full maximum text, keyboard, pending/stale-input and safe copying.
+- Approved-data preflight **PASS**, 45 confirmed reviews, zero blockers. Final
+  source/manifest/hash verification **PASS**, all split intersections empty.
+- New approval reconciliation tests **PASS**: reject false approval, changed
+  staged hash/quarantine/source/pending attestation and tampered final label.
+  Original/history/assignments remain preserved and repeat finalization identical.
+- Clean metadata restoration **PASS twice** in a fresh temporary data workspace,
+  reproducing exact canonical-review/final-split bytes from tracked metadata and
+  original archive. Uses current Python dependencies; not a container test.
+- All four actual model candidates **PASS** hash/reload/fresh-process inference,
+  oversized/encoder-overflow abstention and repeated embedding/head checks.
+  Repeated sparse train fits produce byte-identical artifacts; LR heads identical
+  on fixed embeddings. Numerical encoder differences remain separately disclosed.
+- Actual selected-model metrics/error IDs/majority and old/new comparison **PASS**
+  independent recomputation with no fitting/tuning or network attempts.
+- Both fictional human-review browser harnesses **PASS**, preserving actual source,
+  canonical review and candidate; their mock decisions stay in disposable tests.
+- Synthetic API smoke **PASS**, 25 actual requests across five fictional EN/CZ
+  cases, no-egress; not a language benchmark. Historical report bytes preserved.
+- Fresh UI harness **PASS** seven captures / 14 contrast pairs with approved model,
+  no external requests, errors or storage. Fresh captures are automated; manual
+  Goal 07/native zoom observations remain historical, not falsely repeated.
+- Migration/diff checks pass; exact final owned-file count is in STATUS. Existing
+  Starlette/httpx deprecation and Node color warnings remain visible.
 
-| Command/check | Actual outcome |
-|---|---|
-| `sh scripts/test.sh` | **PASS**: 188 Python, 32 Vitest, 34 Playwright; pip consistency, OpenAPI/TypeScript drift, TypeScript/Vite build and migration. |
-| `.venv/bin/python scripts/training_preflight.py` | **BLOCKED, exit 2**, as expected: approved manifest missing, incomplete label reconciliation/attribution/dates/languages/per-class confirmations. No source text or model loaded by preflight. |
-| `.venv/bin/python scripts/prepare_data.py verify --manifest ml/manifests/mendeley-v1.split.candidate.json --input ml/data/raw/Dataset_5971.zip` | **PASS candidate integrity**: source/manifest hashes match; all leakage intersections empty; explicitly not approved/frozen. |
-| `.venv/bin/python scripts/audit_release.py --output docs/data/goal07-model-audit.json` | **PASS consistency**: actual selected-model inference on 881 validation and 880 test records exactly reproduces classifier metrics/error IDs, majority baseline and historical CLI policy. Current policy also checked separately; no fit/tuning, no egress. |
-| `.venv/bin/python scripts/verify_release.py --clean-install --report docs/data/goal07-local-release.json` | **PASS fresh local runtime**: locked runtime-only venv, clean npm build, genuine HTTP/Chromium flows, offline unchanged-asset restart, corrupt-model failure, limits/admission, no-store and canaries. **Not Docker.** |
-| `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python scripts/verify_model.py --report ml/reports/goal02-provisional-v2.json --output docs/data/goal07-model-reload.json` | **PASS all four saved candidates**: hash/reload/fresh-process prediction parity, oversized review; frozen encoder overflow review and repeated first-32 embedding difference 3.8743e-7. No training/download. |
-| `PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node tests/review_tool_browser.mjs` | **PASS** fictional temporary review flow; canonical review hash unchanged. |
-| `PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node tests/review_validation_browser.mjs` | **PASS** fictional draft/language/metadata/quarantine/submission flow; canonical/source/candidate unchanged; no approval/freeze/training. |
-| `PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-ui.mjs` | **PASS** seven captures and 14 contrast pairs; preserved historical Goal 04 report and saved this run as Goal 07 evidence. |
-| `.venv/bin/python scripts/verify_analysis.py` | **PASS**: 25 real API smoke requests across five fictional EN/CZ development cases, with no-egress guard; historical Goal 03 report preserved, fresh output copied to Goal 07. Not language accuracy. |
-| `python3 scripts/audit_migration.py` / `git diff --check` | **PASS**; final owned-file count recorded in STATUS. |
-| Docker/Linux/Compose enforcement/public hosting | **NOT RUN / BLOCKED**: no docker/podman/nerdctl/colima/limactl or authorized deployed destination. No invented public URL. |
+Exact root-directory commands (new report/output names required on repetition):
 
-Existing Starlette/httpx deprecation and Node color-environment warnings remain
-visible. No test/security check was weakened. Audit-script output paths must be
-new: existing reports are never overwritten. Tests that simulate failures/future
-states are explicitly confined to tests, not evidence of production green output.
-
-Fresh local measurements: **68.646 s** cold startup, **0.979 s** offline restart;
-sampled peak RSS **159.55 / 161.92 / 154.25 MiB** for real/restart/failed model.
-100 alternating short/near-limit HTTP requests: p50 **1.840 ms**, p95 **2.276 ms**,
-max **3.296 ms**. CPU threads/inference are bounded; these are Apple M5 process-RSS
-and loopback measurements, not enforced Linux quotas or Internet latency.
-
-Machine-readable evidence:
-[model/approval/error audit](data/goal07-model-audit.json),
-[fresh local runtime](data/goal07-local-release.json),
-[all-candidate reload](data/goal07-model-reload.json),
-[UI/contrast/layout](data/goal07-ui-verification.json),
-[synthetic API smoke](data/goal07-api-smoke.json).
-
-### Recomputed classifier errors and policy coverage
-
-The following are **agreement with unapproved source annotations**, not verified
-fraud ground truth. Existing fixed selection was checked before reopening test
-for audit. No held-out result changed model/policy/thresholds; blind challenges
-were not opened. Macro-F1: validation **0.876209**, test **0.863645**. Train-majority
-ham baseline test macro-F1 **0.301370**.
-
-| Split / class | Precision | Recall | F1 | Support | FP | FN |
-|---|---:|---:|---:|---:|---:|---:|
-| Validation ham | 0.986395 | 0.997249 | 0.991792 | 727 | 10 | 2 |
-| Validation spam | 0.736842 | 0.848485 | 0.788732 | 66 | 20 | 10 |
-| Validation smishing | 0.957143 | 0.761364 | 0.848101 | 88 | 3 | 21 |
-| Test ham | 0.982265 | 0.991736 | 0.986977 | 726 | 13 | 6 |
-| Test spam | 0.750000 | 0.727273 | 0.738462 | 66 | 16 | 18 |
-| Test smishing | 0.891566 | 0.840909 | 0.865497 | 88 | 9 | 14 |
-
-Confusion matrices, rows source / columns prediction, order ham / spam / smishing:
-
-```text
-Validation (881)          Test (880)
-725   1   1               720   5   1
-  8  56   2                10  48   8
-  2  19  67                 3  11  74
+```sh
+.venv/bin/python scripts/finalize_data.py --approval ml/reviews/goal01-owner-approval.json --staged ml/reviews/goal01-approved-staged.json
+.venv/bin/python scripts/training_preflight.py
+.venv/bin/python scripts/prepare_data.py verify --manifest ml/manifests/mendeley-v1.split.json --input ml/data/raw/Dataset_5971.zip
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 .venv/bin/python scripts/train.py --manifest ml/manifests/mendeley-v1.split.json --output ml/artifacts/goal02-approved-v1 --report ml/reports/goal02-approved-v1.json --encoder-directory ml/artifacts/encoder
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python scripts/verify_model.py --manifest ml/manifests/mendeley-v1.split.json --report ml/reports/goal02-approved-v1.json --output ml/reports/goal02-approved-verification-v1.json
+.venv/bin/python scripts/audit_release.py --output docs/data/approved-model-audit-v1.json
+.venv/bin/python scripts/prepare_model.py
+sh scripts/test.sh
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node tests/review_tool_browser.mjs
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node tests/review_validation_browser.mjs
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-ui.mjs
+.venv/bin/python scripts/verify_analysis.py
+.venv/bin/python scripts/verify_release.py --clean-install --report docs/data/approved-local-release-v1.json
+python3 scripts/audit_migration.py
+git diff --check
 ```
 
-Of the test's 88 source-smishing rows, **3 predict ham / 11 spam**; the nine
-smishing false positives originate from **1 source ham / 8 source spam**.
-Error IDs/labels are reproducible in JSON; no raw source message/dangerous link
-is published as an example.
+Goal 03/04 harnesses write historical paths; wrappers preserved/restored those
+reports and copied fresh results to approved-release evidence. The model audit
+initially rejected absolute-vs-relative metadata paths; normalization was fixed,
+then recomputation passed. A metadata shell check used system Python missing
+FastAPI; rerun with `.venv/bin/python` passed. Neither changed decisions/metrics.
+The first clean-runtime run failed a browser assertion pinned to the old model
+hash; it is a failed run, not a pass. The expected identity was updated to the
+approved artifact without weakening flow/privacy/negative assertions.
 
-The original Goal 02 **CLI** threshold policy yields **75 suspicious / 805 review**,
-68 source-smishing warnings, seven non-smishing warnings and 20 source-smishing
-rows without an explicit warning. Completed-analysis coverage is zero.
-These counts are **not integrated API policy results**.
+### Fresh packaged runtime — actual completed check
 
-With the current policy 2 and honest `message_language=auto` for this
-unverified-language corpus, actual policy inference gives **881/881 validation
-and 880/880 test rows as review**, zero observed-rule warnings, zero inference
-errors, zero completed analyses. All 88 source-smishing test rows lack an explicit
-warning. This is a substantial utility/coverage limitation, **not 880 reassuring
-negative findings**. Classifier warnings require an explicit English hint; assigning
-English to the whole corpus to obtain the CLI count would invent confirmations.
-Narrow rules do not establish fraud detection performance. No policy was tuned
-from these audit results.
+The full clean-install rerun **PASS**: real approved-model HTTP/Chromium flows,
+offline unchanged-asset restart, deliberately corrupt disposable model, health,
+limits/admission, no-store, privacy canaries and zero outgoing network attempts.
+Cold startup **66.358 s**, offline restart
+**1.216 s**; sampled RSS real/restart/failed
+**156.81/162.39/154.61 MiB**.
+100 loopback requests: p50 **2.180**, p95 **3.416**, max **4.161 ms**.
+All 29 runtime hashes unchanged after inference/restart. No Docker/Linux/
+public-host claim. Detailed [deployment scope](DEPLOYMENT_REPORT.md),
+[fresh runtime JSON](data/approved-local-release-v1.json),
+[model reload](../ml/reports/goal02-approved-verification-v1.json),
+[clean data restore](data/approved-data-clean-restore-v1.json),
+[synthetic smoke](data/approved-api-smoke-v1.json),
+[automated UI checks](data/approved-ui-verification-v1.json).
 
-### English and Czech are reviewed separately
+### Actual metrics and old/new comparison
 
-| Evaluation scope | Actual state |
+These are annotation-agreement metrics on partially audited source labels.
+The 880 test rows were already evaluated in Goal 02/07. This is **reused-test
+comparison, not fresh blind or genuinely independent validation**. No reshuffle,
+new benchmark fabrication, test-driven candidate/policy adjustment or blind
+challenge inspection. Both models score identical unchanged validation/test rows.
+
+Selected macro-F1: validation **0.876209**, reused test **0.863645**. Provisional
+selected values are identical; **delta zero**, no prediction disagreements.
+Majority HAM test macro-F1 **0.301370**. Actual weights/provenance/hash changed.
+Frozen MiniLM C=0.5 validation/test **0.813473 / 0.845570**; C=2.0
+**0.801229 / 0.839003**; neither selected using test results.
+
+| Reused-test class | Precision | Recall | F1 | Support | FP | FN |
+|---|---:|---:|---:|---:|---:|---:|
+| HAM | 0.982265 | 0.991736 | 0.986977 | 726 | 13 | 6 |
+| SPAM | 0.750000 | 0.727273 | 0.738462 | 66 | 16 | 18 |
+| SMISHING | 0.891566 | 0.840909 | 0.865497 | 88 | 9 | 14 |
+
+Confusion rows annotation / columns prediction, HAM / SPAM / SMISHING:
+
+```text
+720   5   1
+ 10  48   8
+  3  11  74
+```
+
+Smishing FN: three predict HAM, eleven SPAM. Smishing FP: one source HAM, eight
+SPAM. [MODEL_CARD](MODEL_CARD.md) contains validation metrics/confusion and all
+licenses/hashes. [Training JSON](../ml/reports/goal02-approved-v1.json) and
+[recomputed comparison](data/approved-model-audit-v1.json) contain error IDs and
+per-candidate results, never raw message bodies or dangerous clickable examples.
+
+Threshold-only calculation: 75 suspicious / 805 review, seven non-smishing
+annotations warned, 20 smishing without warning. This is **not integrated API
+coverage**. Actual policy with honest unspecified language gives **880/880 test
+review**, also 881/881 validation review, zero observed warnings, inference errors
+and completed checks. Review is abstention/uncertainty, not a reassuring negative.
+This is a substantial utility limitation. Explicit EN permits experimental model
+warnings, not a verified English benchmark; do not invent language confirmations.
+
+| Language | Results |
 |---|---|
-| English | **No verified English benchmark/denominator or language-specific FP/FN metrics.** Original report `language_results.english=null`; canonical language confirmations are pending. Fictional English regression cases verify behavior only. |
-| Czech | **No verified Czech benchmark/denominator or language-specific FP/FN metrics.** Original report `language_results.czech=null`; only format/schema/instructions and synthetic regression inputs exist, with no actual development/blind challenge records found. |
-| Source-language aggregate | Recomputed provisional metrics above; **not renamed English or merged with Czech**. |
-
-Frozen multilingual MiniLM is a comparison encoder with our trained LR head,
-not our pretrained/fine-tuned encoder and not the deployed runtime. Encoder
-license/revision/hash provenance remains in MODEL_CARD/encoder asset manifest.
-Synthetic fixtures are neither representative validation nor actual human testing.
+| English | Separately unavailable: 45 training confirmations only, no verified evaluation-language denominator/FP/FN benchmark. |
+| Czech | Separately unavailable: no actual development/blind records; retained synthetic behavior tests are not field validation. |
+| Source aggregate | Partially audited annotation-agreement metrics; never relabeled English or merged with Czech. |
 
 ## 3. Remaining blockers
 
-1. Final human approval/reconciliation of 45 decisions, complete language/reviewer
-   metadata and explicit approval of proposed quarantine. A draft/staged selection
-   cannot substitute for approval; no human decisions were invented here.
-2. An approved final frozen dataset split with pinned review/source hashes and
-   empty group intersections, followed by separately authorized final Goal 02
-   training/selection/evaluation on that approved dataset. Current artifact remains
-   the expressly authorized original-label provisional experiment.
-3. Verified language-specific data/performance and validation of any completed
-   low-finding policy. Default unspecified-language warnings have no demonstrated
-   corpus coverage here. The current abstention guard stays intact.
-4. Actual Docker build/run/read-only/resource/network enforcement and public
-   destination authorization. HTTPS, anonymous public access, proxy/hosting body
-   logging, secret/analytics controls and deployment artifact identity are untested.
-5. Upstream partial-header/connection/rate protection before public exposure;
-   application admission/body bounds do not cap every idle TCP connection.
-6. Project distribution license and complete redistribution clearance/notices
-   review remain outstanding as documented in THIRD_PARTY_NOTICES. Nothing was
-   published; recorded dataset/encoder/font licenses are not blanket permission.
+1. Genuinely independent, language-confirmed evaluation and fuller label quality
+   audit. Already evaluated test data cannot certify new blind performance.
+2. Validated language scope and completed low-finding policy. Current limited
+   warnings/abstention do not establish protection or safety; no guard was unlocked.
+3. Actual Docker/Linux/read-only/resource/network enforcement verification. No
+   container tool/daemon exists here; updated Dockerfile is prepared, not tested.
+4. Public destination authorization and anonymous HTTPS/proxy/hosting no-body-log/
+   analytics controls, upstream partial-header/connection/rate protection. No URL
+   exists, and no deployment/publication was requested or attempted.
+5. Project distribution license and complete redistribution clearance/notices
+   review, as recorded in THIRD_PARTY_NOTICES. Recorded source/encoder/font licenses
+   are not blanket upstream clearance.
 
 ## 4. Known limitations
 
-- Source annotations are disputed, metadata incomplete, source dated 2022 and
-  campaign/time split metadata unavailable. Grouping is conservative and may miss
-  paraphrase/translation families. Hash identity is not an independent publisher
-  authenticity checksum or proof of data quality.
-- All actual current assessments are incomplete. Review is uncertainty/abstention,
-  not safety; the model does not verify senders, links, devices or transaction intent.
-  Spam is not interchangeable with smishing. Rules can miss indirect/sophisticated
-  wording and can flag benign requests; no numerical fraud probability is exposed.
-- No representative English/Czech challenge or field evaluation, human participant
-  observations, real screen-reader, physical mobile keyboard, Safari/Firefox or
-  actual native-share delivery testing. Accessibility assertions are not WCAG
-  certification. Historical native zoom is distinguished from this audit's text
-  enlargement/reflow checks.
-- Fresh local runtime requires trusted ignored model restoration plus explicit
-  dependency installation. Linux image/platform/quotas/image size are unmeasured;
-  512 MiB/one-CPU Compose settings and 120-second startup grace are provisional.
-- OCR was skipped; no screenshots, camera, PDF, remote browsing, cloud OCR or
-  multimodal service. No added age/account/history/integration features.
+- Old source (2022), imperfect annotations, 45-row training audit only; time and
+  campaign metadata unavailable; grouping can over/under-merge families.
+- No sender/device/link verification, network reputation or general language
+  reasoning. Narrow rules miss indirect/evasive requests and may flag benign ones.
+- Internal classifier scores are not fraud probabilities. No safety labels or
+  numeric user scores. Every analysis remains incomplete with visible limits.
+- No real screen-reader speech, human participants, physical mobile/Safari/Firefox,
+  current native 200% zoom repetition or actual native-share delivery. Automated
+  accessibility/clipboard evidence is not WCAG certification or usability proof.
+- Fresh local macOS execution differs from Linux/container quotas/Internet latency.
+  Compose resource budgets remain provisional. Trusted ignored weights/source
+  require explicit setup/restoration, never analysis/restart acquisition.
+- OCR remains skipped; no external agent/integration/account/history/analytics.
+  Already running owner dev/review processes were not silently restarted; new
+  processes use the approved on-disk configuration.
 
 ## 5. Release recommendation
 
-**Do not describe or publish this build as a finalized, approved fraudulent-message
-detector.** Goal 01/approved Goal 02 and deployment gates are unresolved.
+**GO: approved dataset and reproducible trained local research prototype.** Owner
+approval is now documented; data/model identity and technical integration are
+verified. Demonstrate fictional inert cases with visible limited-analysis notice.
 
-A **local development/demo prototype** may be demonstrated using fictional inert
-messages, with the visible incomplete-review/language notice, genuine classifier,
-observed-rule basis and independent-verification advice. Cite source-label metrics
-only with their provisional annotation/language scope and distinguish CLI policy
-from current integrated behavior. Preserve review/error abstention; do not unlock
-low findings or adjust thresholds using the audited test set.
+**NO-GO: independently validated public/production fraud detector.** Resolve the
+remaining language/independent-evaluation, policy, container, hosting/privacy and
+licensing gates before a broader release claim. Do not call absence of warnings
+safety, claim a fresh blind benchmark or tune thresholds from this reused test.
+No deployment/publication or Goal 08 follows this work.
 
-No critical failing runtime/privacy regression was found in the executed scope.
-One misleading documentation phrase (“approved project artifact”) was corrected
-to **hash-pinned provisional project artifact**, and “frozen candidate” to
-**immutable provisional manifest**. A reproducible read-only model-audit script
-and evidence reports were added; no product feature or production behavior changed.
-Final approval, reconciliation, training and hosting remain separate authorized
-work. Stop after Goal 07; no next goal, deployment or publication was started.
+Final-source verification also passed after tightening model loading to reuse the
+verified bounded report bytes (no second unchecked read). The exact final package
+ran offline with real HTTP/browser/limits/canaries using the project environment;
+[final package manifest and checks](data/approved-final-package-v1.json) records
+all 29 file hashes. This complements the fresh-install run and is explicitly not
+a second fresh install or Docker test.

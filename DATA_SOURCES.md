@@ -1,10 +1,14 @@
 # ClearMessage data sources
 
-Metadata verification and local acquisition: **10 October 2026**. The owner
-supplied the original archive after automatic acquisition failed. Actual data and
-automatic audit are available; human label review and conflict approval remain
-incomplete. A separately authorized provisional experiment uses original labels;
-it does not constitute approved training data. No extra corpus was added.
+Source verification/acquisition: **10 October 2026**. Goal 01 final owner approval
+and corrected freeze: **11 October 2026**, following commit `c1a8c9f`.
+All 45 reviewed training rows/metadata and exact 98-row whole-family quarantine are
+approved. Final eligibility is 5,873: **4,844 HAM / 439 SPAM / 590 SMISHING**.
+Two original SPAM labels become SMISHING in train only; original archive/labels are
+retained. Final split hash:
+`9fa155bd267fd5492523b297515b3b1a357832ce19e131357ba81198cf89b988`.
+[MODEL_CARD](docs/MODEL_CARD.md) records all review/data/model identities and the
+reused-test evaluation scope. No new corpus or independently verified benchmark.
 
 ## D1 — original Mendeley dataset, version 1
 
@@ -25,9 +29,9 @@ it does not constitute approved training data. No extra corpus was added.
 | CSV SHA-256 | `649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e` |
 | Actual rows | 5,971 |
 | Actual ham / spam / smishing | 4,844 / 489 / 638 |
-| Human sample | 15 entries per class; 45 decisions: 16 agreements / 29 corrections, zero pending labels; attribution/language incomplete |
-| Group proposal | Immutable candidate; all actual eligible-data intersections empty |
-| Approved final split | Absent; `data_split_ready=false` |
+| Human sample | 15 original entries per class; 45 approved rechecks, final 15 HAM / 13 SPAM / 17 SMISHING; complete metadata and English confirmations |
+| Group proposal | Candidate retained; approved frozen revision preserves assignments and empty intersections |
+| Approved final split | Present, `data_split_ready=true`; two approved train-label overrides |
 
 Archive name, member, columns and counts match the published description.
 No independent publisher checksum is available: our hashes establish identity of
@@ -45,7 +49,7 @@ labels block final freeze; none were observed. No numeric aliases or guessing.
 |---|---|---|
 | `ham` | ham | 4,844; source ordinary/legitimate messages, not a safety confirmation |
 | `spam` (466), `Spam` (23) | spam | 489; unsolicited/advertising content, not automatically phishing |
-| `Smishing` (616), `smishing` (22) | smishing | 638; source SMS phishing annotation, human meaning audit incomplete |
+| `Smishing` (616), `smishing` (22) | smishing | 638; source SMS phishing annotation; 45-row sampled meaning review approved, not full-corpus ground truth |
 
 Whole groups with conflicting valid labels are quarantined without relabeling.
 Training labels are distinct from API statuses. `URL/EMAIL/PHONE` use `No` and
@@ -65,12 +69,12 @@ extractors' correctness or completeness.
   These are identified family conflicts, not necessarily identical texts.
   Eligible: **5,873 rows / 5,585 groups**.
 - Script hints: 5,906 Latin unknown, 1 mixed unknown, 64 too-short unknown.
-  All 5,971 message languages remain unverified; Latin script is not English.
+  45 sampled training languages confirmed English; remaining 5,926 raw-row languages unverified. Latin script is not English.
 - No language, time or campaign metadata in the CSV. Upstream row lineage,
   translations, paraphrases and real campaign separation remain unverified.
 
 Seed **20261010**, whole-group splitting; all human-review families reserved for
-train. This is an unapproved candidate, not a reviewed final split:
+train. The following table is the preserved original-label candidate; the corrected approved counts are in MODEL_CARD:
 
 | Class | Train | Validation | Test | Eligible |
 |---|---:|---:|---:|---:|
@@ -85,19 +89,17 @@ intersections across every split pair. Candidate SHA-256:
 [Candidate manifest](ml/manifests/mendeley-v1.split.candidate.json) records the
 historical pending review at creation, not later human decisions. The unchanged
 candidate remains `candidate_pending_human_review`, `data_split_ready=false`.
-Final freeze failed with `human_label_review_pending_or_disagreed`; no final
-approved manifest was produced. At provisional training time two agreements and
-two requested smishing → spam
-changes were saved. The owner has since saved 16 agreements and 29 corrections
-across all 45 entries; zero label decisions remain pending. No corrections were
-silently applied to original-label training. All 45 languages and four
-reviewer/date attributions remain missing; current verification is in STATUS.
-Exclusion approval is still empty.
+The initial original-label freeze failed with `human_label_review_pending_or_disagreed`.
+That failure is historical: final owner approval now permits the corrected frozen
+revision. The approved sample has 45 decisions and complete attribution/language
+metadata, with two original-label overrides and explicit quarantine approval.
+Source labels and prior canonical choices are preserved in review/history snapshots.
+The old candidate/provisional manifest remains unchanged for comparison evidence.
 
 Text-free evidence: [audit](docs/data/mendeley-v1.audit.json),
 [provenance](docs/data/mendeley-v1.provenance.json),
 [preparation status at import](docs/data/preparation-status.json).
-Raw text, review notes and defanged previews remain in ignored `ml/data/`.
+Raw text and defanged previews remain in ignored `ml/data/`. Metadata/tool-note-only review snapshots are tracked under `ml/reviews/`; no source messages are included.
 Current experiment and authorization: [MODEL_CARD](docs/MODEL_CARD.md).
 
 ## License, provenance and attribution
@@ -106,7 +108,7 @@ Publisher citation: mishra, sandhya; Soni, Devpriya (2022), *SMS PHISHING DATASE
 FOR MACHINE LEARNING AND PATTERN RECOGNITION*, Mendeley Data V1,
 doi:10.17632/f45bkkt8pr.1. Copyright Sandhya Mishra and Devpriya Soni, 2022.
 Retain attribution, license/source and changes when using the data. Our changes:
-audit, conflict quarantine, normalization for grouping and proposed group splits.
+audit, approved reversible conflict quarantine, normalization for grouping, two train-label corrections and frozen group assignments.
 Original model text is preserved; raw corpus content is not published.
 
 The publisher describes internet pictures/screenshots converted to text and

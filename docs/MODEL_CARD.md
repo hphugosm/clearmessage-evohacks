@@ -1,211 +1,214 @@
-# ClearMessage — provisional model card
+# ClearMessage model card — approved dataset release candidate
 
-Runtime note updated **2026-10-11, Europe/Prague**; experiment results below are
-from 10 October. A genuine short-message classifier has
-been trained, saved and evaluated. **It is experimental: human label review is
-incomplete, source languages are unverified, and it is not an approved detector.**
-Goal03 now connects the verified sparse artifact to the application API.
-The 11 October integration uses `analysis-policy-2` and `observed-requests-2`.
-It verifies the selection report and unchanged validation threshold at startup;
-weights, source labels and model metrics were not changed or retrained. Final
-reviewed-data approval is still pending. See [POLICY](POLICY.md) and [STATUS](STATUS.md)
-for current runtime checks; historical experiment metrics below retain their
-original scope.
-`model_ready=true` means the asset loaded; all actual results still have
-`analysis_complete=false`. No language has verified performance, the human review
-remains incomplete, and production `no_strong_signals` is disabled. The model still
-has its Goal02 scope and original-label provenance; integration does not improve
-its measured quality. See [API](API.md), [policy](POLICY.md) and the separate
-synthetic integration report `ml/reports/goal03-integration.json`.
+11 October 2026 · Goal 01 explicitly approved by the owner following commit `c1a8c9f`.
 
-The user explicitly authorized provisional training on **original** source labels
-after pausing human review. This permits the experiment; it does not invent human
-approval. At training time four human decisions were saved: two agreements and two
-requested smishing → spam changes, with 41 entries pending. The owner has since
-saved all 45 label decisions: 16 agreements and 29 corrections, zero pending
-labels. All 45 languages and four reviewer/date attributions remain missing;
-conflict exclusion approval is empty. Requested corrections (44 final spam /
-1 ham / 0 smishing) have not been applied to this original-label model or corpus. The previous blocker report remains as historical evidence.
-The separate staged review now has all 45 label/language confirmations and
-complete attribution, proposing 15 HAM / 13 SPAM / 17 SMISHING plus the 98-row
-quarantine. It has not been submitted or finally approved; canonical review and
-this original-label model remain unchanged. See [review assessment](REVIEW_DRAFT_ASSESSMENT.md).
+**Dataset/retraining/integration candidate; not an independently validated fraud detector.**
+All 45 staged decisions and reviewer/language metadata were approved, the exact
+98-row quarantine is reversible, and the corrected split is frozen. Only the
+45 sampled training messages have human language confirmations. No representative
+English or Czech benchmark exists. Every current API assessment remains incomplete;
+`no_strong_signals` and stronger red presentations remain disabled.
 
-## Data and licenses
+The runtime uses our newly trained sparse artifact, not the provisional original-label
+artifact. Historical results and original data remain available:
+[previous model card](MODEL_CARD-provisional-20261011.md),
+[previous report](../ml/reports/goal02-provisional-v2.json).
 
-Sandhya Mishra and Devpriya Soni (2022), *SMS PHISHING DATASET FOR MACHINE LEARNING
-AND PATTERN RECOGNITION*, Mendeley Data V1, DOI `10.17632/f45bkkt8pr.1`, CC BY 4.0.
-Attribution, source links and provenance limitations: [DATA_SOURCES](../DATA_SOURCES.md).
-This is a three-class source-label corpus, not independently verified phishing
-ground truth. Spam is not interchangeable with smishing; ham does not establish safety.
+## Data, approval and provenance
 
-Archive SHA-256:
-`9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3`.
-CSV SHA-256:
-`649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e`.
-Local hash identity is not proof of authenticity; no independent publisher
-checksum was available. The supplied archive and original labels remain unchanged.
+Sandhya Mishra and Devpriya Soni (2022), Mendeley Data V1,
+DOI `10.17632/f45bkkt8pr.1`, **CC BY 4.0**. See [DATA_SOURCES](../DATA_SOURCES.md).
+ham, spam and smishing are preserved; spam is not phishing ground truth and ham
+does not establish safety. A 45-row approved audit is not full-corpus reannotation.
 
 | Stage | ham | spam | smishing | Total |
 |---|---:|---:|---:|---:|
-| Original | 4,844 | 489 | 638 | 5,971 |
-| Eligible | 4,844 | 441 | 588 | 5,873 |
-| Train | 3,391 | 309 | 412 | 4,112 |
+| Original source | 4,844 | 489 | 638 | 5,971 |
+| Approved quarantine | 0 | 48 | 50 | 98 |
+| Approved eligible | 4,844 | 439 | 590 | 5,873 |
+| Train | 3,391 | 307 | 414 | 4,112 |
 | Validation | 727 | 66 | 88 | 881 |
 | Test | 726 | 66 | 88 | 880 |
 
-46 conflicting groups / 98 rows are excluded under the existing automatic audit;
-human approval remains pending. No additional corpus or synthetic training data.
-Seed **20261010**, preparation `data-prep-v2`. Exact/normalized duplicates,
-conservative templates, near copies and known families were grouped before split.
-All row/group/text/normalized/template intersections are empty. Review families
-belong to train. Time/campaign metadata are unavailable; missed paraphrases,
-translations and grouping errors remain possible.
+Review sample final labels: 15 HAM / 13 SPAM / 17 SMISHING; 45/45 English,
+reviewer hugo, 41 dates retained as 2026-10-10 and four explicit re-confirmations
+as 2026-10-11 (unknown original dates preserved). Restore 29 earlier SPAM choices;
+only source SPAM `row-000565` and `row-000891` change to SMISHING, both singleton
+training groups. Raw labels/text remain untouched; manifest records retain
+`source_label` separately from corrected `label`. Canonical schema and notes/history
+are preserved in hash-pinned snapshots.
 
-The original candidate is unchanged. A small immutable provisional authorization
-manifest references its hash and identical assignments, with
-`data_split_ready=false`; no approved split was frozen:
+Quarantine: 46 conflicting families, 98 exact row IDs, with 32 normalized-identical,
+one template and 13 near-copy/combined groups. Originals are retained; no deletion.
+Eligible groups: 5,585, zero mixed-label families, empty row/group/text/normalized/
+template intersections. Seed **20261010**. Every candidate partition is retained:
+no reshuffle of formerly evaluated data. Time/campaign metadata are unavailable;
+missed paraphrase/translation families and imperfect labels remain possible.
 
-- Candidate SHA: `51e9fd09c8f2800d9d53a6a4f147b328eaf26c04ad6497e074c38fad1a1271f0`.
-- Provisional SHA: `21b3089b3e0aa56d076efef258f16cf4a2b8e9a4a27494d0ecf902a02bf2f9f5`.
+| Identity | SHA-256 |
+|---|---|
+| Raw archive | `9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3` |
+| Raw CSV (source manifest) | `649844f1c62a6b27e145eaf17a65f7010c56c390e11a794ea8329993a05ba71e` |
+| Previous canonical review | `4e674147a8a42f144aa90f023430c8e181566da4c8234de52b5b69ca459defa6` |
+| Approved staged assessment | `b0644144df2f738c946b2fec60eaad6e43a0aeeede70fea03df03a507d2373bb` |
+| Owner approval | `33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e` |
+| Final canonical review | `0c4748e7400ec54fe7e8dae343f33597a10339e5f68d5453a292b9d255c80b36` |
+| Final frozen split | `9fa155bd267fd5492523b297515b3b1a357832ce19e131357ba81198cf89b988` |
+| Selected JSON model | `b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1` |
+| Experiment report | `3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd` |
 
-## Our model and reused encoder
+Immutable review/approval snapshots are under `ml/reviews/`; raw corpus and weights
+stay Git-ignored. The archive checksum is local identity, not an independent publisher
+authenticity checksum. No added corpora, synthetic training messages or user inputs.
 
-Baseline: scikit-learn Pipeline → FeatureUnion of word TF-IDF (1–2 grams,
-5,000 feature cap) and character-within-word TF-IDF (3–5 grams, 15,000 cap),
-min_df=2, sublinear TF, L2 normalization → balanced LogisticRegression, lbfgs,
-max_iter=1000. Vocabulary/IDF/classifier fit **only train**. A separate
-train-fitted majority baseline predicts ham.
+## Our training and reused encoder
 
-Two predefined C values, **0.5 and 2.0**, were tested; no broad search. The frozen
-comparison uses `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`,
-revision `e8f8c211226b894fcb81acc59f3b34ba3efd5f42`, **Apache-2.0**; 384-D mean
-pooling embeddings plus our balanced LogisticRegression head on identical split
-assignments. We did **not** pretrain or fine-tune this encoder. Credit and license:
-[Sentence Transformers pinned model card](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/blob/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/README.md).
+scikit-learn Pipeline: FeatureUnion of word TF-IDF (1–2 grams, cap 5,000) and
+character-within-word TF-IDF (3–5 grams, cap 15,000), min_df=2, sublinear TF,
+L2 normalization → balanced LogisticRegression, lbfgs, max_iter=1000.
+Vocabulary/IDF/weights fit only the 4,112 training rows. Majority baseline is
+train-fitted HAM. Same predeclared C grid **0.5 / 2.0**, threshold grid
+**0.60 / 0.75 / 0.90**; no broad search. Validation selects macro-F1 × token
+coverage and warning F1 (higher threshold breaks ties). Saved selection precedes
+this run's test scoring; **test did not select candidate or threshold**.
 
-Explicit setup acquired safetensors/config/tokenizer assets; hashes and license
-provenance are in `ml/encoder-assets.json`. Runtime verifies hashes, uses local
-files only, disables remote code and freezes weights. No pickle is loaded.
-Public train/validation embeddings are cached locally; app inputs and held-out
-embeddings are never cached.
+Frozen `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, revision
+`e8f8c211226b894fcb81acc59f3b34ba3efd5f42`, Apache-2.0, is a comparison encoder
+with our trained balanced LR head. We did not pretrain/fine-tune it. Assets and
+licenses are pinned in `ml/encoder-assets.json`; CPU, local safetensors,
+remote code disabled. Only public train/validation embeddings are cached;
+test embeddings and application inputs are not cached.
 
-The full-tokenizer limit is **128 tokens including special tokens**. Coverage
-is checked without truncation before encoding; overflow is rejected. Encoder
-coverage: train 4,103/4,112; validation 880/881; test 880/880. Metrics use covered
-rows, with denominators disclosed; uncovered rows are review in policy.
-TF-IDF processes full text without a transformer token limit; vocabulary pruning
-does not mean every word has a learned feature.
+Encoder load 3.256 s; first 32 training messages
+0.138990 s before full encoding. Full tokenizer
+checks a 128-token limit including special tokens without truncation:
+train 4,103/4,112, validation 880/881, test 880/880 covered. Overflow abstains.
+TF-IDF processes full bounded text; feature pruning is not universal vocabulary
+understanding. The encoder is absent from the selected runtime.
 
-## Selection and results
+## Actual evaluation and provisional comparison
 
-Validation macro-F1 × token coverage selected **TF-IDF, C=2.0**. The internal
-smishing-warning threshold **0.60** was selected on validation from
-0.60 / 0.75 / 0.90 by warning F1, then higher threshold on ties. Scores are not
-calibrated fraud probabilities and are not returned to users. Selection was
-saved before test text was featurized, embedded or scored. The source parser
-routes all public CSV records by ID beforehand; test content was not used for
-model or threshold selection.
+**Previously evaluated comparison set, not fresh blind validation.** All 880 test
+rows were already evaluated in Goal 02/07. Their text/groups never enter fitting;
+validation/test IDs, labels and partitions are identical for the old/new comparison.
+No audited test errors informed this fixed candidate/threshold protocol. There is
+no newly obtained independent benchmark, and no blind Czech challenge was opened.
 
-| Candidate | Validation macro-F1 | Test macro-F1 |
+| Candidate | Validation macro-F1 | Reused test macro-F1 |
 |---|---:|---:|
-| TF-IDF C=0.5 | 0.867939 | 0.858517 |
-| **TF-IDF C=2.0, selected** | **0.876209** | **0.863645** |
-| Frozen MiniLM + LR C=0.5 | 0.809481 | 0.848873 |
-| Frozen MiniLM + LR C=2.0 | 0.804186 | 0.852579 |
-| Majority baseline | See report | 0.301370 |
+| minilm_c0.5 | 0.813473 | 0.845570 |
+| minilm_c2.0 | 0.801229 | 0.839003 |
+| tfidf_c0.5 | 0.867939 | 0.858517 |
+| tfidf_c2.0 | 0.876209 | 0.863645 |
+| Majority HAM | 0.301410 | 0.301370 |
 
-These are computed **source-label agreement metrics**, not verified fraud
-accuracy. Test results did not change selection. Future tuning on this test must
-identify it as development, not claim a new blind evaluation.
+**Selected: TF-IDF C=2.0, threshold 0.60.** Provisional selected test macro-F1
+**0.863645**, approved selected **0.863645**, delta **0.000000**; zero prediction
+disagreements on validation/test. Weights/artifact provenance and hash changed;
+identical aggregate predictions are measured, not fabricated improvement.
 
-Selected test confusion matrix (rows source labels, columns predictions;
-ham / spam / smishing):
+| Split/class | Precision | Recall | F1 | Support | FP | FN |
+|---|---:|---:|---:|---:|---:|---:|
+| validation ham | 0.986395 | 0.997249 | 0.991792 | 727 | 10 | 2 |
+| validation spam | 0.736842 | 0.848485 | 0.788732 | 66 | 20 | 10 |
+| validation smishing | 0.957143 | 0.761364 | 0.848101 | 88 | 3 | 21 |
+| test ham | 0.982265 | 0.991736 | 0.986977 | 726 | 13 | 6 |
+| test spam | 0.750000 | 0.727273 | 0.738462 | 66 | 16 | 18 |
+| test smishing | 0.891566 | 0.840909 | 0.865497 | 88 | 9 | 14 |
+
+Confusion rows annotation / columns prediction: HAM, SPAM, SMISHING.
 
 ```text
-720   5   1
- 10  48   8
-  3  11  74
+Validation (881)     Reused test (880)
+725   1   1          720   5   1
+  8  56   2           10  48   8
+  2  19  67            3  11  74
 ```
 
-Complete per-class precision/recall/F1, supports, false positives/negatives,
-confusion matrices for every candidate/baseline, and error IDs:
-[English report](MODEL_REPORT.md), [computed JSON](../ml/reports/goal02-provisional-v2.json).
-No raw error-message bodies or dangerous links are published.
+Smishing test FN: 3→HAM, 11→SPAM; smishing FP: one HAM, eight SPAM.
+These are agreement errors against partially audited source annotations, not
+independently adjudicated fraud outcomes. Error IDs are saved without raw text.
+[Full experiment JSON](../ml/reports/goal02-approved-v1.json),
+[recomputed comparison and policy](data/approved-model-audit-v1.json).
 
-## Policy, language and limitations
+## Policy and language scope
 
-Training classes are separate from application statuses. Provisional policy can
-show an explicit classifier-based warning for sufficiently strong smishing
-scores; other cases are review. It never produces `no_strong_signals` or a
-completed reassuring analysis. Inference rejects empty input and text over
-2,000 Unicode characters without echo. There is no runtime message cache.
+API policy **analysis-policy-2**, rules **observed-requests-2**, contract **1.1.0**.
+Scope/coverage/service checks override scores; observed requests can warn during
+model failure with rules-only limitations. Specific reasons require actual
+textual evidence; classifier-only wording is general. Safe recommendations and
+neutral gesture-only sharing use existing templates, never source text.
 
-Selected test policy: **75 suspicious / 805 review / 0 no_strong_signals**;
-68 warnings match source smishing, 7 do not; 20 source-smishing rows lack an
-explicit warning and remain review. Review/abstention rate 0.914773;
-completed-analysis coverage **0**. These are provisional CLI policy results,
-not an integrated API deployment or approved protection claim.
+Human review readiness is true; evaluated languages remain empty and low-finding
+policy validation remains false. Thus **analysis_complete=false** for every
+current response; absence of warnings never establishes safety. EN hint permits
+experimental model warnings, not an evaluated English performance claim.
 
-All source languages remain unverified. **English results: unavailable. Czech
-results: unavailable.** Aggregates are not relabeled English because messages
-use Latin script. Blind challenges were not opened. Synthetic test fixtures are
-neither training data nor real-world validation.
+Threshold-only test calculation: 75 suspicious / 805 review, 68 matching source
+smishing, seven other annotations warned, 20 smishing without warning. This is
+not integrated API coverage. Actual current policy with honest unspecified language:
+**880/880 test review**, zero observed warnings, zero inference errors, zero
+completed checks; validation 881/881 review. Narrow rules have no demonstrated
+corpus warning coverage in this setting.
+
+| Language | Evaluation |
+|---|---|
+| English | Unavailable: only 45 training rows confirmed; evaluation languages not independently verified. |
+| Czech | Unavailable: no actual development/blind records; preserved synthetic regression inputs are behavior tests only. |
+
+Source aggregate metrics are not renamed English or combined with Czech.
 
 ## Integrity, device and reproducibility
 
-Measured on **Apple M5, macOS arm64, 24 GiB RAM**, CPU, four numerical compute
-threads. Encoder first train batch: 32 messages in 0.116693 s; load 2.321944 s.
-Selected TF-IDF warm single-message median **0.424 ms**, p95 **0.640 ms**
-(32 validation messages, includes policy, excludes loading). Its test batch
-amortized 0.0434 ms/message; batch throughput is not single-request latency.
-Startup, all candidate latencies and offline fresh-process checks:
-[verification JSON](../ml/reports/goal02-verification-v2.json).
-
-All candidates passed validation reload parity with **zero score difference**.
-Repeated TF-IDF fits produced identical saved bytes; repeated heads produced
-identical weights on fixed embeddings. Encoder recomputation differs by at most
-3.88e-7 on the checked first 32 train vectors due to different padding batches;
-this is disclosed separately from exact head-fit reproducibility. Genuine saved
-models also passed new-process inference with network connections disabled.
-Selected artifact: `ml/artifacts/goal02-provisional-v2/tfidf_c2.0.json`, SHA-256
-`7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa`.
-
-Models are project-generated JSON and locally verified safetensors. Weights,
-raw texts and caches remain Git-ignored. Reproduction requires explicit setup;
-models do not download on requests. Exact hashes were checked on this stack;
-cross-platform floating-point byte identity is not promised.
-
-Actually installed/tested: Python 3.13.1, scikit-learn 1.9.1, NumPy 2.5.3,
-SciPy 1.18.1, sentence-transformers 6.1.0, Torch 2.14.1, Transformers 5.19.0,
-huggingface-hub 1.33.0, safetensors 0.8.0. Exact wheel-hash locks and package
-license metadata: `ml/requirements*.txt`, `ml/dependency-licenses.json`.
-The project's own distribution license is not chosen; nothing was published.
+Apple M5 / macOS arm64 / 24 GiB; Python 3.13.1, four CPU numerical threads.
+Pinned/tested NumPy 2.5.3, SciPy 1.18.1, scikit-learn 1.9.1; encoder dependencies
+remain in `ml/requirements-encoder.txt` and `ml/dependency-licenses.json`.
+Project model artifacts are JSON; NPY loads disable pickle. No untrusted pickle
+or runtime download. All four artifacts pass fresh-process inference/hash/parity:
+[verification](../ml/reports/goal02-approved-verification-v1.json).
+Repeated TF-IDF train fits produce identical bytes, repeated LR heads identical
+weights on fixed embeddings; first-32 encoder repeat difference is disclosed
+in that report. Exact byte identity is verified on this stack, not promised across
+platforms. Genuine API integration and release scope appear in [FINAL_AUDIT](FINAL_AUDIT.md).
 
 ## Reproduce
 
-From the repository root, using project environments only:
+Restore only the original hash-pinned archive at `ml/data/raw/Dataset_5971.zip`.
+The earlier upstream download returned 403; no public artifact download exists.
+Review/history/approval/candidate/final manifests are tracked, without message bodies.
+From repository root, use isolated environments and new output names:
 
 ```sh
+sh scripts/install.sh
 .venv/bin/python -m pip install --only-binary=:all: --require-hashes -r ml/requirements-encoder.txt
 .venv/bin/python scripts/setup_encoder.py
-.venv/bin/python scripts/train.py \
-  --allow-provisional-original-labels \
-  --encoder-directory ml/artifacts/encoder \
-  --output ml/artifacts/goal02-reproduction \
-  --report ml/reports/goal02-reproduction.json
-.venv/bin/python scripts/verify_model.py \
-  --report ml/reports/goal02-reproduction.json \
-  --output ml/reports/goal02-reproduction-verification.json
-.venv/bin/python -m pytest -q
+# Restore metadata only if absent; preserves existing canonical files.
+.venv/bin/python scripts/finalize_data.py \
+  --approval ml/reviews/goal01-owner-approval.json \
+  --staged ml/reviews/goal01-approved-staged.json \
+  --restore-review-history ml/reviews/goal01-before-finalization.json
+.venv/bin/python scripts/training_preflight.py
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python scripts/train.py --manifest ml/manifests/mendeley-v1.split.json \
+  --encoder-directory ml/artifacts/encoder --output ml/artifacts/goal02-approved-reproduction \
+  --report ml/reports/goal02-approved-reproduction.json
+.venv/bin/python scripts/verify_model.py --manifest ml/manifests/mendeley-v1.split.json \
+  --report ml/reports/goal02-approved-reproduction.json \
+  --output ml/reports/goal02-approved-reproduction-verification.json
+sh scripts/test.sh
 ```
 
-Use a **new output directory/report filename** for each run; artifacts are not
-overwritten. Without the explicit provisional flag, training refuses. Omit
-`--encoder-directory` and install `ml/requirements.txt` for baseline-only
-reproduction. Neither command implies final Goal 01 approval or freeze.
+Outputs never replace different existing bytes. Restore this project's trusted
+selected artifact with its exact configured hash for release setup; new reproduced
+output paths do not automatically replace runtime configuration. Full reproduction
+report bytes include timings/paths and need not be identical; model weights/JSON
+with the same provenance are verified byte-identical. Metadata-only clean restore
+was tested twice in a fresh temporary workspace:
+[evidence](data/approved-data-clean-restore-v1.json).
 
-Our work is the application/data tooling, experiment, trained sparse classifier
-and linear heads, validation selection, conservative provisional policy and
-evaluation. Reused work is the credited dataset, encoder and libraries. Codex
-assisted with implementation, analysis and documentation. No further phase began.
+Our work: data audit/reconciliation, split, sparse model/linear heads, validation
+selection, application/policy/guidance/privacy and tests. Reuse: credited dataset,
+frozen encoder, font and libraries. Codex assisted implementation and evaluation.
+Project distribution licensing, independent/language evaluation, actual Docker
+execution and public hosting remain unresolved. No deployment/publication or new
+product features were added.

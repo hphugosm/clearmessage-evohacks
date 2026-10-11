@@ -163,7 +163,7 @@ def test_real_model_hash_scores_parity_and_full_maximum_input(real_model):
     expected = dict(zip(raw.classes.tolist(), raw.predict_proba([text])[0]))
     assert (prediction.ham, prediction.spam, prediction.smishing) == tuple(float(expected[k]) for k in ("ham","spam","smishing"))
     assert prediction.full_text_coverage
-    assert not real_model.human_review_complete and real_model.evaluated_languages == ()
+    assert real_model.human_review_complete and real_model.evaluated_languages == ()
     with pytest.raises(Exception, match="input_out_of_scope"):
         real_model.predict("x"*2001,"en")
 
@@ -202,7 +202,7 @@ def test_real_api_no_egress_and_log_share_canary(real_model, monkeypatch, capsys
     monkeypatch.setattr(real_model, "predict", inference)
     with TestClient(create_app(classifier=real_model)) as client:
         health = client.get("/api/health").json()
-        assert health["model_ready"] and not health["human_review_complete"]
+        assert health["model_ready"] and health["human_review_complete"]
         for text, expected in ((f"Please send me your OTP. {CANARY} https://notice.invalid/path", "suspicious"), ("Fictional sale on school notebooks. https://shop.invalid/offer", "review"), ("Fictional meeting tomorrow at school.", "review")):
             response = client.post("/api/analyze",json={"text":text,"message_language":"en"})
             data = response.json()
@@ -280,7 +280,7 @@ def test_actual_code_requests_and_trailing_notice_have_proof(text):
     data = result(text, model=UnavailableClassifier())
     assert data.status == "suspicious" and not data.analysis_complete
 
-@pytest.mark.parametrize("change", ["threshold", "artifact", "missing", "hash", "test_selection"])
+@pytest.mark.parametrize("change", ["threshold", "artifact", "missing", "hash", "test_selection", "review_claim", "language_claim", "provenance"])
 def test_selection_integrity_failures_disable_real_model(change, monkeypatch, tmp_path):
     report = json.loads((ROOT / CONFIG["selection_report"]).read_text())
     if change == "threshold":
@@ -289,6 +289,12 @@ def test_selection_integrity_failures_disable_real_model(change, monkeypatch, tm
         report["selection"]["model"] = "tfidf_c0.5"
     elif change == "test_selection":
         report["selection"]["test_used"] = True
+    elif change == "review_claim":
+        monkeypatch.setitem(CONFIG, "human_review_complete", False)
+    elif change == "language_claim":
+        monkeypatch.setitem(CONFIG, "evaluated_languages", ["en"])
+    elif change == "provenance":
+        report["data_approval"]["split_sha256"] = "0" * 64
     path = tmp_path / "selection.json"
     if change != "missing":
         path.write_text(json.dumps(report))

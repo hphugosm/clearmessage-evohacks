@@ -1,53 +1,73 @@
 {
-  "api_integrated": false,
-  "approved_data_ready": false,
+  "analysis_complete_enabled": false,
+  "api_integrated": true,
+  "approved_data_ready": true,
+  "approved_manifest_sha256": "9fa155bd267fd5492523b297515b3b1a357832ce19e131357ba81198cf89b988",
+  "canonical_review_sha256": "0c4748e7400ec54fe7e8dae343f33597a10339e5f68d5453a292b9d255c80b36",
   "checks": {
-    "approved_training_preflight": "blocked",
-    "clean_environment_sparse_inference": "passed",
-    "fresh_process_all_candidates": "passed",
-    "pytest": "89 passed, 1 existing warning"
+    "all_candidate_reload": "passed",
+    "analysis_egress_attempts": 0,
+    "automated_suite": "199 Python / 32 Vitest / 34 Playwright passed",
+    "clean_local_release": "passed after stale-hash harness assertion corrected",
+    "final_package_offline": "passed"
   },
-  "confirmed_original_labels": 2,
-  "date": "2026-10-10",
-  "deployment_performed": false,
-  "disagreed_original_labels": 2,
-  "failed_attempts": [
-    {
-      "check": "dependency_resolution",
-      "reason": "hub 2.2 incompatible with sentence-transformers 6.1",
-      "resolved": true
+  "container_tested": false,
+  "counts": {
+    "test": {
+      "ham": 726,
+      "smishing": 88,
+      "spam": 66
     },
-    {
-      "check": "training_v1_reload",
-      "held_out_scored": false,
-      "reason": "float32 head reloaded as float64",
-      "resolved": true
+    "train": {
+      "ham": 3391,
+      "smishing": 414,
+      "spam": 307
     },
-    {
-      "check": "first_clean_process",
-      "reason": "60 second cold import timeout",
-      "resolved_on_subsequent_verification": true
+    "validation": {
+      "ham": 727,
+      "smishing": 88,
+      "spam": 66
     }
-  ],
-  "human_review_complete": false,
-  "label_corrections_applied": false,
-  "model_trained": true,
-  "next_phase_started": false,
-  "pending_review_records": 41,
-  "reports": {
-    "ml/reports/goal02-provisional-v2.json": "b0d359771769be9f983370eec8599b7be13a6b55c4bc274259694a317eef3715",
-    "ml/reports/goal02-verification-clean-v2.json": "83badc9b60efee32a448bd3489dd79a97bd29eec9d92cea58e068a88d6286659",
-    "ml/reports/goal02-verification-v2.json": "41ff82b6a4577ac548c929c7e7baa0f97bd555c288d71d9785269e5c33554bba"
   },
-  "review_sha256": "7cf04370060bc86e58349a06dc04fc82de680b0404e17eb44b4babe34a30a70c",
+  "date": "2026-10-11",
+  "deployment_performed": false,
+  "fresh_independent_test": false,
+  "human_review_complete": true,
+  "label_corrections_applied": true,
+  "language_results": {
+    "czech": null,
+    "english": null,
+    "unverified_source_languages": true
+  },
+  "model_trained": true,
+  "pending_review_records": 0,
+  "public_url": null,
+  "quarantined_families": 46,
+  "quarantined_rows": 98,
+  "release_recommendation": {
+    "independently_validated_public_detector": "NO-GO",
+    "local_research_prototype": "GO"
+  },
+  "reports": {
+    "ml/reports/goal02-approved-v1.json": "3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd"
+  },
+  "review_records": 45,
   "selected_artifact": {
-    "file": "ml/artifacts/goal02-provisional-v2/tfidf_c2.0.json",
+    "file": "ml/artifacts/goal02-approved-v1/tfidf_c2.0.json",
     "reload_max_score_difference": 0.0,
     "repeat_training_hash_identical": true,
-    "sha256": "7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa"
+    "sha256": "b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1"
   },
   "selected_model": "tfidf_c2.0",
-  "status": "provisional_training_and_evaluation_verified",
-  "timezone": "Europe/Prague",
-  "user_authorization": "Explicit permission for provisional training on original labels despite incomplete audit."
+  "selection": {
+    "criterion": "validation_macro_f1_times_token_coverage",
+    "model": "tfidf_c2.0",
+    "test_used": false,
+    "threshold": 0.6,
+    "threshold_criterion": "validation_smishing_warning_f1_then_higher_threshold"
+  },
+  "source_label_corrections": 2,
+  "status": "approved_dataset_training_and_local_integration_verified",
+  "test_scope": "Previously evaluated Goal 02/07 comparison set; not fresh blind validation; assignments preserved.",
+  "timezone": "Europe/Prague"
 }

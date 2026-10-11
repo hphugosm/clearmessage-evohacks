@@ -24,7 +24,7 @@ def main():
     canonical = ROOT / CONFIG["artifact_path"]
     source = args.artifact_file if args.artifact_file is not None else canonical
     model = LocalClassifier(source)
-    target = ROOT / "build/model.json"
+    target = ROOT / "build/model-approved-v1.json"
     payload = source.read_bytes()
     if hashlib.sha256(payload).hexdigest() != CONFIG["sha256"]:
         raise ValueError("model_artifact_hash_mismatch")
@@ -38,7 +38,7 @@ def main():
     if target.exists() and target.read_bytes() != payload:
         raise ValueError("different_build_artifact_exists")
     target.write_bytes(payload)
-    print(json.dumps({"model_ready":model.ready,"human_review_complete":model.human_review_complete,"sha256":CONFIG["sha256"],"build_asset":"build/model.json"},sort_keys=True))
+    print(json.dumps({"model_ready":model.ready,"human_review_complete":model.human_review_complete,"sha256":CONFIG["sha256"],"build_asset":"build/model-approved-v1.json"},sort_keys=True))
 
 if __name__ == "__main__":
     try:

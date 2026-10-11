@@ -1,7 +1,7 @@
 # ClearMessage English UI copy
 
-Version 1.3.0 · 11 October 2026. Approved Style A wording is integrated with the
-real provisional model. The exact current strings below match
+Version 1.3.1 · 11 October 2026. Approved Style A wording is integrated with the
+model retrained on the approved dataset. The exact current strings below match
 `frontend/src/copy.ts`; update both together. All current results are incomplete.
 English interface language does not establish evaluated model support.
 
@@ -14,7 +14,7 @@ English interface language does not establish evaluated model support.
 | prototypeLabel | EVOHACKS 2026 prototype |
 | illustrationCaption | Make sense of it, together. |
 | intro | Not sure whether a message is trustworthy? Paste it here, and we'll help you identify warning signs and understand what to do next. |
-| stage | Development version · Our model has an incomplete audit. Performance is unverified for individual languages; checks remain limited. |
+| stage | Development version · Performance is unverified for individual languages; checks remain limited. |
 | textLabel | Message text |
 | placeholder | Paste the message here… |
 | privacy | Do not paste passwords or verification codes. Text is sent to our backend and stays in memory during the request. The application does not store it, log it or use it for training. |
@@ -136,7 +136,7 @@ and does not claim that a device or account was checked.
 
 Title: **ClearMessage — Message guidance**. Description:
 **Understand short messages and choose a safer next step. Experimental model with
-incomplete review and unverified language performance.** HTML uses `lang="en"`.
+unverified language performance and limited checks.** HTML uses `lang="en"`.
 All labels, errors and live announcements are English. Decorative mark/hero images
 have empty alt text and are hidden from assistive technology. The submit arrow is
 hidden; no UI locale switcher or untranslated fallback exists.

@@ -1,0 +1,173 @@
+{
+  "audit_goal": "Approved dataset/ML release",
+  "checks": {
+    "no_egress": {
+      "attempted_calls": 0
+    },
+    "no_reassurance": "passed",
+    "real_api": "passed"
+  },
+  "fixture_origin": "project-written synthetic development fixtures; not performance validation",
+  "health": {
+    "contract_version": "1.1.0",
+    "evaluated_message_languages": [],
+    "human_review_complete": true,
+    "max_body_bytes": 32768,
+    "max_text_length": 2000,
+    "model_ready": true,
+    "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
+    "policy_version": "analysis-policy-2",
+    "service_status": "ok"
+  },
+  "held_out_or_blind_data_opened": false,
+  "measurements": {
+    "application_factory_ms": 18.049292033538222,
+    "device": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "max_ms": 36.29920887760818,
+    "p50_ms": 0.9308340959250927,
+    "p95_ms": 3.7384580355137587,
+    "process_peak_rss_bytes": 178421760,
+    "python": "3.13.1",
+    "requests": 25,
+    "timing_scope": "25 loaded-model in-process TestClient requests, including HTTP/ASGI + model + rules and cold bundled PSL; excludes first module import"
+  },
+  "model_sha256": "b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1",
+  "outcomes": [
+    {
+      "action_keys": [
+        "verify_independently",
+        "do_not_send_secrets",
+        "ask_trusted_person"
+      ],
+      "analysis_complete": false,
+      "contract_version": "1.1.0",
+      "evidence": [
+        {
+          "basis": "observed_text_signal",
+          "key": "request_for_secret"
+        }
+      ],
+      "fixture_id": "cz_secret_no_url",
+      "headline_key": "suspicious_signals",
+      "limitations": [
+        "language_not_evaluated",
+        "policy_not_validated",
+        "not_a_safety_confirmation"
+      ],
+      "message_language": "cs",
+      "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
+      "policy_version": "analysis-policy-2",
+      "share_summary_keys": [
+        "analysis_not_completed",
+        "help_verify_independently"
+      ],
+      "status": "suspicious"
+    },
+    {
+      "action_keys": [
+        "verify_independently",
+        "pause_payment",
+        "ask_trusted_person"
+      ],
+      "analysis_complete": false,
+      "contract_version": "1.1.0",
+      "evidence": [
+        {
+          "basis": "observed_text_signal",
+          "key": "payment_pressure"
+        }
+      ],
+      "fixture_id": "en_payment",
+      "headline_key": "suspicious_signals",
+      "limitations": [
+        "language_not_evaluated",
+        "policy_not_validated",
+        "not_a_safety_confirmation"
+      ],
+      "message_language": "en",
+      "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
+      "policy_version": "analysis-policy-2",
+      "share_summary_keys": [
+        "analysis_not_completed",
+        "help_verify_independently"
+      ],
+      "status": "suspicious"
+    },
+    {
+      "action_keys": [
+        "verify_independently",
+        "ask_trusted_person"
+      ],
+      "analysis_complete": false,
+      "contract_version": "1.1.0",
+      "evidence": [],
+      "fixture_id": "en_security_advice",
+      "headline_key": "review_required",
+      "limitations": [
+        "language_not_evaluated",
+        "policy_not_validated",
+        "not_a_safety_confirmation"
+      ],
+      "message_language": "en",
+      "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
+      "policy_version": "analysis-policy-2",
+      "share_summary_keys": [
+        "analysis_not_completed",
+        "help_verify_independently"
+      ],
+      "status": "review"
+    },
+    {
+      "action_keys": [
+        "verify_independently",
+        "ask_trusted_person"
+      ],
+      "analysis_complete": false,
+      "contract_version": "1.1.0",
+      "evidence": [],
+      "fixture_id": "en_advertisement",
+      "headline_key": "review_required",
+      "limitations": [
+        "language_not_evaluated",
+        "policy_not_validated",
+        "not_a_safety_confirmation"
+      ],
+      "message_language": "en",
+      "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
+      "policy_version": "analysis-policy-2",
+      "share_summary_keys": [
+        "analysis_not_completed",
+        "help_verify_independently"
+      ],
+      "status": "review"
+    },
+    {
+      "action_keys": [
+        "verify_independently",
+        "ask_trusted_person"
+      ],
+      "analysis_complete": false,
+      "contract_version": "1.1.0",
+      "evidence": [],
+      "fixture_id": "en_school",
+      "headline_key": "review_required",
+      "limitations": [
+        "language_not_evaluated",
+        "policy_not_validated",
+        "not_a_safety_confirmation"
+      ],
+      "message_language": "en",
+      "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
+      "policy_version": "analysis-policy-2",
+      "share_summary_keys": [
+        "analysis_not_completed",
+        "help_verify_independently"
+      ],
+      "status": "review"
+    }
+  ],
+  "rules_version": "observed-requests-2",
+  "source_harness": "Goal 03 fictional EN/CZ smoke; not language accuracy",
+  "training_performed": false
+}

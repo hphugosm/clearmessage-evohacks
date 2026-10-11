@@ -148,7 +148,7 @@ Hide when disabled. **Choose screenshot** accepts validated PNG/JPEG. Show edita
 | Changed input/language | Remove prior result | A previous response must not appear to describe the new input |
 | Clear/new check | Clear result intentionally | No hidden persistence or history |
 
-The source Style A names three visual cards; the product additionally requires an honest review state. Preserve all core API semantics. The current provisional model renders review or supported suspicious results, always analysis_complete=false. Missing-model states remain honest. Completed no-strong-signals and stronger red presentation are disabled; those illustrative states require verified scope and validated policy before use.
+The source Style A names three visual cards; the product additionally requires an honest review state. Preserve all core API semantics. The current language-unverified model renders review or supported suspicious results, always analysis_complete=false. Missing-model states remain honest. Completed no-strong-signals and stronger red presentation are disabled; those illustrative states require verified scope and validated policy before use.
 
 ## 11. Voice and English copy
 

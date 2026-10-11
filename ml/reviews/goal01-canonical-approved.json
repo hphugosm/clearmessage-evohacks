@@ -1,0 +1,412 @@
+{
+  "exclusions_approved_by": "hugo",
+  "pipeline_version": "data-prep-v2",
+  "records": [
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "Human decision in Codex conversation: S; requested_label=spam. Reviewer attribution and language confirmation pending.\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:10:11.310508+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": {\"historical_date_unknown\": true, \"mode\": \"reconfirm_now\", \"recorded_at\": \"2026-10-11T07:19:19.467240+00:00\"}, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-11",
+      "reviewer_id": "hugo",
+      "row_id": "row-000188",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "Human decision in Codex conversation: H; requested_label=ham. Reviewer attribution and language confirmation pending.\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:29:51.070041+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": {\"historical_date_unknown\": true, \"mode\": \"reconfirm_now\", \"recorded_at\": \"2026-10-11T07:19:19.467240+00:00\"}, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-11",
+      "reviewer_id": "hugo",
+      "row_id": "row-000244",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "Human decision in Codex conversation: S; requested_label=spam. Reviewer attribution and language confirmation pending.\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:02.679721+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": {\"historical_date_unknown\": true, \"mode\": \"reconfirm_now\", \"recorded_at\": \"2026-10-11T07:19:19.467240+00:00\"}, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-11",
+      "reviewer_id": "hugo",
+      "row_id": "row-000490",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "Human decision in Codex conversation: S; requested_label=spam. Reviewer attribution and language confirmation pending.\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:06.099176+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": {\"historical_date_unknown\": true, \"mode\": \"reconfirm_now\", \"recorded_at\": \"2026-10-11T07:19:19.467240+00:00\"}, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-11",
+      "reviewer_id": "hugo",
+      "row_id": "row-000565",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:17:54.355867+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000711",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:17:56.852962+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000810",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:02.191304+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000867",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:13.861373+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-000891",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:25.577059+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001078",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:05.324291+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001136",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:27.512647+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001145",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:28.414880+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001291",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:17:57.122000+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001324",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:17.141772+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001372",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:29.113731+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001392",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:01.717713+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001593",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:20.150799+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001607",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:22.080521+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-001939",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:30.675576+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002290",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:03.918962+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002354",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:34.658315+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002546",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:36.397663+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002692",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:37.839703+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002882",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:29.530103+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-002915",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:04.420329+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003032",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:29.888141+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003088",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:30.262690+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003347",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:06.494780+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003654",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:30.591681+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003706",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:12.317566+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003734",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:30.979491+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003848",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:39.585870+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-003948",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:12.918995+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004498",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:13.592775+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004597",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:14.253236+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004657",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:31.314649+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-004805",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:31.635262+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005106",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:32.138314+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005131",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:14.664073+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005144",
+      "source_label": "smishing"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:09:47.979433+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005154",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:11:15.692851+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005324",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:11:23.845960+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005397",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:30:32.617542+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"spam\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005455",
+      "source_label": "spam"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-10T22:11:29.205903+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"ham\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005506",
+      "source_label": "ham"
+    },
+    {
+      "decision": "confirmed",
+      "language": "en",
+      "notes": "ClearMessage human review tool: {\"action\": \"spam\", \"requested_label\": \"spam\", \"version\": 1}\nClearMessage human review tool: {\"action\": \"finalize_approved_review\", \"approval_sha256\": \"33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e\", \"label_confirmed_at\": \"2026-10-11T07:18:15.130639+00:00\", \"language_confirmed_at\": \"2026-10-11T07:22:58.447724+00:00\", \"metadata_confirmation\": null, \"requested_label\": \"smishing\", \"version\": 1}",
+      "reviewed_date": "2026-10-10",
+      "reviewer_id": "hugo",
+      "row_id": "row-005600",
+      "source_label": "smishing"
+    }
+  ],
+  "source_input_sha256": "9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3"
+}

@@ -84,7 +84,10 @@ def summary(row: dict) -> dict:
         state = "exclusion_approved" if meta.get("action") == "approve_exclusion" else "proposed_exclusion"
         target = None
     elif row["decision"] == "confirmed":
-        state, target = "approved", row["source_label"]
+        if meta.get("action") == "finalize_approved_review" and target in LABELS:
+            state = "corrected" if target != row["source_label"] else "approved"
+        else:
+            state, target = "approved", row["source_label"]
     elif row["decision"] == "disagreed":
         state = "corrected" if target and target != row["source_label"] else "pending"
     else:

@@ -1,10 +1,10 @@
 {
-  "artifact_path": "ml/artifacts/goal02-provisional-v2/tfidf_c2.0.json",
-  "sha256": "7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa",
-  "human_review_complete": false,
+  "artifact_path": "ml/artifacts/goal02-approved-v1/tfidf_c2.0.json",
   "evaluated_languages": [],
-  "warning_threshold": 0.6,
+  "human_review_complete": true,
   "reassurance_policy_validated": false,
-  "selection_report": "ml/reports/goal02-provisional-v2.json",
-  "selection_report_sha256": "b0d359771769be9f983370eec8599b7be13a6b55c4bc274259694a317eef3715"
+  "selection_report": "ml/reports/goal02-approved-v1.json",
+  "selection_report_sha256": "3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd",
+  "sha256": "b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1",
+  "warning_threshold": 0.6
 }

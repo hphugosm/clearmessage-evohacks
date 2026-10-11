@@ -1,0 +1,26 @@
+{
+  "approval_reference_commit": "c1a8c9f",
+  "approved_by": "hugo",
+  "approved_changes": [
+    "All 45 staged decisions and English confirmations; restore 29 incorrectly saved SPAM labels.",
+    "Source SPAM row-000565 and row-000891 become SMISHING.",
+    "Recorded reviewer metadata and dates, retaining unknown historical dates.",
+    "Reversible whole-family quarantine of exactly 98 rows in 46 families.",
+    "Finalize canonical review, preserve originals/history, freeze documented split, retrain and revalidate Phases 3-5."
+  ],
+  "authority": "Explicit owner approval in this Codex conversation, following commit c1a8c9f; not an inferred tool decision.",
+  "deployment_authorized": false,
+  "eligible_counts": {
+    "ham": 4844,
+    "smishing": 590,
+    "spam": 439
+  },
+  "explicit_owner_approval": true,
+  "format_version": 1,
+  "previous_review_sha256": "4e674147a8a42f144aa90f023430c8e181566da4c8234de52b5b69ca459defa6",
+  "quarantine_groups": 46,
+  "quarantine_rows": 98,
+  "recorded_at_utc": "2026-10-11T09:48:54.250947+00:00",
+  "staged_sha256": "b0644144df2f738c946b2fec60eaad6e43a0aeeede70fea03df03a507d2373bb",
+  "test_scope": "Existing test was evaluated previously; not fresh blind validation. No new independent benchmark authorized or invented."
+}

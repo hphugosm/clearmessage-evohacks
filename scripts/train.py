@@ -13,7 +13,7 @@ from ml.train import run
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--manifest", type=Path, default=Path("ml/manifests/mendeley-v1.split.provisional.json"))
+    p.add_argument("--manifest", type=Path, default=Path("ml/manifests/mendeley-v1.split.json"))
     p.add_argument("--source", type=Path, default=Path("ml/data/raw/Dataset_5971.zip"))
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--report", type=Path, required=True)

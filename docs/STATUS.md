@@ -1,66 +1,163 @@
 # ClearMessage project status
 
-Updated **11 October 2026, Europe/Prague**. Dataset/ML finalization is at
-**Phase 1, awaiting explicit owner approval**. The live staged review was
-rechecked; no label/language/metadata rechecks remain in the draft, but it is
-neither submitted nor finally approved and the 98-row quarantine is only proposed.
-Canonical data, candidate split and provisional model remain unchanged.
-Goal 07 final audit is complete.
-**NO-GO for an approved detector/public release**: Goal 01 approval/quarantine/final
-split and final approved Goal 02 are absent; actual deployment/container gates
-remain unresolved. Local technical verification passes with the genuine
-provisional model. See [FINAL_AUDIT](FINAL_AUDIT.md) for evidence, error/coverage
-results and the release recommendation. No features, training, policy/data
-changes, deployment or publishing occurred.
+Updated **11 October 2026, Europe/Prague**. **Approved dataset/ML finalization,
+Phases 2–5 complete.** The owner explicitly approved the stage summarized in
+commit `c1a8c9f`; no further human decisions were invented. Goal 01 canonical
+review, corrected dataset/quarantine and frozen assignments are finalized; the
+approved-data Goal 02 model is genuinely retrained and Goal 03 revalidated.
 
-Goal 06 was assessed and **skipped**:
-the text core passes locally, but the required working deployed core remains
-unverified. OCR was not implemented or enabled. The prerequisite checks and
-reason are recorded below.
+**GO for the tested reproducible local research prototype. NO-GO for an independently
+validated public/production detector.** Language/independent evaluation, completed
+low-finding policy, actual Docker/platform enforcement, hosting/privacy and licensing
+remain gates. No product feature, deployment, publication or Goal 08 was added.
+See [FINAL_AUDIT](FINAL_AUDIT.md), [MODEL_CARD](MODEL_CARD.md) and
+[DEPLOYMENT_REPORT](DEPLOYMENT_REPORT.md) for exact scope and evidence.
 
-Goal 05 prepared the three-stage
-single-container release and verified fresh local execution of the real model,
-API and English Style A frontend. **Docker execution and public deployment remain
-blocked**, not completed: no Docker/alternative runtime and no authorized existing
-hosting destination. There is no public URL. Clean local install, production
-packaging, real HTTP/Chromium flows, restart and corrupt-model failure passed;
-measurements and actual scope are recorded below and in
-[DEPLOYMENT_REPORT](DEPLOYMENT_REPORT.md). No publishing, purchase, credential
-collection, retraining, review approval, split freeze, OCR or Devpost submission.
+## Current approved release candidate
 
-Goal 04's interface and the English migration remain intact. The last recorded
-Goal 01 review state is staged in RAM, not submitted: all 45 labels explicitly
-rechecked, all 45 languages confirmed, four missing attributions re-confirmed,
-98-row quarantine proposed; final approval remains withheld. Canonical review,
-provisional model, thresholds, Czech evaluation data and provenance are unchanged.
-
-The real Goal 02 sparse model remains integrated with `analysis-policy-2` and
-`observed-requests-2`, contract **1.1.0**. It is provisional: **final reviewed-data approval remains outstanding**, original
-training labels unchanged, no verified language performance. Current
-results are `suspicious` with actual basis or `review`, always
-`analysis_complete=false`. Production `no_strong_signals` is disabled.
-
-| Area | Actual state / evidence |
+| Area | Verified state |
 |---|---|
-| Naming/language | ClearMessage; English UI, instructions, docs, metadata and public demos. Czech evaluation data remains separate. Migration verification below. |
-| Brand | Approved Style A: shared blue/navy tokens, white rounded cards, local Inter, passive local mark/illustration, input-first mobile layout. |
-| Frontend/API | Real model-backed POST via Vite and FastAPI-served build; no demo verdicts. |
-| Contract | Pydantic → OpenAPI → TypeScript; schema 1.1.0 fields/enums unchanged; policy version 2; drift checks passed. |
-| Model/policy | Hash-verified project JSON and validation-selection report; unchanged 0.60 warning threshold; policy 2 and rules 2. Incomplete results and rules-only failures remain explicit. |
-| Dataset | 5,971 source rows. Canonical: 45 saved decisions (16 confirmed / 29 disagreed), all 45 languages pending, four missing attributions. 98-row/46-group conflict quarantine not approved. Historical RAM-staged draft is not final approval; source/training unchanged. |
-| Data split | Immutable candidate, empty intersections; no approved final freeze. Provisional authorization preserves original assignments and `data_split_ready=false`. |
-| Czech development/challenge | Format and independent instructions; zero actual challenge records. Existing synthetic Czech regression inputs preserved, not a benchmark. |
-| Sharing | Fixed English dictionary/templates, preview, separate Copy/Share click. Write-only clipboard copies the neutral preview; denial/missing support selects it for manual copying. No source content or recipient selection. |
-| Docker | Three-stage build and hardened loopback Compose prepared. CLI/daemon unavailable; build/run/healthcheck/enforcement **untested**. |
-| Deployment | Fresh local release verified; no authorized existing public host/account or URL. HTTPS/proxy/hosting controls unverified. |
-| Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
-| Goal 07 | Final local audit passed technical checks; approved/public release NO-GO. FINAL_AUDIT records separate classifier/policy/language evidence. |
-| Goal 05 | Local fallback verified; actual Docker and public release blocked, detailed evidence below. |
-| Goal 04 | Implemented and verified below; real screen-reader/physical-device testing remains unperformed. |
-| OCR | Goal 06 skipped at the deployed-core gate; no Tesseract dependency, screenshot input or OCR assets added. |
-| Submission/video | Not started by this optional goal. |
+| Review | 45 confirmed decisions, zero pending; 15 HAM / 13 SPAM / 17 SMISHING; 45 English training confirmations, complete attributed metadata/dates |
+| Changes | Restore 29 incorrectly saved SPAM choices; only original SPAM row-000565/row-000891 become SMISHING, singleton train groups |
+| Quarantine | Explicit owner-approved reversible 98 rows / 46 families, 48 SPAM / 50 SMISHING; originals/history retained |
+| Dataset | 5,873 rows: 4,844 HAM / 439 SPAM / 590 SMISHING; 5,585 eligible groups, zero mixed-label eligible families |
+| Split | Frozen/data_split_ready=true; every candidate partition preserved, train 4,112 / validation 881 / test 880; all intersections empty |
+| Test integrity | Existing test previously evaluated in Goal 02/07; identical old/new comparison rows, no fit/tuning on test, no fresh-blind/independent claim |
+| Training | Real train-only word/character TF-IDF + LR plus frozen pinned MiniLM comparison heads; validation selects TF-IDF C=2, threshold 0.60 |
+| Runtime | Approved JSON/report hash and provenance verified; model_ready=true, human_review_complete=true for the 45-row dataset audit |
+| Safety | Policy 2/rules 2/contract 1.1.0 unchanged; all analyses incomplete, evaluated_languages empty, low-finding/red stronger warnings disabled |
+| Language | English and Czech evaluation metrics separately unavailable; training English confirmations are not an evaluated language denominator |
+| Privacy/sharing | Zero analysis/startup/restart egress, no-store, empty process logs, canaries and neutral gesture-only previews/copy pass |
+| Interface | English ClearMessage Style A/local assets unchanged; stale audit notice corrected, unverified-language/limited-check notice remains |
+| Release | Fresh locked local Python/npm/package/HTTP/browser/restart/failure passed; container/public destination absent, no URL |
+| OCR/Goal 08 | OCR remains skipped; Goal 08 not started |
 
-## Dataset/ML finalization — Phase 1 approval gate
+## Approved finalization, retraining and integration
+
+Started from clean commit `c1a8c9f`. Read AGENTS, STATUS, FINAL_AUDIT,
+REVIEW_DRAFT_ASSESSMENT, DEPLOYMENT_REPORT, PROJECT_PLAN, RESEARCH and ACCEPTANCE;
+read BRAND_BIBLE/UI_COPY/LANGUAGE_POLICY before factual UI-copy corrections.
+Approval is explicitly recorded in `ml/reviews/goal01-owner-approval.json`; staged
+snapshot, previous canonical bytes and finalized metadata/tool-note-only review
+are tracked alongside it. No source message is in these snapshots. Raw archive,
+candidate/provisional evidence, original source labels/text and review notes/history
+are preserved. Unknown original review dates were not backfilled: four explicit
+re-confirmations dated 2026-10-11, 41 existing dates retained as 2026-10-10.
+
+The approval-bound finalizer validates staged/source/candidate identities, recomputes
+conflict membership, records reviewed labels separately from source_label, enforces
+train-only corrections and homogeneous eligible groups, and retains every partition.
+98-row quarantine is reversible via retained original archive; IDs/reasons are in
+the approved stage and local quarantine metadata. Frozen manifest is immutable;
+future differing writes fail. Clean metadata restoration from tracked history and
+original archive passed twice in a fresh temporary workspace with exact bytes.
+
+| Split | HAM | SPAM | SMISHING | Total |
+|---|---:|---:|---:|---:|
+| Train | 3,391 | 307 | 414 | 4,112 |
+| Validation | 727 | 66 | 88 | 881 |
+| Reused test | 726 | 66 | 88 | 880 |
+| Eligible | 4,844 | 439 | 590 | 5,873 |
+
+| Exact identity | SHA-256 |
+|---|---|
+| Raw source | `9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3` |
+| Owner approval | `33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e` |
+| Previous canonical review | `4e674147a8a42f144aa90f023430c8e181566da4c8234de52b5b69ca459defa6` |
+| Approved canonical review | `0c4748e7400ec54fe7e8dae343f33597a10339e5f68d5453a292b9d255c80b36` |
+| Final frozen split | `9fa155bd267fd5492523b297515b3b1a357832ce19e131357ba81198cf89b988` |
+| Selected trained JSON | `b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1` |
+| Selection/training report | `3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd` |
+
+Commands actually executed from repository root:
+
+```sh
+.venv/bin/python scripts/finalize_data.py --approval ml/reviews/goal01-owner-approval.json --staged ml/reviews/goal01-approved-staged.json
+.venv/bin/python scripts/training_preflight.py
+.venv/bin/python scripts/prepare_data.py verify --manifest ml/manifests/mendeley-v1.split.json --input ml/data/raw/Dataset_5971.zip
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 .venv/bin/python scripts/train.py --manifest ml/manifests/mendeley-v1.split.json --output ml/artifacts/goal02-approved-v1 --report ml/reports/goal02-approved-v1.json --encoder-directory ml/artifacts/encoder
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python scripts/verify_model.py --manifest ml/manifests/mendeley-v1.split.json --report ml/reports/goal02-approved-v1.json --output ml/reports/goal02-approved-verification-v1.json
+.venv/bin/python scripts/audit_release.py --output docs/data/approved-model-audit-v1.json
+.venv/bin/python scripts/prepare_model.py
+sh scripts/test.sh
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node tests/review_tool_browser.mjs
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node tests/review_validation_browser.mjs
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-ui.mjs
+.venv/bin/python scripts/verify_analysis.py
+.venv/bin/python scripts/verify_release.py --clean-install --report docs/data/approved-local-release-v1.json
+python3 scripts/audit_migration.py
+git diff --check
+```
+
+**PASS:** approved training preflight (zero blockers, 45 confirmed), frozen split
+source/hash/leakage verification, true training and reproducibility, all four
+fresh-process reload/parity/overflow checks. **199 Python / 32 Vitest / 34
+Playwright tests passed**, pip consistency, contract drift and TypeScript/Vite
+build passed. Separate review-tool and validation-tool browser flows passed with
+fictional decisions only. Selected actual inference/old-new comparison independently
+recomputed; network audit zero attempts. 25 real API smoke requests across five
+fictional EN/CZ cases passed; this is behavior, not language accuracy. Seven fresh
+UI captures/14 contrast pairs passed automatically; no new manual/screen-reader/
+physical-device/native-zoom/native-share-delivery verification was claimed.
+Historical Goal 03/04 report bytes were preserved by wrappers.
+
+**Failed then resolved:** the model audit initially rejected absolute-vs-relative
+metadata paths; normalization was fixed and approved consistency tests/recomputation
+passed. A metadata shell check used system Python without FastAPI; project-venv
+rerun passed, with no global installation. First fresh runtime run failed the
+browser's old-artifact identity assertion; after updating the expected hash, the
+entire fresh-install/runtime/restart/corrupt-model check passed. No safety/test
+assertion was weakened. Existing Starlette/httpx/Node warnings remain visible.
+
+**NOT RUN / unavailable:** Docker/alternative container runtimes, Linux quotas/
+read-only/network enforcement, public HTTPS/anonymous access/proxy or host body-log
+controls. No destination authorization, public URL, credentials or purchase.
+No representative English/Czech independent benchmark exists. Blind challenge
+records are absent and no answers were used. No new corpus was added.
+
+Selected validation macro-F1 **0.876209**, reused test macro-F1 **0.863645**;
+majority HAM test macro-F1 **0.301370**. SMISHING precision **0.891566**, recall
+**0.840909**, F1 **0.865497**, **nine FP / 14 FN** (3→HAM, 11→SPAM). Provisional
+selected model has identical validation/test predictions and metrics, delta zero.
+Two training corrections changed weights/provenance/hash; no performance gain
+was invented. Frozen MiniLM candidates were genuinely retrained and compared on
+identical assignments; neither selected using test. Full per-class results,
+confusion/error IDs and measured CPU/encoder coverage are in MODEL_CARD/reports.
+
+Threshold-only test calculation: 75 warnings / 805 review, seven non-smishing
+annotations warned, 20 smishing without warning. **Not API coverage.** Current
+policy with unspecified input language: **880/880 test and 881/881 validation
+review**, zero observed warnings/errors/completed checks. English and Czech
+benchmarks remain separately unavailable; these are partially audited source
+annotation-agreement results, not independent fraud accuracy. Preserve abstention.
+
+Fresh local CPU execution on Apple M5/macOS arm64: cold startup
+**66.358 s**, restart **1.216 s**, failed-model
+startup **1.007 s**. Sampled RSS real/restart/failed:
+**156.81/162.39/154.61 MiB**. 100 loopback requests p50/p95/max:
+**2.180/3.416/4.161 ms**. All 29 packaged file hashes unchanged after
+analysis/restart; outgoing attempts zero, logs empty. Eight-client burst: 32 HTTP
+200; admitted overflow 503, held bodies 408 after five-second deadline; all no-store.
+Corrupt model remains live with readiness failure and no reassuring result.
+No container quota or Internet-latency claim follows.
+
+New runtime configuration/Docker staging pins approved artifact/report; earlier
+provisional weights/build asset remain intact. No product/policy feature added.
+Factual copy no longer claims label review is incomplete; visible language/policy
+limitations remain. Owner's existing dev/review processes were not silently restarted;
+new processes use the approved configuration. Clear reproducible acquisition/training/
+new-package commands are in MODEL_CARD/DEPLOYMENT_REPORT. Local commit follows
+checks. This authorized finalization stops here: no Goal 08 or publishing.
+
+Final source package also passed offline real HTTP/browser/limits/canaries after
+model-loading hardening reused the hash-verified bounded report bytes. This final
+run uses project dependencies, not a second fresh install or Docker. All 29 file
+hashes and observations: [final-package evidence](data/approved-final-package-v1.json).
+The current ML experiment index now points to the approved model; its previous
+provisional index is retained.
+Final migration audit **PASS: 183 owned files**; `git diff --check` **PASS**.
+
+## Historical Phase 1 approval gate — subsequently resolved by explicit owner approval
 
 Read AGENTS, STATUS, FINAL_AUDIT, REVIEW_DRAFT_ASSESSMENT, DEPLOYMENT_REPORT,
 PROJECT_PLAN, RESEARCH and ACCEPTANCE. Started from clean commit `95e53c6`.

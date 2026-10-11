@@ -10,7 +10,7 @@ frontend/playwright-report
 .cache
 .env*
 build/*
-!build/model.json
+!build/model-approved-v1.json
 ml/data
 ml/artifacts
 tests

@@ -1,5 +1,9 @@
 # ClearMessage staged review assessment
 
+Historical staged assessment: explicitly approved by the owner after commit `c1a8c9f`.
+The final frozen revision and retraining are recorded in [MODEL_CARD](MODEL_CARD.md)
+and [STATUS](STATUS.md); the unapproved statements below describe the assessment time.
+
 Assessed **11 October 2026, Europe/Prague**. This is an independent read-only
 check of the existing approval workspace at `http://127.0.0.1:8767`.
 **No submitted approval-draft file exists.** The workspace reports

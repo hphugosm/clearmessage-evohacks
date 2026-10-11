@@ -1,0 +1,4595 @@
+{
+  "access_order": [
+    "train",
+    "validation",
+    "test"
+  ],
+  "artifact_storage": "Project-generated JSON plus public-development NPY with allow_pickle=False.",
+  "artifacts": {
+    "minilm_c0.5": {
+      "file": "ml/artifacts/goal02-approved-v1/minilm_c0.5.json",
+      "reload_max_score_difference": 0.0,
+      "repeat_head_weights_identical": true,
+      "sha256": "3734435822816bcef57ec77449e6883dedb8428825b8e29803ecd1728234fac9"
+    },
+    "minilm_c2.0": {
+      "file": "ml/artifacts/goal02-approved-v1/minilm_c2.0.json",
+      "reload_max_score_difference": 0.0,
+      "repeat_head_weights_identical": true,
+      "sha256": "7903001194adffea895c2bfc3968a0405e67824a817d882a0940cc3a63010396"
+    },
+    "tfidf_c0.5": {
+      "file": "ml/artifacts/goal02-approved-v1/tfidf_c0.5.json",
+      "reload_max_score_difference": 0.0,
+      "repeat_training_hash_identical": true,
+      "sha256": "83f667822a656132ccbbe9a0a02c4092d20df7c3309b0f43449fabfaf9cddc53"
+    },
+    "tfidf_c2.0": {
+      "file": "ml/artifacts/goal02-approved-v1/tfidf_c2.0.json",
+      "reload_max_score_difference": 0.0,
+      "repeat_training_hash_identical": true,
+      "sha256": "b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1"
+    }
+  },
+  "blind_challenges_used": false,
+  "candidates_predefined": [
+    0.5,
+    2.0
+  ],
+  "counts": {
+    "test": {
+      "ham": 726,
+      "smishing": 88,
+      "spam": 66
+    },
+    "train": {
+      "ham": 3391,
+      "smishing": 414,
+      "spam": 307
+    },
+    "validation": {
+      "ham": 727,
+      "smishing": 88,
+      "spam": 66
+    }
+  },
+  "data_approval": {
+    "approval_sha256": "33c707bb012d2ed9a89cfb470c18821adc9c951d31ef52458bf04283ef2d540e",
+    "human_review_complete": true,
+    "human_review_sha256": "0c4748e7400ec54fe7e8dae343f33597a10339e5f68d5453a292b9d255c80b36",
+    "language_performance_verified": false,
+    "original_labels": false,
+    "seed": 20261010,
+    "source_sha256": "9bbf3188fdad81495d8e82825648b9b63b53fc86841a3d26c02629990b233cc3",
+    "split_sha256": "9fa155bd267fd5492523b297515b3b1a357832ce19e131357ba81198cf89b988"
+  },
+  "encoder": {
+    "assets": {
+      "files": {
+        "1_Pooling/config.json": {
+          "bytes": 190,
+          "sha256": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23"
+        },
+        "README.md": {
+          "bytes": 3888,
+          "sha256": "1e98ea05b0de579fcaad3d625b62ea55647142ed674d5f5ebf1440e4bbbb6f23"
+        },
+        "config.json": {
+          "bytes": 645,
+          "sha256": "6300193cb75e01cf80c96decef7187dfb33094d97cc1490b7ead6ff134476e4e"
+        },
+        "config_sentence_transformers.json": {
+          "bytes": 122,
+          "sha256": "b8c64b5cece00d8424b4896ea75b512b6008576088497609dfeb6bd63e6d36b8"
+        },
+        "model.safetensors": {
+          "bytes": 470641600,
+          "sha256": "eaa086f0ffee582aeb45b36e34cdd1fe2d6de2bef61f8a559a1bbc9bd955917b"
+        },
+        "modules.json": {
+          "bytes": 229,
+          "sha256": "8f4b264b80206c830bebbdcae377e137925650a433b689343a63bdc9b3145460"
+        },
+        "sentence_bert_config.json": {
+          "bytes": 53,
+          "sha256": "70f4448f31320443fe3557cacea5abf2dcc4915dda8c80646bec9f3bb0aa5a1f"
+        },
+        "sentencepiece.bpe.model": {
+          "bytes": 5069051,
+          "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+        },
+        "special_tokens_map.json": {
+          "bytes": 239,
+          "sha256": "378eb3bf733eb16e65792d7e3fda5b8a4631387ca04d2015199c4d4f22ae554d"
+        },
+        "tokenizer.json": {
+          "bytes": 9081518,
+          "sha256": "2c3387be76557bd40970cec13153b3bbf80407865484b209e655e5e4729076b8"
+        },
+        "tokenizer_config.json": {
+          "bytes": 526,
+          "sha256": "5036ea374ffedd706e3bef33e2e0d6953cb868ef8a490e76e32ba0faa37a6b9b"
+        }
+      },
+      "license": "Apache-2.0",
+      "license_source": "https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/blob/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/README.md",
+      "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42"
+    },
+    "benchmark_count": 32,
+    "benchmark_seconds": 0.13899037498049438,
+    "device": "cpu",
+    "frozen": true,
+    "license": "Apache-2.0",
+    "load_seconds": 3.256351999938488,
+    "max_tokens": 128,
+    "pretrained_by_us": false,
+    "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+    "status": "benchmarked",
+    "train_covered": 4103,
+    "train_total": 4112,
+    "validation_covered": 880,
+    "validation_total": 881
+  },
+  "environment": {
+    "architecture": "arm64",
+    "compute_threads": 4,
+    "python": "3.13.1",
+    "system": "Darwin",
+    "versions": {
+      "numpy": "2.5.3",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1"
+    }
+  },
+  "evaluation_scope": "Previously evaluated Goal 02/07 comparison set; not fresh blind validation; assignments preserved.",
+  "fresh_independent_test": false,
+  "language_results": {
+    "czech": null,
+    "english": null,
+    "unverified_source_languages": true
+  },
+  "language_scope": "Source languages unverified; aggregate source-label metrics are neither verified English nor Czech performance.",
+  "majority_baseline": {
+    "test": {
+      "confusion_labels": [
+        "ham",
+        "spam",
+        "smishing"
+      ],
+      "confusion_matrix": [
+        [
+          726,
+          0,
+          0
+        ],
+        [
+          66,
+          0,
+          0
+        ],
+        [
+          88,
+          0,
+          0
+        ]
+      ],
+      "count": 880,
+      "counts": {
+        "ham": 726,
+        "smishing": 88,
+        "spam": 66
+      },
+      "errors": [
+        {
+          "prediction": "ham",
+          "row_id": "row-000006",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000167",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000187",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000204",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000234",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000410",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000435",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000444",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000504",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000554",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000555",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000591",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000636",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000691",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000703",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000792",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000843",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000853",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000908",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000943",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001101",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001153",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001156",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001168",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001176",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001193",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001426",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001429",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001436",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001444",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001469",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001489",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001582",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001600",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001605",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001675",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001676",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001692",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001707",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001714",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001769",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001773",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001789",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001796",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001807",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001821",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001834",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001836",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001926",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002033",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002090",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002110",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002327",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002341",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002351",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002391",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002405",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002407",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002408",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002420",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002429",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002457",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002502",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002508",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002544",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002568",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002594",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002631",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002772",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002784",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002855",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002856",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002870",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002874",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002890",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002904",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002916",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002929",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002945",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002951",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002971",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003016",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003037",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003089",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003093",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003112",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003151",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003159",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003191",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003316",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003329",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003401",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003445",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003533",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003563",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003592",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003624",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003627",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003631",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003716",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003761",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003764",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003784",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003785",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003787",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003872",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003982",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003995",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004005",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004021",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004033",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004058",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004081",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004083",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004084",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004088",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004134",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004224",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004281",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004306",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004463",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004513",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004590",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004591",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004724",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004774",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004776",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004806",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004882",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004893",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004901",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004943",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004988",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005024",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005043",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005058",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005088",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005182",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005226",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005239",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005267",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005489",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005503",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005509",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005588",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005709",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005786",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005792",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005799",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005848",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005860",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005864",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005876",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005946",
+          "source_label": "smishing"
+        }
+      ],
+      "macro_f1": 0.3013698630136986,
+      "per_class": {
+        "ham": {
+          "f1-score": 0.9041095890410958,
+          "false_negatives": 0,
+          "false_positives": 154,
+          "precision": 0.825,
+          "recall": 1.0,
+          "support": 726.0
+        },
+        "smishing": {
+          "f1-score": 0.0,
+          "false_negatives": 88,
+          "false_positives": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 88.0
+        },
+        "spam": {
+          "f1-score": 0.0,
+          "false_negatives": 66,
+          "false_positives": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 66.0
+        }
+      }
+    },
+    "validation": {
+      "confusion_labels": [
+        "ham",
+        "spam",
+        "smishing"
+      ],
+      "confusion_matrix": [
+        [
+          727,
+          0,
+          0
+        ],
+        [
+          66,
+          0,
+          0
+        ],
+        [
+          88,
+          0,
+          0
+        ]
+      ],
+      "count": 881,
+      "counts": {
+        "ham": 727,
+        "smishing": 88,
+        "spam": 66
+      },
+      "errors": [
+        {
+          "prediction": "ham",
+          "row_id": "row-000040",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000093",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000123",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000196",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000372",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000380",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000442",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000467",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000478",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000507",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000510",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000516",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000568",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000599",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000734",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000744",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000769",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000784",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000789",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000799",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000839",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000950",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-000962",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001011",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001044",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001100",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001135",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001258",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001268",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001293",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001294",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001433",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001458",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001479",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001536",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001599",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001625",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001636",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001666",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001680",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001703",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001794",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001880",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001883",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001903",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001909",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-001920",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002007",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002010",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002074",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002097",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002116",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002143",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002160",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002169",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002212",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002231",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002251",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002377",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002454",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002500",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002501",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002518",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002540",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002609",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002622",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002633",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002659",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002821",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002838",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002912",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002918",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-002937",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003104",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003150",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003168",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003220",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003247",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003262",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003333",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003334",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003386",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003407",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003408",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003411",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003420",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003430",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003431",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003433",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003439",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003464",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003519",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003531",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003556",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003583",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003680",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003692",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003736",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003749",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003753",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003762",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003796",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003810",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003831",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003889",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003918",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003929",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003962",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003968",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-003972",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004012",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004101",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004245",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004311",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004366",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004427",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004440",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004467",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004620",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004715",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004735",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004737",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004742",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004752",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004791",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004796",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004860",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004966",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-004972",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005033",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005067",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005070",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005115",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005166",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005181",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005242",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005250",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005251",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005293",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005310",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005316",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005341",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005374",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005394",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005410",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005608",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005610",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005694",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005813",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005828",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005841",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005896",
+          "source_label": "smishing"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005898",
+          "source_label": "spam"
+        },
+        {
+          "prediction": "ham",
+          "row_id": "row-005917",
+          "source_label": "spam"
+        }
+      ],
+      "macro_f1": 0.30140961857379767,
+      "per_class": {
+        "ham": {
+          "f1-score": 0.904228855721393,
+          "false_negatives": 0,
+          "false_positives": 154,
+          "precision": 0.8251986379114642,
+          "recall": 1.0,
+          "support": 727.0
+        },
+        "smishing": {
+          "f1-score": 0.0,
+          "false_negatives": 88,
+          "false_positives": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 88.0
+        },
+        "spam": {
+          "f1-score": 0.0,
+          "false_negatives": 66,
+          "false_positives": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 66.0
+        }
+      }
+    }
+  },
+  "models": {
+    "minilm_c0.5": {
+      "fit_seconds": 0.027999124955385923,
+      "selection_score": 0.8125497019581722,
+      "test": {
+        "confusion_labels": [
+          "ham",
+          "spam",
+          "smishing"
+        ],
+        "confusion_matrix": [
+          [
+            707,
+            14,
+            5
+          ],
+          [
+            4,
+            52,
+            10
+          ],
+          [
+            1,
+            13,
+            74
+          ]
+        ],
+        "count": 880,
+        "counts": {
+          "ham": 726,
+          "smishing": 88,
+          "spam": 66
+        },
+        "errors": [
+          {
+            "prediction": "spam",
+            "row_id": "row-000006",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000037",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000234",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000410",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000515",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000555",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000886",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001008",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001067",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001101",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001156",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001426",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-001429",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001582",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001677",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001741",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001807",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001834",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002405",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002410",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002508",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-002874",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002904",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002916",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003016",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003037",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003063",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003093",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003112",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003159",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003401",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003624",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003874",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004084",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004584",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004774",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004806",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004821",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004868",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004967",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005182",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005327",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005624",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005706",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005746",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005796",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005860",
+            "source_label": "smishing"
+          }
+        ],
+        "macro_f1": 0.8455699081303348,
+        "per_class": {
+          "ham": {
+            "f1-score": 0.9833101529902643,
+            "false_negatives": 19,
+            "false_positives": 5,
+            "precision": 0.9929775280898876,
+            "recall": 0.9738292011019284,
+            "support": 726.0
+          },
+          "smishing": {
+            "f1-score": 0.8361581920903954,
+            "false_negatives": 14,
+            "false_positives": 15,
+            "precision": 0.8314606741573034,
+            "recall": 0.8409090909090909,
+            "support": 88.0
+          },
+          "spam": {
+            "f1-score": 0.7172413793103448,
+            "false_negatives": 14,
+            "false_positives": 27,
+            "precision": 0.6582278481012658,
+            "recall": 0.7878787878787878,
+            "support": 66.0
+          }
+        }
+      },
+      "test_batch_latency": {
+        "amortized_ms_per_message": 1.816900520564311,
+        "count": 880,
+        "seconds": 1.5988724580965936
+      },
+      "test_policy": {
+        "abstention_rate": 0.9090909090909091,
+        "analysis_complete_count": 0,
+        "completed_coverage": 0.0,
+        "no_strong_signals": 0,
+        "review": 800,
+        "smishing_false_positives": 11,
+        "smishing_true_positives": 69,
+        "smishing_without_explicit_warning": 19,
+        "suspicious": 80,
+        "threshold_internal_score": 0.6,
+        "token_coverage": 1.0,
+        "warning_confusion_labels": [
+          "not_smishing",
+          "smishing"
+        ],
+        "warning_confusion_matrix": [
+          [
+            781,
+            11
+          ],
+          [
+            19,
+            69
+          ]
+        ],
+        "warning_f1": 0.8214285714285714,
+        "warning_precision": 0.8625,
+        "warning_recall": 0.7840909090909091
+      },
+      "test_token_coverage": 1.0,
+      "validation": {
+        "confusion_labels": [
+          "ham",
+          "spam",
+          "smishing"
+        ],
+        "confusion_matrix": [
+          [
+            708,
+            14,
+            4
+          ],
+          [
+            6,
+            51,
+            9
+          ],
+          [
+            0,
+            22,
+            66
+          ]
+        ],
+        "count": 880,
+        "counts": {
+          "ham": 726,
+          "smishing": 88,
+          "spam": 66
+        },
+        "errors": [
+          {
+            "prediction": "ham",
+            "row_id": "row-000123",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000196",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000299",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000334",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000372",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000467",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-000769",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000789",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000799",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001479",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001625",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001761",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002097",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-002116",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002454",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002501",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002633",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002648",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002676",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002821",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002937",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003259",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003262",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003295",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003407",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003420",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003556",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003651",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003686",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003749",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003810",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003962",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003972",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004012",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004124",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004236",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004311",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004366",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004377",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004440",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004508",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004620",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004735",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004752",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004791",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004860",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004921",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005067",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005250",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005259",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005290",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005378",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005608",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005815",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005828",
+            "source_label": "smishing"
+          }
+        ],
+        "macro_f1": 0.8134730538922156,
+        "per_class": {
+          "ham": {
+            "f1-score": 0.9833333333333333,
+            "false_negatives": 18,
+            "false_positives": 6,
+            "precision": 0.9915966386554622,
+            "recall": 0.9752066115702479,
+            "support": 726.0
+          },
+          "smishing": {
+            "f1-score": 0.7904191616766467,
+            "false_negatives": 22,
+            "false_positives": 13,
+            "precision": 0.8354430379746836,
+            "recall": 0.75,
+            "support": 88.0
+          },
+          "spam": {
+            "f1-score": 0.6666666666666666,
+            "false_negatives": 15,
+            "false_positives": 36,
+            "precision": 0.5862068965517241,
+            "recall": 0.7727272727272727,
+            "support": 66.0
+          }
+        }
+      },
+      "validation_policies": [
+        {
+          "abstention_rate": 0.9171396140749148,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 808,
+          "smishing_false_positives": 10,
+          "smishing_true_positives": 63,
+          "smishing_without_explicit_warning": 25,
+          "suspicious": 73,
+          "threshold_internal_score": 0.6,
+          "token_coverage": 0.9988649262202043,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              783,
+              10
+            ],
+            [
+              25,
+              63
+            ]
+          ],
+          "warning_f1": 0.782608695652174,
+          "warning_precision": 0.863013698630137,
+          "warning_recall": 0.7159090909090909
+        },
+        {
+          "abstention_rate": 0.9307604994324631,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 820,
+          "smishing_false_positives": 5,
+          "smishing_true_positives": 56,
+          "smishing_without_explicit_warning": 32,
+          "suspicious": 61,
+          "threshold_internal_score": 0.75,
+          "token_coverage": 0.9988649262202043,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              788,
+              5
+            ],
+            [
+              32,
+              56
+            ]
+          ],
+          "warning_f1": 0.7516778523489933,
+          "warning_precision": 0.9180327868852459,
+          "warning_recall": 0.6363636363636364
+        },
+        {
+          "abstention_rate": 0.9557321225879682,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 842,
+          "smishing_false_positives": 1,
+          "smishing_true_positives": 38,
+          "smishing_without_explicit_warning": 50,
+          "suspicious": 39,
+          "threshold_internal_score": 0.9,
+          "token_coverage": 0.9988649262202043,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              792,
+              1
+            ],
+            [
+              50,
+              38
+            ]
+          ],
+          "warning_f1": 0.5984251968503937,
+          "warning_precision": 0.9743589743589743,
+          "warning_recall": 0.4318181818181818
+        }
+      ]
+    },
+    "minilm_c2.0": {
+      "fit_seconds": 0.02587520913220942,
+      "selection_score": 0.8003191151462916,
+      "test": {
+        "confusion_labels": [
+          "ham",
+          "spam",
+          "smishing"
+        ],
+        "confusion_matrix": [
+          [
+            708,
+            14,
+            4
+          ],
+          [
+            4,
+            51,
+            11
+          ],
+          [
+            1,
+            14,
+            73
+          ]
+        ],
+        "count": 880,
+        "counts": {
+          "ham": 726,
+          "smishing": 88,
+          "spam": 66
+        },
+        "errors": [
+          {
+            "prediction": "spam",
+            "row_id": "row-000006",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000037",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000410",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000515",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000555",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001008",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001067",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001156",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001426",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001436",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001582",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001677",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001741",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001807",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001821",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001834",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002405",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002410",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002508",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-002874",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002904",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002916",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003016",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003037",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003093",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003112",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003159",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003401",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003542",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003624",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003874",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003995",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004084",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004584",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004774",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004806",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004821",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004868",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004967",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005182",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005267",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005327",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005624",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005706",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-005709",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005746",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005796",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005860",
+            "source_label": "smishing"
+          }
+        ],
+        "macro_f1": 0.8390034695521025,
+        "per_class": {
+          "ham": {
+            "f1-score": 0.9840166782487839,
+            "false_negatives": 18,
+            "false_positives": 5,
+            "precision": 0.9929873772791024,
+            "recall": 0.9752066115702479,
+            "support": 726.0
+          },
+          "smishing": {
+            "f1-score": 0.8295454545454546,
+            "false_negatives": 15,
+            "false_positives": 15,
+            "precision": 0.8295454545454546,
+            "recall": 0.8295454545454546,
+            "support": 88.0
+          },
+          "spam": {
+            "f1-score": 0.7034482758620689,
+            "false_negatives": 15,
+            "false_positives": 28,
+            "precision": 0.6455696202531646,
+            "recall": 0.7727272727272727,
+            "support": 66.0
+          }
+        }
+      },
+      "test_batch_latency": {
+        "amortized_ms_per_message": 1.8325391577408565,
+        "count": 880,
+        "seconds": 1.6126344588119537
+      },
+      "test_policy": {
+        "abstention_rate": 0.9034090909090909,
+        "analysis_complete_count": 0,
+        "completed_coverage": 0.0,
+        "no_strong_signals": 0,
+        "review": 795,
+        "smishing_false_positives": 13,
+        "smishing_true_positives": 72,
+        "smishing_without_explicit_warning": 16,
+        "suspicious": 85,
+        "threshold_internal_score": 0.6,
+        "token_coverage": 1.0,
+        "warning_confusion_labels": [
+          "not_smishing",
+          "smishing"
+        ],
+        "warning_confusion_matrix": [
+          [
+            779,
+            13
+          ],
+          [
+            16,
+            72
+          ]
+        ],
+        "warning_f1": 0.8323699421965318,
+        "warning_precision": 0.8470588235294118,
+        "warning_recall": 0.8181818181818182
+      },
+      "test_token_coverage": 1.0,
+      "validation": {
+        "confusion_labels": [
+          "ham",
+          "spam",
+          "smishing"
+        ],
+        "confusion_matrix": [
+          [
+            710,
+            12,
+            4
+          ],
+          [
+            7,
+            47,
+            12
+          ],
+          [
+            1,
+            21,
+            66
+          ]
+        ],
+        "count": 880,
+        "counts": {
+          "ham": 726,
+          "smishing": 88,
+          "spam": 66
+        },
+        "errors": [
+          {
+            "prediction": "ham",
+            "row_id": "row-000123",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000196",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000299",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000334",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000372",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000467",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-000769",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000784",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000789",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000799",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001044",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001479",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001625",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-001666",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001761",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001903",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002097",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-002116",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-002454",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002501",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002633",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002821",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002937",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003259",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003262",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003295",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003386",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003407",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003420",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003556",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003651",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003686",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003749",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003810",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003962",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003972",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004012",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004124",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004236",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004311",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004366",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004377",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004440",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004620",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004735",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004752",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004791",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004860",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004916",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-004921",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005067",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005250",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005259",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005290",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005378",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005608",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005815",
+            "source_label": "ham"
+          }
+        ],
+        "macro_f1": 0.8012285686862306,
+        "per_class": {
+          "ham": {
+            "f1-score": 0.9833795013850416,
+            "false_negatives": 16,
+            "false_positives": 8,
+            "precision": 0.9888579387186629,
+            "recall": 0.977961432506887,
+            "support": 726.0
+          },
+          "smishing": {
+            "f1-score": 0.7764705882352941,
+            "false_negatives": 22,
+            "false_positives": 16,
+            "precision": 0.8048780487804879,
+            "recall": 0.75,
+            "support": 88.0
+          },
+          "spam": {
+            "f1-score": 0.6438356164383562,
+            "false_negatives": 19,
+            "false_positives": 33,
+            "precision": 0.5875,
+            "recall": 0.7121212121212122,
+            "support": 66.0
+          }
+        }
+      },
+      "validation_policies": [
+        {
+          "abstention_rate": 0.9137343927355278,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 805,
+          "smishing_false_positives": 13,
+          "smishing_true_positives": 63,
+          "smishing_without_explicit_warning": 25,
+          "suspicious": 76,
+          "threshold_internal_score": 0.6,
+          "token_coverage": 0.9988649262202043,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              780,
+              13
+            ],
+            [
+              25,
+              63
+            ]
+          ],
+          "warning_f1": 0.7682926829268293,
+          "warning_precision": 0.8289473684210527,
+          "warning_recall": 0.7159090909090909
+        },
+        {
+          "abstention_rate": 0.9250851305334846,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 815,
+          "smishing_false_positives": 8,
+          "smishing_true_positives": 58,
+          "smishing_without_explicit_warning": 30,
+          "suspicious": 66,
+          "threshold_internal_score": 0.75,
+          "token_coverage": 0.9988649262202043,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              785,
+              8
+            ],
+            [
+              30,
+              58
+            ]
+          ],
+          "warning_f1": 0.7532467532467533,
+          "warning_precision": 0.8787878787878788,
+          "warning_recall": 0.6590909090909091
+        },
+        {
+          "abstention_rate": 0.9398410896708286,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 828,
+          "smishing_false_positives": 3,
+          "smishing_true_positives": 50,
+          "smishing_without_explicit_warning": 38,
+          "suspicious": 53,
+          "threshold_internal_score": 0.9,
+          "token_coverage": 0.9988649262202043,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              790,
+              3
+            ],
+            [
+              38,
+              50
+            ]
+          ],
+          "warning_f1": 0.7092198581560284,
+          "warning_precision": 0.9433962264150944,
+          "warning_recall": 0.5681818181818182
+        }
+      ]
+    },
+    "tfidf_c0.5": {
+      "fit_seconds": 0.37981583387590945,
+      "selection_score": 0.8679388071220586,
+      "test": {
+        "confusion_labels": [
+          "ham",
+          "spam",
+          "smishing"
+        ],
+        "confusion_matrix": [
+          [
+            720,
+            5,
+            1
+          ],
+          [
+            11,
+            47,
+            8
+          ],
+          [
+            2,
+            12,
+            74
+          ]
+        ],
+        "count": 880,
+        "counts": {
+          "ham": 726,
+          "smishing": 88,
+          "spam": 66
+        },
+        "errors": [
+          {
+            "prediction": "ham",
+            "row_id": "row-000234",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000410",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000515",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000555",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000697",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-000843",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000943",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001101",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001156",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-001193",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001426",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001429",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-001489",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001582",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001741",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001807",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002405",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-002904",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002916",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003016",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003037",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003063",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003093",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003159",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003401",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003624",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003631",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003995",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004084",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004117",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004513",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004724",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004774",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004806",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-005024",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005182",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005230",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-005709",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005864",
+            "source_label": "smishing"
+          }
+        ],
+        "macro_f1": 0.8585171269562165,
+        "per_class": {
+          "ham": {
+            "f1-score": 0.9869773817683345,
+            "false_negatives": 6,
+            "false_positives": 13,
+            "precision": 0.9822646657571623,
+            "recall": 0.9917355371900827,
+            "support": 726.0
+          },
+          "smishing": {
+            "f1-score": 0.8654970760233918,
+            "false_negatives": 14,
+            "false_positives": 9,
+            "precision": 0.891566265060241,
+            "recall": 0.8409090909090909,
+            "support": 88.0
+          },
+          "spam": {
+            "f1-score": 0.7230769230769231,
+            "false_negatives": 19,
+            "false_positives": 17,
+            "precision": 0.734375,
+            "recall": 0.7121212121212122,
+            "support": 66.0
+          }
+        }
+      },
+      "test_batch_latency": {
+        "amortized_ms_per_message": 0.04376268982675604,
+        "count": 880,
+        "seconds": 0.038511167047545314
+      },
+      "test_policy": {
+        "abstention_rate": 0.9238636363636363,
+        "analysis_complete_count": 0,
+        "completed_coverage": 0.0,
+        "no_strong_signals": 0,
+        "review": 813,
+        "smishing_false_positives": 4,
+        "smishing_true_positives": 63,
+        "smishing_without_explicit_warning": 25,
+        "suspicious": 67,
+        "threshold_internal_score": 0.6,
+        "token_coverage": 1.0,
+        "warning_confusion_labels": [
+          "not_smishing",
+          "smishing"
+        ],
+        "warning_confusion_matrix": [
+          [
+            788,
+            4
+          ],
+          [
+            25,
+            63
+          ]
+        ],
+        "warning_f1": 0.8129032258064516,
+        "warning_precision": 0.9402985074626866,
+        "warning_recall": 0.7159090909090909
+      },
+      "test_token_coverage": 1.0,
+      "validation": {
+        "confusion_labels": [
+          "ham",
+          "spam",
+          "smishing"
+        ],
+        "confusion_matrix": [
+          [
+            723,
+            1,
+            3
+          ],
+          [
+            8,
+            56,
+            2
+          ],
+          [
+            2,
+            20,
+            66
+          ]
+        ],
+        "count": 881,
+        "counts": {
+          "ham": 727,
+          "smishing": 88,
+          "spam": 66
+        },
+        "errors": [
+          {
+            "prediction": "ham",
+            "row_id": "row-000123",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000196",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000334",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000467",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000475",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-000478",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000510",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000584",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-000769",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001044",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-001135",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001625",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002074",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002501",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002633",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002937",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003262",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003420",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003749",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003762",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003810",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003962",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003972",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004012",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004311",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004366",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004440",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004620",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004752",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005067",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005250",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-005374",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-005394",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005608",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-005815",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005828",
+            "source_label": "smishing"
+          }
+        ],
+        "macro_f1": 0.8679388071220586,
+        "per_class": {
+          "ham": {
+            "f1-score": 0.9904109589041096,
+            "false_negatives": 4,
+            "false_positives": 10,
+            "precision": 0.9863574351978172,
+            "recall": 0.9944979367262724,
+            "support": 727.0
+          },
+          "smishing": {
+            "f1-score": 0.8301886792452831,
+            "false_negatives": 22,
+            "false_positives": 5,
+            "precision": 0.9295774647887324,
+            "recall": 0.75,
+            "support": 88.0
+          },
+          "spam": {
+            "f1-score": 0.7832167832167832,
+            "false_negatives": 10,
+            "false_positives": 21,
+            "precision": 0.7272727272727273,
+            "recall": 0.8484848484848485,
+            "support": 66.0
+          }
+        }
+      },
+      "validation_policies": [
+        {
+          "abstention_rate": 0.927355278093076,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 817,
+          "smishing_false_positives": 2,
+          "smishing_true_positives": 62,
+          "smishing_without_explicit_warning": 26,
+          "suspicious": 64,
+          "threshold_internal_score": 0.6,
+          "token_coverage": 1.0,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              791,
+              2
+            ],
+            [
+              26,
+              62
+            ]
+          ],
+          "warning_f1": 0.8157894736842105,
+          "warning_precision": 0.96875,
+          "warning_recall": 0.7045454545454546
+        },
+        {
+          "abstention_rate": 0.9466515323496028,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 834,
+          "smishing_false_positives": 0,
+          "smishing_true_positives": 47,
+          "smishing_without_explicit_warning": 41,
+          "suspicious": 47,
+          "threshold_internal_score": 0.75,
+          "token_coverage": 1.0,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              793,
+              0
+            ],
+            [
+              41,
+              47
+            ]
+          ],
+          "warning_f1": 0.6962962962962963,
+          "warning_precision": 1.0,
+          "warning_recall": 0.5340909090909091
+        },
+        {
+          "abstention_rate": 0.9727582292849035,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 857,
+          "smishing_false_positives": 0,
+          "smishing_true_positives": 24,
+          "smishing_without_explicit_warning": 64,
+          "suspicious": 24,
+          "threshold_internal_score": 0.9,
+          "token_coverage": 1.0,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              793,
+              0
+            ],
+            [
+              64,
+              24
+            ]
+          ],
+          "warning_f1": 0.42857142857142855,
+          "warning_precision": 1.0,
+          "warning_recall": 0.2727272727272727
+        }
+      ]
+    },
+    "tfidf_c2.0": {
+      "fit_seconds": 0.3470349998679012,
+      "selection_score": 0.8762085752841523,
+      "test": {
+        "confusion_labels": [
+          "ham",
+          "spam",
+          "smishing"
+        ],
+        "confusion_matrix": [
+          [
+            720,
+            5,
+            1
+          ],
+          [
+            10,
+            48,
+            8
+          ],
+          [
+            3,
+            11,
+            74
+          ]
+        ],
+        "count": 880,
+        "counts": {
+          "ham": 726,
+          "smishing": 88,
+          "spam": 66
+        },
+        "errors": [
+          {
+            "prediction": "ham",
+            "row_id": "row-000234",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000410",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000515",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-000555",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000697",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-000843",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000943",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001101",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001156",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-001193",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001426",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001429",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-001489",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-001582",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001741",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-001807",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002405",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-002904",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-002916",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003016",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003037",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003063",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003093",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003159",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003401",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003624",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003631",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003995",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004084",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004117",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004513",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004724",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004774",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004806",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-005024",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005182",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005230",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005864",
+            "source_label": "smishing"
+          }
+        ],
+        "macro_f1": 0.8636453320844216,
+        "per_class": {
+          "ham": {
+            "f1-score": 0.9869773817683345,
+            "false_negatives": 6,
+            "false_positives": 13,
+            "precision": 0.9822646657571623,
+            "recall": 0.9917355371900827,
+            "support": 726.0
+          },
+          "smishing": {
+            "f1-score": 0.8654970760233918,
+            "false_negatives": 14,
+            "false_positives": 9,
+            "precision": 0.891566265060241,
+            "recall": 0.8409090909090909,
+            "support": 88.0
+          },
+          "spam": {
+            "f1-score": 0.7384615384615385,
+            "false_negatives": 18,
+            "false_positives": 16,
+            "precision": 0.75,
+            "recall": 0.7272727272727273,
+            "support": 66.0
+          }
+        }
+      },
+      "test_batch_latency": {
+        "amortized_ms_per_message": 0.04324512370989065,
+        "count": 880,
+        "seconds": 0.038055708864703774
+      },
+      "test_policy": {
+        "abstention_rate": 0.9147727272727273,
+        "analysis_complete_count": 0,
+        "completed_coverage": 0.0,
+        "no_strong_signals": 0,
+        "review": 805,
+        "smishing_false_positives": 7,
+        "smishing_true_positives": 68,
+        "smishing_without_explicit_warning": 20,
+        "suspicious": 75,
+        "threshold_internal_score": 0.6,
+        "token_coverage": 1.0,
+        "warning_confusion_labels": [
+          "not_smishing",
+          "smishing"
+        ],
+        "warning_confusion_matrix": [
+          [
+            785,
+            7
+          ],
+          [
+            20,
+            68
+          ]
+        ],
+        "warning_f1": 0.8343558282208589,
+        "warning_precision": 0.9066666666666666,
+        "warning_recall": 0.7727272727272727
+      },
+      "test_token_coverage": 1.0,
+      "validation": {
+        "confusion_labels": [
+          "ham",
+          "spam",
+          "smishing"
+        ],
+        "confusion_matrix": [
+          [
+            725,
+            1,
+            1
+          ],
+          [
+            8,
+            56,
+            2
+          ],
+          [
+            2,
+            19,
+            67
+          ]
+        ],
+        "count": 881,
+        "counts": {
+          "ham": 727,
+          "smishing": 88,
+          "spam": 66
+        },
+        "errors": [
+          {
+            "prediction": "ham",
+            "row_id": "row-000123",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000196",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000334",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000467",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-000478",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-000510",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-000769",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001044",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-001135",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-001625",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002074",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002633",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-002937",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003262",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003420",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003749",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003762",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-003810",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-003962",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-003972",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004012",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004311",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004366",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004440",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-004620",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-004752",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005067",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005250",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-005374",
+            "source_label": "spam"
+          },
+          {
+            "prediction": "ham",
+            "row_id": "row-005394",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005608",
+            "source_label": "smishing"
+          },
+          {
+            "prediction": "smishing",
+            "row_id": "row-005815",
+            "source_label": "ham"
+          },
+          {
+            "prediction": "spam",
+            "row_id": "row-005828",
+            "source_label": "smishing"
+          }
+        ],
+        "macro_f1": 0.8762085752841523,
+        "per_class": {
+          "ham": {
+            "f1-score": 0.9917920656634747,
+            "false_negatives": 2,
+            "false_positives": 10,
+            "precision": 0.9863945578231292,
+            "recall": 0.9972489683631361,
+            "support": 727.0
+          },
+          "smishing": {
+            "f1-score": 0.8481012658227848,
+            "false_negatives": 21,
+            "false_positives": 3,
+            "precision": 0.9571428571428572,
+            "recall": 0.7613636363636364,
+            "support": 88.0
+          },
+          "spam": {
+            "f1-score": 0.7887323943661971,
+            "false_negatives": 10,
+            "false_positives": 20,
+            "precision": 0.7368421052631579,
+            "recall": 0.8484848484848485,
+            "support": 66.0
+          }
+        }
+      },
+      "validation_policies": [
+        {
+          "abstention_rate": 0.923950056753689,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 814,
+          "smishing_false_positives": 2,
+          "smishing_true_positives": 65,
+          "smishing_without_explicit_warning": 23,
+          "suspicious": 67,
+          "threshold_internal_score": 0.6,
+          "token_coverage": 1.0,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              791,
+              2
+            ],
+            [
+              23,
+              65
+            ]
+          ],
+          "warning_f1": 0.8387096774193549,
+          "warning_precision": 0.9701492537313433,
+          "warning_recall": 0.7386363636363636
+        },
+        {
+          "abstention_rate": 0.9330306469920545,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 822,
+          "smishing_false_positives": 0,
+          "smishing_true_positives": 59,
+          "smishing_without_explicit_warning": 29,
+          "suspicious": 59,
+          "threshold_internal_score": 0.75,
+          "token_coverage": 1.0,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              793,
+              0
+            ],
+            [
+              29,
+              59
+            ]
+          ],
+          "warning_f1": 0.8027210884353742,
+          "warning_precision": 1.0,
+          "warning_recall": 0.6704545454545454
+        },
+        {
+          "abstention_rate": 0.9511918274687855,
+          "analysis_complete_count": 0,
+          "completed_coverage": 0.0,
+          "no_strong_signals": 0,
+          "review": 838,
+          "smishing_false_positives": 0,
+          "smishing_true_positives": 43,
+          "smishing_without_explicit_warning": 45,
+          "suspicious": 43,
+          "threshold_internal_score": 0.9,
+          "token_coverage": 1.0,
+          "warning_confusion_labels": [
+            "not_smishing",
+            "smishing"
+          ],
+          "warning_confusion_matrix": [
+            [
+              793,
+              0
+            ],
+            [
+              45,
+              43
+            ]
+          ],
+          "warning_f1": 0.6564885496183206,
+          "warning_precision": 1.0,
+          "warning_recall": 0.48863636363636365
+        }
+      ]
+    }
+  },
+  "policy_grid_predefined": [
+    0.6,
+    0.75,
+    0.9
+  ],
+  "seed": 20261010,
+  "selection": {
+    "criterion": "validation_macro_f1_times_token_coverage",
+    "model": "tfidf_c2.0",
+    "test_used": false,
+    "threshold": 0.6,
+    "threshold_criterion": "validation_smishing_warning_f1_then_higher_threshold"
+  },
+  "status": "approved_reviewed_data_experiment",
+  "test_evaluation_after_selection": true
+}

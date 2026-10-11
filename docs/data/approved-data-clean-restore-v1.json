@@ -1,0 +1,8 @@
+{
+  "canonical_review_sha256": "0c4748e7400ec54fe7e8dae343f33597a10339e5f68d5453a292b9d255c80b36",
+  "manifest_sha256": "9fa155bd267fd5492523b297515b3b1a357832ce19e131357ba81198cf89b988",
+  "original_archive_preserved": true,
+  "passed": true,
+  "repeat_finalization_byte_identical": true,
+  "scope": "Fresh temporary data workspace, current local Python dependencies; immutable approvals/history/candidate plus original archive; no training or independent benchmark."
+}

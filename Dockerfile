@@ -17,8 +17,8 @@ COPY backend/ ./backend/
 COPY scripts/serve.py scripts/healthcheck.py scripts/prepare_model.py scripts/package_runtime.py ./scripts/
 COPY ml/sparse_model.py ml/data_prep.py ./ml/
 COPY ml/sources/mendeley-v1.json ./ml/sources/mendeley-v1.json
-COPY build/model.json ./ml/artifacts/goal02-provisional-v2/tfidf_c2.0.json
-COPY ml/reports/goal02-provisional-v2.json ./ml/reports/goal02-provisional-v2.json
+COPY build/model-approved-v1.json ./ml/artifacts/goal02-approved-v1/tfidf_c2.0.json
+COPY ml/reports/goal02-approved-v1.json ./ml/reports/goal02-approved-v1.json
 COPY DATA_SOURCES.md ./DATA_SOURCES.md
 COPY docs/MODEL_CARD.md docs/THIRD_PARTY_NOTICES.md docs/runtime-licenses.json ./docs/
 COPY frontend/src/assets/Inter-LICENSE.txt ./frontend/src/assets/Inter-LICENSE.txt

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('real frontend POST → API → honest provisional review, without storage or external requests', async ({ page, context, baseURL }) => {
+test('real frontend POST → API → honest limited review, without storage or external requests', async ({ page, context, baseURL }) => {
   const canary = 'FIKTIVNI_E2E_731_English_sample https://notice.invalid/example';
   const requests: string[] = [];
   const errors: string[] = [];
@@ -16,7 +16,7 @@ test('real frontend POST → API → honest provisional review, without storage 
   expect(response.request().postDataJSON()).toEqual({ text: canary, message_language: 'en' });
   expect(response.status()).toBe(200);
   expect(response.headers()['cache-control']).toBe('no-store');
-  expect(await response.json()).toMatchObject({ status: 'review', analysis_complete: false, headline_key: 'review_required', evidence: [], model_version: 'clearmessage-sparse-v1:7fe727cfb786' });
+  expect(await response.json()).toMatchObject({ status: 'review', analysis_complete: false, headline_key: 'review_required', evidence: [], model_version: 'clearmessage-sparse-v1:b6e56c3f1d34' });
   await expect(page.getByRole('heading', { name: 'This message needs further verification.' })).toBeVisible();
   await expect(page.getByText('Limited check · analysis is incomplete', { exact: true })).toBeVisible();
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
@@ -158,7 +158,7 @@ test('real English signals without links → bounded reasons/actions → neutral
   await page.getByRole('button', { name: 'Check Message' }).click();
   const response = await responsePromise;
   const data = await response.json();
-  expect(data).toMatchObject({ status: 'suspicious', analysis_complete: false, policy_version: 'analysis-policy-2', model_version: 'clearmessage-sparse-v1:7fe727cfb786' });
+  expect(data).toMatchObject({ status: 'suspicious', analysis_complete: false, policy_version: 'analysis-policy-2', model_version: 'clearmessage-sparse-v1:b6e56c3f1d34' });
   expect(data.evidence.map((item: {key: string}) => item.key)).toEqual(['request_for_secret', 'payment_pressure', 'secrecy_request']);
   expect(data.action_keys).toHaveLength(3);
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'suspicious');

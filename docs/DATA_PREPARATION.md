@@ -1,6 +1,35 @@
 # ClearMessage reproducible data preparation
 
-**Original data imported; human approval incomplete.** The real Mendeley archive, audit and immutable candidate exist. All 45 label decisions are saved (16 agreements, 29 requested corrections); zero label decisions remain pending. All 45 languages and four reviewer/date attributions are missing. Attribution/language and exclusion approval are incomplete. No approved final split exists. The user separately authorized provisional original-label training; this did not complete Goal 01. See [data sources](../DATA_SOURCES.md), [model card](MODEL_CARD.md) and [status](STATUS.md). This preparation workflow itself trains no model.
+**Goal 01 finalized with explicit owner approval on 11 October 2026.** All 45
+staged decisions/metadata and exactly 98 quarantined rows in 46 families were
+approved following commit `c1a8c9f`. The approved corrected dataset has 5,873 rows
+(4,844 ham / 439 spam / 590 smishing), zero eligible mixed families and empty
+split intersections. Only two singleton training labels change; all existing
+partitions remain intact. The test set is previously evaluated, not fresh blind data.
+
+Restore the original pinned archive into `ml/data/raw/Dataset_5971.zip`. Then:
+
+```sh
+.venv/bin/python scripts/finalize_data.py \
+  --approval ml/reviews/goal01-owner-approval.json \
+  --staged ml/reviews/goal01-approved-staged.json \
+  --restore-review-history ml/reviews/goal01-before-finalization.json
+.venv/bin/python scripts/training_preflight.py
+.venv/bin/python scripts/prepare_data.py verify \
+  --input ml/data/raw/Dataset_5971.zip --manifest ml/manifests/mendeley-v1.split.json
+```
+
+The finalizer verifies immutable approval/staged/history/source/candidate identities,
+reconstructs grouping/quarantine, preserves the canonical schema/history and
+source labels, records corrections separately, and never reshuffles exposed rows.
+Repeated finalization is byte-identical; differing existing artifacts are refused.
+Clean metadata restoration was verified twice in a fresh temporary workspace.
+The owner's approval is recorded consent, not a script-invented human decision.
+See [MODEL_CARD](MODEL_CARD.md) for hashes and actual training/reload commands.
+
+The remaining sections document the original audit/candidate procedure, not the
+command for applying this corrected approval. `prepare_data.py freeze` retains its
+original-label semantics and cannot overwrite this corrected final manifest.
 
 ## Environment and scope
 
@@ -56,7 +85,7 @@ The existing immutable proposal reports candidate_pending_human_review and data_
 
 ## Human review gate
 
-For a new audit only, copy review.pending.json to review.completed.json without overwriting an existing review. The current review.completed.json contains 45 explicit decisions: preserve them. Never infer decisions from a file name. A person reviews all 45 selected records. Set decision=confirmed only for genuine agreement; provide language=en/cs/other/und, reviewer_id, reviewed_date (YYYY-MM-DD) and notes where appropriate. ham is ordinary, spam unsolicited, smishing a deceptive attempt to obtain data/money. Advertising alone is not smishing. Quarantine ambiguity; this sample is not complete annotation.
+For a new audit only, copy review.pending.json to review.completed.json without overwriting an existing review. The current review.completed.json contains 45 explicit decisions: preserve them. Never infer decisions from a file name. A person reviews all 45 selected records. For original reviews, set decision=confirmed only for genuine agreement; the approved finalizer also records explicitly confirmed corrections in a versioned notes annotation while retaining source_label; provide language=en/cs/other/und, reviewer_id, reviewed_date (YYYY-MM-DD) and notes where appropriate. ham is ordinary, spam unsolicited, smishing a deceptive attempt to obtain data/money. Advertising alone is not smishing. Quarantine ambiguity; this sample is not complete annotation.
 
 Exclusions of blank/long text, conflict groups or decisions about NA markers require exclusions_approved_by. Unknown/blank labels block freeze. Disagreement needs a documented corrected data revision and new audit, not automatic relabeling for metrics. Scripts require attributed records but cannot prove a human actually reviewed them. Test approvals are fictional mocks, not production consent.
 
@@ -73,7 +102,7 @@ Prefix filtering uses a consistent token ordering. More than two million near-co
 
 Entire reviewed families are reserved for train so the audit does not reveal future held-out input. Remaining groups use size/hash ordering with seed 20261010 and a greedy objective for per-class 70/15/15 balance. Validation and test require all classes. A class deviation above 10 percentage points blocks freeze. Report actual counts; arbitrary group sizes cannot guarantee exact ratios.
 
-The commands below use the measured archive hash. Final freeze is a future human-approved action, not authorized by the UI migration. It currently fails because review is incomplete:
+Historical original-label freeze procedure (not the approved corrected revision):
 
 ```sh
 .venv/bin/python scripts/prepare_data.py freeze \
@@ -90,7 +119,7 @@ The commands below use the measured archive hash. Final freeze is a future human
 
 Use the same input/member/encoding/families options as the audit. The manifest contains eligible IDs, groups, labels, split and text/normalization/template hashes, not message text. All cross-split ID/hash/group intersections must be empty. Its checksum pins exact bytes; provenance pins source, code and review. Identical output is idempotent; different bytes cannot overwrite an existing artifact. Revisions use a new path/version and fresh freeze rather than overwriting held-out evidence.
 
-After real acquisition/audit, a text-free manifest and redacted source/audit summary may be committed. Raw text, review previews/notes, family inputs and challenge answers stay outside Git. Update DATA_SOURCES, preparation-status and STATUS with measured values; do not publish an unreviewed local audit containing arbitrary upstream columns/member names.
+After real acquisition/audit, a text-free manifest and redacted source/audit summary may be committed. Raw text, review previews, arbitrary message-containing notes, family inputs and challenge answers stay outside Git. The approved 45-entry snapshots contain metadata/tool annotations only and preserve review history without source messages. Update DATA_SOURCES, preparation-status and STATUS with measured values; do not publish an unreviewed local audit containing arbitrary upstream columns/member names.
 
 ## Additional-language formats and public examples
 

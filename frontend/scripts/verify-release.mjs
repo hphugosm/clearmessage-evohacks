@@ -38,7 +38,7 @@ try {
     await page.locator(`.result[data-status="${expected}"]`).waitFor();
     assert(await page.getByText('Limited check · analysis is incomplete', {exact:true}).isVisible());
     if (mode === 'failed-model' && expected === 'review') assert(await page.getByText('Analysis not performed', {exact:true}).isVisible());
-    if (mode === 'real-model') assert.equal(result.model_version, 'clearmessage-sparse-v1:7fe727cfb786');
+    if (mode === 'real-model') assert.equal(result.model_version, 'clearmessage-sparse-v1:b6e56c3f1d34');
     else assert.equal(result.model_version, null);
     await page.getByRole('button', {name:'Ask someone for help',exact:true}).click();
     const preview = await page.getByLabel('Help request preview').inputValue();

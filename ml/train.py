@@ -1,4 +1,4 @@
-"""Bounded provisional experiment; validation selection precedes test scoring."""
+"""Bounded approved/provisional experiments; validation selection precedes test scoring."""
 
 from __future__ import annotations
 
@@ -30,6 +30,14 @@ def load_manifest(path: Path, allow_provisional: bool) -> tuple[dict, str]:
     if digest(payload) != path.with_suffix(".sha256").read_text().strip():
         raise DataError("manifest_hash_mismatch")
     wrapper = json.loads(payload)
+    if wrapper.get("status") == "frozen_after_human_review":
+        if wrapper.get("approved_revision_version") != "approved-data-v1":
+            raise DataError("approved_revision_evidence_required")
+        from ml.training_preflight import check_training_inputs
+        result = check_training_inputs(path, Path(wrapper["human_review_file"]), Path(wrapper["source_file"]))
+        if not result["training_allowed"]:
+            raise DataError("approved_training_preflight_failed")
+        return wrapper, digest(payload)
     if wrapper.get("status") != "provisional_original_labels_user_authorized" or not allow_provisional:
         raise DataError("explicit_provisional_authorization_required")
     if wrapper.get("authorization", {}).get("human_review_complete") is not False:
@@ -72,11 +80,11 @@ class Corpus:
         texts, labels, ids = [], [], []
         for record in records:
             row = self.rows[record["row_id"]]
-            if (row.label != record["label"] or digest(row.text) != record["text_sha256"]
+            if (row.label != record.get("source_label", record["label"]) or digest(row.text) != record["text_sha256"]
                     or digest(normalized(row.text)) != record["normalized_sha256"]):
                 raise DataError("source_row_manifest_mismatch")
             texts.append(row.text)
-            labels.append(row.label)
+            labels.append(record["label"])
             ids.append(row.row_id)
         return texts, np.asarray(labels), ids
 
@@ -127,10 +135,13 @@ def run(manifest_path: Path, source: Path, output: Path, report_path: Path, *, a
     corpus = Corpus(source, manifest)
     train_text, train_y, _ = corpus.get("train")
     val_text, val_y, val_ids = corpus.get("validation")
+    approved = manifest.get("status") == "frozen_after_human_review"
     provenance = {"source_sha256": manifest["provenance"]["input_sha256"], "split_sha256": manifest_hash,
-                  "seed": SEED, "human_review_complete": False, "original_labels": True,
+                  "seed": SEED, "human_review_complete": approved, "original_labels": not approved,
                   "language_performance_verified": False}
-    report = {"status": "provisional_original_label_experiment", "data_approval": provenance,
+    if approved:
+        provenance.update(human_review_sha256=manifest["human_review_sha256"], approval_sha256=manifest["approval_sha256"])
+    report = {"status": "approved_reviewed_data_experiment" if approved else "provisional_original_label_experiment", "data_approval": provenance,
               "counts": manifest["counts"], "seed": SEED,
               "candidates_predefined": list(CANDIDATES), "policy_grid_predefined": list(THRESHOLDS),
               "environment": {"system": platform.system(), "architecture": platform.machine(),
@@ -138,6 +149,8 @@ def run(manifest_path: Path, source: Path, output: Path, report_path: Path, *, a
                               "versions": {n: importlib.metadata.version(n) for n in ("numpy", "scipy", "scikit-learn")}},
               "language_results": {"english": None, "czech": None, "unverified_source_languages": True},
               "blind_challenges_used": False, "models": {}, "encoder": {"status": "not_requested"}}
+    report['evaluation_scope'] = manifest.get('test_scope', 'Original provisional held-out evaluation after validation selection.')
+    report['fresh_independent_test'] = False if approved else None
     fitted = {}
     for c in CANDIDATES:
         name = f"tfidf_c{c}"
