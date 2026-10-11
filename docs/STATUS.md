@@ -1,11 +1,14 @@
 # ClearMessage project status
 
-Updated **10 October 2026, Europe/Prague**. The owner supplied the saved Goal 01
-review validation report; its schema/hash/decisions were checked against the
-current review. Zero label decisions are pending, but language/attribution,
-correction reconciliation and conflict approval still block Goal 01 completion.
-The English migration remains complete. No Goal 04, retraining, split freeze,
-blind/held-out input inspection or publication was started.
+Updated **11 October 2026, Europe/Prague**. The owner requested an independent
+assessment of the Goal 01 validation draft. The current workspace is staged in
+RAM, not submitted: 29 labels rechecked, 16 fresh rechecks missing, all 45
+languages confirmed, four missing attributions explicitly re-confirmed. The
+98-row quarantine is now explicitly proposed; final approval remains withheld.
+The canonical review is unchanged; Goal 01 completion remains blocked.
+The English migration remains complete.
+No Goal 04, retraining, split freeze, blind/held-out message inspection or
+publication was started.
 
 The real Goal 02 sparse model remains integrated with `analysis-policy-1` and
 `observed-requests-1`, contract **1.1.0**. It is provisional: **human review requirements remain incomplete**, original
@@ -20,7 +23,7 @@ results are `suspicious` with actual basis or `review`, always
 | Frontend/API | Real model-backed POST via Vite and FastAPI-served build; no demo verdicts. |
 | Contract | Pydantic → OpenAPI → TypeScript; title migrated, fields/enums/versions unchanged. |
 | Model/policy | Real hash-verified project JSON; incomplete results and rules-only errors remain explicit. |
-| Dataset | 5,971 original rows; 45 saved label decisions (16 agreements, 29 corrections), zero pending labels; all 45 languages and four attributions missing, conflict approval incomplete. Corrections not applied to source/training. |
+| Dataset | 5,971 original rows. Canonical: 45 saved decisions (16 agreements, 29 corrections), languages/four attributions missing. Staged draft: 15 labels per class, 45 English confirmations, four fresh attributions, 98-row quarantine proposed; 16 rechecks missing. Conditional eligible size 5,873, not approved. Source/training unchanged. |
 | Data split | Immutable candidate, empty intersections; no approved final freeze. Provisional authorization preserves original assignments and `data_split_ready=false`. |
 | Czech development/challenge | Format and independent instructions; zero actual challenge records. Existing synthetic Czech regression inputs preserved, not a benchmark. |
 | Sharing | Fixed English templates, preview and separate gesture; selectable manual-copy fallback. No clipboard API or source content. |
@@ -29,7 +32,65 @@ results are `suspicious` with actual basis or `review`, always
 | Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
 | OCR/submission/video/Goal 04 | Not started by this migration. |
 
-## Goal 01 — owner-supplied review validation follow-up
+## Goal 01 — independent staged-draft assessment, 11 October 2026
+
+[REVIEW_DRAFT_ASSESSMENT](REVIEW_DRAFT_ASSESSMENT.md) lists all 45 staged decisions,
+their saved/source labels and dates, and every one of the 98 conditional
+quarantine rows with its group and conflict reason. No submitted
+`review.approval-draft-*.json` exists; the loopback validation workspace reports
+`draft_submitted=false`, `quarantine_proposed=true`, and no final approval.
+This assessment does not create human decisions or approve an exclusion.
+
+- Canonical choices remain **1 HAM / 44 SPAM / 0 SMISHING**. The staged draft
+  proposes reversing 14 HAM → SPAM and 15 SMISHING → SPAM corrections, producing
+  **15 HAM / 15 SPAM / 15 SMISHING**, with zero original corpus label overrides.
+- All 45 languages are explicitly confirmed `en` in the staged workspace.
+  Reviewer `hugo` and dates are present for all 45: 41 historical dates remain
+  `2026-10-10`; four missing attributions are explicitly re-confirmed
+  `2026-10-11`, with their original historical date recorded as unknown.
+- **29 label rechecks are present; 16 remain missing.** Existing saved choices
+  are not treated as fresh rechecks. No completed submission is inferred.
+- Independently recomputed source conflicts: **46 groups / 98 rows**, comprising
+  **48 SPAM / 50 SMISHING**. Reasons: 32 normalized-duplicate groups, one
+  conservative-template group, 13 near-copy/combined groups. These rows are
+  already excluded from the existing candidate. Owner quarantine proposal is
+  explicitly staged, but separate final approval is still withheld.
+- Conditional eligible corpus: **5,873 rows / 5,585 groups**, **4,844 HAM /
+  441 SPAM / 588 SMISHING**, with **zero mixed eligible groups**. Staged reversal
+  removes the seven extra mixed groups / 29 rows that saved corrections would
+  introduce. The 46 original raw conflicts remain documented, not relabeled.
+- Candidate assignments remain 4,112 train / 881 validation / 880 test; group
+  intersections are empty. No final freeze, held-out message inspection, model
+  inference, training or canonical write occurred.
+
+Read-only recomputation used the original archive, candidate, saved review and
+existing loopback workspace. It checked source/member hashes, all expected IDs,
+source/group/text-hash consistency, candidate checksum, explicit confirmations,
+metadata, exact quarantine membership, eligible counts and workspace blockers.
+Protected review/source/candidate/config/model SHA-256 values match before and
+after; full pins and a text-free snapshot hash are in the assessment.
+
+```sh
+PYTHONPATH="$PWD" .venv/bin/python .cache/review-draft-assessment/verify.py
+.venv/bin/python -m pytest tests/test_review_validation.py tests/test_review_tool.py tests/test_training_preflight.py -q
+python3 scripts/audit_migration.py
+git diff --check
+```
+
+Actual results: read-only consistency **PASS**; **34 tests passed**, one existing
+unsuppressed Starlette/httpx warning; migration audit **PASS**, 139 owned files;
+`git diff --check` **PASS**. The verifier/snapshot are local ignored `.cache/`
+files and depend on the running staged workspace. No interface/runtime code
+changed, so build/browser/Docker checks were not rerun. Only assessment/status
+documentation is committed. Final review approval, freeze and training remain
+explicitly withheld by the owner.
+
+An additional ad hoc group-count check initially failed because it looked for
+`group_id` on a source row. Rechecked through the actual grouping mapping:
+**PASS**, 5,585 unique eligible groups. Report-table checks also **PASS**:
+45 decision rows and 98 unique quarantine row IDs across 46 groups.
+
+## Goal 01 — owner-supplied review validation follow-up (10 October, historical)
 
 The owner supplied
 `ml/data/mendeley-v1-audit-v2/review.validation-2026-10-10-4e674147a8a4.json`.
