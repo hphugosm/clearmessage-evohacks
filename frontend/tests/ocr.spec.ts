@@ -70,16 +70,54 @@ test('real JPEG OCR works through drag and drop without automatically checking',
 
 test('invalid, oversized and corrupt images preserve text fallback',async({page})=>{
   await page.goto('/'); await page.getByRole('button',{name:'Upload a screenshot'}).click();
+  const header=Buffer.alloc(33);header.set([137,80,78,71,13,10,26,10]);header.writeUInt32BE(13,8);header.write('IHDR',12);header.writeUInt32BE(100,16);header.writeUInt32BE(100,20);
+  const oversized=Buffer.from(header);oversized.writeUInt32BE(4000,16);oversized.writeUInt32BE(4000,20);
   const cases=[
     {name:'fake.png',mimeType:'image/png',buffer:Buffer.from('<svg>fictional</svg>'),error:'Choose one actual PNG'},
     {name:'huge.jpg',mimeType:'image/jpeg',buffer:Buffer.alloc(10*1024*1024+1),error:'This image exceeds 10 MB'},
     {name:'broken.png',mimeType:'image/png',buffer:Buffer.from([137,80,78,71,13,10,26,10]),error:'We could not read this image'},
     {name:'empty.png',mimeType:'image/png',buffer:Buffer.alloc(0),error:'This file is empty'},
+    {name:'decoded-broken.png',mimeType:'image/png',buffer:header,error:'We could not read this image'},
+    {name:'pixel-limit.png',mimeType:'image/png',buffer:oversized,error:'This image exceeds the supported dimensions'},
   ];
   for(const {error,...image} of cases){await page.getByLabel('Choose screenshot',{exact:true}).setInputFiles(image);await expect(page.getByRole('alert')).toContainText(error);await expect(page.locator('.result')).toHaveCount(0);}
   await page.getByRole('button',{name:'Paste a message instead'}).click();
   await page.getByLabel('Message text',{exact:true}).fill('A fictional ordinary lunch plan for tomorrow.');
   await page.getByRole('button',{name:'Check message',exact:true}).click();await expect(page.locator('.result')).toHaveAttribute('data-status','review');
+});
+
+test('real long OCR stays editable and cannot submit an over-limit message',async({page})=>{
+  test.setTimeout(90_000);await monitorWorkers(page);let posts=0;page.on('request',request=>{if(request.method()==='POST') posts++;});
+  await page.setViewportSize({width:360,height:800});await page.goto('/');
+  const data=await page.evaluate(()=>{
+    const canvas=document.createElement('canvas');canvas.width=1400;canvas.height=2800;
+    const context=canvas.getContext('2d')!;context.fillStyle='white';context.fillRect(0,0,canvas.width,canvas.height);context.fillStyle='#111827';context.font='34px Arial';
+    for(let index=0;index<48;index++) context.fillText('Fictional meeting note for tomorrow afternoon.',30,55+index*56);
+    return canvas.toDataURL('image/png').split(',')[1];
+  });
+  const upload=page.getByRole('button',{name:'Upload a screenshot',exact:true});await upload.focus();await page.keyboard.press('Enter');
+  const choosing=page.waitForEvent('filechooser');await page.getByRole('button',{name:'Choose screenshot',exact:true}).focus();await page.keyboard.press('Enter');
+  await (await choosing).setFiles({name:'fictional-long.png',mimeType:'image/png',buffer:Buffer.from(data,'base64')});
+  const field=page.getByLabel('Review the extracted text',{exact:true});await expect(field).toBeVisible({timeout:60_000});await expect(field).toBeFocused();
+  const output=await field.inputValue();expect([...output].length).toBeGreaterThan(2000);expect(posts).toBe(0);
+  await page.keyboard.press('Tab');await expect(page.getByLabel('I reviewed this text and removed sensitive details.')).toBeFocused();await page.keyboard.press('Space');
+  await page.getByRole('button',{name:'Check message',exact:true}).click();await expect(page.getByRole('alert')).toContainText('The text exceeds 2,000 characters');expect(posts).toBe(0);await expect(field).toHaveValue(output);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await field.fill('Please send me your login code. Fictional demonstration.');await expect(page.getByLabel('I reviewed this text and removed sensitive details.')).not.toBeChecked();
+  await page.getByLabel('I reviewed this text and removed sensitive details.').check();await page.getByLabel('Message language',{exact:true}).selectOption('en');
+  await page.getByRole('button',{name:'Check message',exact:true}).click();await expect(page.locator('.result')).toHaveAttribute('data-status','suspicious');
+  expect(posts).toBe(1);expect(await page.evaluate(()=>(window as unknown as {ocrWorkers:unknown}).ocrWorkers)).toEqual({created:1,terminated:1});
+});
+
+test('real blank screenshot has a readable error and no reassuring result at 200% text',async({page})=>{
+  test.setTimeout(90_000);await monitorWorkers(page);let posts=0;page.on('request',request=>{if(request.method()==='POST') posts++;});
+  await page.setViewportSize({width:640,height:900});await page.goto('/');await page.evaluate(()=>{document.documentElement.style.fontSize='200%';});
+  const data=await page.evaluate(()=>{const canvas=document.createElement('canvas');canvas.width=800;canvas.height=250;const context=canvas.getContext('2d')!;context.fillStyle='white';context.fillRect(0,0,800,250);return canvas.toDataURL('image/png').split(',')[1];});
+  await page.getByRole('button',{name:'Upload a screenshot'}).click();await page.getByLabel('Choose screenshot',{exact:true}).setInputFiles({name:'fictional-blank.png',mimeType:'image/png',buffer:Buffer.from(data,'base64')});
+  await expect(page.getByRole('alert')).toContainText('No readable text was found',{timeout:60_000});await expect(page.locator('.result')).toHaveCount(0);expect(posts).toBe(0);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect(await page.evaluate(()=>(window as unknown as {ocrWorkers:unknown}).ocrWorkers)).toEqual({created:1,terminated:1});
+  await page.getByRole('button',{name:'Paste a message instead'}).click();await expect(page.getByLabel('Message text',{exact:true})).toBeVisible();
 });
 
 test('OCR initialization failure terminates the worker and offers paste input',async({page})=>{

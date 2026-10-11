@@ -17,5 +17,6 @@ test('Behind the AI route and reload expose report-verified values and adjacent 
 test('transparency reflows at 360px and 200% text enlargement with keyboard-operable details',async({page})=>{
   await page.setViewportSize({width:360,height:800});await page.goto('/how-it-works');await page.getByText('View class results and confusion matrix',{exact:true}).focus();await page.keyboard.press('Enter');
   await expect(page.getByRole('table').first()).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  const region=page.getByRole('region',{name:'Classifier results by dataset label',exact:true});await region.focus();await page.keyboard.press('ArrowRight');await expect.poll(()=>region.evaluate(element=>element.scrollLeft)).toBeGreaterThan(0);
   await page.setViewportSize({width:640,height:900});await page.evaluate(()=>{document.documentElement.style.fontSize='200%';});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await expect(page.getByRole('link',{name:'Back to checking a message'})).toBeVisible();
 });

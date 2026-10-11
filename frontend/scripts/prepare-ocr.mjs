@@ -7,9 +7,17 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const output = path.join(root, 'public/assets/ocr');
 const sources = {
   'worker.min.js': 'tesseract.js/dist/worker.min.js',
+  'worker.min.js.LICENSE.txt': 'tesseract.js/dist/worker.min.js.LICENSE.txt',
   'eng.traineddata.gz': '@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz',
   'TESSERACT-LICENSE.txt': 'tesseract.js/LICENSE.md',
   'CORE-LICENSE.txt': 'tesseract.js-core/LICENSE',
+  'WASM-FEATURE-DETECT-LICENSE.txt': 'wasm-feature-detect/LICENSE',
+  'REGENERATOR-LICENSE.txt': 'regenerator-runtime/LICENSE',
+  'ZLIBJS-LICENSE.txt': 'zlibjs/LICENSE',
+  'BMPJS-LICENSE.txt': 'bmp-js/LICENSE',
+  'IDB-KEYVAL-LICENSE.txt': 'idb-keyval/LICENCE',
+  'REACT-LICENSE.txt': 'react/LICENSE',
+  'REACT-DOM-LICENSE.txt': 'react-dom/LICENSE',
 };
 for (const name of ['tesseract-core', 'tesseract-core-simd', 'tesseract-core-lstm', 'tesseract-core-simd-lstm']) {
   sources[`${name}.wasm.js`] = `tesseract.js-core/${name}.wasm.js`;

@@ -6,7 +6,8 @@ ClearMessage helps people understand short messages and choose a safer next step
 React + TypeScript + Vite calls FastAPI/Pydantic, our genuinely trained Goal 02
 TF-IDF + LogisticRegression model, and transparent textual rules. The interface,
 documentation and project instructions are English; message language is separate.
-The approved [Style A brand bible](docs/BRAND_BIBLE.md) governs the interface.
+The approved [Style A brand bible](docs/BRAND_BIBLE.md) now includes the Goal 09 minimalist refinement.
+[Goal 09 handoff and demo](docs/GOAL_09_HANDOFF.md) records the isolated release candidate and verification.
 
 **The dataset review is approved and the model was retrained. Language performance
 and completed low-finding policy remain unverified.** Current analysis returns `suspicious` with an actual basis or
@@ -20,6 +21,22 @@ Text is sent to our backend and processed in RAM; analysis makes no outbound
 requests. Help sharing uses fixed neutral sentences, a preview and a separate
 user gesture. It never includes the source message. Czech evaluation formats,
 regression inputs and provenance remain available and unchanged.
+
+## Screenshot, explanations and guidance
+
+Choose **Upload a screenshot** for real English PNG/JPEG OCR in the browser, using pinned resources from the application origin. Images are not uploaded. Review and edit the full extracted text, remove sensitive details, confirm it, then choose **Check message**. Images are bounded to 10 MiB, 12 megapixels and 16,384 pixels per side. OCR errors offer paste input; text above 2,000 Unicode code points stays editable and is never automatically shortened.
+
+Observed rule explanations can expand to highlight a proven phrase. Classifier-only findings cannot identify particular words. **What have you already done?** offers five curated local checklists; choices never enter analysis or sharing. **Behind the AI** at `/how-it-works` shows report-verified counts/metrics beside the previously evaluated-test and independent-language limitations.
+
+Screenshot input is enabled for the authorized Goal 09 build. To disable it while preserving paste analysis:
+
+```sh
+VITE_ENABLE_OCR=false npm --prefix frontend run build
+# For development instead:
+VITE_ENABLE_OCR=false npm --prefix frontend run dev
+```
+
+English recognition of synthetic fixtures is verified, not a general OCR quality benchmark. Screenshot bytes, temporary canvases and workers are released; browser garbage collection controls final memory reclamation. See [implementation](docs/GOAL_09_IMPLEMENTATION.md) and [test report](docs/GOAL_09_TEST_REPORT.md).
 
 ## Requirements and installation
 
@@ -64,10 +81,20 @@ sh scripts/test.sh
 ```
 
 This checks migration consistency, dependency conflicts, OpenAPI/TypeScript drift,
-Python tests, client tests, the production build and real browser/API flows.
+Python tests, client tests, approved transparency-fact drift, the production build and real browser/API/OCR flows.
 Ports 8000 and 5173 must be free; tests do not reuse unrelated servers. Browser
 traces, videos and automatic screenshots are disabled. Failure mocks are confined
 to tests. Normal end-to-end tests use the actual trained model and inert fixtures.
+
+Additional Goal 09 checks and actual screenshots:
+
+```sh
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-product-ui.mjs
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-ocr-flag.mjs
+python3 scripts/export_transparency.py --check
+```
+
+The UI verifier owns port 8788, captures only fictional inputs under `.cache/goal09-ui`, and writes new Goal 09 evidence without replacing historical audits. The flag verifier owns a temporary production build/server. Start services ahead of a demo: the fresh locked runtime's measured cold startup is recorded in the test report. Browser native-share availability depends on the device; manual preview/copy remains available.
 
 Individual checks:
 
@@ -158,7 +185,7 @@ resource bounds and the outstanding container/hosting checks.
 npm --prefix frontend run build
 .venv/bin/python scripts/prepare_model.py
 .venv/bin/python scripts/package_runtime.py --output build/runtime
-.venv/bin/python scripts/verify_release.py --clean-install
+.venv/bin/python scripts/verify_release.py --clean-install --report docs/data/goal09-local-release.json
 ```
 
 The verifier explicitly installs hash-locked dependencies in a fresh temporary

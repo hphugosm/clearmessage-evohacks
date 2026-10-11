@@ -101,11 +101,21 @@ def test_server_diagnostics_never_format_private_values_or_tracebacks():
     assert CANARY not in output
 
 
-def test_real_runtime_package_and_trusted_import_preserve_foreign_files(tmp_path):
+@pytest.fixture
+def built_frontend(tmp_path):
+    built = tmp_path / 'test-only-build'
+    ocr = built / 'assets/ocr'
+    ocr.mkdir(parents=True)
+    (built / 'index.html').write_text('<html lang="en"><title>ClearMessage test-only build</title></html>')
+    recorded = ROOT / 'frontend/ocr-assets.json'
+    for name, entry in json.loads(recorded.read_bytes())['files'].items():
+        shutil.copyfile(ROOT / 'frontend/node_modules' / entry['source'], ocr / name)
+    shutil.copyfile(recorded, ocr / 'manifest.json')
+    return built
+
+
+def test_real_runtime_package_and_trusted_import_preserve_foreign_files(tmp_path, built_frontend):
     staged = tmp_path / 'runtime'
-    built_frontend = tmp_path / 'test-only-build'
-    (built_frontend / 'assets').mkdir(parents=True)
-    (built_frontend / 'index.html').write_text('<html lang="en"><title>ClearMessage test-only build</title></html>')
     manifest = package(staged, built_frontend)
     assert manifest['model_sha256'] == CONFIG['sha256']
     assert manifest['encoder_required'] is False
@@ -134,6 +144,31 @@ def test_real_runtime_package_and_trusted_import_preserve_foreign_files(tmp_path
     assert CANARY not in result.stdout + result.stderr
     assert str(staged) not in result.stdout + result.stderr
     assert hashlib.sha256((staged / CONFIG['artifact_path']).read_bytes()).hexdigest() == CONFIG['sha256']
+
+
+@pytest.mark.parametrize('change,code', [
+    ('alter-worker', 'ocr_asset_hash_mismatch'), ('missing-core', 'ocr_assets_incomplete'),
+    ('missing-manifest', 'ocr_assets_incomplete'), ('alter-manifest', 'ocr_manifest_mismatch'),
+    ('extra-file', 'ocr_asset_hash_mismatch'), ('symlink', 'unexpected_frontend_asset'),
+])
+def test_runtime_rejects_modified_incomplete_or_symlinked_ocr(tmp_path, built_frontend, change, code):
+    ocr = built_frontend / 'assets/ocr'
+    if change == 'alter-worker':
+        (ocr / 'worker.min.js').write_bytes(b'test-only tampering')
+    elif change == 'missing-core':
+        (ocr / 'tesseract-core-lstm.wasm').unlink()
+    elif change == 'missing-manifest':
+        (ocr / 'manifest.json').unlink()
+    elif change == 'alter-manifest':
+        (ocr / 'manifest.json').write_text('{}')
+    elif change == 'extra-file':
+        (ocr / 'unexpected.js').write_text('test-only extra asset')
+    else:
+        (ocr / 'worker.min.js').unlink()
+        (ocr / 'worker.min.js').symlink_to(ROOT / 'frontend/node_modules/tesseract.js/dist/worker.min.js')
+    with pytest.raises(ValueError, match=code):
+        package(tmp_path / 'rejected-runtime', built_frontend)
+    assert not (tmp_path / 'rejected-runtime').exists()
 
 
 def test_launcher_argument_errors_do_not_echo_secrets_or_paths():

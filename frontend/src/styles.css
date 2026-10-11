@@ -49,10 +49,9 @@ footer { border-top: 1px solid var(--cm-border-subtle); padding: 24px 0 40px; fo
 .help-button { margin-top: 18px; width: 100%; }
 .help-preview { margin-top: 24px; }
 .help-preview p { font-size: 1rem; }
-.clicked-advice { margin-top: 32px; }
 summary { cursor: pointer; min-height: var(--cm-control-height); padding: 12px 0; font-weight: 600; }
 .result-label svg, .submit svg { flex-shrink: 0; }
-@media (max-width: 560px) { .page { padding: 0 16px; } header { flex-wrap: wrap; padding: 16px 0; gap: 0; } nav { gap: 20px; } h1 { font-size: 2rem; line-height: 1.2; } form, .result, .surface { padding: 20px; } .field-note { flex-wrap: wrap; gap: 8px; } .hero { margin-top: 32px; } }
+@media (max-width: 560px) { .page { padding: 0 16px; } header { flex-wrap: wrap; padding: 16px 0; gap: 8px; } nav { gap: 20px; } h1 { font-size: 2rem; line-height: 1.2; } form, .result, .surface { padding: 20px; } .field-note { flex-wrap: wrap; gap: 8px; } .hero { margin-top: 32px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 .input-method { display: flex; border: 1px solid var(--cm-border-control); border-radius: 12px; padding: 4px; gap: 4px; margin-bottom: 24px; }
 .input-method button { flex: 1; border: 0; border-radius: 8px; padding: 8px 12px; font-size: 1rem; font-weight: 600; background: var(--cm-surface-card); color: var(--cm-text-secondary); }

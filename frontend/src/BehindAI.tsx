@@ -38,7 +38,7 @@ export default function BehindAI() {
       <p>{b.languageLimit}</p>
       <details className="metrics-details"><summary>{b.detailedMetrics}</summary>
         <p className="small">{b.testCount} {facts.testCount}. {b.metricFormat}</p>
-        <div className="table-wrap"><table>
+        <div className="table-wrap" tabIndex={0} role="region" aria-label={b.classMetrics}><table>
           <caption>{b.classMetrics}</caption>
           <thead><tr>{b.metricColumns.map(column => <th scope="col" key={column}>{column}</th>)}</tr></thead>
           <tbody>{(['ham','spam','smishing'] as const).map(label => {
@@ -47,7 +47,7 @@ export default function BehindAI() {
           })}</tbody>
         </table></div>
         <p className="small">{b.confusionExplanation}</p>
-        <div className="table-wrap"><table><caption>{b.confusionTitle}</caption><thead><tr><th scope="col">{b.sourceClass}</th>{['HAM','SPAM','SMISHING'].map(label=><th scope="col" key={label}>{label}</th>)}</tr></thead><tbody>{facts.confusionMatrix.map((row,index)=><tr key={index}><th scope="row">{['HAM','SPAM','SMISHING'][index]}</th>{row.map((value,column)=><td key={column}>{value}</td>)}</tr>)}</tbody></table></div>
+        <div className="table-wrap" tabIndex={0} role="region" aria-label={b.confusionTitle}><table><caption>{b.confusionTitle}</caption><thead><tr><th scope="col">{b.sourceClass}</th>{['HAM','SPAM','SMISHING'].map(label=><th scope="col" key={label}>{label}</th>)}</tr></thead><tbody>{facts.confusionMatrix.map((row,index)=><tr key={index}><th scope="row">{['HAM','SPAM','SMISHING'][index]}</th>{row.map((value,column)=><td key={column}>{value}</td>)}</tr>)}</tbody></table></div>
       </details>
     </section>
     <section aria-labelledby="limits-title"><h2 id="limits-title">{b.limitsTitle}</h2><p>{b.limits}</p><p>{b.releaseLimit}</p></section>

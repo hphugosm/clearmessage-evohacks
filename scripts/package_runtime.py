@@ -25,6 +25,9 @@ def package(destination: Path, frontend_dir: Path | None = None) -> dict:
         raise ValueError("frontend_build_missing")
     sources = {name: ROOT / name for name in RUNTIME_FILES}
     sources["frontend/dist/index.html"] = dist / "index.html"
+    ocr_manifest = json.loads((ROOT / "frontend/ocr-assets.json").read_bytes())
+    expected_ocr = {f"ocr/{name}" for name in ocr_manifest["files"]} | {"ocr/manifest.json"}
+    present_ocr = set()
     for asset in sorted((dist / "assets").rglob("*")):
         if asset.is_dir() and not asset.is_symlink():
             continue
@@ -34,12 +37,14 @@ def package(destination: Path, frontend_dir: Path | None = None) -> dict:
         if "/" in relative and not relative.startswith("ocr/"):
             raise ValueError("unexpected_frontend_asset_directory")
         if relative.startswith("ocr/"):
-            ocr_manifest = json.loads((ROOT / "frontend/ocr-assets.json").read_bytes())
+            present_ocr.add(relative)
             if relative != "ocr/manifest.json" and (relative[4:] not in ocr_manifest["files"] or hashlib.sha256(asset.read_bytes()).hexdigest() != ocr_manifest["files"][relative[4:]]["sha256"]):
                 raise ValueError("ocr_asset_hash_mismatch")
             if relative == "ocr/manifest.json" and json.loads(asset.read_bytes()) != ocr_manifest:
                 raise ValueError("ocr_manifest_mismatch")
         sources[f"frontend/dist/assets/{relative}"] = asset
+    if present_ocr != expected_ocr:
+        raise ValueError("ocr_assets_incomplete")
     payloads = {name: source.read_bytes() for name, source in sorted(sources.items())}
     manifest = {
         "format_version": 1, "product": "ClearMessage", "model_sha256": CONFIG["sha256"],

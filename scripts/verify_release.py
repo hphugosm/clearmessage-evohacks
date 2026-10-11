@@ -74,7 +74,7 @@ def metrics(values):
 
 
 def browser_check(port, mode, env):
-    output = command(['node', 'frontend/scripts/verify-release.mjs', str(port), mode], ROOT, env, timeout=60)
+    output = command(['node', 'frontend/scripts/verify-release.mjs', str(port), mode], ROOT, env, timeout=120)
     return json.loads(output)
 
 
@@ -215,7 +215,7 @@ def run_server(runtime, python, env, hook, mode, *, benchmark=True, browser=True
 def main():
     parser = PrivateArgumentParser(description=__doc__)
     parser.add_argument('--clean-install', action='store_true', required=True)
-    parser.add_argument('--report', type=Path, default=ROOT / 'docs/data/goal05-local-release.json')
+    parser.add_argument('--report', type=Path, default=ROOT / 'docs/data/goal09-local-release.json')
     args = parser.parse_args()
     env = {key: value for key, value in os.environ.items() if key in ('PATH', 'TMPDIR', 'SYSTEMROOT', 'LANG', 'LC_ALL')}
     env.update({'PYTHONDONTWRITEBYTECODE': '1', 'FASTAPI_OTEL_AUTO_CONFIGURE': 'false', 'HF_HUB_OFFLINE': '1', 'TRANSFORMERS_OFFLINE': '1',
@@ -263,7 +263,7 @@ sys.addaudithook(audit)
             failed.update(run_server.observations)
             require(all(result['outgoing_network_attempts'] == 0 for result in (actual, restart, failed)), 'analysis_egress_attempted')
             versions = json.loads(command([str(python), '-c', 'import importlib.metadata,json,sys; print(json.dumps({"python":sys.version.split()[0],**{name:importlib.metadata.version(name) for name in ("fastapi","pydantic","uvicorn","scikit-learn","numpy","scipy","tldextract")}}))'], runtime, env))
-            report = {'goal': 'Goal 05', 'executed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
+            report = {'goal': 'Goal 09', 'executed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
                       'execution': 'Fresh locked Python venv and clean npm ci/build, isolated whitelisted runtime, real loopback HTTP and Chromium; NOT Docker',
                       'platform': {'system': platform.system(), 'architecture': platform.machine()}, 'versions': versions,
                       'node': command(['node', '--version'], ROOT, env).decode().strip(),

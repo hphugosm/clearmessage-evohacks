@@ -1,0 +1,890 @@
+{
+  "goal": "Goal 09",
+  "date": "2026-10-11",
+  "executed_at_utc": "2026-10-11T11:22:35.957Z",
+  "node": "v25.8.2",
+  "browser": "156.0.8078.4",
+  "device": "darwin arm64 desktop; emulated CSS viewports",
+  "flow": "English form → same-origin POST → real approved Goal 02 model/rules/policy 2 → incomplete result → neutral help preview",
+  "api": {
+    "http_status": 200,
+    "cache_control": "no-store",
+    "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
+    "policy_version": "analysis-policy-2",
+    "analysis_complete": false,
+    "evidence_count": 3
+  },
+  "contrasts": [
+    {
+      "name": "body",
+      "foreground": "#111827",
+      "background": "#fafafc",
+      "ratio": 17.017,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "card body",
+      "foreground": "#111827",
+      "background": "#fff",
+      "ratio": 17.74,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "secondary page",
+      "foreground": "#596579",
+      "background": "#fafafc",
+      "ratio": 5.655,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "secondary card",
+      "foreground": "#596579",
+      "background": "#fff",
+      "ratio": 5.895,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "primary",
+      "foreground": "#fff",
+      "background": "#173da5",
+      "ratio": 9.345,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "primary hover/active",
+      "foreground": "#fff",
+      "background": "#12317f",
+      "ratio": 11.854,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "help button",
+      "foreground": "#173da5",
+      "background": "#fff",
+      "ratio": 9.345,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "warning text/icon",
+      "foreground": "#9a6700",
+      "background": "#fffbeb",
+      "ratio": 4.694,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "review text/icon",
+      "foreground": "#9a6700",
+      "background": "#fff",
+      "ratio": 4.868,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "reserved green text/icon",
+      "foreground": "#166534",
+      "background": "#fff",
+      "ratio": 7.13,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "error text",
+      "foreground": "#b42318",
+      "background": "#fef2f2",
+      "ratio": 6.01,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "name": "control border",
+      "foreground": "#667085",
+      "background": "#fff",
+      "ratio": 4.975,
+      "minimum": 3,
+      "passed": true
+    },
+    {
+      "name": "focus/page",
+      "foreground": "#173da5",
+      "background": "#fafafc",
+      "ratio": 8.964,
+      "minimum": 3,
+      "passed": true
+    },
+    {
+      "name": "focus/warning",
+      "foreground": "#173da5",
+      "background": "#fffbeb",
+      "ratio": 9.011,
+      "minimum": 3,
+      "passed": true
+    },
+    {
+      "name": "disabled primary at 0.75 opacity over white",
+      "foreground": "#FFFFFF",
+      "background": "#516ebc",
+      "ratio": 4.876,
+      "minimum": 4.5,
+      "passed": true
+    }
+  ],
+  "layouts": [
+    {
+      "name": "desktop-input",
+      "width": 1440,
+      "height": 1000,
+      "text_scale": 1,
+      "viewport_width_css_px": 1440,
+      "scroll_width_css_px": 1440,
+      "body_font_px": 20,
+      "content_width_css_px": 736,
+      "controls": [
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "textarea",
+          "height": 258,
+          "font_px": 20
+        },
+        {
+          "element": "select",
+          "height": 48,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 53.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 56,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/desktop-input.png"
+    },
+    {
+      "name": "tablet-input",
+      "width": 768,
+      "height": 1024,
+      "text_scale": 1,
+      "viewport_width_css_px": 768,
+      "scroll_width_css_px": 768,
+      "body_font_px": 20,
+      "content_width_css_px": 704,
+      "controls": [
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "textarea",
+          "height": 258,
+          "font_px": 20
+        },
+        {
+          "element": "select",
+          "height": 48,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 53.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 56,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/tablet-input.png"
+    },
+    {
+      "name": "mobile-360-input",
+      "width": 360,
+      "height": 800,
+      "text_scale": 1,
+      "viewport_width_css_px": 360,
+      "scroll_width_css_px": 360,
+      "body_font_px": 20,
+      "content_width_css_px": 328,
+      "controls": [
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "textarea",
+          "height": 258,
+          "font_px": 20
+        },
+        {
+          "element": "select",
+          "height": 48,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 53.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 56,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/mobile-360-input.png"
+    },
+    {
+      "name": "mobile-360-screenshot",
+      "width": 360,
+      "height": 800,
+      "text_scale": 1,
+      "viewport_width_css_px": 360,
+      "scroll_width_css_px": 360,
+      "body_font_px": 20,
+      "content_width_css_px": 328,
+      "controls": [
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 51.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 56,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/mobile-360-screenshot.png"
+    },
+    {
+      "name": "text-200-screenshot",
+      "width": 640,
+      "height": 900,
+      "text_scale": 2,
+      "viewport_width_css_px": 640,
+      "scroll_width_css_px": 640,
+      "body_font_px": 40,
+      "content_width_css_px": 576,
+      "controls": [
+        {
+          "element": "button",
+          "height": 105.59375,
+          "font_px": 32
+        },
+        {
+          "element": "button",
+          "height": 105.59375,
+          "font_px": 32
+        },
+        {
+          "element": "button",
+          "height": 76.390625,
+          "font_px": 36
+        },
+        {
+          "element": "summary",
+          "height": 88,
+          "font_px": 40
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/text-200-screenshot.png"
+    },
+    {
+      "name": "mobile-360-ocr-error",
+      "width": 360,
+      "height": 800,
+      "text_scale": 1,
+      "viewport_width_css_px": 360,
+      "scroll_width_css_px": 360,
+      "body_font_px": 20,
+      "content_width_css_px": 328,
+      "controls": [
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 51.1875,
+          "font_px": 18
+        },
+        {
+          "element": "button",
+          "height": 51.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 56,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/mobile-360-ocr-error.png"
+    },
+    {
+      "name": "desktop-result-help",
+      "width": 1440,
+      "height": 1000,
+      "text_scale": 1,
+      "viewport_width_css_px": 1440,
+      "scroll_width_css_px": 1440,
+      "body_font_px": 20,
+      "content_width_css_px": 736,
+      "controls": [
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "textarea",
+          "height": 258,
+          "font_px": 20
+        },
+        {
+          "element": "select",
+          "height": 48,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 53.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 52.796875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 52.796875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 52.796875,
+          "font_px": 18
+        },
+        {
+          "element": "button",
+          "height": 51.1875,
+          "font_px": 18
+        },
+        {
+          "element": "textarea",
+          "height": 226,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 51.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 56,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/desktop-result-help.png"
+    },
+    {
+      "name": "mobile-360-result-help",
+      "width": 360,
+      "height": 800,
+      "text_scale": 1,
+      "viewport_width_css_px": 360,
+      "scroll_width_css_px": 360,
+      "body_font_px": 20,
+      "content_width_css_px": 328,
+      "controls": [
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "textarea",
+          "height": 258,
+          "font_px": 20
+        },
+        {
+          "element": "select",
+          "height": 48,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 53.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 81.59375,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 52.796875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 52.796875,
+          "font_px": 18
+        },
+        {
+          "element": "button",
+          "height": 51.1875,
+          "font_px": 18
+        },
+        {
+          "element": "textarea",
+          "height": 226,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 51.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 56,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/mobile-360-result-help.png"
+    },
+    {
+      "name": "reflow-320-result-help",
+      "width": 320,
+      "height": 800,
+      "text_scale": 1,
+      "viewport_width_css_px": 320,
+      "scroll_width_css_px": 320,
+      "body_font_px": 20,
+      "content_width_css_px": 288,
+      "controls": [
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "textarea",
+          "height": 258,
+          "font_px": 20
+        },
+        {
+          "element": "select",
+          "height": 48,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 53.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 81.59375,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 52.796875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 81.59375,
+          "font_px": 18
+        },
+        {
+          "element": "button",
+          "height": 51.1875,
+          "font_px": 18
+        },
+        {
+          "element": "textarea",
+          "height": 226,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 51.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 88,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/reflow-320-result-help.png"
+    },
+    {
+      "name": "text-200-result-help",
+      "width": 640,
+      "height": 900,
+      "text_scale": 2,
+      "viewport_width_css_px": 640,
+      "scroll_width_css_px": 640,
+      "body_font_px": 40,
+      "content_width_css_px": 576,
+      "controls": [
+        {
+          "element": "button",
+          "height": 105.59375,
+          "font_px": 32
+        },
+        {
+          "element": "button",
+          "height": 105.59375,
+          "font_px": 32
+        },
+        {
+          "element": "textarea",
+          "height": 482,
+          "font_px": 40
+        },
+        {
+          "element": "select",
+          "height": 67,
+          "font_px": 40
+        },
+        {
+          "element": "button",
+          "height": 78.390625,
+          "font_px": 36
+        },
+        {
+          "element": "summary",
+          "height": 139.1875,
+          "font_px": 36
+        },
+        {
+          "element": "summary",
+          "height": 81.59375,
+          "font_px": 36
+        },
+        {
+          "element": "summary",
+          "height": 139.1875,
+          "font_px": 36
+        },
+        {
+          "element": "button",
+          "height": 76.390625,
+          "font_px": 36
+        },
+        {
+          "element": "textarea",
+          "height": 418,
+          "font_px": 40
+        },
+        {
+          "element": "button",
+          "height": 76.390625,
+          "font_px": 36
+        },
+        {
+          "element": "summary",
+          "height": 88,
+          "font_px": 40
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/text-200-result-help.png"
+    },
+    {
+      "name": "desktop-review",
+      "width": 1440,
+      "height": 1000,
+      "text_scale": 1,
+      "viewport_width_css_px": 1440,
+      "scroll_width_css_px": 1440,
+      "body_font_px": 20,
+      "content_width_css_px": 736,
+      "controls": [
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "textarea",
+          "height": 258,
+          "font_px": 20
+        },
+        {
+          "element": "select",
+          "height": 48,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 53.1875,
+          "font_px": 18
+        },
+        {
+          "element": "button",
+          "height": 51.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 56,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/desktop-review.png"
+    },
+    {
+      "name": "mobile-360-error",
+      "width": 360,
+      "height": 800,
+      "text_scale": 1,
+      "viewport_width_css_px": 360,
+      "scroll_width_css_px": 360,
+      "body_font_px": 20,
+      "content_width_css_px": 328,
+      "controls": [
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "button",
+          "height": 48,
+          "font_px": 16
+        },
+        {
+          "element": "textarea",
+          "height": 258,
+          "font_px": 20
+        },
+        {
+          "element": "select",
+          "height": 48,
+          "font_px": 20
+        },
+        {
+          "element": "button",
+          "height": 53.1875,
+          "font_px": 18
+        },
+        {
+          "element": "summary",
+          "height": 56,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/mobile-360-error.png"
+    },
+    {
+      "name": "desktop-transparency",
+      "width": 1440,
+      "height": 1000,
+      "text_scale": 1,
+      "viewport_width_css_px": 1440,
+      "scroll_width_css_px": 1440,
+      "body_font_px": 20,
+      "content_width_css_px": 736,
+      "controls": [
+        {
+          "element": "summary",
+          "height": 56,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/desktop-transparency.png"
+    },
+    {
+      "name": "mobile-360-transparency",
+      "width": 360,
+      "height": 800,
+      "text_scale": 1,
+      "viewport_width_css_px": 360,
+      "scroll_width_css_px": 360,
+      "body_font_px": 20,
+      "content_width_css_px": 328,
+      "controls": [
+        {
+          "element": "summary",
+          "height": 88,
+          "font_px": 20
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/mobile-360-transparency.png"
+    },
+    {
+      "name": "text-200-transparency",
+      "width": 640,
+      "height": 900,
+      "text_scale": 2,
+      "viewport_width_css_px": 640,
+      "scroll_width_css_px": 640,
+      "body_font_px": 40,
+      "content_width_css_px": 576,
+      "controls": [
+        {
+          "element": "summary",
+          "height": 152,
+          "font_px": 40
+        }
+      ],
+      "screenshot": ".cache/goal09-ui/text-200-transparency.png"
+    }
+  ],
+  "native_browser_zoom": {
+    "passed": true,
+    "setting": "Chromium Page zoom 200%",
+    "profile": "temporary isolated test profile",
+    "layouts": [
+      {
+        "name": "native-200-input",
+        "css_viewport_width": 720,
+        "device_pixel_ratio": 2,
+        "root_font_px": 16,
+        "body_font_px": 20,
+        "scroll_width": 720,
+        "capture": "actual viewport",
+        "physical_screenshot_width": 1440,
+        "screenshot": ".cache/goal09-ui/native-200-input.png"
+      },
+      {
+        "name": "native-200-result-guide-help",
+        "css_viewport_width": 720,
+        "device_pixel_ratio": 2,
+        "root_font_px": 16,
+        "body_font_px": 20,
+        "scroll_width": 720,
+        "capture": "actual viewport",
+        "physical_screenshot_width": 1440,
+        "screenshot": ".cache/goal09-ui/native-200-result-guide-help.png"
+      },
+      {
+        "name": "native-200-screenshot",
+        "css_viewport_width": 720,
+        "device_pixel_ratio": 2,
+        "root_font_px": 16,
+        "body_font_px": 20,
+        "scroll_width": 720,
+        "capture": "actual viewport",
+        "physical_screenshot_width": 1440,
+        "screenshot": ".cache/goal09-ui/native-200-screenshot.png"
+      },
+      {
+        "name": "native-200-ocr-review",
+        "css_viewport_width": 720,
+        "device_pixel_ratio": 2,
+        "root_font_px": 16,
+        "body_font_px": 20,
+        "scroll_width": 720,
+        "capture": "actual viewport",
+        "physical_screenshot_width": 1440,
+        "screenshot": ".cache/goal09-ui/native-200-ocr-review.png"
+      },
+      {
+        "name": "native-200-transparency",
+        "css_viewport_width": 720,
+        "device_pixel_ratio": 2,
+        "root_font_px": 16,
+        "body_font_px": 20,
+        "scroll_width": 720,
+        "capture": "actual viewport",
+        "physical_screenshot_width": 1440,
+        "screenshot": ".cache/goal09-ui/native-200-transparency.png"
+      }
+    ],
+    "browser": "156.0.8078.4"
+  },
+  "external_browser_requests": [],
+  "page_errors": [],
+  "reduced_motion_transition": "0s",
+  "server_output_empty": true,
+  "automated_checks_passed": true,
+  "zoom_scope": "Separate 200% root text enlargement and genuine Chromium Page zoom at 200% in a fresh isolated profile; native desktop Chrome UI remains unavailable while the Mac is locked",
+  "manual_visual_inspection": "This script does not perform manual inspection; see GOAL_09_TEST_REPORT.md for the separately recorded actual scope.",
+  "not_tested": [
+    "desktop Chrome UI on the locked Mac",
+    "physical mobile keyboard",
+    "real screen reader",
+    "human participants",
+    "Safari/Firefox",
+    "Docker",
+    "deployment"
+  ]
+}

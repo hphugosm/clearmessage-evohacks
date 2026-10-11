@@ -38,7 +38,7 @@ export default function SafeScan({ onText, onReady, onPaste }: Props) {
     }}>
       <p>{t.scan.drop}</p>
       <p className="small">{t.scan.formats}</p>
-      <input className="sr-only" id="screenshot" ref={picker} type="file" accept="image/png,image/jpeg" aria-label={t.scan.choose} tabIndex={-1} onChange={event => void choose(event.target.files?.[0])} />
+      <input hidden id="screenshot" ref={picker} type="file" accept="image/png,image/jpeg" aria-label={t.scan.choose} tabIndex={-1} onChange={event => void choose(event.target.files?.[0])} />
       <button type="button" className="secondary-button" onClick={() => picker.current?.click()}>{state === 'done' ? t.scan.replace : t.scan.choose}</button>
     </div>
     <p className="small">{t.scan.privacy}</p>

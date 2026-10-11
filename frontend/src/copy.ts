@@ -22,7 +22,7 @@ type Copy = {
     review: string; instruction: string; confirm: string; confirmationError: string;
     errors: Record<OcrErrorKey, string> };
 
-  titleLines: readonly [string, string]; prototypeLabel: string; intro: string; stage: string; illustrationCaption: string; languageHint: string;
+  prototypeLabel: string; intro: string; stage: string; languageHint: string;
   textLabel: string; placeholder: string; privacy: string; limit: string;
   languageLabel: string; languages: Record<'auto' | 'cs' | 'en' | 'other', string>;
   submit: string; pending: string;
@@ -35,7 +35,7 @@ type Copy = {
   copyHelp: string; copying: string; copied: string; copyUnavailable: string;
   sharing: string; shareCancelled: string;
   helpTemplates: Record<AnalyzeResponse['share_summary_keys'][number], string>;
-  clicked: string; clickedAdvice: string[]; steps: string; limitationsLabel: string; footer: string;
+  steps: string; limitationsLabel: string; footer: string;
   errors: Record<ClientErrorKey, string>;
   actions: Record<AnalyzeResponse['action_keys'][number], string>;
   limitations: Record<AnalyzeResponse['limitations'][number], string>;
@@ -110,9 +110,7 @@ export const copy: Copy = {
       cancelled: 'Text recognition was cancelled. No analysis was performed.',
     },
   },
-  titleLines: ['Understand messages.', 'Make safer decisions.'],
   prototypeLabel: 'EVOHACKS 2026 prototype',
-  illustrationCaption: 'Make sense of it, together.',
   languageHint: 'This describes your message. It does not change the interface or confirm language support.',
   intro: "Paste a message or upload a screenshot. We'll help you understand the warning signs and what you can do next.",
   stage: 'Development version · Performance is unverified for individual languages; checks remain limited.',
@@ -144,11 +142,6 @@ export const copy: Copy = {
     analysis_not_completed: 'The automated check was limited and does not establish message safety.',
     help_verify_independently: 'I received a message I need to verify. Could you please help me check its claims through a familiar independent channel? I do not want to use the contact or link from the message.',
   },
-  clicked: 'I already clicked or shared something', clickedAdvice: [
-    'Stop further steps. Close the page; do not enter more information or download anything. Clicking alone does not tell us what happened.',
-    'If you entered a password, change it through a familiar app or address. If you sent money or banking details, contact your bank through a familiar channel. Do not enter any of those details here.',
-    'If you downloaded or installed something, ask a trusted person to help update and check your device. This application does not inspect devices.',
-  ],
   steps: 'What you can do', limitationsLabel: 'Limits of this version',
   footer: 'ClearMessage does not verify senders or links. It never confirms that a message is safe.',
   errors: {

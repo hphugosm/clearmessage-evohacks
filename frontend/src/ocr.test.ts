@@ -35,6 +35,16 @@ describe('image content limits', () => {
     const {bitmap,canvas}=decoding(); await rasterizeImage(file(png()), new AbortController().signal);
     expect(bitmap.close).toHaveBeenCalledOnce(); expect(canvas.width).toBe(0); expect(canvas.height).toBe(0);
   });
+  it('clears its owned source bytes on success and rejected dimensions', async () => {
+    decoding(); const source=png(); await rasterizeImage(file(source),new AbortController().signal);
+    expect(source.every(value=>value===0)).toBe(true);
+    const oversized=png(4000,4000); await expect(rasterizeImage(file(oversized),new AbortController().signal)).rejects.toMatchObject({key:'pixels'});
+    expect(oversized.every(value=>value===0)).toBe(true);
+  });
+  it('sanitizes file-read errors without private diagnostics',async()=>{
+    decoding(); const unreadable={size:33,arrayBuffer:async()=>{throw new Error('PRIVATE_FILENAME_CANARY');}} as unknown as File;
+    await expect(rasterizeImage(unreadable,new AbortController().signal)).rejects.toEqual(new OcrError('corrupt'));
+  });
 });
 
 function workerMock(failedAction?: string, hangAction?: string, text = 'Fictional extracted text.') {
@@ -51,7 +61,7 @@ function workerMock(failedAction?: string, hangAction?: string, text = 'Fictiona
   vi.stubGlobal('Worker', FakeWorker); return workers;
 }
 describe('worker lifecycle', () => {
-  it.each(['load','loadLanguage','initialize','recognize'])('terminates on %s rejection without echoing private diagnostics', async action => {
+  it.each(['load','loadLanguage','initialize','setParameters','recognize'])('terminates on %s rejection without echoing private diagnostics', async action => {
     decoding(); const workers=workerMock(action);
     await expect(extractText(file(png()), new AbortController().signal, vi.fn())).rejects.toEqual(new OcrError(action === 'recognize' ? 'processing' : 'initialization'));
     expect(workers[0].terminate).toHaveBeenCalledOnce();
@@ -73,5 +83,16 @@ describe('worker lifecycle', () => {
     decoding(); const workers=workerMock(undefined,'load'); const controller=new AbortController();
     const result=extractText(file(png()),controller.signal,vi.fn()); const assertion=expect(result).rejects.toMatchObject({key:'cancelled'});
     while (!workers.length) await Promise.resolve(); controller.abort(); await assertion; expect(workers[0].terminate).toHaveBeenCalled();
+  });
+  it('clears job timers and worker handlers when native postMessage throws',async()=>{
+    decoding(); vi.useFakeTimers(); const terminate=vi.fn();
+    vi.stubGlobal('Worker',class {terminate=terminate;postMessage(){throw new Error('PRIVATE_NATIVE_WORKER_CANARY');}});
+    await expect(extractText(file(png()),new AbortController().signal,vi.fn())).rejects.toEqual(new OcrError('initialization'));
+    expect(terminate).toHaveBeenCalledOnce();expect(vi.getTimerCount()).toBe(0);
+  });
+  it('terminates recognition that exceeds its processing deadline',async()=>{
+    decoding(); vi.useFakeTimers();const workers=workerMock(undefined,'recognize');
+    const result=extractText(file(png()),new AbortController().signal,vi.fn());const assertion=expect(result).rejects.toEqual(new OcrError('processing'));
+    await vi.runAllTimersAsync();await assertion;expect(workers[0].terminate).toHaveBeenCalledOnce();
   });
 });

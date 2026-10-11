@@ -28,8 +28,7 @@ by the current sparse application runtime.
 
 Exact backend/ML/frontend versions and wheel/integrity hashes remain in existing
 locks. Backend runtime licenses and tldextract BSD-3-Clause / bundled PSL
-MPL-2.0 notices are recorded in `docs/runtime-licenses.json`. Migration changes
-no dependency versions. A complete redistribution notice/legal review remains a
+MPL-2.0 notices are recorded in `docs/runtime-licenses.json`. The naming migration changed no dependency versions; Goal 09 adds the pinned OCR packages below. A complete redistribution notice/legal review remains a
 release task; package existence does not prove full upstream clearance.
 
 ## First-party design assets
@@ -49,3 +48,5 @@ notices and choose the project license deliberately before publication.
 Explicit setup acquired `tesseract.js` 6.0.1 (Apache-2.0), `tesseract.js-core` 6.0.0 (Apache-2.0), and `@tesseract.js-data/eng` 1.0.0 (npm package declares MIT). Exact tarball integrity and transitive versions are pinned in `frontend/package-lock.json`; worker/core/English-data byte hashes, sizes and package paths are in `frontend/ocr-assets.json`. Build verifies those bytes and serves them from `/assets/ocr/`. The English `4.0.0_best_int` traineddata is a reused pretrained OCR resource, not a classifier trained by the ClearMessage team. No other OCR language is claimed.
 
 Primary implementation references: [pinned Tesseract.js worker protocol](https://github.com/naptha/tesseract.js/blob/v6.0.1/src/worker-script/index.js), [local asset guidance](https://github.com/naptha/tesseract.js/blob/v6.0.1/docs/local-installation.md), and [English language package](https://www.npmjs.com/package/@tesseract.js-data/eng). Apache license texts from the installed worker/core packages are copied into the same-origin OCR directory. The package declaration and recorded provenance do not resolve the project's broader distribution-license gate. Do not describe OCR model weights as original ClearMessage work.
+
+The worker bundle's own `worker.min.js.LICENSE.txt` is retained at its referenced same-origin path. Installed full license texts for wasm-feature-detect, regenerator-runtime, zlibjs, bmp-js and idb-keyval are also hash-pinned and packaged, alongside React/React DOM licenses. The worker's extracted notices identify bundled buffer and ieee754 code; their exact embedded source versions are not established by the installed package metadata. The English-data package includes no standalone license text beyond its MIT declaration. These limitations are documented rather than treated as complete upstream redistribution clearance. IndexedDB code in an upstream dependency does not mean this application uses persistent OCR caching: `cacheMethod: none` and actual browser checks verify that behavior.

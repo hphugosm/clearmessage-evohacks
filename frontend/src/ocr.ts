@@ -43,12 +43,14 @@ export function imageDimensions(bytes: Uint8Array): { width: number; height: num
 export async function rasterizeImage(file: File, signal: AbortSignal): Promise<Uint8Array> {
   if (file.size === 0) throw new OcrError('empty');
   if (file.size > MAX_IMAGE_BYTES) throw new OcrError('bytes');
-  const bytes = new Uint8Array(await file.arrayBuffer());
-  const dimensions = imageDimensions(bytes);
   if (signal.aborted) throw new OcrError('cancelled');
+  let bytes: Uint8Array<ArrayBuffer> | undefined;
   let bitmap: ImageBitmap | undefined;
   const canvas = document.createElement('canvas');
   try {
+    bytes = new Uint8Array(await file.arrayBuffer());
+    const dimensions = imageDimensions(bytes);
+    if (signal.aborted) throw new OcrError('cancelled');
     bitmap = await createImageBitmap(new Blob([bytes], { type: dimensions.type }));
     if (!bitmap.width || !bitmap.height || bitmap.width * bitmap.height > MAX_IMAGE_PIXELS || bitmap.width > MAX_IMAGE_SIDE || bitmap.height > MAX_IMAGE_SIDE) throw new OcrError('pixels');
     if (signal.aborted) throw new OcrError('cancelled');
@@ -63,16 +65,16 @@ export async function rasterizeImage(file: File, signal: AbortSignal): Promise<U
   } catch (error) {
     throw error instanceof OcrError ? error : new OcrError('corrupt');
   } finally {
-    bitmap?.close(); canvas.width = 0; canvas.height = 0;
+    bitmap?.close(); canvas.width = 0; canvas.height = 0; bytes?.fill(0);
   }
 }
 
 export async function extractText(file: File, signal: AbortSignal, onReading: () => void): Promise<string> {
   const image = await rasterizeImage(file, signal);
-  if (signal.aborted) throw new OcrError('cancelled');
+  if (signal.aborted) { image.fill(0); throw new OcrError('cancelled'); }
   let worker: Worker;
   try { worker = new Worker('/assets/ocr/worker.min.js'); }
-  catch { throw new OcrError('initialization'); }
+  catch { image.fill(0); throw new OcrError('initialization'); }
   let sequence = 0;
   let phase: OcrErrorKey = 'initialization';
   let rejectActive: ((error: OcrError) => void) | undefined;
@@ -96,7 +98,8 @@ export async function extractText(file: File, signal: AbortSignal, onReading: ()
         else if (packet.status === 'reject') finish(undefined, new OcrError(phase));
       };
       if (signal.aborted) { finish(undefined, new OcrError('cancelled')); return; }
-      worker.postMessage({ workerId: 'clearmessage-local-ocr', jobId, action, payload });
+      try { worker.postMessage({ workerId: 'clearmessage-local-ocr', jobId, action, payload }); }
+      catch { finish(undefined, new OcrError(phase)); }
     });
   }
   try {
