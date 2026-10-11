@@ -1,18 +1,76 @@
 # ClearMessage English UI copy
 
-Version 3.0 · 11 October 2026 · Goal 09. This inventory was exported from the shared English dictionary `frontend/src/copy.ts`; update the dictionary and this document together. Model facts are separate verified aggregates in `frontend/src/model-facts.json`, checked against the pinned reports by `scripts/export_transparency.py --check`. All current assessments remain incomplete.
+Version 4.0 · 11 October 2026 · Goal 10. This inventory contains all 238 string entries exported from the current shared English dictionary, `frontend/src/copy.ts`. Some retained strings belong to earlier presentations and are not rendered in every view. Update the dictionary and this inventory together. Model facts remain separate verified aggregates in `frontend/src/model-facts.json`, checked against pinned reports by `scripts/export_transparency.py --check`. All current assessments remain incomplete.
+
+## Human-first flow
+
+| Key | Exact current copy |
+|---|---|
+| experience.how | How it works |
+| experience.welcome | Let's check it together. |
+| experience.example | Try an example |
+| experience.exampleLabel | Example message |
+| experience.exampleText | Your delivery is waiting. Pay the invoice immediately to release your parcel. Visit https://example.invalid/delivery. |
+| experience.back | Start again |
+| experience.edit | Edit message |
+| experience.why | Why this result? |
+| experience.next | What should I do? |
+| experience.summary | Your next step |
+| experience.safety | This check cannot tell you that a message is safe. |
+| experience.noFinding | We have no clear warning signs to explain from this limited check. |
+| experience.simpleReasons.request_for_secret | It asks for a password or verification code. |
+| experience.simpleReasons.payment_pressure | It asks you to make a payment quickly. |
+| experience.simpleReasons.secrecy_request | It asks you to keep something secret. |
+| experience.simpleReasons.model_signal | Our experimental model found a concerning pattern. This does not prove fraud. |
+| experience.critical.model_not_ready | The model check was not performed. |
+| experience.critical.inference_unavailable | The model could not finish its check. |
+| experience.critical.rules_only | Only a limited check for known requests was available. |
+| experience.critical.insufficient_text | There is too little text for the model to check. |
+| experience.critical.incomplete_coverage | We could not check the full text. |
+| experience.critical.language_not_evaluated | Performance is unverified in every language, including English. |
+| experience.critical.language_unspecified | The message language was not specified. |
+| experience.critical.human_review_incomplete | Review of the training labels is unfinished. |
+| experience.critical.policy_not_validated | This version cannot complete a low-warning check. |
+| experience.critical.not_a_safety_confirmation | This output does not establish message safety. |
+| experience.bubble.title | The message you checked |
+| experience.bubble.hint | Select a highlighted phrase to see the observed warning sign. Highlights do not explain the model’s prediction. |
+| experience.speech.listen | Listen |
+| experience.speech.stop | Stop reading |
+| experience.speech.unsupported | Reading aloud is not available in this browser. |
+| experience.speech.unavailable | Reading aloud could not start. You can read the guidance here. |
+| experience.speech.notice | Only fixed guidance is read aloud, never your message. Browser or device voices may use online services. |
+| experience.privacy.hide | Hide personal details |
+| experience.privacy.show | Show personal details |
+| experience.privacy.title | Privacy controls |
+| experience.privacy.notice | Automatic masking may miss details, including names. You can hide more text yourself. This changes the display only; it does not erase text already processed by our backend. |
+| experience.privacy.instruction | Select any text in this box, then choose Hide selected text. You can use the keyboard or touch selection handles. |
+| experience.privacy.select | Choose more text to hide |
+| experience.privacy.selectionLabel | Select text to hide |
+| experience.privacy.mask | Hide selected text |
+| experience.privacy.noSelection | Select some text in the box first. |
+| experience.privacy.applied | Selected text is hidden. |
+| experience.privacy.distinction | Personal details are masked in this display. The check used the original text. |
+| experience.patterns.label | Possible pattern |
+| experience.patterns.caveat | This is context for an observed request, not confirmation of fraud or the sender’s identity. |
+| experience.patterns.delivery_payment.title | Delivery payment request |
+| experience.patterns.delivery_payment.description | Some scams pretend to be delivery companies and ask for unexpected payments. |
+| experience.patterns.account_secret.title | Account code request |
+| experience.patterns.account_secret.description | Some scams ask for a password or code while pretending to help with an account. |
+| experience.patterns.bank_payment.title | Bank payment request |
+| experience.patterns.bank_payment.description | Some scams pretend to be a bank and pressure people to transfer money. |
 
 ## Header and input
 
 | Key | Exact current copy |
 |---|---|
 | hero | Not sure about a message? |
-| prototypeLabel | EVOHACKS 2026 prototype |
 | home | Home |
 | behind | Behind the AI |
 | inputMethod | Input method |
 | paste | Paste a message |
 | screenshot | Upload a screenshot |
+| prototypeLabel | EVOHACKS 2026 prototype |
+| languageHint | This describes your message. It does not change the interface or confirm language support. |
 | intro | Paste a message or upload a screenshot. We'll help you understand the warning signs and what you can do next. |
 | stage | Development version · Performance is unverified for individual languages; checks remain limited. |
 | textLabel | Message text |
@@ -20,7 +78,6 @@ Version 3.0 · 11 October 2026 · Goal 09. This inventory was exported from the 
 | privacy | Do not paste passwords or verification codes. Text is sent to our backend and stays in memory during the request. The application does not store it, log it or use it for training. |
 | limit | Maximum 2,000 characters. Longer text is never automatically shortened. |
 | languageLabel | Message language |
-| languageHint | This describes your message. It does not change the interface or confirm language support. |
 | languages.auto | Not specified |
 | languages.en | English |
 | languages.cs | Czech |
@@ -62,36 +119,36 @@ Version 3.0 · 11 October 2026 · Goal 09. This inventory was exported from the 
 
 | Key | Exact current copy |
 |---|---|
-| incomplete | Limited check · analysis is incomplete |
-| complete | Analysis completed · safety not established |
-| statusLabels.suspicious | Suspicious message |
-| statusLabels.review | We couldn't assess this reliably |
-| statusLabels.no_strong_signals | No strong warning signs found |
-| notPerformed | Analysis not performed |
-| headlines.model_not_ready | The model is not ready yet. |
-| headlines.review_required | This message needs further verification. |
-| headlines.suspicious_signals | There are warning signals in this message. |
-| headlines.no_strong_signals | We found no strong warning signals. |
-| resultDetail | This output does not verify the sender or the claims and does not establish message safety. Check the claims through a familiar independent channel. |
-| reasons | What caught our attention? |
 | evidenceTitles.request_for_secret | A request for a password or code |
 | evidenceTitles.payment_pressure | Pressure to pay quickly |
 | evidenceTitles.secrecy_request | A request to keep things secret |
 | evidenceTitles.model_signal | An experimental model pattern |
 | evidenceIntro | Expand a finding to see its basis. Text highlights come only from observed rules. |
+| observedEvidenceLimit | This is an observed textual signal, not proof of fraud or an explanation of the model’s prediction. |
+| modelEvidenceLimit | This finding comes from the experimental classifier. It cannot identify which words caused the prediction. |
+| resultDetail | This output does not verify the sender or the claims and does not establish message safety. Check the claims through a familiar independent channel. |
+| headlines.model_not_ready | The model is not ready yet. |
+| headlines.review_required | We couldn't check this fully. |
+| headlines.suspicious_signals | Be careful with this message. |
+| headlines.no_strong_signals | We found no strong warning signals. |
+| statusLabels.suspicious | Suspicious message |
+| statusLabels.review | We couldn't assess this reliably |
+| statusLabels.no_strong_signals | No strong warning signs found |
+| notPerformed | Analysis not performed |
 | evidence.request_for_secret | Observed textual signal: a request to disclose a password or verification code. |
 | evidence.payment_pressure | Observed textual signal: a request for an immediate payment or transfer. |
 | evidence.secrecy_request | Observed textual signal: a request to conceal something from family or another trusted person. |
 | evidence.model_signal | The experimental model found a concerning message pattern. This does not prove fraud or explain particular words. |
-| observedEvidenceLimit | This is an observed textual signal, not proof of fraud or an explanation of the model’s prediction. |
-| modelEvidenceLimit | This finding comes from the experimental classifier. It cannot identify which words caused the prediction. |
+| reasons | What caught our attention? |
 | noEvidence | We have no specific textual evidence of fraud. A low or uncertain finding does not establish safety. |
+| incomplete | Limited check · analysis is incomplete |
+| complete | Analysis completed · safety not established |
 | steps | What you can do |
+| limitationsLabel | Limits of this version |
 | actions.verify_independently | Verify the claim through a familiar channel. Use a contact you already know instead of a contact or link from the message. |
 | actions.do_not_send_secrets | Do not share passwords or verification codes. |
 | actions.pause_payment | Pause the payment or transfer until you verify the request through a familiar independent channel. |
 | actions.ask_trusted_person | If you are unsure, ask someone you trust for help. |
-| limitationsLabel | Limits of this version |
 | limitations.model_not_ready | The model is not ready; the model part of analysis was not performed. |
 | limitations.human_review_incomplete | Training-label review is incomplete; the model uses original labels. |
 | limitations.rules_only | Only a limited check of known textual rules was available. |
@@ -143,14 +200,14 @@ Version 3.0 · 11 October 2026 · Goal 09. This inventory was exported from the 
 | help | Ask someone for help |
 | helpPreview | Help request preview |
 | helpNotice | The draft contains only fixed neutral sentences, without your source message or personal details. You can copy it manually. You choose the recipient and whether to send. |
+| share | Share help request |
+| shareUnavailable | Sharing could not be opened. You can copy the draft manually; nothing was sent automatically. |
 | copyHelp | Copy help request |
 | copying | Copying… |
 | copied | Copied |
 | copyUnavailable | Copying did not complete. Select the preview text and copy it manually. |
-| share | Share help request |
 | sharing | Opening sharing… |
 | shareCancelled | Sharing cancelled. You can still copy the preview manually. |
-| shareUnavailable | Sharing could not be opened. You can copy the draft manually; nothing was sent automatically. |
 | helpTemplates.analysis_not_completed | The automated check was limited and does not establish message safety. |
 | helpTemplates.help_verify_independently | I received a message I need to verify. Could you please help me check its claims through a familiar independent channel? I do not want to use the contact or link from the message. |
 
@@ -225,14 +282,20 @@ Version 3.0 · 11 October 2026 · Goal 09. This inventory was exported from the 
 
 ## Presentation and privacy boundaries
 
-Results use neutral white surfaces with small labeled warning indicators. There is one main finding heading, up to three expandable reasons and three recommended actions. Limits remain visible. No completed low finding or stronger red warning is enabled. Missing or failed inference without an observed warning displays **Analysis not performed**; an explicit rule warning may still appear with its incomplete basis.
+The home screen offers Upload a screenshot, Paste a message and a visibly fictional example. Input privacy and limits appear beside the actual input. Text analysis uses the existing application backend; it is not entirely browser-local. The example is submitted through the real API, rather than receiving a preset verdict. Its link uses an inert `.invalid` hostname and is never visited.
 
-Screenshot recognition is real browser-side English OCR, enabled by default for this authorized goal and hidden with `VITE_ENABLE_OCR=false`. Only reviewed, explicitly confirmed text reaches the application backend after a separate submit action. Neither OCR nor validation shortens text automatically. Pasted text uses the same backend and policy. Application logging/storage statements are verified locally; proxy and public-hosting behavior remains unverified.
+The default result shows one heading, a plain-language reason, one immediate next step, incomplete status and critical service, coverage and unverified-language notices. The lack of a warning never establishes safety. Why this result? reveals the inert message bubble, supported reasons, all recommendations and detailed limitations. What should I do? opens the curated ActionGuide. Technical architecture and annotation metrics remain on the separate same-origin transparency page.
 
-Evidence highlights are escaped original-text slices at proven rule offsets. Model-only or legacy missing-span responses have general explanations without a quote. No message link is activated. ActionGuide collects only a situation choice and checklist state in page memory; these choices never enter the API or shared draft. Its advice is curated, rather than generated.
+Screenshot recognition is browser-side English OCR with bundled same-origin assets. `VITE_ENABLE_OCR=false` hides screenshot controls. Extracted text stays editable, requires explicit confirmation and is submitted only through a separate Check message action. Validation does not shorten pasted or extracted text. No screenshot preview is rendered.
 
-The help boundary accepts only fixed allowlisted keys. Preview precedes separate copy/native-share gestures; no source text, evidence, URL, contact, code, account detail or selected situation is copied. The application writes the fixed draft and never reads the clipboard. Failed copying selects the preview for manual copy. A resolved share dialog does not establish delivery.
+The message bubble renders escaped text. Only valid observed-rule spans can become interactive highlights; classifier-only or missing-span evidence cannot attribute particular words. Unicode code-point offsets preserve exact positions. Overlapping observed spans share an explanation containing each applicable rule. Links and HTML from the source remain inert. Pattern labels are narrow explanations of verified observed requests in nearby context, never an additional classifier, sender verification or confirmation of fraud.
+
+Hide personal details replaces detected characters in the displayed bubble, evidence quotes and selection field. It does not use CSS blur, change the analysis, erase backend processing or promise complete anonymization. Automatic masking can miss names and ambiguous details; native text selection lets the user hide additional text. The source editor is removed from the result view. Edit message restores the original text for deliberate editing and resets masks. Original text and selections remain in page memory during the session, without history or persistent storage.
+
+Listen is user initiated and reads only a fixed summary assembled from approved result, uncertainty, reason and action wording. It never reads the message bubble, source text, detected links, identifiers or secrets. Stop reading, new checks, navigation and page exit cancel speech. English voices are preferred, including local voices when available; browser or system speech may use online services. No offline or audible-output guarantee is made. Missing APIs and native failures leave readable guidance.
+
+Help previews contain only fixed allowlisted neutral templates. Separate copy/native-share gestures are required. Source text, evidence, links, personal identifiers and ActionGuide selections never enter the draft, regardless of masking. The application writes the draft without reading the clipboard. Copy failure offers manual selection, and a resolved share dialog does not prove delivery.
 
 ## Metadata and accessibility
 
-Title: **ClearMessage — Message guidance**. Description: **Understand short messages and choose a safer next step. Experimental model with unverified language performance and limited checks.** HTML uses `lang="en"`. Inputs have persistent English labels and associated errors. Real loading/result changes have polite live announcements and result focus. The native file input is hidden behind a labeled visible picker button. Decorative mark/arrow assets have no spoken meaning. Keyboard operation, contrast, reflow and reduced motion are tested; actual screen-reader speech remains unverified; isolated Chromium native 200% page zoom passes separately from text enlargement.
+Title: **ClearMessage — Message guidance**. Description: **Understand short messages and choose a safer next step. Experimental model with unverified language performance and limited checks.** HTML declares `lang="en"`. Persistent labels, associated errors, polite real-work statuses, result-heading focus, native disclosure controls and visible keyboard focus remain. New speech, privacy and message-highlight controls use approved English labels. Color is accompanied by wording. Reduced motion, contrast, touch targets, reflow and zoom evidence belongs in [GOAL_10_TEST_REPORT](GOAL_10_TEST_REPORT.md); screen-reader speech, physical mobile and actual Safari usability must not be inferred from automated browser checks.

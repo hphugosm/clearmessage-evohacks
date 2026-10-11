@@ -1,0 +1,638 @@
+{
+  "goal": "Goal 10",
+  "executed_at_utc": "2026-10-11T14:49:52.189Z",
+  "stats": {
+    "startTime": "2026-10-11T14:49:52.189Z",
+    "duration": 52400.456,
+    "expected": 86,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "projects": {
+    "firefox": 42,
+    "webkit": 44
+  },
+  "checks": [
+    {
+      "title": "real frontend POST \u2192 API \u2192 honest limited review, without storage or external requests",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 956,
+      "retries": 0
+    },
+    {
+      "title": "empty and overlong inputs never call analyze",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 287,
+      "retries": 0
+    },
+    {
+      "title": "English UI is independent of message language",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 268,
+      "retries": 0
+    },
+    {
+      "title": "network failure clearly says analysis was not performed",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 257,
+      "retries": 0
+    },
+    {
+      "title": "unknown successful payload cannot render reassurance",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 485,
+      "retries": 0
+    },
+    {
+      "title": "mobile keyboard submission and inert HTML text",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 328,
+      "retries": 0
+    },
+    {
+      "title": "real CZ rules without URL, neutral preview and gesture-only share canary",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 581,
+      "retries": 0
+    },
+    {
+      "title": "Style A assets, English metadata and narrow text reflow",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 357,
+      "retries": 0
+    },
+    {
+      "title": "real English signals without links \u2192 bounded reasons/actions \u2192 neutral preview",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 469,
+      "retries": 0
+    },
+    {
+      "title": "unavailable model contract has a separate incomplete service state",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 485,
+      "retries": 0
+    },
+    {
+      "title": "pending edits cancel the old request and ignore late responses even when transport ignores abort",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 459,
+      "retries": 0
+    },
+    {
+      "title": "keyboard-only flow exposes truthful evidence and a private help preview",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 310,
+      "retries": 0
+    },
+    {
+      "title": "clipboard denial and native cancellation/failure preserve a selectable neutral fallback",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 593,
+      "retries": 0
+    },
+    {
+      "title": "missing clipboard and late copy completion cannot restore old feedback",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 516,
+      "retries": 0
+    },
+    {
+      "title": "language edits during a pending request cancel without an error or result",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 268,
+      "retries": 0
+    },
+    {
+      "title": "reduced motion, control geometry and reserved green state keep explicit limitations",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 339,
+      "retries": 0
+    },
+    {
+      "title": "font download failure retains readable fallback and functioning real API",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 289,
+      "retries": 0
+    },
+    {
+      "title": "real frontend POST \u2192 API \u2192 honest limited review, without storage or external requests",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 1665,
+      "retries": 0
+    },
+    {
+      "title": "empty and overlong inputs never call analyze",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 238,
+      "retries": 0
+    },
+    {
+      "title": "English UI is independent of message language",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 237,
+      "retries": 0
+    },
+    {
+      "title": "network failure clearly says analysis was not performed",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 223,
+      "retries": 0
+    },
+    {
+      "title": "unknown successful payload cannot render reassurance",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 197,
+      "retries": 0
+    },
+    {
+      "title": "mobile keyboard submission and inert HTML text",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 249,
+      "retries": 0
+    },
+    {
+      "title": "real CZ rules without URL, neutral preview and gesture-only share canary",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 414,
+      "retries": 0
+    },
+    {
+      "title": "Style A assets, English metadata and narrow text reflow",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 219,
+      "retries": 0
+    },
+    {
+      "title": "real English signals without links \u2192 bounded reasons/actions \u2192 neutral preview",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 268,
+      "retries": 0
+    },
+    {
+      "title": "unavailable model contract has a separate incomplete service state",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 202,
+      "retries": 0
+    },
+    {
+      "title": "pending edits cancel the old request and ignore late responses even when transport ignores abort",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 392,
+      "retries": 0
+    },
+    {
+      "title": "keyboard-only flow exposes truthful evidence and a private help preview",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 262,
+      "retries": 0
+    },
+    {
+      "title": "actual clipboard write contains only the neutral preview",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 284,
+      "retries": 0
+    },
+    {
+      "title": "clipboard denial and native cancellation/failure preserve a selectable neutral fallback",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 373,
+      "retries": 0
+    },
+    {
+      "title": "missing clipboard and late copy completion cannot restore old feedback",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 396,
+      "retries": 0
+    },
+    {
+      "title": "language edits during a pending request cancel without an error or result",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 221,
+      "retries": 0
+    },
+    {
+      "title": "reduced motion, control geometry and reserved green state keep explicit limitations",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 272,
+      "retries": 0
+    },
+    {
+      "title": "font download failure retains readable fallback and functioning real API",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 243,
+      "retries": 0
+    },
+    {
+      "title": "exact observed highlights escape HTML and never activate message URLs",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 471,
+      "retries": 0
+    },
+    {
+      "title": "negated notices and ordinary messages have no fabricated warning reasons",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 646,
+      "retries": 0
+    },
+    {
+      "title": "legacy evidence and model-only findings never invent a highlighted phrase",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 932,
+      "retries": 0
+    },
+    {
+      "title": "ActionGuide selects appropriate curated steps, resets checkboxes and never sends choices",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 769,
+      "retries": 0
+    },
+    {
+      "title": "exact observed highlights escape HTML and never activate message URLs",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 362,
+      "retries": 0
+    },
+    {
+      "title": "negated notices and ordinary messages have no fabricated warning reasons",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 329,
+      "retries": 0
+    },
+    {
+      "title": "legacy evidence and model-only findings never invent a highlighted phrase",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 430,
+      "retries": 0
+    },
+    {
+      "title": "ActionGuide selects appropriate curated steps, resets checkboxes and never sends choices",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 545,
+      "retries": 0
+    },
+    {
+      "title": "uncertain result guidance and copy keep source and selected situation private",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 366,
+      "retries": 0
+    },
+    {
+      "title": "human-first home has two large choices and a keyboard path at 360px with reduced motion",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 218,
+      "retries": 0
+    },
+    {
+      "title": "one-tap fictional example calls the real model and explains an observed delivery payment request",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 251,
+      "retries": 0
+    },
+    {
+      "title": "a failed new example clears its previous result and never simulates a verdict",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 316,
+      "retries": 0
+    },
+    {
+      "title": "simple view keeps insufficient-text and unavailable-model uncertainty visible",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 397,
+      "retries": 0
+    },
+    {
+      "title": "verified Unicode bubble highlights are keyboard selectable and hostile message text remains inert",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 437,
+      "retries": 0
+    },
+    {
+      "title": "automatic and manual masks remove source characters from every DOM field without changing analysis",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 918,
+      "retries": 0
+    },
+    {
+      "title": "masked source never enters neutral preview or native sharing, which still requires gestures",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 478,
+      "retries": 0
+    },
+    {
+      "title": "gesture-only speech reads fixed guidance and stops on control, edits and navigation events",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 715,
+      "retries": 0
+    },
+    {
+      "title": "unsupported speech offers readable guidance without a working Listen control",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 495,
+      "retries": 0
+    },
+    {
+      "title": "ordinary or negated context never forces a scam pattern, even alongside an observed request",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 598,
+      "retries": 0
+    },
+    {
+      "title": "real screenshot review and masked result never render the private screenshot as a preview",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 695,
+      "retries": 0
+    },
+    {
+      "title": "human-first home has two large choices and a keyboard path at 360px with reduced motion",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 168,
+      "retries": 0
+    },
+    {
+      "title": "one-tap fictional example calls the real model and explains an observed delivery payment request",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 202,
+      "retries": 0
+    },
+    {
+      "title": "a failed new example clears its previous result and never simulates a verdict",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 247,
+      "retries": 0
+    },
+    {
+      "title": "simple view keeps insufficient-text and unavailable-model uncertainty visible",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 265,
+      "retries": 0
+    },
+    {
+      "title": "verified Unicode bubble highlights are keyboard selectable and hostile message text remains inert",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 253,
+      "retries": 0
+    },
+    {
+      "title": "automatic and manual masks remove source characters from every DOM field without changing analysis",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 636,
+      "retries": 0
+    },
+    {
+      "title": "masked source never enters neutral preview or native sharing, which still requires gestures",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 396,
+      "retries": 0
+    },
+    {
+      "title": "gesture-only speech reads fixed guidance and stops on control, edits and navigation events",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 554,
+      "retries": 0
+    },
+    {
+      "title": "unsupported speech offers readable guidance without a working Listen control",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 186,
+      "retries": 0
+    },
+    {
+      "title": "ordinary or negated context never forces a scam pattern, even alongside an observed request",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 447,
+      "retries": 0
+    },
+    {
+      "title": "real screenshot review and masked result never render the private screenshot as a preview",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 513,
+      "retries": 0
+    },
+    {
+      "title": "real local PNG OCR \u2192 editable review \u2192 explicit confirmation \u2192 actual approved model \u2192 neutral help",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 735,
+      "retries": 0
+    },
+    {
+      "title": "real JPEG OCR works through drag and drop without automatically checking",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 1010,
+      "retries": 0
+    },
+    {
+      "title": "invalid, oversized and corrupt images preserve text fallback",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 525,
+      "retries": 0
+    },
+    {
+      "title": "real long OCR stays editable and cannot submit an over-limit message",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 2715,
+      "retries": 0
+    },
+    {
+      "title": "real blank screenshot has a readable error and no reassuring result at 200% text",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 557,
+      "retries": 0
+    },
+    {
+      "title": "OCR initialization failure terminates the worker and offers paste input",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 278,
+      "retries": 0
+    },
+    {
+      "title": "changing input method during initialization cancels extraction and ignores late text",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 252,
+      "retries": 0
+    },
+    {
+      "title": "keyboard cancellation announces no analysis, restores focus and permits a fresh real extraction",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 947,
+      "retries": 0
+    },
+    {
+      "title": "real local PNG OCR \u2192 editable review \u2192 explicit confirmation \u2192 actual approved model \u2192 neutral help",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 627,
+      "retries": 0
+    },
+    {
+      "title": "real JPEG OCR works through drag and drop without automatically checking",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 485,
+      "retries": 0
+    },
+    {
+      "title": "invalid, oversized and corrupt images preserve text fallback",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 531,
+      "retries": 0
+    },
+    {
+      "title": "real long OCR stays editable and cannot submit an over-limit message",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 2199,
+      "retries": 0
+    },
+    {
+      "title": "real blank screenshot has a readable error and no reassuring result at 200% text",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 398,
+      "retries": 0
+    },
+    {
+      "title": "OCR initialization failure terminates the worker and offers paste input",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 263,
+      "retries": 0
+    },
+    {
+      "title": "changing input method during initialization cancels extraction and ignores late text",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 325,
+      "retries": 0
+    },
+    {
+      "title": "keyboard cancellation announces no analysis, restores focus and permits a fresh real extraction",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 585,
+      "retries": 0
+    },
+    {
+      "title": "Behind the AI route and reload expose report-verified values and adjacent limitations",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 486,
+      "retries": 0
+    },
+    {
+      "title": "transparency reflows at 360px and 200% text enlargement with keyboard-operable details",
+      "project": "firefox",
+      "status": "passed",
+      "duration_ms": 212,
+      "retries": 0
+    },
+    {
+      "title": "Behind the AI route and reload expose report-verified values and adjacent limitations",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 339,
+      "retries": 0
+    },
+    {
+      "title": "transparency reflows at 360px and 200% text enlargement with keyboard-operable details",
+      "project": "webkit",
+      "status": "passed",
+      "duration_ms": 177,
+      "retries": 0
+    }
+  ],
+  "scope": "Playwright Firefox and WebKit engines on macOS production; not actual Safari or audible-output verification. Firefox excludes two named native clipboard read-back tests; both run in Chromium and WebKit.",
+  "passed": true,
+  "native_speech_capabilities": [
+    {
+      "project": "firefox",
+      "api": true,
+      "initialVoices": 0,
+      "initialEnglishVoices": 0,
+      "initialLocalEnglishVoices": 0
+    },
+    {
+      "project": "webkit",
+      "api": true,
+      "initialVoices": 0,
+      "initialEnglishVoices": 0,
+      "initialLocalEnglishVoices": 0
+    }
+  ]
+}

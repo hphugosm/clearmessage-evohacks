@@ -7,6 +7,8 @@ import {tmpdir} from 'node:os';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import assert from 'node:assert/strict';
+const goal10=process.argv.includes('--goal10');
+const goal=goal10?'Goal 10':'Goal 09';
 const root=fileURLToPath(new URL('../../',import.meta.url));
 const temporary=await mkdtemp(path.join(tmpdir(),'clearmessage-ocr-flag-'));
 let server,browser,output='';
@@ -22,12 +24,13 @@ try{
     if(ready)break;await new Promise(resolve=>setTimeout(resolve,100));
   }assert(ready,'Flag server unavailable');
   browser=await chromium.launch();const page=await browser.newPage();await page.goto(`http://127.0.0.1:${port}`);
+  if(goal10)await page.getByRole('button',{name:'Paste a message',exact:true}).click();
   await page.getByLabel('Message text',{exact:true}).waitFor();assert.equal(await page.getByRole('button',{name:'Upload a screenshot',exact:true}).count(),0);assert.equal(await page.locator('input[type="file"]').count(),0);
-  assert(!await page.locator('.intro').innerText().then(text=>text.includes('upload')));
+  if(!goal10)assert(!await page.locator('.intro').innerText().then(text=>text.includes('upload')));
   await page.getByLabel('Message text',{exact:true}).fill('We can meet for a fictional lunch tomorrow.');await page.getByLabel('Message language',{exact:true}).selectOption('en');
   const waiting=page.waitForResponse(response=>response.url().endsWith('/api/analyze'));await page.getByRole('button',{name:'Check message',exact:true}).click();const response=await waiting;const result=await response.json();
   assert.equal(result.model_version,'clearmessage-sparse-v1:b6e56c3f1d34');assert.equal(result.status,'review');assert.equal(result.analysis_complete,false);
   await page.locator('.result').waitFor();assert.equal(output,'');
-  const report={goal:'Goal 09',executed_at_utc:new Date().toISOString(),passed:true,flag:'VITE_ENABLE_OCR=false',actual_separate_production_build:true,screenshot_controls_absent:true,paste_actual_model_verified:true,analysis_complete:false,server_logs_empty:true};
-  await writeFile(path.join(root,'docs/data/goal09-ocr-disabled.json'),JSON.stringify(report,null,2)+'\n');console.log('OCR-disabled production build and real paste analysis passed.');
+  const report={goal,executed_at_utc:new Date().toISOString(),passed:true,flag:'VITE_ENABLE_OCR=false',actual_separate_production_build:true,screenshot_controls_absent:true,paste_actual_model_verified:true,analysis_complete:false,server_logs_empty:true};
+  await writeFile(path.join(root,`docs/data/${goal10?'goal10':'goal09'}-ocr-disabled.json`),JSON.stringify(report,null,2)+'\n');console.log('OCR-disabled production build and real paste analysis passed.');
 }finally{await browser?.close();if(server){server.kill('SIGTERM');await new Promise(resolve=>server.once('exit',resolve));}await rm(temporary,{recursive:true,force:true});}
