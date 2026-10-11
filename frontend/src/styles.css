@@ -54,3 +54,13 @@ summary { cursor: pointer; min-height: var(--cm-control-height); padding: 12px 0
 .result-label svg, .submit svg { flex-shrink: 0; }
 @media (max-width: 560px) { .page { padding: 0 16px; } header { flex-wrap: wrap; padding: 16px 0; gap: 0; } nav { gap: 20px; } h1 { font-size: 2rem; line-height: 1.2; } form, .result, .surface { padding: 20px; } .field-note { flex-wrap: wrap; gap: 8px; } .hero { margin-top: 32px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+.input-method { display: flex; border: 1px solid var(--cm-border-control); border-radius: 12px; padding: 4px; gap: 4px; margin-bottom: 24px; }
+.input-method button { flex: 1; border: 0; border-radius: 8px; padding: 8px 12px; font-size: 1rem; font-weight: 600; background: var(--cm-surface-card); color: var(--cm-text-secondary); }
+.input-method button[aria-pressed='true'] { background: var(--cm-surface-accent); color: var(--cm-brand-primary); }
+.input-heading { font-size: 1.25rem; }
+.drop-area { border: 1px dashed var(--cm-border-control); border-radius: 12px; text-align: center; padding: 24px 16px; }
+.drop-area p { margin: 0 0 12px; }
+.safe-scan { margin-bottom: 24px; }
+.check-row { display: flex; align-items: flex-start; gap: 12px; min-height: 48px; padding: 12px 0; font-size: 1rem; font-weight: 400; cursor: pointer; }
+.check-row input { width: 24px; height: 24px; margin: 0; flex: 0 0 24px; accent-color: var(--cm-brand-primary); }
+@media (max-width: 400px) { .input-method { flex-direction: column; } }

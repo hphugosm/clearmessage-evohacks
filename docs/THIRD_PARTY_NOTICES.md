@@ -43,3 +43,9 @@ Source and hashes: [MIGRATION_REPORT](MIGRATION_REPORT.md).
 The owner has not selected a project distribution license. No trademark/domain
 clearance or public-release authorization is inferred. Preserve all upstream
 notices and choose the project license deliberately before publication.
+
+## Goal 09 browser OCR
+
+Explicit setup acquired `tesseract.js` 6.0.1 (Apache-2.0), `tesseract.js-core` 6.0.0 (Apache-2.0), and `@tesseract.js-data/eng` 1.0.0 (npm package declares MIT). Exact tarball integrity and transitive versions are pinned in `frontend/package-lock.json`; worker/core/English-data byte hashes, sizes and package paths are in `frontend/ocr-assets.json`. Build verifies those bytes and serves them from `/assets/ocr/`. The English `4.0.0_best_int` traineddata is a reused pretrained OCR resource, not a classifier trained by the ClearMessage team. No other OCR language is claimed.
+
+Primary implementation references: [pinned Tesseract.js worker protocol](https://github.com/naptha/tesseract.js/blob/v6.0.1/src/worker-script/index.js), [local asset guidance](https://github.com/naptha/tesseract.js/blob/v6.0.1/docs/local-installation.md), and [English language package](https://www.npmjs.com/package/@tesseract.js-data/eng). Apache license texts from the installed worker/core packages are copied into the same-origin OCR directory. The package declaration and recorded provenance do not resolve the project's broader distribution-license gate. Do not describe OCR model weights as original ClearMessage work.

@@ -14,7 +14,7 @@ RUNTIME_FILES = [
     "scripts/serve.py", "scripts/healthcheck.py", "ml/sparse_model.py", "ml/data_prep.py",
     "ml/sources/mendeley-v1.json", CONFIG["artifact_path"], CONFIG["selection_report"],
     "DATA_SOURCES.md", "docs/MODEL_CARD.md", "docs/THIRD_PARTY_NOTICES.md", "docs/runtime-licenses.json",
-    "frontend/src/assets/Inter-LICENSE.txt",
+    "frontend/src/assets/Inter-LICENSE.txt", "frontend/ocr-assets.json",
 ]
 
 
@@ -25,10 +25,21 @@ def package(destination: Path, frontend_dir: Path | None = None) -> dict:
         raise ValueError("frontend_build_missing")
     sources = {name: ROOT / name for name in RUNTIME_FILES}
     sources["frontend/dist/index.html"] = dist / "index.html"
-    for asset in sorted((dist / "assets").iterdir()):
-        if not asset.is_file() or asset.is_symlink() or asset.suffix not in {".css", ".js", ".svg", ".woff2"}:
+    for asset in sorted((dist / "assets").rglob("*")):
+        if asset.is_dir() and not asset.is_symlink():
+            continue
+        if not asset.is_file() or asset.is_symlink() or asset.suffix not in {".css", ".js", ".svg", ".woff2", ".wasm", ".gz", ".txt", ".json"}:
             raise ValueError("unexpected_frontend_asset")
-        sources[f"frontend/dist/assets/{asset.name}"] = asset
+        relative = asset.relative_to(dist / "assets").as_posix()
+        if "/" in relative and not relative.startswith("ocr/"):
+            raise ValueError("unexpected_frontend_asset_directory")
+        if relative.startswith("ocr/"):
+            ocr_manifest = json.loads((ROOT / "frontend/ocr-assets.json").read_bytes())
+            if relative != "ocr/manifest.json" and (relative[4:] not in ocr_manifest["files"] or hashlib.sha256(asset.read_bytes()).hexdigest() != ocr_manifest["files"][relative[4:]]["sha256"]):
+                raise ValueError("ocr_asset_hash_mismatch")
+            if relative == "ocr/manifest.json" and json.loads(asset.read_bytes()) != ocr_manifest:
+                raise ValueError("ocr_manifest_mismatch")
+        sources[f"frontend/dist/assets/{relative}"] = asset
     payloads = {name: source.read_bytes() for name, source in sorted(sources.items())}
     manifest = {
         "format_version": 1, "product": "ClearMessage", "model_sha256": CONFIG["sha256"],

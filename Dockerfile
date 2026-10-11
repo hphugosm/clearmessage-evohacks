@@ -21,6 +21,7 @@ COPY build/model-approved-v1.json ./ml/artifacts/goal02-approved-v1/tfidf_c2.0.j
 COPY ml/reports/goal02-approved-v1.json ./ml/reports/goal02-approved-v1.json
 COPY DATA_SOURCES.md ./DATA_SOURCES.md
 COPY docs/MODEL_CARD.md docs/THIRD_PARTY_NOTICES.md docs/runtime-licenses.json ./docs/
+COPY --from=frontend-build /build/frontend/ocr-assets.json ./frontend/ocr-assets.json
 COPY frontend/src/assets/Inter-LICENSE.txt ./frontend/src/assets/Inter-LICENSE.txt
 COPY --from=frontend-build /build/frontend/dist ./frontend/dist/
 RUN python scripts/prepare_model.py && python scripts/package_runtime.py --output /runtime

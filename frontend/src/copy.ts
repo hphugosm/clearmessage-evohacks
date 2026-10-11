@@ -1,6 +1,13 @@
 import type { AnalyzeResponse, ClientErrorKey } from './api';
+import type { OcrErrorKey } from './ocr';
 
 type Copy = {
+  hero: string; home: string; behind: string; inputMethod: string; paste: string; screenshot: string;
+  scan: { title: string; drop: string; formats: string; choose: string; replace: string; privacy: string;
+    initializing: string; reading: string; ready: string; cancel: string; fallback: string;
+    review: string; instruction: string; confirm: string; confirmationError: string;
+    errors: Record<OcrErrorKey, string> };
+
   titleLines: readonly [string, string]; prototypeLabel: string; intro: string; stage: string; illustrationCaption: string; languageHint: string;
   textLabel: string; placeholder: string; privacy: string; limit: string;
   languageLabel: string; languages: Record<'auto' | 'cs' | 'en' | 'other', string>;
@@ -21,6 +28,31 @@ type Copy = {
 };
 
 export const copy: Copy = {
+  hero: 'Not sure about a message?', home: 'Home', behind: 'Behind the AI',
+  inputMethod: 'Input method', paste: 'Paste a message', screenshot: 'Upload a screenshot',
+  scan: {
+    title: 'Read a screenshot', drop: 'Drop one screenshot here, or choose a file.',
+    formats: 'PNG or JPEG · up to 10 MB and 12 megapixels · English text',
+    choose: 'Choose screenshot', replace: 'Choose another screenshot',
+    privacy: 'Your screenshot stays in this browser. Only the text you review and submit reaches our backend. Remove passwords and verification codes before checking.',
+    initializing: 'Preparing local text recognition…', reading: 'Reading text in your browser…',
+    ready: 'Text extracted. Review it below before checking.', cancel: 'Cancel text recognition',
+    fallback: 'Paste a message instead', review: 'Review the extracted text',
+    instruction: 'Make sure the text is correct before checking the message. OCR can miss or misread words.',
+    confirm: 'I reviewed this text and removed sensitive details.',
+    confirmationError: 'Review and confirm the extracted text first. Analysis was not performed.',
+    errors: {
+      empty: 'This file is empty. Choose a PNG or JPEG screenshot, or paste the message.',
+      format: 'Choose one actual PNG or JPEG image. Other formats are not supported.',
+      bytes: 'This image exceeds 10 MB. Choose a smaller screenshot, or paste the message.',
+      pixels: 'This image exceeds the supported dimensions. Use up to 12 megapixels and 16,384 pixels per side.',
+      corrupt: 'We could not read this image. Choose another PNG or JPEG, or paste the message.',
+      initialization: 'Local text recognition could not start. Try another image, or paste the message.',
+      processing: 'Text recognition did not complete. Try a clearer screenshot, or paste the message.',
+      unreadable: 'No readable text was found. Try a clearer screenshot, or paste the message.',
+      cancelled: 'Text recognition was cancelled. No analysis was performed.',
+    },
+  },
   titleLines: ['Understand messages.', 'Make safer decisions.'],
   prototypeLabel: 'EVOHACKS 2026 prototype',
   illustrationCaption: 'Make sense of it, together.',

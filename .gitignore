@@ -17,3 +17,6 @@ build/
 
 # Owner-supplied reference package; kept intact, not active application source.
 /clearmessage-evohacks/
+
+# Build-time OCR resources are restored from pinned npm packages and verified manifest.
+frontend/public/assets/ocr/

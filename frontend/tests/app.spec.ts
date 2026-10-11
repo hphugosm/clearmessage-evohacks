@@ -236,6 +236,10 @@ test('keyboard-only flow and actual clipboard write contain only the preview', a
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: 'Home', exact: true })).toBeFocused();
   await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Paste a message', exact: true })).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Upload a screenshot', exact: true })).toBeFocused();
+  await page.keyboard.press('Tab');
   await expect(page.getByLabel('Message text', { exact: true })).toBeFocused();
   expect(await page.getByLabel('Message text', { exact: true }).evaluate(element => getComputedStyle(element).outlineWidth)).toBe('3px');
   await page.keyboard.insertText(`Please send me your password. ${canary}`);
