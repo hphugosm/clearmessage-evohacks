@@ -59,9 +59,35 @@ completed before that denial. A new manual visual inspection is not claimed.
 
 ## Publication state
 
-The new public repository was created in the owner's authenticated GitHub session.
-Source and Pages publication are being completed; final remote commit, workflow
-conclusion and anonymous HTTP checks will be recorded after their actual success.
+The new public source repository is published at
+https://github.com/hphugosm/clearmessage-evohacks (implementation commit `75a4704`).
+[Demo deployment](https://github.com/hphugosm/clearmessage-evohacks/actions/runs/38152891256)
+completed successfully, including fresh Linux Node 24 dependency installation,
+134 frontend tests, build and Pages deployment. Anonymous HTTPS checks pass for
+https://hphugosm.github.io/clearmessage-evohacks/, its JS/CSS/brand assets and
+How it works. The delivered bundle contains the explicit recorded-mode labels.
+
+The team project page is published at https://tymtrampolin.cz/clearmessage/.
+Its response exactly matches the reviewed source; `/projekty/` contains the new
+link and the existing homepage remains reachable.
+[Team deployment](https://github.com/hphugosm/tym-trampolin-web/actions/runs/38152901591)
+completed successfully for `713f0d8`. The existing site also had legacy branch
+publishing enabled, causing a redundant failed Pages build. Its publishing source
+was aligned with its existing Astro workflow; HTTPS enforcement was enabled using
+its already approved certificate. The confirmed CNAME and audience are preserved.
+HTTP checks, asset hashes and route responses are in `docs/data/continuation-public-checks.json`.
+
+The original Goal 10 worktree branch was fast-forwarded to the reviewed continuation
+and its live build prepared. The original app at http://127.0.0.1:8870/ remains
+model-ready. Main in the Desktop checkout was not merged or changed.
+
+The new app's complete npm audit reports **zero vulnerabilities**. GitHub reported
+73 existing dependency alerts on the separate team website repository: 2 critical,
+39 high, 24 moderate, 8 low. Those refer to its existing dependency trees; no
+runtime dependency was added by the two-file page change. They remain a separate
+maintenance item at https://github.com/hphugosm/tym-trampolin-web/security/dependabot.
+No blanket dependency updates were applied to that unrelated site.
+
 No model artifact or raw dataset is publicly redistributed. The public demo is
 recorded mode, not a public detector. A separate backend remains unconfigured.
 

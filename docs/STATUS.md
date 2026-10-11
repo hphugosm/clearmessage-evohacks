@@ -5,8 +5,9 @@ highlights, recorded GitHub Pages demonstration and English team project page
 are implemented. **217 Python / 134 frontend / 44 Chromium / 42 Firefox / 44 WebKit /
 3 Pages-specific checks pass.** Frozen model/backend/data/policy/metrics unchanged.
 See [continuation report](CONTINUATION_REPORT.md), [publishing](PUBLISHING.md) and
-[submission draft](submission/DEVPOST.md). The new public repository exists;
-source/Pages deployment verification is in progress and will be recorded there.
+[submission draft](submission/DEVPOST.md). Public source, recorded Pages demo and the team project page are published;
+workflow completion and anonymous HTTPS checks pass. The original feature
+worktree is updated and its model-ready local app remains available.
 Video recording/upload and final Devpost approval remain outstanding. Public
 Pages accepts no personal messages and performs no live inference. No public
 backend is configured and no first-party open-source license is selected.

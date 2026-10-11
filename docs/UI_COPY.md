@@ -105,7 +105,7 @@ Version 5.0 · 11 October 2026. Generated from the shared English dictionary; 24
 | behindAI.sourceClass | Source label |
 | behindAI.limitsTitle | What a check cannot tell you |
 | behindAI.limits | ClearMessage cannot verify a sender, inspect a website or device, or guarantee that a message is fraudulent. A lack of warnings does not establish safety. Narrow rules can miss subtle requests and misread context. Current language performance and the completed low-finding policy are unvalidated, so every assessment remains incomplete. |
-| behindAI.releaseLimit | This is a research prototype verified locally. It is not a validated public fraud detector and does not automatically protect your inbox. Docker execution, public hosting, HTTPS and hosting-log privacy have not been verified. |
+| behindAI.releaseLimit | This is a research prototype verified locally. It is not a validated public fraud detector and does not automatically protect your inbox. Docker execution and public inference hosting, HTTPS and log privacy have not been verified. |
 | behindAI.privacyTitle | Where your information goes |
 | behindAI.privacy.0 | Screenshot recognition uses bundled English Tesseract resources in your browser. The image is not uploaded. You can edit the extracted text and must confirm it before choosing Check message. |
 | behindAI.privacy.1 | Pasted or confirmed text is sent to our FastAPI backend and processed in memory. The application has no message history or database, records no message bodies in its logs, and does not use your messages for training. Public proxy and hosting logs would need separate verification before deployment. |

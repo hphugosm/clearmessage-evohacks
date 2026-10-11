@@ -78,7 +78,9 @@ inference check until model distribution and setup are actually verified.
 `site/index.html` is the complete English project page. Copy it to
 `tym-trampolin-astro/public/clearmessage/index.html` in the existing team web repo.
 Astro copies this static file into `/clearmessage/` without importing the team's
-analytics. Keep existing pages, CNAME and hosting settings. Add a discoverable
+analytics. Keep existing pages and CNAME. The existing dual legacy/workflow source was
+aligned with Astro workflow publishing, and HTTPS enforced with the approved
+certificate. Add a discoverable
 link in the projects section. Publish only those intended changes, preserving
 all unrelated site content.
 

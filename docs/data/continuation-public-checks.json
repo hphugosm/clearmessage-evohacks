@@ -1,0 +1,41 @@
+[
+  {
+    "path": "/clearmessage-evohacks/assets/mark-zBSi9m9b.svg",
+    "status": 200,
+    "bytes": 387,
+    "sha256": "f7f0c5b1824abdf82a7d245c95995b13f4cd255d4b2b9aad11c7ce5955138269"
+  },
+  {
+    "path": "/clearmessage-evohacks/assets/index-Cos8Da-T.js",
+    "status": 200,
+    "bytes": 277124,
+    "sha256": "7af5a7b55e96fd4edaead1b356ba10d1d818a1303b558ae0c9271f26d6c51ab6",
+    "recorded_mode_labels_present": true
+  },
+  {
+    "path": "/clearmessage-evohacks/assets/index-DuIRGeyZ.css",
+    "status": 200,
+    "bytes": 14130,
+    "sha256": "9a837c3c7c090e87e95e810b7e82bb000c1fa9db851e402e1c07540fa4bb8654"
+  },
+  {
+    "url": "https://github.com/hphugosm/clearmessage-evohacks",
+    "status": 200,
+    "bytes": 343655
+  },
+  {
+    "url": "https://hphugosm.github.io/clearmessage-evohacks/?view=how-it-works",
+    "status": 200,
+    "bytes": 786
+  },
+  {
+    "url": "https://tymtrampolin.cz/projekty/",
+    "status": 200,
+    "bytes": 78261
+  },
+  {
+    "url": "https://tymtrampolin.cz/",
+    "status": 200,
+    "bytes": 54529
+  }
+]
