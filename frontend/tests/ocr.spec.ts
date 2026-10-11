@@ -101,7 +101,12 @@ test('real long OCR stays editable and cannot submit an over-limit message',asyn
   const field=page.getByLabel('Review the extracted text',{exact:true});await expect(field).toBeVisible({timeout:60_000});await expect(field).toBeFocused();
   const output=await field.inputValue();expect([...output].length).toBeGreaterThan(2000);expect(posts).toBe(0);
   // WebKit on macOS uses Option+Tab to include controls in native navigation.
-  await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');await expect(page.getByLabel('I reviewed this text and removed sensitive details.')).toBeFocused();await page.keyboard.press('Space');
+  const confirmation=page.getByLabel('I reviewed this text and removed sensitive details.');
+  for(let step=0;step<12;step++){
+    await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
+    if(await confirmation.evaluate(element=>element===document.activeElement)) break;
+  }
+  await expect(confirmation).toBeFocused();await page.keyboard.press('Space');
   await page.getByRole('button',{name:'Check message',exact:true}).click();await expect(page.getByRole('alert')).toContainText('The text exceeds 2,000 characters');expect(posts).toBe(0);await expect(field).toHaveValue(output);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await field.fill('Please send me your login code. Fictional demonstration.');await expect(page.getByLabel('I reviewed this text and removed sensitive details.')).not.toBeChecked();

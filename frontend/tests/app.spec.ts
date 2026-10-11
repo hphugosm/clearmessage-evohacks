@@ -1,4 +1,18 @@
 import { test, expect } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
+
+async function enterPaste(page: Page) {
+  await page.getByRole('button', { name: 'Paste a message', exact: true }).click();
+}
+
+async function tabTo(page: Page, target: Locator, browserName: string) {
+  for (let step = 0; step < 40; step++) {
+    await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
+    if (await target.evaluate(element => element === document.activeElement)) return;
+  }
+  await expect(target).toBeFocused();
+}
+
 
 test('real frontend POST → API → honest limited review, without storage or external requests', async ({ page, context, baseURL }) => {
   const canary = 'FIKTIVNI_E2E_731_English_sample https://notice.invalid/example';
@@ -7,6 +21,7 @@ test('real frontend POST → API → honest limited review, without storage or e
   page.on('request', request => { requests.push(request.url()); });
   page.on('pageerror', error => { errors.push(error.message); });
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message text', { exact: true }).fill(canary);
   await page.getByLabel('Message language', { exact: true }).selectOption('en');
   const responsePromise = page.waitForResponse(response => response.url().endsWith('/api/analyze'));
@@ -17,11 +32,11 @@ test('real frontend POST → API → honest limited review, without storage or e
   expect(response.status()).toBe(200);
   expect(response.headers()['cache-control']).toBe('no-store');
   expect(await response.json()).toMatchObject({ status: 'review', analysis_complete: false, headline_key: 'review_required', evidence: [], model_version: 'clearmessage-sparse-v1:b6e56c3f1d34' });
-  await expect(page.getByRole('heading', { name: 'This message needs further verification.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: "We couldn't check this fully." })).toBeVisible();
   await expect(page.getByText('Limited check · analysis is incomplete', { exact: true })).toBeVisible();
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
-  await expect(page.getByText("We couldn't assess this reliably", { exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'This message needs further verification.' })).toBeFocused();
+  await expect(page.locator('.result-label')).toContainText("We couldn't assess this reliably");
+  await expect(page.getByRole('heading', { name: "We couldn't check this fully." })).toBeFocused();
   expect(await page.locator('.result').textContent()).not.toContain(canary);
   expect(requests.every(url => new URL(url).origin === new URL(baseURL!).origin)).toBe(true);
   expect(requests.some(url => url.includes(canary))).toBe(false);
@@ -30,6 +45,9 @@ test('real frontend POST → API → honest limited review, without storage or e
   expect(errors).toEqual([]);
   // Refresh does not restore message history.
   await page.reload();
+  await expect(page.getByRole('heading', { name: 'Not sure about a message?' })).toBeVisible();
+  await expect(page.getByLabel('Message text', { exact: true })).toHaveCount(0);
+  await enterPaste(page);
   await expect(page.getByLabel('Message text', { exact: true })).toHaveValue('');
 });
 
@@ -37,6 +55,7 @@ test('empty and overlong inputs never call analyze', async ({ page }) => {
   let posts = 0;
   page.on('request', request => { if (request.url().endsWith('/api/analyze')) posts++; });
   await page.goto('/');
+  await enterPaste(page);
   await page.getByRole('button', { name: 'Check message' }).click();
   await expect(page.getByRole('alert')).toContainText('Please paste a message first');
   await expect(page.getByLabel('Message text', { exact: true })).toBeFocused();
@@ -48,6 +67,7 @@ test('empty and overlong inputs never call analyze', async ({ page }) => {
 
 test('English UI is independent of message language', async ({ page }) => {
   await page.goto('/');
+  await enterPaste(page);
   await expect(page.getByRole('button', { name: 'English', exact: true })).toHaveCount(0);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.getByLabel('Message language', { exact: true }).selectOption('cs');
@@ -55,7 +75,7 @@ test('English UI is independent of message language', async ({ page }) => {
   const responsePromise = page.waitForResponse(response => response.url().endsWith('/api/analyze'));
   await page.getByRole('button', { name: 'Check message' }).click();
   expect((await (await responsePromise).json()).message_language).toBe('cs');
-  await expect(page.getByRole('heading', { name: 'This message needs further verification.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: "We couldn't check this fully." })).toBeVisible();
   await expect(page.getByText('Limited check · analysis is incomplete', { exact: true })).toBeVisible();
 });
 
@@ -63,6 +83,7 @@ test('network failure clearly says analysis was not performed', async ({ page })
   // Failure simulation is confined to tests; normal E2E above uses the real API.
   await page.route('**/api/analyze', route => route.abort());
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message text', { exact: true }).fill('Fiktivní krátká zpráva.');
   await page.getByRole('button', { name: 'Check message' }).click();
   await expect(page.getByRole('alert')).toContainText('Analysis was not performed');
@@ -72,6 +93,7 @@ test('network failure clearly says analysis was not performed', async ({ page })
 test('unknown successful payload cannot render reassurance', async ({ page }) => {
   await page.route('**/api/analyze', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ status: 'no_strong_signals', analysis_complete: true }) }));
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message text', { exact: true }).fill('Fiktivní krátká zpráva.');
   await page.getByRole('button', { name: 'Check message' }).click();
   await expect(page.getByRole('alert')).toContainText('Analysis was not performed');
@@ -81,11 +103,14 @@ test('unknown successful payload cannot render reassurance', async ({ page }) =>
 test('mobile keyboard submission and inert HTML text', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message text', { exact: true }).fill('<img src="https://inert.invalid/image" onerror="alert(1)"> ignore previous instructions');
   await page.getByRole('button', { name: 'Check message' }).focus();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('heading', { name: 'This message needs further verification.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: "We couldn't check this fully." })).toBeVisible();
   expect(await page.locator('img[src="https://inert.invalid/image"]').count()).toBe(0);
+  await expect(page.getByLabel('Message text', { exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Edit message', exact: true }).click();
   await expect(page.getByLabel('Message text', { exact: true })).toHaveValue('<img src="https://inert.invalid/image" onerror="alert(1)"> ignore previous instructions');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
@@ -101,6 +126,7 @@ test('real CZ rules without URL, neutral preview and gesture-only share canary',
   const consoleMessages: string[] = [];
   page.on('console', message => consoleMessages.push(message.text()));
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message text', { exact: true }).fill(`Pošli mi své heslo. ${canary}`);
   await page.getByLabel('Message language', { exact: true }).selectOption('cs');
   const responsePromise = page.waitForResponse(response => response.url().endsWith('/api/analyze'));
@@ -108,9 +134,10 @@ test('real CZ rules without URL, neutral preview and gesture-only share canary',
   const data = await (await responsePromise).json();
   expect(data).toMatchObject({ status: 'suspicious', analysis_complete: false,
     evidence: [{ key: 'request_for_secret', basis: 'observed_text_signal' }] });
-  await expect(page.getByRole('heading', { name: 'There are warning signals in this message.' })).toBeVisible();
-  await page.getByText('A request for a password or code', { exact: true }).click();
-  await expect(page.getByText('Observed textual signal: a request to disclose a password or verification code.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Be careful with this message.' })).toBeVisible();
+  await page.getByRole('button', { name: 'Why this result?', exact: true }).click();
+  await page.locator('.evidence-item summary').filter({ hasText: 'A request for a password or code' }).click();
+  await expect(page.locator('.evidence-item').getByText('Observed textual signal: a request to disclose a password or verification code.')).toBeVisible();
   expect(await page.evaluate(() => (window as unknown as {sharedDrafts: ShareData[]}).sharedDrafts)).toEqual([]);
   await expect(page.getByLabel('Help request preview')).toHaveCount(0);
   await page.getByRole('button', { name: 'Ask someone for help' }).click();
@@ -122,6 +149,7 @@ test('real CZ rules without URL, neutral preview and gesture-only share canary',
   expect(consoleMessages.join(' ')).not.toContain(canary);
   await page.getByText('What have you already done?', { exact: true }).click();
   await expect(page.getByText(/Do not enter any of those details here/)).toBeVisible();
+  await page.getByRole('button', { name: 'Edit message', exact: true }).click();
   await page.getByLabel('Message text', { exact: true }).fill('Jiná fiktivní zpráva.');
   await expect(page.getByLabel('Help request preview')).toHaveCount(0);
 });
@@ -142,8 +170,10 @@ test('Style A assets, English metadata and narrow text reflow', async ({ page })
   for (const width of [900, 360, 320]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-    await expect(page.getByRole('button', { name: 'Check message', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Paste a message', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Upload a screenshot', exact: true })).toBeVisible();
   }
+  await enterPaste(page);
   await page.setViewportSize({ width: 640, height: 900 });
   await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
@@ -153,6 +183,7 @@ test('Style A assets, English metadata and narrow text reflow', async ({ page })
 test('real English signals without links → bounded reasons/actions → neutral preview', async ({ page }) => {
   const canary = 'FICTIONAL_PRIVATE_CANARY_Alex_ACCOUNT_654321';
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message language', { exact: true }).selectOption('en');
   await page.getByLabel('Message text', { exact: true }).fill(`Please send me your login code. Pay the invoice immediately. Keep this secret. ${canary}`);
   const responsePromise = page.waitForResponse(response => response.url().endsWith('/api/analyze'));
@@ -163,10 +194,11 @@ test('real English signals without links → bounded reasons/actions → neutral
   expect(data.evidence.map((item: {key: string}) => item.key)).toEqual(['request_for_secret', 'payment_pressure', 'secrecy_request']);
   expect(data.action_keys).toHaveLength(3);
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'suspicious');
-  await expect(page.getByText('Suspicious message', { exact: true })).toBeVisible();
+  await expect(page.locator('.result-label')).toContainText('Suspicious message');
   expect(await page.locator('.result').textContent()).not.toContain(canary);
   await page.getByRole('button', { name: 'Ask someone for help' }).click();
   expect(await page.getByLabel('Help request preview').inputValue()).not.toMatch(/CANARY|Alex|ACCOUNT|654321|login|invoice|https?:/);
+  await page.getByRole('button', { name: 'Edit message', exact: true }).click();
   await page.getByLabel('Message language', { exact: true }).selectOption('other');
   await expect(page.locator('.result')).toHaveCount(0);
 });
@@ -181,12 +213,13 @@ test('unavailable model contract has a separate incomplete service state', async
     share_summary_keys: ['analysis_not_completed', 'help_verify_independently'],
   })}));
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message text', { exact: true }).fill('Fictional ordinary message for failure testing.');
   await page.getByRole('button', { name: 'Check message' }).click();
-  await expect(page.getByText('Analysis not performed', { exact: true })).toBeVisible();
+  await expect(page.locator('.result-label')).toContainText('Analysis not performed');
   await expect(page.getByText('Limited check · analysis is incomplete', { exact: true })).toBeVisible();
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
-  await expect(page.getByText('No strong warning signs found', { exact: true })).toHaveCount(0);
+  await expect(page.locator('.result-label')).not.toContainText('No strong warning signs found');
 });
 
 test('pending edits cancel the old request and ignore late responses even when transport ignores abort', async ({ page }) => {
@@ -205,6 +238,7 @@ test('pending edits cancel the old request and ignore late responses even when t
     };
   });
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message language', { exact: true }).selectOption('en');
   await page.getByLabel('Message text', { exact: true }).fill('Please send me your login code.');
   await page.getByRole('button', { name: 'Check message' }).click();
@@ -221,6 +255,7 @@ test('pending edits cancel the old request and ignore late responses even when t
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
   await expect(page.getByText('Observed textual signal:', { exact: false })).toHaveCount(0);
   await page.getByRole('button', { name: 'Ask someone for help' }).click();
+  await page.getByRole('button', { name: 'Edit message', exact: true }).click();
   await page.getByLabel('Message language', { exact: true }).selectOption('other');
   await expect(page.locator('.result')).toHaveCount(0);
   await expect(page.getByLabel('Help request preview')).toHaveCount(0);
@@ -235,28 +270,32 @@ test('keyboard-only flow exposes truthful evidence and a private help preview', 
   await next();
   await expect(page.getByRole('link', { name: 'ClearMessage', exact: true })).toBeFocused();
   await next();
-  await expect(page.getByRole('link', { name: 'Home', exact: true })).toBeFocused();
-  await next();
-  await expect(page.getByRole('link', { name: 'Behind the AI', exact: true })).toBeFocused();
-  await next();
-  await expect(page.getByRole('button', { name: 'Paste a message', exact: true })).toBeFocused();
+  await expect(page.getByRole('link', { name: 'How it works', exact: true })).toBeFocused();
   await next();
   await expect(page.getByRole('button', { name: 'Upload a screenshot', exact: true })).toBeFocused();
   await next();
+  await expect(page.getByRole('button', { name: 'Paste a message', exact: true })).toBeFocused();
+  await page.keyboard.press('Enter');
   await expect(page.getByLabel('Message text', { exact: true })).toBeFocused();
   expect(await page.getByLabel('Message text', { exact: true }).evaluate(element => getComputedStyle(element).outlineWidth)).toBe('3px');
   await page.keyboard.insertText(`Please send me your password. ${canary}`);
-  await next();
+  await tabTo(page, page.getByLabel('Message language', { exact: true }), browserName);
   await expect(page.getByLabel('Message language', { exact: true })).toBeFocused();
   await next();
   await expect(page.getByRole('button', { name: 'Check message' })).toBeFocused();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('heading', { name: 'There are warning signals in this message.' })).toBeFocused();
+  await expect(page.getByRole('heading', { name: 'Be careful with this message.' })).toBeFocused();
   await next();
-  await expect(page.getByText('A request for a password or code', { exact: true })).toBeFocused();
+  await expect(page.getByRole('button', { name: 'What should I do?', exact: true })).toBeFocused();
+  await next();
+  await expect(page.getByRole('button', { name: 'Why this result?', exact: true })).toBeFocused();
+  await page.keyboard.press('Enter');
+  const reason = page.locator('.evidence-item summary').filter({ hasText: 'A request for a password or code' });
+  await tabTo(page, reason, browserName);
+  await expect(reason).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.locator('.evidence-quote mark')).toHaveText('send me your password');
-  await next();
+  await tabTo(page, page.getByRole('button', { name: 'Ask someone for help', exact: true }), browserName);
   await expect(page.getByRole('button', { name: 'Ask someone for help' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.getByLabel('Help request preview')).toBeFocused();
@@ -265,6 +304,7 @@ test('keyboard-only flow exposes truthful evidence and a private help preview', 
   await expect(page.getByRole('button', { name: 'Copy help request' })).toBeFocused();
   expect(draft).not.toMatch(/PRIVATE|Alex|123456|notice\.invalid|password/);
   expect(logs.join(' ')).not.toContain(canary);
+  await page.getByRole('button', { name: 'Edit message', exact: true }).click();
   await page.getByLabel('Message text', { exact: true }).fill('A changed fictional message.');
   await expect(page.getByLabel('Help request preview')).toHaveCount(0);
 });
@@ -272,6 +312,7 @@ test('keyboard-only flow exposes truthful evidence and a private help preview', 
 test('actual clipboard write contains only the neutral preview', async ({ page, context, browserName }) => {
   await context.grantPermissions(browserName === 'webkit' ? ['clipboard-read'] : ['clipboard-read', 'clipboard-write']);
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message text', { exact: true }).fill('Please send me your password. PRIVATE_CLIPBOARD_CANARY_123456');
   await page.getByRole('button', { name: 'Check message' }).click();
   await page.getByRole('button', { name: 'Ask someone for help' }).click();
@@ -284,6 +325,7 @@ test('actual clipboard write contains only the neutral preview', async ({ page, 
   await expect(page.getByRole('status').filter({ hasText: 'Copied' })).toHaveText('Copied');
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(draft);
   expect(draft).not.toMatch(/PRIVATE|123456|password/);
+  await page.getByRole('button', { name: 'Edit message', exact: true }).click();
   await page.getByLabel('Message text', { exact: true }).fill('A changed fictional message.');
   await expect(page.getByText('Copied', { exact: true })).toHaveCount(0);
 });
@@ -298,6 +340,7 @@ test('clipboard denial and native cancellation/failure preserve a selectable neu
     } });
   });
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message text', { exact: true }).fill('A fictional ordinary message for testing.');
   await page.getByRole('button', { name: 'Check message' }).click();
   await page.getByRole('button', { name: 'Ask someone for help' }).click();
@@ -322,6 +365,7 @@ test('missing clipboard and late copy completion cannot restore old feedback', a
     Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
   });
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message text', { exact: true }).fill('A fictional ordinary message for testing.');
   await page.getByRole('button', { name: 'Check message' }).click();
   await page.getByRole('button', { name: 'Ask someone for help' }).click();
@@ -345,6 +389,7 @@ test('language edits during a pending request cancel without an error or result'
   const blocked = new Promise<void>(resolve => { release = resolve; });
   await page.route('**/api/analyze', async route => { await blocked; await route.abort().catch(() => {}); });
   await page.goto('/');
+  await enterPaste(page);
   await page.getByLabel('Message text', { exact: true }).fill('A fictional ordinary message.');
   await page.getByRole('button', { name: 'Check message' }).click();
   await expect(page.getByRole('button', { name: 'Checking…' })).toBeDisabled();
@@ -358,6 +403,7 @@ test('language edits during a pending request cancel without an error or result'
 test('reduced motion, control geometry and reserved green state keep explicit limitations', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
+  await enterPaste(page);
   expect(await page.getByRole('button', { name: 'Check message' }).evaluate(element => getComputedStyle(element).transitionDuration)).toBe('0s');
   expect(await page.locator('body').evaluate(element => getComputedStyle(element).fontSize)).toBe('20px');
   expect(await page.getByRole('button', { name: 'Check message' }).evaluate(element => getComputedStyle(element).fontSize)).toBe('18px');
@@ -375,7 +421,7 @@ test('reduced motion, control geometry and reserved green state keep explicit li
   await page.getByLabel('Message text', { exact: true }).fill('A fictional future-contract fixture only.');
   await page.getByRole('button', { name: 'Check message' }).click();
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'no_strong_signals');
-  await expect(page.getByText('No strong warning signs found', { exact: true })).toBeVisible();
+  await expect(page.locator('.result-label')).toContainText('No strong warning signs found');
   await expect(page.getByText('This output does not establish message safety.', { exact: true })).toBeVisible();
   expect(await page.locator('.result-label').evaluate(element => getComputedStyle(element).color)).toBe('rgb(22, 101, 52)');
   await page.getByRole('button', { name: 'Ask someone for help' }).click();
@@ -385,6 +431,7 @@ test('reduced motion, control geometry and reserved green state keep explicit li
 test('font download failure retains readable fallback and functioning real API', async ({ page }) => {
   await page.route('**/*.woff2', route => route.abort());
   await page.goto('/');
+  await enterPaste(page);
   await page.evaluate(() => document.fonts.ready);
   expect(await page.locator('body').evaluate(element => getComputedStyle(element).fontFamily)).toContain('system-ui');
   await page.getByLabel('Message text', { exact: true }).fill('A fictional ordinary message in the fallback font.');

@@ -1,3 +1,11 @@
+# Goal 10 — human-first experience
+
+11 October 2026. Goal 10 is implemented in a separate `feature/clearmessage-human-first` worktree from verified Goal 09 `c91cf63`. Home now offers screenshot, paste and a real fictional example; results use simple/detailed disclosure, fixed-guidance speech, exact interactive rule spans, automatic/manual display masking and conservative possible-pattern context. The frozen classifier/backend/data/policy and approved historical audits are untouched. See [progress](GOAL_10_PROGRESS.md); final verification and handoff are in progress at this checkpoint.
+
+New baseline **217 Python / 68 Vitest / 66 Chromium PASS**. Current **131 Vitest / 33 retained production / 11 new production feature scenarios PASS**, build/migration/diff PASS. Every actual assessment remains incomplete. No merge, deployment or publishing occurred. Local-prototype integration remains subject to final verification; public detector, independent English/Czech evaluation, Docker/hosting/privacy/license and physical accessibility gates remain unchanged.
+
+The Goal 09 and approved-release sections below are preserved historical evidence.
+
 # Goal 09 — isolated product experience
 
 11 October 2026. Goal 09 is implemented and verified on `feature/clearmessage-product-experience`, based on `a9a924d`. See [handoff](GOAL_09_HANDOFF.md), [implementation](GOAL_09_IMPLEMENTATION.md), [test report](GOAL_09_TEST_REPORT.md) and [progress](GOAL_09_PROGRESS.md). A–E deliver minimalist Style A, real browser English PNG/JPEG OCR with full editable confirmation, optional truthful rule spans, five curated ActionGuide checklists, fixed private help and report-verified `/how-it-works`.

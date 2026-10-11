@@ -5,8 +5,8 @@
   --cm-surface-card: #FFFFFF;
   --cm-surface-accent: #EEF3FF;
   --cm-text-primary: #111827;
-  --cm-text-secondary: #596579;
-  --cm-text-secondary-page: #596579;
+  --cm-text-secondary: #475467;
+  --cm-text-secondary-page: #475467;
   --cm-border-subtle: #E5E7EB;
   --cm-border-control: #667085;
   --cm-state-positive-indicator: #166534;
@@ -18,12 +18,13 @@
   --cm-state-danger-indicator: #B42318;
   --cm-state-danger-surface: #FEF2F2;
   --cm-state-danger-text: #B42318;
-  --cm-radius-control: 12px;
+  --cm-radius-control: 16px;
   --cm-radius-card: 20px;
   --cm-radius-panel: 20px;
   --cm-shadow: 0 2px 8px rgba(17,24,39,0.025);
   --cm-control-height: 48px;
-  --cm-primary-height: 52px;
-  --cm-page-width: 880px;
+  --cm-primary-height: 60px;
+  --cm-page-width: 760px;
+  --cm-warm-accent: #F4B46A;
   --cm-transition: 150ms;
 }

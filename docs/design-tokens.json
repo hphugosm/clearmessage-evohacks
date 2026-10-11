@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "3.0.0",
   "product": "ClearMessage",
   "style": "Style A \u2014 Modern & Friendly with Apple-inspired minimalism",
   "colors": {
@@ -14,8 +14,8 @@
     },
     "text": {
       "primary": "#111827",
-      "secondary": "#596579",
-      "secondary-page": "#596579"
+      "secondary": "#475467",
+      "secondary-page": "#475467"
     },
     "border": {
       "subtle": "#E5E7EB",
@@ -37,7 +37,8 @@
         "surface": "#FEF2F2",
         "text": "#B42318"
       }
-    }
+    },
+    "warmAccent": "#F4B46A"
   },
   "typography": {
     "family": "-apple-system, BlinkMacSystemFont, Segoe UI, Inter, system-ui, sans-serif",
@@ -85,19 +86,19 @@
     80
   ],
   "radiusPx": {
-    "control": 12,
+    "control": 16,
     "card": 20,
     "panel": 20
   },
   "layout": {
-    "maxWidthPx": 880,
-    "interactionWidthPx": 736,
+    "maxWidthPx": 760,
+    "interactionWidthPx": 680,
     "columns": 1,
     "mobileGutterPx": 16
   },
   "controls": {
     "minHeightPx": 48,
-    "primaryHeightPx": 52,
+    "primaryHeightPx": 60,
     "focusWidthPx": 3,
     "focusOffsetPx": 3
   },

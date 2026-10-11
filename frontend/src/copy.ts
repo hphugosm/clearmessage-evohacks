@@ -4,6 +4,16 @@ import type { OcrErrorKey } from './ocr';
 export type Situation = 'none' | 'opened' | 'password' | 'payment' | 'code';
 
 type Copy = {
+  experience: {
+    how: string; welcome: string; example: string; exampleLabel: string; exampleText: string; back: string; edit: string;
+    why: string; next: string; summary: string; safety: string; noFinding: string;
+    simpleReasons: Record<AnalyzeResponse['evidence'][number]['key'], string>;
+    critical: Record<AnalyzeResponse['limitations'][number], string>;
+    bubble: {title: string; hint: string};
+    speech: {listen: string; stop: string; unsupported: string; unavailable: string; notice: string};
+    privacy: {hide: string; show: string; title: string; notice: string; instruction: string; select: string; selectionLabel: string; mask: string; noSelection: string; applied: string; distinction: string};
+    patterns: {label: string; caveat: string; delivery_payment: {title: string; description: string}; account_secret: {title: string; description: string}; bank_payment: {title: string; description: string}};
+  };
   behindAI: { title: string; intro: string; pipelineTitle: string; pipeline: string[]; pipelineNotice: string;
     modelTitle: string; modelDescription: string; classes: Record<'ham'|'spam'|'smishing',string>; training: string; comparison: string;
     datasetTitle: string; datasetMessages: string; datasetLimit: string; datasetCredit: string; datasetLicense: string;
@@ -42,6 +52,22 @@ type Copy = {
 };
 
 export const copy: Copy = {
+  experience: {
+    how: 'How it works', welcome: "Let's check it together.", example: 'Try an example', exampleLabel: 'Example message',
+    exampleText: 'Your delivery is waiting. Pay the invoice immediately to release your parcel. Visit https://example.invalid/delivery.',
+    back: 'Start again', edit: 'Edit message', why: 'Why this result?', next: 'What should I do?', summary: 'Your next step',
+    safety: 'This check cannot tell you that a message is safe.',
+    noFinding: 'We have no clear warning signs to explain from this limited check.',
+    simpleReasons: { request_for_secret: 'It asks for a password or verification code.', payment_pressure: 'It asks you to make a payment quickly.', secrecy_request: 'It asks you to keep something secret.', model_signal: 'Our experimental model found a concerning pattern. This does not prove fraud.' },
+    critical: { model_not_ready: 'The model check was not performed.', inference_unavailable: 'The model could not finish its check.', rules_only: 'Only a limited check for known requests was available.', insufficient_text: 'There is too little text for the model to check.', incomplete_coverage: 'We could not check the full text.', language_not_evaluated: 'Performance is unverified in every language, including English.', language_unspecified: 'The message language was not specified.', human_review_incomplete: 'Review of the training labels is unfinished.', policy_not_validated: 'This version cannot complete a low-warning check.', not_a_safety_confirmation: 'This output does not establish message safety.' },
+    bubble: { title: 'The message you checked', hint: 'Select a highlighted phrase to see the observed warning sign. Highlights do not explain the model’s prediction.' },
+    speech: { listen: 'Listen', stop: 'Stop reading', unsupported: 'Reading aloud is not available in this browser.', unavailable: 'Reading aloud could not start. You can read the guidance here.', notice: 'Only fixed guidance is read aloud, never your message. Browser or device voices may use online services.' },
+    privacy: { hide: 'Hide personal details', show: 'Show personal details', title: 'Privacy controls', notice: 'Automatic masking may miss details, including names. You can hide more text yourself. This changes the display only; it does not erase text already processed by our backend.', instruction: 'Select any text in this box, then choose Hide selected text. You can use the keyboard or touch selection handles.', select: 'Choose more text to hide', selectionLabel: 'Select text to hide', mask: 'Hide selected text', noSelection: 'Select some text in the box first.', applied: 'Selected text is hidden.', distinction: 'Personal details are masked in this display. The check used the original text.' },
+    patterns: { label: 'Possible pattern', caveat: 'This is context for an observed request, not confirmation of fraud or the sender’s identity.',
+      delivery_payment: { title: 'Delivery payment request', description: 'Some scams pretend to be delivery companies and ask for unexpected payments.' },
+      account_secret: { title: 'Account code request', description: 'Some scams ask for a password or code while pretending to help with an account.' },
+      bank_payment: { title: 'Bank payment request', description: 'Some scams pretend to be a bank and pressure people to transfer money.' } },
+  },
   behindAI: {
     title: 'How ClearMessage works', intro: 'ClearMessage combines a machine-learning classifier with transparent detection rules to help identify warning signs in messages.',
     pipelineTitle: 'From message to guidance', pipeline: ['Message', 'Text processing', 'ML classification', 'Detection rules', 'Safety guidance'],
@@ -121,7 +147,7 @@ export const copy: Copy = {
   languages: { auto: 'Not specified', en: 'English', cs: 'Czech', other: 'Other language' },
   submit: 'Check message', pending: 'Checking…',
   resultDetail: 'This output does not verify the sender or the claims and does not establish message safety. Check the claims through a familiar independent channel.',
-  headlines: { model_not_ready: 'The model is not ready yet.', review_required: 'This message needs further verification.', suspicious_signals: 'There are warning signals in this message.', no_strong_signals: 'We found no strong warning signals.' },
+  headlines: { model_not_ready: 'The model is not ready yet.', review_required: "We couldn't check this fully.", suspicious_signals: 'Be careful with this message.', no_strong_signals: 'We found no strong warning signals.' },
   statusLabels: { suspicious: 'Suspicious message', review: "We couldn't assess this reliably", no_strong_signals: 'No strong warning signs found' },
   notPerformed: 'Analysis not performed',
   evidence: {
