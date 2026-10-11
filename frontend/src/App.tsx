@@ -8,7 +8,9 @@ import HelpRequest from './HelpRequest';
 import SafeScan from './SafeScan';
 import EvidenceDetails from './EvidenceDetails';
 import ActionGuide from './ActionGuide';
+import BehindAI from './BehindAI';
 
+const IS_BEHIND = location.pathname === '/how-it-works';
 const OCR_ENABLED = import.meta.env.VITE_ENABLE_OCR !== 'false';
 
 export default function App() {
@@ -75,9 +77,9 @@ export default function App() {
     <div className="page">
       <header>
         <a className="brand" href="/"><img src={mark} width="32" height="32" alt="" aria-hidden="true" />ClearMessage</a>
-        <nav aria-label="Main navigation"><a href="/" aria-current="page">{t.home}</a></nav>
+        <nav aria-label="Main navigation"><a href="/" aria-current={IS_BEHIND ? undefined : "page"}>{t.home}</a><a href="/how-it-works" aria-current={IS_BEHIND ? "page" : undefined}>{t.behind}</a></nav>
       </header>
-      <main className="hero">
+      {IS_BEHIND ? <BehindAI /> : <main className="hero">
         <div className="interaction">
           <p className="prototype-label">{t.prototypeLabel}</p>
           <h1>{t.hero}</h1>
@@ -134,7 +136,7 @@ export default function App() {
           </div>
           <ActionGuide key={guideRevision} />
         </div>
-      </main>
+      </main>}
       <footer>{t.footer}</footer>
     </div>
   );

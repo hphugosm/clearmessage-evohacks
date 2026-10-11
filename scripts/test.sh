@@ -4,6 +4,7 @@ cd "$(dirname "$0")/.."
 python3 scripts/audit_migration.py
 .venv/bin/python -m pip check
 .venv/bin/python scripts/export_contract.py --check
+python3 scripts/export_transparency.py --check
 npm --prefix frontend run contract:check
 .venv/bin/python -m pytest -q
 npm --prefix frontend test

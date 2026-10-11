@@ -56,6 +56,7 @@ def create_app(frontend_dir: Path | None = None, classifier: Classifier | None =
         if (dist / "assets").is_dir():
             api.mount("/assets", StaticFiles(directory=dist / "assets"), name="assets")
 
+        @api.get("/how-it-works", include_in_schema=False)
         @api.get("/", include_in_schema=False)
         async def index():
             return FileResponse(dist / "index.html")

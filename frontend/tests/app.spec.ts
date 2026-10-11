@@ -237,6 +237,8 @@ test('keyboard-only flow and actual clipboard write contain only the preview', a
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: 'Home', exact: true })).toBeFocused();
   await page.keyboard.press('Tab');
+  await expect(page.getByRole('link', { name: 'Behind the AI', exact: true })).toBeFocused();
+  await page.keyboard.press('Tab');
   await expect(page.getByRole('button', { name: 'Paste a message', exact: true })).toBeFocused();
   await page.keyboard.press('Tab');
   await expect(page.getByRole('button', { name: 'Upload a screenshot', exact: true })).toBeFocused();

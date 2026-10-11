@@ -9,7 +9,7 @@ button { cursor: pointer; line-height: 1.4; min-height: var(--cm-control-height)
 button:disabled { cursor: default; opacity: .75; }
 a { color: var(--cm-brand-primary); text-underline-offset: 4px; }
 .page { max-width: var(--cm-page-width); padding: 0 32px; margin: 0 auto; }
-header { padding: 24px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid var(--cm-border-subtle); }
+header { flex-wrap: wrap; padding: 24px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid var(--cm-border-subtle); }
 .brand { display: inline-flex; align-items: center; gap: 8px; font-size: 1.25rem; font-weight: 650; letter-spacing: -.025em; text-decoration: none; color: var(--cm-text-primary); min-height: 48px; }
 nav { display: flex; gap: 20px; font-size: 1rem; }
 nav a { display: inline-flex; align-items: center; min-height: 48px; text-decoration: none; color: var(--cm-text-secondary); }
@@ -76,3 +76,20 @@ fieldset { border: 0; padding: 0; margin: 16px 0; min-width: 0; }
 legend { font-weight: 600; font-size: 1rem; padding: 0; }
 .checklist { list-style: none; padding: 0; }
 .checklist li { padding: 0; margin: 0; border-bottom: 1px solid var(--cm-border-subtle); }
+.transparency section { padding: 24px 0; border-bottom: 1px solid var(--cm-border-subtle); }
+.transparency section h2 { margin-top: 0; }
+.pipeline { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding: 0; list-style-position: inside; font-size: 1rem; }
+.pipeline li { flex: 1 1 7rem; min-width: 0; padding: 12px 0; font-weight: 600; }
+.class-definitions { margin: 20px 0; }
+.class-definitions > div { display: grid; grid-template-columns: 120px 1fr; padding: 12px 0; gap: 16px; font-size: 1.125rem; }
+dt { font-weight: 600; } dd { margin: 0; }
+.metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0; }
+.metrics dt { font-size: 1rem; color: var(--cm-text-secondary); font-weight: 400; }
+.metrics dd { font-size: 2rem; font-weight: 600; letter-spacing: -.03em; }
+.disclosure { border-left: 3px solid var(--cm-state-warning-indicator); padding-left: 16px; font-size: 1.125rem; }
+.table-wrap { overflow-x: auto; max-width: 100%; }
+table { width: 100%; border-collapse: collapse; font-size: 1rem; margin: 12px 0 24px; }
+caption { text-align: left; font-weight: 600; margin-bottom: 12px; }
+th,td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--cm-border-subtle); }
+.back-link { display: inline-flex; align-items: center; min-height: 48px; margin-top: 24px; font-size: 1.125rem; }
+@media (max-width: 560px) { .pipeline { display: block; } .pipeline li { padding: 4px 0; } .class-definitions > div { grid-template-columns: 1fr; gap: 4px; } .metrics { gap: 16px; } }

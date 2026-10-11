@@ -1,0 +1,82 @@
+{
+  "classCounts": {
+    "ham": 4844,
+    "smishing": 590,
+    "spam": 439
+  },
+  "confusionMatrix": [
+    [
+      720,
+      5,
+      1
+    ],
+    [
+      10,
+      48,
+      8
+    ],
+    [
+      3,
+      11,
+      74
+    ]
+  ],
+  "datasetCount": 5873,
+  "formatVersion": 1,
+  "independentBlindValidation": false,
+  "languageBenchmarks": {
+    "czech": null,
+    "english": null,
+    "unverified_source_languages": true
+  },
+  "macroF1": 0.8636453320844216,
+  "modelSha256": "b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1",
+  "perClass": {
+    "ham": {
+      "f1-score": 0.9869773817683345,
+      "false_negatives": 6,
+      "false_positives": 13,
+      "precision": 0.9822646657571623,
+      "recall": 0.9917355371900827,
+      "support": 726.0
+    },
+    "smishing": {
+      "f1-score": 0.8654970760233918,
+      "false_negatives": 14,
+      "false_positives": 9,
+      "precision": 0.891566265060241,
+      "recall": 0.8409090909090909,
+      "support": 88.0
+    },
+    "spam": {
+      "f1-score": 0.7384615384615385,
+      "false_negatives": 18,
+      "false_positives": 16,
+      "precision": 0.75,
+      "recall": 0.7272727272727273,
+      "support": 66.0
+    }
+  },
+  "reportSha256": "3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd",
+  "selectedModel": "tfidf_c2.0",
+  "smishingCorrect": 74,
+  "splitCounts": {
+    "test": {
+      "ham": 726,
+      "smishing": 88,
+      "spam": 66
+    },
+    "train": {
+      "ham": 3391,
+      "smishing": 414,
+      "spam": 307
+    },
+    "validation": {
+      "ham": 727,
+      "smishing": 88,
+      "spam": 66
+    }
+  },
+  "splitSha256": "9fa155bd267fd5492523b297515b3b1a357832ce19e131357ba81198cf89b988",
+  "testCount": 880
+}
