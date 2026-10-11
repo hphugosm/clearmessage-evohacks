@@ -1,6 +1,11 @@
 # ClearMessage project status
 
-Updated **11 October 2026, Europe/Prague**. Goal 07 final audit is complete.
+Updated **11 October 2026, Europe/Prague**. Dataset/ML finalization is at
+**Phase 1, awaiting explicit owner approval**. The live staged review was
+rechecked; no label/language/metadata rechecks remain in the draft, but it is
+neither submitted nor finally approved and the 98-row quarantine is only proposed.
+Canonical data, candidate split and provisional model remain unchanged.
+Goal 07 final audit is complete.
 **NO-GO for an approved detector/public release**: Goal 01 approval/quarantine/final
 split and final approved Goal 02 are absent; actual deployment/container gates
 remain unresolved. Local technical verification passes with the genuine
@@ -54,6 +59,62 @@ results are `suspicious` with actual basis or `review`, always
 | Goal 04 | Implemented and verified below; real screen-reader/physical-device testing remains unperformed. |
 | OCR | Goal 06 skipped at the deployed-core gate; no Tesseract dependency, screenshot input or OCR assets added. |
 | Submission/video | Not started by this optional goal. |
+
+## Dataset/ML finalization — Phase 1 approval gate
+
+Read AGENTS, STATUS, FINAL_AUDIT, REVIEW_DRAFT_ASSESSMENT, DEPLOYMENT_REPORT,
+PROJECT_PLAN, RESEARCH and ACCEPTANCE. Started from clean commit `95e53c6`.
+Read-only inspection of the existing loopback approval workspace confirms the
+same staged decisions described in [REVIEW_DRAFT_ASSESSMENT](REVIEW_DRAFT_ASSESSMENT.md),
+including its exact 45-entry table and 46-group/98-row quarantine list.
+
+- **Zero** unconfirmed label rechecks; **45/45** explicit English confirmations.
+- Staged sample: **15 HAM / 13 SPAM / 17 SMISHING**. Restore 14 prior HAM→SPAM
+  and 15 prior SMISHING→SPAM choices to original labels; correct source SPAM
+  `row-000565` and `row-000891` to SMISHING. There are 31 changes versus the
+  saved review, only two versus the original corpus, both singleton train groups.
+- No missing staged reviewer metadata. Reviewer `hugo` for all 45; preserve 41
+  dates as 2026-10-10. Four explicitly re-confirmed dates are 2026-10-11 for
+  `row-000188`, `row-000244`, `row-000490`, `row-000565`; do not invent their
+  unknown original dates. Preserve saved history and the original archive.
+- Quarantine is **proposed, not approved**: 98 rows (48 SPAM / 50 SMISHING)
+  in 46 original mixed families. Reasons: 32 normalized-identical families,
+  one template family, 13 near-copy/combined families. No individual exclusions.
+- **Zero additional mixed families** among 5,585 eligible groups under the staged
+  corrections. Conditional eligible count: **5,873**, HAM **4,844**, SPAM **439**,
+  SMISHING **590**. Candidate partitions total 4,112 / 881 / 880 and remain
+  unapproved; do not freeze or move previously exposed groups before approval.
+- `draft_submitted=false`, `final_approval_given=false`; no immutable approval
+  draft file exists. Canonical metadata/decisions remain in the audited old state.
+  The owner's instruction requires stopping here for approval. No submission,
+  canonical edit, correction application, quarantine, freeze, training, runtime
+  replacement or deployment occurred.
+
+Read-only recomputation **PASS**: source/group/sample membership, candidate
+checksum/leakage, staged confirmations, corrections, quarantine and counts;
+protected review/archive/candidate/config/model hashes unchanged. Fresh text-free
+snapshot is ignored at
+`.cache/review-draft-assessment/assessment-finalization-20261011T094018874526Z.json`,
+SHA-256 `b0644144df2f738c946b2fec60eaad6e43a0aeeede70fea03df03a507d2373bb`,
+identical to the prior assessment. An initial snapshot-path wrapper failed with
+`NameError` before writing output; its corrected rerun passed. No data changed.
+
+Relevant checks:
+
+```sh
+.venv/bin/python -m pytest tests/test_review_validation.py tests/test_review_tool.py tests/test_training_preflight.py -q
+python3 scripts/audit_migration.py
+git diff --check
+```
+
+**34 tests passed**, one existing Starlette/httpx deprecation warning. Migration
+and diff checks passed. Full retraining/integration/release checks are deferred
+until approval, not claimed passed for an approved model. Prior test rows were
+already evaluated in Goal 02/07: a later fixed-protocol comparison must disclose
+that reuse, preserve their exclusion from fitting/tuning, and not call them fresh
+blind validation. The 45 English confirmations concern training examples only;
+English/Czech benchmark results remain unavailable without verified evaluation
+language data. No new corpus or challenge labels were inspected.
 
 ## Goal 07 — final release audit
 
