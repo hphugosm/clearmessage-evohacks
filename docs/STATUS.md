@@ -1,6 +1,11 @@
 # ClearMessage project status
 
-Updated **11 October 2026, Europe/Prague**. Goal 05 prepared the three-stage
+Updated **11 October 2026, Europe/Prague**. Goal 06 was assessed and **skipped**:
+the text core passes locally, but the required working deployed core remains
+unverified. OCR was not implemented or enabled. The prerequisite checks and
+reason are recorded below.
+
+Goal 05 prepared the three-stage
 single-container release and verified fresh local execution of the real model,
 API and English Style A frontend. **Docker execution and public deployment remain
 blocked**, not completed: no Docker/alternative runtime and no authorized existing
@@ -38,7 +43,58 @@ results are `suspicious` with actual basis or `review`, always
 | Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
 | Goal 05 | Local fallback verified; actual Docker and public release blocked, detailed evidence below. |
 | Goal 04 | Implemented and verified below; real screen-reader/physical-device testing remains unperformed. |
-| OCR/submission/video | Not started by this interface goal. |
+| OCR | Goal 06 skipped at the deployed-core gate; no Tesseract dependency, screenshot input or OCR assets added. |
+| Submission/video | Not started by this optional goal. |
+
+## Goal 06 — optional OCR skipped at the release gate
+
+Started from clean commit `d9ac5ff`. Read AGENTS, PROJECT_PLAN, RESEARCH,
+ACCEPTANCE, STATUS, BRAND_BIBLE, UI_COPY and LANGUAGE_POLICY. The user requested
+prerequisite verification first and permitted skipping the optional bonus.
+AGENTS requires OCR “only after a working deployed core.” This gate is **not met**:
+only the clean local release is verified. There is no public deployment/URL,
+Docker/alternative runtime is unavailable, and container execution, HTTPS and
+proxy/hosting privacy controls remain untested. Do not describe this as a failed
+text application; it is a missing deployment prerequisite.
+
+| Prerequisite | Verified state on 11 October 2026 |
+|---|---|
+| Text frontend/API flow | PASS: current production-build and Vite-proxy browser suites exercise real POST/inference and ordinary/suspicious/review flows. |
+| Genuine model | PASS: preparation loads our real JSON; artifact and validation-selection-report hashes match their recorded pins. No training/substitution. |
+| Conservative safety policy | PASS: incomplete/unsupported/error states cannot reassure; current production always returns analysis_complete=false and keeps no_strong_signals disabled. |
+| Reproducible local runtime | Recorded Goal 05 fresh-install verification PASS, including real inference, unchanged-asset offline restart, corrupt-model failure, no-egress and log canaries. The report/hashes were checked; a new clean-install benchmark was not run for this documentation-only decision. |
+| Working deployed core / container release | BLOCKED: no authorized public destination or deployed URL, no container runtime; no Docker/public-host verification. |
+| Optional OCR | SKIPPED: prerequisite failed; no screenshot handling/control, feature-flag implementation, worker/WASM/language assets or Tesseract dependency introduced. |
+
+Executed commands:
+
+```sh
+sh scripts/test.sh
+.venv/bin/python scripts/prepare_model.py
+python3 scripts/audit_migration.py
+git diff --check
+```
+
+Also checked artifact/report SHA-256 directly against `backend/model-config.json`,
+the saved `docs/data/goal05-local-release.json` result/inference/restart fields,
+and availability of docker/podman/nerdctl/colima/limactl (none found). Source and
+package-lock search confirms no Tesseract/OCR runtime was introduced.
+
+Current regression results **PASS**: **188 Python**, **32 Vitest**, **34
+Playwright**, dependency consistency, both contract drift checks, TypeScript/Vite
+build and migration audit (**154 owned files**). Existing Starlette/httpx and Node
+color-environment warnings remain visible. Tests include genuine model/API flows,
+limits, unsupported scope, model/service failure, no-egress, neutral copying and
+private canaries. No new language-performance or completed-analysis claim.
+
+OCR quality is **not measured**; PNG/JPEG extraction, blur/format/byte/pixel-bound
+checks, image privacy/worker cleanup and Tesseract/language-data availability or
+licenses were **not tested/acquired**, because OCR was skipped. No screenshots
+are handled by the application. Manual pasted-text input remains the verified
+fallback; no OCR mock/demo or empty OCR result can enter analysis. No data/review,
+model/policy, UI, dependencies or deployment configuration changed. Only this
+status decision was committed. Stop after this optional goal; no next goal,
+public publishing or Devpost action.
 
 ## Goal 05 — production packaging and verified local fallback
 
