@@ -73,7 +73,7 @@ export async function extractText(file: File, signal: AbortSignal, onReading: ()
   const image = await rasterizeImage(file, signal);
   if (signal.aborted) { image.fill(0); throw new OcrError('cancelled'); }
   let worker: Worker;
-  try { worker = new Worker('/assets/ocr/worker.min.js'); }
+  try { worker = new Worker(`${import.meta.env.BASE_URL}assets/ocr/worker.min.js`); }
   catch { image.fill(0); throw new OcrError('initialization'); }
   let sequence = 0;
   let phase: OcrErrorKey = 'initialization';
@@ -103,8 +103,8 @@ export async function extractText(file: File, signal: AbortSignal, onReading: ()
     });
   }
   try {
-    await job('load', { options: { lstmOnly: true, corePath: new URL('/assets/ocr', location.origin).href, logging: false } }, 30_000);
-    await job('loadLanguage', { langs: 'eng', options: { langPath: new URL('/assets/ocr', location.origin).href, cacheMethod: 'none', gzip: true, lstmOnly: true } }, 30_000);
+    await job('load', { options: { lstmOnly: true, corePath: new URL(`${import.meta.env.BASE_URL}assets/ocr`, location.origin).href, logging: false } }, 30_000);
+    await job('loadLanguage', { langs: 'eng', options: { langPath: new URL(`${import.meta.env.BASE_URL}assets/ocr`, location.origin).href, cacheMethod: 'none', gzip: true, lstmOnly: true } }, 30_000);
     await job('initialize', { langs: 'eng', oem: 1, config: {} }, 30_000);
     await job('setParameters', { params: { user_defined_dpi: '300' } }, 10_000);
     phase = 'processing'; onReading();

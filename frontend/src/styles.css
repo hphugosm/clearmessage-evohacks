@@ -153,3 +153,8 @@ footer .prototype-label { margin: 0 0 8px; }
 #mask-editor { margin-top: 16px; }
 #mask-editor button { margin-top: 12px; }
 @media (forced-colors: active) { .message-highlight { border: 2px solid ButtonText; } .message-highlight[aria-expanded='true'] { outline: 2px solid Highlight; } .possible-pattern { border-color: CanvasText; } }
+
+.recorded-demo { margin: 12px 0; padding: 16px 20px; border: 1px solid var(--cm-border-control); border-radius: 16px; background: var(--cm-surface-accent); font-size: 1rem; }
+.recorded-demo p { margin: 4px 0 0; }
+.result > .message-bubble { margin: 24px 0; }
+.speech-notice summary { font-size: 1rem; font-weight: 400; color: var(--cm-text-secondary); }

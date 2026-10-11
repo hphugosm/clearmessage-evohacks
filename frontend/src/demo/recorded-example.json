@@ -1,0 +1,45 @@
+{
+  "kind": "recorded_real_local_analysis",
+  "recorded_at": "2026-10-11T15:17:16.250113+00:00",
+  "model_sha256": "b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1",
+  "selection_report_sha256": "3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd",
+  "text": "Your delivery is waiting. Pay the invoice immediately to release your parcel. Visit https://example.invalid/delivery.",
+  "response": {
+    "status": "suspicious",
+    "analysis_complete": false,
+    "headline_key": "suspicious_signals",
+    "evidence": [
+      {
+        "key": "payment_pressure",
+        "basis": "observed_text_signal",
+        "span": {
+          "start": 26,
+          "end": 53
+        }
+      },
+      {
+        "key": "model_signal",
+        "basis": "classifier",
+        "span": null
+      }
+    ],
+    "action_keys": [
+      "verify_independently",
+      "pause_payment",
+      "ask_trusted_person"
+    ],
+    "limitations": [
+      "language_not_evaluated",
+      "policy_not_validated",
+      "not_a_safety_confirmation"
+    ],
+    "message_language": "en",
+    "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
+    "policy_version": "analysis-policy-2",
+    "contract_version": "1.1.0",
+    "share_summary_keys": [
+      "analysis_not_completed",
+      "help_verify_independently"
+    ]
+  }
+}

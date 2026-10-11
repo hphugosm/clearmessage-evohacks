@@ -1,3 +1,17 @@
+# Submission continuation after Goal 10
+
+11 October 2026. Owner-authorized shorter English UI, immediate verified rule
+highlights, recorded GitHub Pages demonstration and English team project page
+are implemented. **217 Python / 134 frontend / 44 Chromium / 42 Firefox / 44 WebKit /
+3 Pages-specific checks pass.** Frozen model/backend/data/policy/metrics unchanged.
+See [continuation report](CONTINUATION_REPORT.md), [publishing](PUBLISHING.md) and
+[submission draft](submission/DEVPOST.md). The new public repository exists;
+source/Pages deployment verification is in progress and will be recorded there.
+Video recording/upload and final Devpost approval remain outstanding. Public
+Pages accepts no personal messages and performs no live inference. No public
+backend is configured and no first-party open-source license is selected.
+Historical Goal 10 and earlier evidence below is retained unchanged.
+
 # Goal 10 — human-first experience
 
 11 October 2026. **Goal 10 complete**, implemented and verified in separate `feature/clearmessage-human-first` from exact Goal 09 `c91cf63`. Home offers screenshot, paste and a real fictional example. All six requested interactions are delivered: fixed-guidance speech, interactive exact rule spans, genuine one-tap demo, simple/detailed disclosure, real automatic/manual display masking and conservative possible-pattern context. Frozen backend/classifier/data/policy and historical audits are unchanged. Commits `2277dfa` and `a1148b0`, followed by the final documentation milestone; see [progress](GOAL_10_PROGRESS.md), [implementation](GOAL_10_IMPLEMENTATION.md), [test report](GOAL_10_TEST_REPORT.md) and [handoff](GOAL_10_HANDOFF.md).

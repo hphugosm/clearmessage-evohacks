@@ -4,7 +4,7 @@ const facts=JSON.parse(readFileSync(new URL('../src/model-facts.json',import.met
 
 test('Behind the AI route and reload expose report-verified values and adjacent limitations',async({page})=>{
   await page.goto('/');await expect(page.getByRole('link',{name:'Behind the AI',exact:true})).toBeVisible();await page.getByRole('link',{name:'How it works',exact:true}).click();
-  await expect(page).toHaveURL(/\/how-it-works$/);await expect(page.getByRole('heading',{name:'How ClearMessage works',exact:true})).toBeVisible();
+  await expect(page).toHaveURL(/\?view=how-it-works$/);await expect(page.getByRole('heading',{name:'How ClearMessage works',exact:true})).toBeVisible();
   await expect(page.locator('.metrics dd')).toHaveText([facts.macroF1.toFixed(3),facts.perClass.smishing.recall.toFixed(3)]);
   await expect(page.getByText('5,873',{exact:true})).toBeVisible();await expect(page.getByText('4,844 HAM',{exact:true})).toBeVisible();await expect(page.getByText('439 SPAM',{exact:true})).toBeVisible();await expect(page.getByText('590 SMISHING',{exact:true})).toBeVisible();
   await expect(page.getByText('These metrics were measured on a previously evaluated test set and are not an independent blind validation.',{exact:true})).toBeVisible();

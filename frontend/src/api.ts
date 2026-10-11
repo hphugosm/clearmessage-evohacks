@@ -1,4 +1,5 @@
 import type { components } from './api.schema';
+import { analysisUrl } from './deployment';
 
 export type AnalyzeRequest = components['schemas']['AnalyzeRequest'];
 export type AnalyzeResponse = components['schemas']['AnalyzeResponse'];
@@ -69,7 +70,7 @@ export async function analyze(request: AnalyzeRequest, signal?: AbortSignal): Pr
   signal?.addEventListener('abort', abort, { once: true });
   const timeout = setTimeout(abort, 10_000);
   try {
-    const response = await fetch('/api/analyze', {
+    const response = await fetch(analysisUrl(), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(request),

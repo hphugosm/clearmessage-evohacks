@@ -33,11 +33,12 @@ test('real frontend POST → API → honest limited review, without storage or e
   expect(response.headers()['cache-control']).toBe('no-store');
   expect(await response.json()).toMatchObject({ status: 'review', analysis_complete: false, headline_key: 'review_required', evidence: [], model_version: 'clearmessage-sparse-v1:b6e56c3f1d34' });
   await expect(page.getByRole('heading', { name: "We couldn't check this fully." })).toBeVisible();
-  await expect(page.getByText('Limited check · analysis is incomplete', { exact: true })).toBeVisible();
+  await expect(page.locator('.critical-limits').filter({ hasText: 'Limited check.' })).toBeVisible();
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
-  await expect(page.locator('.result-label')).toContainText("We couldn't assess this reliably");
+  await expect(page.locator('.result-label')).toContainText("Check this another way");
   await expect(page.getByRole('heading', { name: "We couldn't check this fully." })).toBeFocused();
-  expect(await page.locator('.result').textContent()).not.toContain(canary);
+  await expect(page.locator('.message-bubble-text')).toContainText(canary);
+  expect((await page.locator('.result-summary, .critical-limits, .next-step').allTextContents()).join(' ')).not.toContain(canary);
   expect(requests.every(url => new URL(url).origin === new URL(baseURL!).origin)).toBe(true);
   expect(requests.some(url => url.includes(canary))).toBe(false);
   expect(await context.cookies()).toEqual([]);
@@ -76,7 +77,7 @@ test('English UI is independent of message language', async ({ page }) => {
   await page.getByRole('button', { name: 'Check message' }).click();
   expect((await (await responsePromise).json()).message_language).toBe('cs');
   await expect(page.getByRole('heading', { name: "We couldn't check this fully." })).toBeVisible();
-  await expect(page.getByText('Limited check · analysis is incomplete', { exact: true })).toBeVisible();
+  await expect(page.locator('.critical-limits').filter({ hasText: 'Limited check.' })).toBeVisible();
 });
 
 test('network failure clearly says analysis was not performed', async ({ page }) => {
@@ -134,7 +135,7 @@ test('real CZ rules without URL, neutral preview and gesture-only share canary',
   const data = await (await responsePromise).json();
   expect(data).toMatchObject({ status: 'suspicious', analysis_complete: false,
     evidence: [{ key: 'request_for_secret', basis: 'observed_text_signal' }] });
-  await expect(page.getByRole('heading', { name: 'Be careful with this message.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'This message looks suspicious.' })).toBeVisible();
   await page.getByRole('button', { name: 'Why this result?', exact: true }).click();
   await page.locator('.evidence-item summary').filter({ hasText: 'A request for a password or code' }).click();
   await expect(page.locator('.evidence-item').getByText('Observed textual signal: a request to disclose a password or verification code.')).toBeVisible();
@@ -148,7 +149,7 @@ test('real CZ rules without URL, neutral preview and gesture-only share canary',
   expect(await page.evaluate(() => (window as unknown as {sharedDrafts: ShareData[]}).sharedDrafts)).toEqual([{ text: preview }]);
   expect(consoleMessages.join(' ')).not.toContain(canary);
   await page.getByText('What have you already done?', { exact: true }).click();
-  await expect(page.getByText(/Do not enter any of those details here/)).toBeVisible();
+  await expect(page.getByText(/never enter private details here/)).toBeVisible();
   await page.getByRole('button', { name: 'Edit message', exact: true }).click();
   await page.getByLabel('Message text', { exact: true }).fill('Jiná fiktivní zpráva.');
   await expect(page.getByLabel('Help request preview')).toHaveCount(0);
@@ -195,7 +196,8 @@ test('real English signals without links → bounded reasons/actions → neutral
   expect(data.action_keys).toHaveLength(3);
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'suspicious');
   await expect(page.locator('.result-label')).toContainText('Suspicious message');
-  expect(await page.locator('.result').textContent()).not.toContain(canary);
+  await expect(page.locator('.message-bubble-text')).toContainText(canary);
+  expect((await page.locator('.result-summary, .critical-limits, .next-step').allTextContents()).join(' ')).not.toContain(canary);
   await page.getByRole('button', { name: 'Ask someone for help' }).click();
   expect(await page.getByLabel('Help request preview').inputValue()).not.toMatch(/CANARY|Alex|ACCOUNT|654321|login|invoice|https?:/);
   await page.getByRole('button', { name: 'Edit message', exact: true }).click();
@@ -217,7 +219,7 @@ test('unavailable model contract has a separate incomplete service state', async
   await page.getByLabel('Message text', { exact: true }).fill('Fictional ordinary message for failure testing.');
   await page.getByRole('button', { name: 'Check message' }).click();
   await expect(page.locator('.result-label')).toContainText('Analysis not performed');
-  await expect(page.getByText('Limited check · analysis is incomplete', { exact: true })).toBeVisible();
+  await expect(page.locator('.critical-limits').filter({ hasText: 'Limited check.' })).toBeVisible();
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
   await expect(page.locator('.result-label')).not.toContainText('No strong warning signs found');
 });
@@ -253,7 +255,7 @@ test('pending edits cancel the old request and ignore late responses even when t
   // Drain the resumed promise and React rendering before checking the retained state.
   await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
-  await expect(page.getByText('Observed textual signal:', { exact: false })).toHaveCount(0);
+  await expect(page.locator('.bubble-explanation:not([hidden])')).toHaveCount(0);
   await page.getByRole('button', { name: 'Ask someone for help' }).click();
   await page.getByRole('button', { name: 'Edit message', exact: true }).click();
   await page.getByLabel('Message language', { exact: true }).selectOption('other');
@@ -284,7 +286,12 @@ test('keyboard-only flow exposes truthful evidence and a private help preview', 
   await next();
   await expect(page.getByRole('button', { name: 'Check message' })).toBeFocused();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('heading', { name: 'Be careful with this message.' })).toBeFocused();
+  await expect(page.getByRole('heading', { name: 'This message looks suspicious.' })).toBeFocused();
+  await next();
+  const directHighlight = page.locator('.message-highlight');
+  await expect(directHighlight).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(directHighlight).toHaveAttribute('aria-expanded', 'true');
   await next();
   await expect(page.getByRole('button', { name: 'What should I do?', exact: true })).toBeFocused();
   await next();
@@ -356,7 +363,7 @@ test('clipboard denial and native cancellation/failure preserve a selectable neu
   await expect(page.getByRole('status').filter({ hasText: 'Sharing cancelled.' })).toBeVisible();
   await page.getByRole('button', { name: 'Share help request' }).click();
   await expect(page.getByRole('status').filter({ hasText: 'Sharing could not be opened.' })).toBeVisible();
-  expect(await page.locator('.result').textContent()).not.toContain('CANARY');
+  expect((await page.locator('.result-summary, .critical-limits, .next-step').allTextContents()).join(' ')).not.toContain('CANARY');
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
 });
 
@@ -422,7 +429,7 @@ test('reduced motion, control geometry and reserved green state keep explicit li
   await page.getByRole('button', { name: 'Check message' }).click();
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'no_strong_signals');
   await expect(page.locator('.result-label')).toContainText('No strong warning signs found');
-  await expect(page.getByText('This output does not establish message safety.', { exact: true })).toBeVisible();
+  await expect(page.locator('.critical-limits').filter({ hasText: 'This check cannot confirm safety.' })).toBeVisible();
   expect(await page.locator('.result-label').evaluate(element => getComputedStyle(element).color)).toBe('rgb(22, 101, 52)');
   await page.getByRole('button', { name: 'Ask someone for help' }).click();
   expect(await page.getByLabel('Help request preview').inputValue()).not.toContain('The automated check was limited');

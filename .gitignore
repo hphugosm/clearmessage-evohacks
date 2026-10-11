@@ -20,3 +20,7 @@ build/
 
 # Build-time OCR resources are restored from pinned npm packages and verified manifest.
 frontend/public/assets/ocr/
+
+# Isolated continuation may reuse the existing Python environment through a link.
+.venv
+frontend/test-results-pages/

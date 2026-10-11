@@ -46,3 +46,12 @@ Verify contrast, real frontend/backend flows, browser OCR, keyboard operation, r
 **Possible pattern** offers at most one small fixed contextual explanation, only for a nearby delivery/account/bank context plus a verified existing observed request. Negated, educational or insufficient context abstains. It does not verify senders, change predictions or carry independent accuracy metrics. No pattern is forced for an ordinary or classifier-only message.
 
 The home provides warmth through one original small message icon, restrained warm dot, rounded choices and clear typography. It has no metrics or technical paragraphs. Privacy instructions stay near the actual input; incomplete/service/language/coverage warnings remain visible in simple results. All first-party strings, including accessible names, come from the shared English dictionary.
+
+## Owner-authorized submission continuation — 11 October 2026
+
+The shorter shared copy supersedes earlier long main-flow wording. One visible
+paragraph states incomplete/language/service limits and inability to confirm
+safety. Exact rule highlights now appear in the first result, while the longer
+explanation remains optional. Classifier-only findings never receive highlights.
+Speech details move into a disclosure. The Pages build prominently identifies
+recorded mode and has no personal input; live local inference is unchanged.

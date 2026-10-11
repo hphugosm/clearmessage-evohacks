@@ -38,18 +38,18 @@ describe('approved result speech', () => {
   it('speaks fixed guidance and critical uncertainty, never spans or arbitrary response content', () => {
     const text = buildResultSpeech({ ...result, source_text: 'PRIVATE_SOURCE 123456 person@example.invalid' } as AnalyzeResponse);
     expect(text).toContain(copy.headlines.suspicious_signals);
-    expect(text).toContain('analysis is incomplete');
-    expect(text).toContain('Performance is unverified in every language');
+    expect(text).toContain(copy.incomplete);
+    expect(text).toContain(copy.experience.critical.language_not_evaluated);
     expect(text).toContain('It asks for a password or verification code.');
     expect(text).toContain('Do not share passwords or verification codes');
-    expect(text).toContain('does not establish message safety');
+    expect(text).toContain(copy.limitations.not_a_safety_confirmation);
     expect(text).not.toMatch(/PRIVATE_|654321|123456|example\.invalid|person@/);
   });
   it('retains service and input-coverage limitations without reading additional source fields', () => {
     const text = buildResultSpeech({ ...result, limitations: ['model_not_ready', 'incomplete_coverage', 'language_not_evaluated', 'not_a_safety_confirmation'] });
-    expect(text).toContain('model check was not performed');
-    expect(text).toContain('could not check the full text');
-    expect(text).toContain('Performance is unverified in every language');
+    expect(text).toContain(copy.experience.critical.model_not_ready);
+    expect(text).toContain(copy.experience.critical.incomplete_coverage);
+    expect(text).toContain(copy.experience.critical.language_not_evaluated);
   });
   it('declines injected speech keys using a fixed error, without reflecting them', () => {
     expect(() => buildResultSpeech({ ...result, headline_key: 'PRIVATE_CANARY_654321' } as unknown as AnalyzeResponse)).toThrow(/^invalid_speech_keys$/);

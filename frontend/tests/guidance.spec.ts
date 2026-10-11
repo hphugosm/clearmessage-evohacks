@@ -21,7 +21,7 @@ test('negated notices and ordinary messages have no fabricated warning reasons',
   for(const [index,text] of ['Never share your password or verification code. We will never ask you to send it.','We can meet for a fictional lunch tomorrow.'].entries()){
     if(index) await page.getByRole('button',{name:'Edit message',exact:true}).click();
     await page.getByLabel('Message text',{exact:true}).fill(text);await page.getByRole('button',{name:'Check message',exact:true}).click();
-    await expect(page.locator('.result')).toHaveAttribute('data-status','review');await page.getByRole('button',{name:'Why this result?',exact:true}).click();await expect(page.locator('.evidence-item')).toHaveCount(0);await expect(page.locator('.evidence-quote')).toHaveCount(0);await expect(page.getByText('Limited check · analysis is incomplete',{exact:true})).toBeVisible();
+    await expect(page.locator('.result')).toHaveAttribute('data-status','review');await page.getByRole('button',{name:'Why this result?',exact:true}).click();await expect(page.locator('.evidence-item')).toHaveCount(0);await expect(page.locator('.evidence-quote')).toHaveCount(0);await expect(page.locator('.critical-limits').filter({hasText:'Limited check.'})).toBeVisible();
   }
 });
 
@@ -33,7 +33,7 @@ test('legacy evidence and model-only findings never invent a highlighted phrase'
     if(index) await page.getByRole('button',{name:'Edit message',exact:true}).click();
     await page.getByLabel('Message text',{exact:true}).fill('A fictional test-only API fixture.');await page.getByRole('button',{name:'Check message',exact:true}).click();await page.getByRole('button',{name:'Why this result?',exact:true}).click();await page.locator('.evidence-item summary').filter({hasText:title}).click();await expect(page.locator('.evidence-quote')).toHaveCount(0);modelOnly=true;
   }
-  await expect(page.getByText('This finding comes from the experimental classifier. It cannot identify which words caused the prediction.',{exact:true})).toBeVisible();
+  await expect(page.getByText('Flagged by our classifier. It cannot identify the words behind its prediction.',{exact:true})).toBeVisible();
 });
 
 test('ActionGuide selects appropriate curated steps, resets checkboxes and never sends choices',async({page})=>{
@@ -48,6 +48,6 @@ test('ActionGuide selects appropriate curated steps, resets checkboxes and never
 test('uncertain result guidance and copy keep source and selected situation private',async({page,context,browserName})=>{
   await context.grantPermissions(browserName === 'webkit' ? ['clipboard-read'] : ['clipboard-read','clipboard-write']);await page.goto('/');await page.getByRole('button',{name:'Paste a message',exact:true}).click();
   await page.getByLabel('Message text',{exact:true}).fill('PRIVATE_GUIDE_CANARY_987654 A fictional lunch plan.');await page.getByRole('button',{name:'Check message',exact:true}).click();await expect(page.locator('.result')).toHaveAttribute('data-status','review');
-  await page.getByText('What have you already done?',{exact:true}).click();await page.getByRole('radio',{name:'I entered my password.',exact:true}).check();await expect(page.locator('.action-guide')).toContainText('even when the analysis is uncertain or unavailable');
+  await page.getByText('What have you already done?',{exact:true}).click();await page.getByRole('radio',{name:'I entered my password.',exact:true}).check();await expect(page.locator('.action-guide')).toContainText('General advice.');
   await page.getByRole('button',{name:'Ask someone for help'}).click();const preview=await page.getByLabel('Help request preview').inputValue();expect(preview).not.toMatch(/PRIVATE|987654|password|lunch/);await page.getByRole('button',{name:'Copy help request'}).click();await expect(page.getByText('Copied',{exact:true})).toBeVisible();expect(await page.evaluate(()=>navigator.clipboard.readText())).toBe(preview);
 });

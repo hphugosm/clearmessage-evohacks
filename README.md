@@ -2,6 +2,17 @@
 
 **Understand messages. Make safer decisions.**
 
+[Recorded interactive demo](https://hphugosm.github.io/clearmessage-evohacks/) ·
+[Team project page](https://tymtrampolin.cz/clearmessage/)
+
+The public GitHub Pages demo replays one actual local result and **cannot check
+your own messages**. It has no live backend or screenshot input. The complete
+local app below uses the real trained classifier and browser OCR. Its trusted
+model artifact has not been publicly redistributed. The recorded demo builds
+without it: `npm ci --prefix frontend`, then `node frontend/scripts/build-pages.mjs`.
+See [hosting and privacy](docs/PUBLISHING.md) and [submission materials](docs/submission/DEVPOST.md).
+
+
 ClearMessage helps people understand short messages and choose a safer next step.
 React + TypeScript + Vite calls FastAPI/Pydantic, our genuinely trained Goal 02
 TF-IDF + LogisticRegression model, and transparent textual rules. The interface,
@@ -31,7 +42,7 @@ Home offers **Upload a screenshot**, **Paste a message** and **Try an example**.
 
 Choose **Upload a screenshot** for real English PNG/JPEG OCR in the browser, using pinned resources from the application origin. Images are not uploaded. Review and edit the full extracted text, remove sensitive details, confirm it, then choose **Check message**. Images are bounded to 10 MiB, 12 megapixels and 16,384 pixels per side. OCR errors offer paste input; text above 2,000 Unicode code points stays editable and is never automatically shortened.
 
-The detailed view displays an inert message bubble with selectable exact observed-rule phrases. Classifier-only findings cannot identify particular words; Unicode offsets are verified rather than guessed. **What have you already done?** offers five curated local checklists; choices never enter analysis or sharing. **Behind the AI** at `/how-it-works` shows report-verified counts/metrics beside the previously evaluated-test and independent-language limitations.
+The result immediately displays an inert message bubble with selectable exact observed-rule phrases. Classifier-only findings cannot identify particular words; Unicode offsets are verified rather than guessed. **What have you already done?** offers five curated local checklists; choices never enter analysis or sharing. **Behind the AI** at `/how-it-works` shows report-verified counts/metrics beside the previously evaluated-test and independent-language limitations.
 
 Screenshot input remains enabled in the authorized human-first build. To disable it while preserving paste analysis:
 
@@ -239,8 +250,8 @@ TypeScript describe the shared versioned contract. All backend responses use
 `no-store`; message bodies stay out of errors, logs, browser URLs and sharing.
 Processing happens on our backend, not entirely in the browser.
 
-No deployment destination/account is confirmed. No credentials, purchase,
-publication or deployment occurred. Goal 10 fresh local release verification passed;
+The owner confirmed the public source/demo repository and existing team Pages site.
+See the continuation report for the actual publication state. No public inference backend is configured. Goal 10 fresh local release verification passed;
 public HTTPS, proxy/hosting logging and container execution remain unverified.
 See the release report for measured scope. Starlette's existing
 httpx TestClient deprecation warning remains visible; it is not suppressed.
@@ -249,7 +260,7 @@ httpx TestClient deprecation warning remains visible; it is not suppressed.
 [MIGRATION_REPORT](docs/MIGRATION_REPORT.md) records the ClearMessage migration.
 [Project plan](docs/PROJECT_PLAN.md), [research](docs/RESEARCH.md),
 [acceptance](docs/ACCEPTANCE.md), [planning notes](docs/PLANNING_NOTES.md) and
-`AGENTS.md` are English. The local Git repository has no remote. Goal 04 completed
+`AGENTS.md` are English. The original local repository had no remote; this continuation publishes a separate reviewed release to the owner-authorized GitHub repository. Goal 04 completed
 the simple Style A interface, neutral preview/copying and cancellation guards.
 [UI verification](docs/UI_VERIFICATION.md) records browser and visual scope.
 The existing workspace path is retained to preserve local environments;

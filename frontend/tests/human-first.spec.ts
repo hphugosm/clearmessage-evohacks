@@ -78,7 +78,7 @@ test('human-first home has two large choices and a keyboard path at 360px with r
   await expect(page.getByRole('button', { name: 'Paste a message', exact: true })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.getByLabel('Message text', { exact: true })).toBeFocused();
-  await expect(page.getByText(/Text is sent to our backend/)).toBeVisible();
+  await expect(page.getByText(/Text is sent to our server/)).toBeVisible();
 });
 
 test('one-tap fictional example calls the real model and explains an observed delivery payment request', async ({ page, baseURL }) => {
@@ -94,17 +94,17 @@ test('one-tap fictional example calls the real model and explains an observed de
   expect(result.evidence).toContainEqual(expect.objectContaining({ key: 'payment_pressure', basis: 'observed_text_signal' }));
   await expect(page.getByText('Example message', { exact: true })).toBeVisible();
   await expect(why(page)).toHaveAttribute('aria-expanded', 'false');
-  await expect(page.locator('.message-bubble')).toHaveCount(0);
-  await expect(page.getByText('Limited check · analysis is incomplete', { exact: true })).toBeVisible();
-  await expect(page.getByText('Performance is unverified in every language, including English.', { exact: true })).toBeVisible();
-  await expect(page.getByText('This output does not establish message safety.', { exact: true })).toBeVisible();
+  await expect(page.locator('.message-bubble')).toBeVisible();
+  await expect(page.locator('.critical-limits').filter({ hasText: 'Limited check.' })).toBeVisible();
+  await expect(page.locator('.critical-limits').filter({ hasText: 'Language accuracy is unverified.' })).toBeVisible();
+  await expect(page.locator('.critical-limits').filter({ hasText: 'This check cannot confirm safety.' })).toBeVisible();
   await why(page).focus(); await page.keyboard.press('Enter');
   await expect(why(page)).toHaveAttribute('aria-expanded', 'true');
   await expect(why(page)).toBeFocused();
   await expect(checkedMessage(page)).toHaveText(example);
   await expect(page.getByText('Possible pattern', { exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Delivery payment request', exact: true })).toBeVisible();
-  await expect(page.getByText('This is context for an observed request, not confirmation of fraud or the sender’s identity.', { exact: true })).toBeVisible();
+  await expect(page.getByText('This pattern does not verify the sender or prove fraud.', { exact: true })).toBeVisible();
   await expect(page.locator('.message-bubble a')).toHaveCount(0);
   const nativeSpeech = await page.evaluate(() => {
     const supported = Boolean(window.speechSynthesis && typeof window.SpeechSynthesisUtterance === 'function');
@@ -135,8 +135,8 @@ test('a failed new example clears its previous result and never simulates a verd
 test('simple view keeps insufficient-text and unavailable-model uncertainty visible', async ({ page }) => {
   await openPaste(page); await checkText(page, 'Hi');
   await expect(why(page)).toHaveAttribute('aria-expanded', 'false');
-  await expect(page.getByText('There is too little text for the model to check.', { exact: true })).toBeVisible();
-  await expect(page.getByText('This output does not establish message safety.', { exact: true })).toBeVisible();
+  await expect(page.locator('.critical-limits').filter({ hasText: 'Too little text for the model.' })).toBeVisible();
+  await expect(page.locator('.critical-limits').filter({ hasText: 'This check cannot confirm safety.' })).toBeVisible();
   await page.getByRole('button', { name: 'Edit message', exact: true }).click();
   // Service failure fixture only. Genuine inference is exercised in other cases.
   await page.route('**/api/analyze', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({
@@ -147,7 +147,7 @@ test('simple view keeps insufficient-text and unavailable-model uncertainty visi
   }) }));
   await checkText(page, 'A fictional ordinary message for unavailable-model testing.');
   await expect(page.locator('.result-label')).toContainText('Analysis not performed');
-  await expect(page.getByText('The model check was not performed.', { exact: true })).toBeVisible();
+  await expect(page.locator('.critical-limits').filter({ hasText: 'Model check unavailable.' })).toBeVisible();
   await expect(why(page)).toHaveAttribute('aria-expanded', 'false');
   await expect(page.getByText('No strong warning signs found', { exact: true })).toHaveCount(0);
 });
@@ -183,7 +183,7 @@ test('automatic and manual masks remove source characters from every DOM field w
   await expect(checkedMessage(page)).toContainText('privacy_canary@example.invalid');
   await page.getByRole('button', { name: 'Hide personal details', exact: true }).click();
   expect(await page.content()).not.toMatch(/privacy_canary@example\.invalid|845921/);
-  await expect(page.getByText('Personal details are masked in this display. The check used the original text.', { exact: true })).toBeVisible();
+  await expect(page.getByText('Display masked. The check used the original text.', { exact: true })).toBeVisible();
   await page.getByText('Privacy controls', { exact: true }).click();
   await page.getByRole('button', { name: 'Choose more text to hide', exact: true }).click();
   const selection = page.getByLabel('Select text to hide', { exact: true });
@@ -246,8 +246,8 @@ test('gesture-only speech reads fixed guidance and stops on control, edits and n
   let state = await speechState(page);
   expect(state.spoken).toHaveLength(1);
   expect(state.spoken[0]).toMatchObject({ lang: 'en', voiceName: 'TEST_ONLY_LOCAL_ENGLISH' });
-  expect(state.spoken[0].text).toContain('analysis is incomplete');
-  expect(state.spoken[0].text).toContain('does not establish message safety');
+  expect(state.spoken[0].text).toContain('Limited check.');
+  expect(state.spoken[0].text).toContain('cannot confirm safety');
   expect(state.spoken[0].text).not.toMatch(/RAW_SPEECH_CANARY|845921|notice\.invalid/);
   let stopped = state.cancelled;
   await page.getByRole('button', { name: 'Stop reading', exact: true }).click();
@@ -300,7 +300,7 @@ test('ordinary or negated context never forces a scam pattern, even alongside an
     if (index === 1) expect(result.evidence).toContainEqual(expect.objectContaining({ key: 'payment_pressure', basis: 'observed_text_signal' }));
     await why(page).click();
     await expect(page.locator('.possible-pattern')).toHaveCount(0);
-    await expect(page.getByText('This output does not establish message safety.', { exact: true }).first()).toBeVisible();
+    await expect(page.locator('.critical-limits').filter({ hasText: 'This check cannot confirm safety.' }).first()).toBeVisible();
   }
 });
 

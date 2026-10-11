@@ -14,9 +14,12 @@ import { useReadAloud } from './speech';
 import { automaticMaskRanges, mergeMaskRanges, maskText, selectionToCodePointRange } from './privacy';
 import type { MaskRange } from './privacy';
 import { possiblePattern } from './patterns';
+import { STATIC_DEMO, HOME_URL, BEHIND_URL } from './deployment';
+import recordedExample from './demo/recorded-example.json';
+import { parseResponse } from './api';
 
-const IS_BEHIND = location.pathname === '/how-it-works';
-const OCR_ENABLED = import.meta.env.VITE_ENABLE_OCR !== 'false';
+const IS_BEHIND = location.pathname === '/how-it-works' || new URLSearchParams(location.search).get('view') === 'how-it-works';
+const OCR_ENABLED = !STATIC_DEMO && import.meta.env.VITE_ENABLE_OCR !== 'false';
 
 function InputIcon({image = false}: {image?: boolean}) {
   return <svg aria-hidden="true" viewBox="0 0 32 32" width="32" height="32" fill="none">
@@ -91,7 +94,10 @@ export default function App() {
   }
   function tryExample() {
     setMode('paste'); setText(t.experience.exampleText); setMessageLanguage('en'); setExample(true); setConfirmed(false);
-    void check(t.experience.exampleText, 'en');
+    if (STATIC_DEMO) {
+      clearPrevious(); setText(recordedExample.text); setAnalyzedText(recordedExample.text);
+      setResult(parseResponse(recordedExample.response));
+    } else void check(t.experience.exampleText, 'en');
   }
   function openGuide() {
     const disclosure = guide.current?.querySelector('details');
@@ -114,18 +120,19 @@ export default function App() {
 
   return <div className="page">
     <header>
-      <a className="brand" href="/" onClick={speech.stop}><img src={mark} width="32" height="32" alt="" aria-hidden="true"/>ClearMessage</a>
-      <nav aria-label="Main navigation"><a onClick={speech.stop} href={IS_BEHIND ? '/' : '/how-it-works'}>{IS_BEHIND ? t.home : t.experience.how}</a></nav>
+      <a className="brand" href={HOME_URL} onClick={speech.stop}><img src={mark} width="32" height="32" alt="" aria-hidden="true"/>ClearMessage</a>
+      <nav aria-label="Main navigation"><a onClick={speech.stop} href={IS_BEHIND ? HOME_URL : BEHIND_URL}>{IS_BEHIND ? t.home : t.experience.how}</a></nav>
     </header>
+    {STATIC_DEMO && <aside className="recorded-demo" aria-label={t.experience.recordedLabel}><strong>{t.experience.recordedLabel}</strong><p>{t.experience.recordedNotice}</p></aside>}
     {IS_BEHIND ? <BehindAI/> : <main className="hero">
       {mode === 'home' ? <section className="welcome" aria-labelledby="home-heading">
         <div className="welcome-mark" aria-hidden="true"><InputIcon/><span/></div>
         <h1 id="home-heading" ref={homeHeading} tabIndex={-1}>{t.hero}</h1>
         <p className="intro">{t.experience.welcome}</p>
-        <div className="home-actions">
+        {!STATIC_DEMO && <div className="home-actions">
           {OCR_ENABLED && <button className="home-choice" type="button" onClick={() => chooseMode('screenshot')}><InputIcon image/><span>{t.screenshot}</span><span aria-hidden="true">→</span></button>}
           <button className="home-choice home-choice-primary" type="button" onClick={() => chooseMode('paste')}><InputIcon/><span>{t.paste}</span><span aria-hidden="true">→</span></button>
-        </div>
+        </div>}
         <button className="text-button demo-button" type="button" onClick={tryExample}>{t.experience.example}<span aria-hidden="true"> ↗</span></button>
       </section> : <div className="interaction">
         <div className="flow-bar"><button className="text-button" type="button" onClick={() => chooseMode('home')}><span aria-hidden="true">← </span>{t.experience.back}</button>{example && <span className="example-label">{t.experience.exampleLabel}</span>}</div>
@@ -134,19 +141,18 @@ export default function App() {
             <p className="result-label"><span aria-hidden="true">!</span>{resultLabel}</p>
             <h1 id="result-heading" ref={resultHeading} tabIndex={-1}>{t.headlines[result.headline_key]}</h1>
             <p className="result-summary">{result.evidence.length ? t.experience.simpleReasons[result.evidence[0].key] : t.experience.noFinding}</p>
-            <p className="completion-label">{result.analysis_complete ? t.complete : t.incomplete}</p>
-            <div className="critical-limits">{criticalKeys.map(key => <p key={key}>{t.experience.critical[key]}</p>)}<p>{t.limitations.not_a_safety_confirmation}</p></div>
+            <p className="critical-limits">{result.analysis_complete ? t.complete : t.incomplete} {criticalKeys.map(key => t.experience.critical[key]).join(' ')} {t.experience.safety}</p>
             <div className="next-step"><h2>{t.experience.summary}</h2><p>{t.actions[result.action_keys[0]]}</p></div>
+            <MessageBubble text={analyzedText} displayText={displayText} evidence={result.evidence} title={t.experience.bubble.title} hint={t.experience.bubble.hint}/>
             <div className="result-controls">
               <button className="submit" type="button" onClick={openGuide}>{t.experience.next}<span aria-hidden="true"> →</span></button>
               <button className="secondary-button" type="button" aria-expanded={details} aria-controls="result-details" onClick={() => setDetails(value => !value)}>{t.experience.why}</button>
             </div>
             <div className="speech-control">
-              {speech.supported ? <><button className="text-button listen-button" type="button" onClick={speech.listening ? speech.stop : speech.start}><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="m11 5-5 4H3v6h3l5 4V5Zm4 3c3 2 3 6 0 8m3-11c5 4 5 10 0 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>{speech.listening ? t.experience.speech.stop : t.experience.speech.listen}</button><p className="small">{t.experience.speech.notice}</p></> : <p className="small">{t.experience.speech.unsupported}</p>}
+              {speech.supported ? <><button className="text-button listen-button" type="button" onClick={speech.listening ? speech.stop : speech.start}><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="m11 5-5 4H3v6h3l5 4V5Zm4 3c3 2 3 6 0 8m3-11c5 4 5 10 0 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>{speech.listening ? t.experience.speech.stop : t.experience.speech.listen}</button><details className="speech-notice"><summary>{t.experience.speechAbout}</summary><p className="small">{t.experience.speech.notice}</p></details></> : <p className="small">{t.experience.speech.unsupported}</p>}
               {speech.error === 'unavailable' && <p className="small error" role="status">{t.experience.speech.unavailable}</p>}
             </div>
             {details && <div id="result-details" className="result-details"><h2>{t.experience.why}</h2>
-              <MessageBubble text={analyzedText} displayText={displayText} evidence={result.evidence} title={t.experience.bubble.title} hint={t.experience.bubble.hint}/>
               {pattern && <section className="possible-pattern" aria-labelledby="pattern-label"><p id="pattern-label" className="small pattern-label">{t.experience.patterns.label}</p><h3>{t.experience.patterns[pattern].title}</h3><p>{t.experience.patterns[pattern].description}</p><p className="small">{t.experience.patterns.caveat}</p></section>}
               <h2>{t.reasons}</h2>
               {result.evidence.length ? <EvidenceDetails evidence={result.evidence} analyzedText={displayText}/> : <p>{t.noEvidence}</p>}
@@ -169,7 +175,7 @@ export default function App() {
             {helpPreview && <HelpRequest summaryKeys={result.share_summary_keys}/>}
           </section>
           <div ref={guide}><ActionGuide key={guideRevision}/></div>
-          <button className="text-button edit-button" type="button" onClick={() => { clearPrevious(); setExample(false); }}>{t.experience.edit}</button>
+          {!STATIC_DEMO && <button className="text-button edit-button" type="button" onClick={() => { clearPrevious(); setExample(false); }}>{t.experience.edit}</button>}
         </> : <>
           <h1>{mode === 'screenshot' ? t.scan.title : t.paste}</h1>
           <form onSubmit={submit} noValidate aria-busy={pending}>
@@ -201,6 +207,6 @@ export default function App() {
         <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">{pending ? t.pending : result ? `${resultLabel}. ${result.analysis_complete ? t.complete : t.incomplete}` : ''}</p>
       </div>}
     </main>}
-    <footer><p>{t.footer}</p><p className="prototype-label">{t.prototypeLabel}</p><a onClick={speech.stop} href="/how-it-works">{t.behind}</a></footer>
+    <footer><p>{t.footer}</p><p className="prototype-label">{t.prototypeLabel}</p><a onClick={speech.stop} href={BEHIND_URL}>{t.behind}</a></footer>
   </div>;
 }

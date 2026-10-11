@@ -22,7 +22,7 @@ export default function MessageBubble({ text, evidence, displayText = text, titl
 
   return <section className="message-bubble" aria-labelledby={`${id}-title`}>
     <h3 id={`${id}-title`}>{title}</h3>
-    <p className="small">{hint}</p>
+    {segments.some(segment => segment.evidenceIndices.length > 0) && <p className="small">{hint}</p>}
     <p className="message-bubble-text">{segments.map((segment, index) => segment.evidenceIndices.length > 0
       ? <button type="button" className="message-highlight" key={`${segment.start}-${segment.end}`}
         aria-label={label(segment.evidenceIndices)} aria-expanded={selected === index}

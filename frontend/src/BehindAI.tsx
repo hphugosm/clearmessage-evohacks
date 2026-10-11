@@ -64,6 +64,6 @@ export default function BehindAI() {
     <section aria-labelledby="limits-title"><h2 id="limits-title">{b.limitsTitle}</h2><p>{b.limits}</p><p>{b.releaseLimit}</p></section>
     <section aria-labelledby="privacy-title"><h2 id="privacy-title">{b.privacyTitle}</h2>{b.privacy.map(paragraph=><p key={paragraph}>{paragraph}</p>)}</section>
     <section aria-labelledby="technology-title"><h2 id="technology-title">{b.technologyTitle}</h2><p>{b.technology}</p><p className="small">{b.credits} <a href="https://github.com/naptha/tesseract.js/tree/v6.0.1" rel="noreferrer">Tesseract.js</a>.</p></section>
-    <a className="back-link" href="/">{b.back}</a>
+    <a className="back-link" href={import.meta.env.BASE_URL}>{b.back}</a>
   </main>;
 }
