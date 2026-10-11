@@ -6,7 +6,7 @@ const missingModel = {
   status: 'review', analysis_complete: false, headline_key: 'model_not_ready',
   evidence: [], action_keys: ['verify_independently'],
   limitations: ['model_not_ready', 'language_not_evaluated', 'not_a_safety_confirmation'],
-  message_language: 'en', model_version: null, policy_version: 'analysis-policy-1',
+  message_language: 'en', model_version: null, policy_version: 'analysis-policy-2',
   contract_version: '1.1.0', share_summary_keys: ['analysis_not_completed', 'help_verify_independently'],
 };
 afterEach(() => { vi.unstubAllGlobals(); });
@@ -62,9 +62,20 @@ describe('real analysis response boundaries', () => {
     expect(parseResponse(provisional)).toEqual(provisional);
     expect(parseResponse(warning)).toEqual(warning);
   });
+  it('keeps a completed low-finding contract distinct and rejects false help completion', () => {
+    // Future valid contract fixture only; no production policy was enabled.
+    const completed = { ...provisional, status: 'no_strong_signals', analysis_complete: true,
+      headline_key: 'no_strong_signals', limitations: ['not_a_safety_confirmation'],
+      share_summary_keys: ['help_verify_independently'] };
+    expect(parseResponse(completed)).toEqual(completed);
+    expect(() => parseResponse({ ...completed, share_summary_keys: ['analysis_not_completed', 'help_verify_independently'] })).toThrow(AnalysisError);
+  });
   it.each([
     { ...provisional, analysis_complete: true },
     { ...warning, evidence: [] },
+    { ...warning, status: 'review', headline_key: 'review_required' },
+    { ...warning, evidence: [{ key: 'model_signal', basis: 'classifier' }], message_language: 'other' },
+    { ...warning, policy_version: 'analysis-policy-1' },
     { ...warning, evidence: [{ key: 'request_for_secret', basis: 'classifier' }] },
     { ...warning, evidence: [{ key: 'request_for_secret', basis: 'observed_text_signal', snippet: 'PRIVATE_CANARY' }] },
     { ...warning, share_summary_keys: ['PRIVATE_CANARY'] },

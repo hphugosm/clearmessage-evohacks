@@ -1,6 +1,8 @@
 """Small offline inference seam. Scores stay internal; artifacts are hash pinned."""
 from dataclasses import dataclass
+import hashlib
 import json
+import math
 from pathlib import Path
 from threading import BoundedSemaphore
 from typing import Protocol
@@ -25,6 +27,27 @@ class Classifier(Protocol):
 class ModelNotReady(Exception):
     """Fixed exception with no message text."""
 
+def verify_selection() -> None:
+    """Bind runtime model and warning threshold to our pinned validation choice.
+
+    The report is read only at setup, as bounded JSON, never as executable code.
+    Its test results do not participate in this check or any policy selection.
+    """
+    with (ROOT / CONFIG["selection_report"]).open("rb") as stream:
+        payload = stream.read(1024 * 1024 + 1)
+    if len(payload) > 1024 * 1024 or hashlib.sha256(payload).hexdigest() != CONFIG["selection_report_sha256"]:
+        raise ModelNotReady("selection_report_hash_mismatch")
+    report = json.loads(payload)
+    selection = report["selection"]
+    artifact = report["artifacts"][selection["model"]]
+    threshold = selection["threshold"]
+    if (type(threshold) not in (int, float) or not math.isfinite(threshold)
+        or not 0 < threshold <= 1 or threshold != CONFIG["warning_threshold"]
+        or selection["test_used"] is not False
+        or artifact["sha256"] != CONFIG["sha256"]
+        or (ROOT / artifact["file"]).resolve() != (ROOT / CONFIG["artifact_path"]).resolve()):
+        raise ModelNotReady("model_selection_mismatch")
+
 class UnavailableClassifier:
     version = None
     ready = False
@@ -43,6 +66,7 @@ class LocalClassifier:
     def __init__(self, path: Path):
         from ml.sparse_model import SparseModel
         self._model = SparseModel(path, CONFIG["sha256"])
+        verify_selection()
         self.version = f"{self._model.version}:{CONFIG['sha256'][:12]}"
         self.human_review_complete = CONFIG["human_review_complete"] is True and self._model.provenance.get("human_review_complete") is True
         self.evaluated_languages = tuple(CONFIG["evaluated_languages"])

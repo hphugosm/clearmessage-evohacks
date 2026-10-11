@@ -1,4 +1,4 @@
-# ClearMessage API contract 1.1.0 — analysis-policy-1
+# ClearMessage API contract 1.1.0 — analysis-policy-2
 
 The source is `backend/contracts.py`; `docs/openapi.json` and generated
 `frontend/src/api.schema.ts` are checked for drift. Regenerate explicitly:
@@ -32,7 +32,7 @@ Example from the real saved Goal 02 artifact, not a fixture verdict:
   "limitations": ["language_not_evaluated","human_review_incomplete","policy_not_validated","not_a_safety_confirmation"],
   "message_language": "en",
   "model_version": "clearmessage-sparse-v1:7fe727cfb786",
-  "policy_version": "analysis-policy-1",
+  "policy_version": "analysis-policy-2",
   "contract_version": "1.1.0",
   "share_summary_keys": ["analysis_not_completed","help_verify_independently"]
 }
@@ -47,8 +47,8 @@ Statuses are guidance states, distinct from training labels:
   requires complete analysis, verified model/language/policy and no evidence.
 
 `analysis_complete` is separate. The current artifact always returns `false`:
-41 human reviews pending, language performance unverified, reassuring policy
-unvalidated. A rule can warn during model failure, with
+final reviewed-data approval pending, language performance unverified, low-finding
+policy unvalidated. A rule can warn during model failure, with
 `inference_unavailable/rules_only` disclosed. HTTP 200 does not mean complete
 assessment. Missing/corrupt artifact yields `model_version=null`, `model_not_ready`.
 
@@ -63,6 +63,12 @@ trusted. `limitations` always include `not_a_safety_confirmation`. English
 presentation is fixed in `frontend/src/copy.ts`. The client checks the whole
 contract, evidence basis and completion invariants; unknown/corrupt responses
 produce an honest service error, never a reassuring fallback.
+Policy 2 retains the validation-selected warning threshold. Startup verifies the
+selection-report hash, selected artifact identity/hash and threshold agreement;
+drift or a report missing from the installation disables the model. The client
+rejects evidence/status contradictions, classifier evidence outside explicit
+English scope, and completion/share-summary contradictions. Schema fields and
+contract version are unchanged; older policy responses are rejected explicitly.
 
 `share_summary_keys` select only two neutral fixed sentences. The user opens a
 preview, manually copies text or makes another gesture to invoke native Web Share.

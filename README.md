@@ -100,6 +100,9 @@ curl --fail http://127.0.0.1:7860/api/analyze \
 
 `model_ready=true` means the verified artifact loaded, not that detector quality
 is approved. Every current result remains an incomplete check.
+Runtime policy 2 also verifies the Goal 02 selection-report hash, chosen artifact
+and validation-selected threshold at startup. Missing or inconsistent assets
+disable the model; no runtime download or substitute is attempted.
 
 ## Data and model reproduction
 
@@ -159,8 +162,9 @@ docker run --rm --name clearmessage --read-only \
 
 One final container serves build assets and API as nonprivileged user 10001.
 Node exists only in the build stage. The final image includes the verified sparse
-model, not raw data, tests, encoder or Node. Base images are pinned by digest;
-registry availability checks do not prove container execution. The healthcheck
+model and pinned selection report for offline startup verification, not raw data,
+tests, encoder or Node. Base images are pinned by digest; registry availability
+checks do not prove container execution. The healthcheck
 measures service liveness.
 
 ## Contracts, privacy and project state

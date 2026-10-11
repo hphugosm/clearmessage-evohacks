@@ -1,9 +1,16 @@
 # ClearMessage — provisional model card
 
-Updated **2026-10-10, Europe/Prague**. A genuine short-message classifier has
+Runtime note updated **2026-10-11, Europe/Prague**; experiment results below are
+from 10 October. A genuine short-message classifier has
 been trained, saved and evaluated. **It is experimental: human label review is
 incomplete, source languages are unverified, and it is not an approved detector.**
 Goal03 now connects the verified sparse artifact to the application API.
+The 11 October integration uses `analysis-policy-2` and `observed-requests-2`.
+It verifies the selection report and unchanged validation threshold at startup;
+weights, source labels and model metrics were not changed or retrained. Final
+reviewed-data approval is still pending. See [POLICY](POLICY.md) and [STATUS](STATUS.md)
+for current runtime checks; historical experiment metrics below retain their
+original scope.
 `model_ready=true` means the asset loaded; all actual results still have
 `analysis_complete=false`. No language has verified performance, the human review
 remains incomplete, and production `no_strong_signals` is disabled. The model still
@@ -19,6 +26,10 @@ saved all 45 label decisions: 16 agreements and 29 corrections, zero pending
 labels. All 45 languages and four reviewer/date attributions remain missing;
 conflict exclusion approval is empty. Requested corrections (44 final spam /
 1 ham / 0 smishing) have not been applied to this original-label model or corpus. The previous blocker report remains as historical evidence.
+The separate staged review now has all 45 label/language confirmations and
+complete attribution, proposing 15 HAM / 13 SPAM / 17 SMISHING plus the 98-row
+quarantine. It has not been submitted or finally approved; canonical review and
+this original-label model remain unchanged. See [review assessment](REVIEW_DRAFT_ASSESSMENT.md).
 
 ## Data and licenses
 

@@ -1,6 +1,6 @@
 # ClearMessage English UI copy
 
-Version 1.1.0 · 10 October 2026. Approved Style A wording is integrated with the
+Version 1.2.0 · 11 October 2026. Approved Style A wording is integrated with the
 real provisional model. The exact current strings below match
 `frontend/src/copy.ts`; update both together. All current results are incomplete.
 English interface language does not establish evaluated model support.
@@ -35,6 +35,10 @@ English interface language does not establish evaluated model support.
 |---|---|
 | incomplete | Limited check · analysis is incomplete |
 | complete | Analysis completed · safety not established |
+| statusLabels.suspicious | Suspicious message |
+| statusLabels.review | We couldn't assess this reliably |
+| statusLabels.no_strong_signals | No strong warning signs found |
+| notPerformed | Analysis not performed |
 | headlines.model_not_ready | The model is not ready yet. |
 | headlines.review_required | This message needs further verification. |
 | headlines.suspicious_signals | There are warning signals in this message. |
@@ -106,6 +110,13 @@ experimental-model template never explains particular words or verifies identity
 At most three reasons and three actions; visible limitations are not collapsed.
 `no_strong_signals` wording is reserved and unreachable for the current artifact.
 No red stronger-warning presentation has a validated policy; it remains disabled.
+Review has a neutral white card with an amber accent; supported suspicious results
+use the amber surface. The status label and analysis-completion label are separate.
+Missing/failed model with no observed warning displays **Analysis not performed**.
+Observed warnings may still display **Suspicious message** during model failure,
+with the incomplete/rules-only limitation visible. The green presentation is
+reserved for a valid completed low-finding response and is unreachable in the
+current production policy.
 
 Dedicated copy feedback, additional UX work and optional OCR remain future goals,
 not implemented by this migration. Fictional demos must use `.invalid` domains;

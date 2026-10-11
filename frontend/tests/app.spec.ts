@@ -19,6 +19,8 @@ test('real frontend POST → API → honest provisional review, without storage 
   expect(await response.json()).toMatchObject({ status: 'review', analysis_complete: false, headline_key: 'review_required', evidence: [], model_version: 'clearmessage-sparse-v1:7fe727cfb786' });
   await expect(page.getByRole('heading', { name: 'This message needs further verification.' })).toBeVisible();
   await expect(page.getByText('Limited check · analysis is incomplete', { exact: true })).toBeVisible();
+  await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
+  await expect(page.getByText("We couldn't assess this reliably", { exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'This message needs further verification.' })).toBeFocused();
   expect(await page.locator('.result').textContent()).not.toContain(canary);
   expect(requests.every(url => new URL(url).origin === new URL(baseURL!).origin)).toBe(true);
@@ -145,4 +147,43 @@ test('Style A assets, English metadata and narrow text reflow', async ({ page })
   await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await expect(page.getByLabel('Message text', { exact: true })).toBeVisible();
+});
+
+test('real English signals without links → bounded reasons/actions → neutral preview', async ({ page }) => {
+  const canary = 'FICTIONAL_PRIVATE_CANARY_Alex_ACCOUNT_654321';
+  await page.goto('/');
+  await page.getByLabel('Message language', { exact: true }).selectOption('en');
+  await page.getByLabel('Message text', { exact: true }).fill(`Please send me your login code. Pay the invoice immediately. Keep this secret. ${canary}`);
+  const responsePromise = page.waitForResponse(response => response.url().endsWith('/api/analyze'));
+  await page.getByRole('button', { name: 'Check Message' }).click();
+  const response = await responsePromise;
+  const data = await response.json();
+  expect(data).toMatchObject({ status: 'suspicious', analysis_complete: false, policy_version: 'analysis-policy-2', model_version: 'clearmessage-sparse-v1:7fe727cfb786' });
+  expect(data.evidence.map((item: {key: string}) => item.key)).toEqual(['request_for_secret', 'payment_pressure', 'secrecy_request']);
+  expect(data.action_keys).toHaveLength(3);
+  await expect(page.locator('.result')).toHaveAttribute('data-status', 'suspicious');
+  await expect(page.getByText('Suspicious message', { exact: true })).toBeVisible();
+  expect(await page.locator('.result').textContent()).not.toContain(canary);
+  await page.getByRole('button', { name: 'Ask someone for help' }).click();
+  expect(await page.getByLabel('Help request preview').inputValue()).not.toMatch(/CANARY|Alex|ACCOUNT|654321|login|invoice|https?:/);
+  await page.getByLabel('Message language', { exact: true }).selectOption('other');
+  await expect(page.locator('.result')).toHaveCount(0);
+});
+
+test('unavailable model contract has a separate incomplete service state', async ({ page }) => {
+  // Failure simulation only; other tests use real local model/API inference.
+  await page.route('**/api/analyze', route => route.fulfill({status: 200, contentType: 'application/json', body: JSON.stringify({
+    status: 'review', analysis_complete: false, headline_key: 'model_not_ready', evidence: [],
+    action_keys: ['verify_independently', 'ask_trusted_person'],
+    limitations: ['model_not_ready', 'rules_only', 'not_a_safety_confirmation'],
+    message_language: 'auto', model_version: null, policy_version: 'analysis-policy-2', contract_version: '1.1.0',
+    share_summary_keys: ['analysis_not_completed', 'help_verify_independently'],
+  })}));
+  await page.goto('/');
+  await page.getByLabel('Message text', { exact: true }).fill('Fictional ordinary message for failure testing.');
+  await page.getByRole('button', { name: 'Check Message' }).click();
+  await expect(page.getByText('Analysis not performed', { exact: true })).toBeVisible();
+  await expect(page.getByText('Limited check · analysis is incomplete', { exact: true })).toBeVisible();
+  await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
+  await expect(page.getByText('No strong warning signs found', { exact: true })).toHaveCount(0);
 });

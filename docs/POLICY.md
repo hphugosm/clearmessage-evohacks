@@ -1,10 +1,15 @@
-# Analysis policy 1 / observed requests 1
+# Analysis policy 2 / observed requests 2
 
 Goal03 connects the project-trained Goal02 word/character TF-IDF + balanced
 LogisticRegression (C=2) selected on validation. `backend/model-config.json`
 independently pins its SHA-256 and the selection-report hash. It accepts no
 remote model identifier, arbitrary expected hash, pickle, runtime download or
 alternative demo classifier. Read `MODEL_CARD.md` for data/license limits.
+Startup verifies the bounded selection-report JSON hash, selected artifact
+path/hash, warning-threshold agreement and recorded validation selection
+(`test_used=false`). Failure disables inference instead of silently using a
+different threshold or model. Threshold **0.60** is unchanged; no new training,
+validation search or held-out selection was performed for policy 2.
 
 ## Decision order
 
@@ -35,7 +40,7 @@ alternative demo classifier. Read `MODEL_CARD.md` for data/license limits.
    **unvalidated and disabled in production**; test-only reviewed models exercise
    its safety invariants. Enabling it requires a separately validated policy.
 
-`analysis-policy-1` and `observed-requests-1` are versioned in source and the
+`analysis-policy-2` and `observed-requests-2` are versioned in source and the
 integration report. Scores, raw class outputs and evidence text never enter API
 responses or help drafts. API/UI permit at most three reasons and three steps.
 General text is used when no observed rule matched; it never fabricates an ML
@@ -48,6 +53,12 @@ ask…” and common educational warnings do not trigger direct-request rules.
 Separate sentences and contrast clauses (“but” / “ale”) permit a later actual
 request to warn. “Do not tell anyone your password” is anti-disclosure advice,
 not transaction concealment. Transfer of school notes is not money transfer.
+Policy 2 also recognizes explicit login/security/authentication/two-factor code
+requests. “No one should ask you to share your verification code” and “Do not
+tell anyone about your password” are routine protective advice. An educational
+phrase appended after a direct request does not erase that request's evidence.
+These are finite observed-rule corrections, not new model predictions or a
+general quotation/negation parser.
 
 This is a small finite pattern set, not general language understanding. Complex
 negation, quotations, hypotheticals, paraphrases, mixed languages and evasion can
@@ -72,6 +83,17 @@ secrets and does not claim to inspect/clean the device. Advice was cross-checked
 with [FTC phishing guidance](https://consumer.ftc.gov/articles/how-recognize-avoid-phishing-scams)
 and [FTC steps after a scam](https://consumer.ftc.gov/articles/what-do-if-you-were-scammed).
 Offline PSL configuration follows [tldextract's official documentation](https://github.com/john-kurkowski/tldextract).
+
+## Presentation
+
+Style A uses **Suspicious message** on amber for supported evidence; **We couldn't
+assess this reliably** on a neutral card with an amber accent for review. Model
+failure without observed evidence says **Analysis not performed**. Completion
+is shown separately. Reserved green low findings require the unchanged full
+completion guards and remain unreachable with this provisional artifact. Red
+**Potential scam** has no validated stronger-warning policy and stays disabled.
+The client mirrors evidence, scope and completion invariants before rendering;
+its expanded states were checked after the backend contract/integration suite.
 
 ## Verification boundaries
 

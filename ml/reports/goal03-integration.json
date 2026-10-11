@@ -15,18 +15,18 @@
     "max_text_length": 2000,
     "model_ready": true,
     "model_version": "clearmessage-sparse-v1:7fe727cfb786",
-    "policy_version": "analysis-policy-1",
+    "policy_version": "analysis-policy-2",
     "service_status": "ok"
   },
   "held_out_or_blind_data_opened": false,
   "measurements": {
-    "application_factory_ms": 15.818916959688067,
+    "application_factory_ms": 17.158625181764364,
     "device": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
     "machine": "arm64",
-    "max_ms": 30.605582986027002,
-    "p50_ms": 0.892583979293704,
-    "p95_ms": 3.395874984562397,
-    "process_peak_rss_bytes": 178503680,
+    "max_ms": 37.22258284687996,
+    "p50_ms": 0.9525420609861612,
+    "p95_ms": 3.971958067268133,
+    "process_peak_rss_bytes": 178356224,
     "python": "3.13.1",
     "requests": 25,
     "timing_scope": "25 loaded-model in-process TestClient requests, including HTTP/ASGI + model + rules and cold bundled PSL; excludes first module import"
@@ -57,7 +57,7 @@
       ],
       "message_language": "cs",
       "model_version": "clearmessage-sparse-v1:7fe727cfb786",
-      "policy_version": "analysis-policy-1",
+      "policy_version": "analysis-policy-2",
       "share_summary_keys": [
         "analysis_not_completed",
         "help_verify_independently"
@@ -88,7 +88,7 @@
       ],
       "message_language": "en",
       "model_version": "clearmessage-sparse-v1:7fe727cfb786",
-      "policy_version": "analysis-policy-1",
+      "policy_version": "analysis-policy-2",
       "share_summary_keys": [
         "analysis_not_completed",
         "help_verify_independently"
@@ -113,7 +113,7 @@
       ],
       "message_language": "en",
       "model_version": "clearmessage-sparse-v1:7fe727cfb786",
-      "policy_version": "analysis-policy-1",
+      "policy_version": "analysis-policy-2",
       "share_summary_keys": [
         "analysis_not_completed",
         "help_verify_independently"
@@ -138,7 +138,7 @@
       ],
       "message_language": "en",
       "model_version": "clearmessage-sparse-v1:7fe727cfb786",
-      "policy_version": "analysis-policy-1",
+      "policy_version": "analysis-policy-2",
       "share_summary_keys": [
         "analysis_not_completed",
         "help_verify_independently"
@@ -163,7 +163,7 @@
       ],
       "message_language": "en",
       "model_version": "clearmessage-sparse-v1:7fe727cfb786",
-      "policy_version": "analysis-policy-1",
+      "policy_version": "analysis-policy-2",
       "share_summary_keys": [
         "analysis_not_completed",
         "help_verify_independently"
@@ -171,6 +171,6 @@
       "status": "review"
     }
   ],
-  "rules_version": "observed-requests-1",
+  "rules_version": "observed-requests-2",
   "training_performed": false
 }

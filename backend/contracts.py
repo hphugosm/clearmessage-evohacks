@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 MAX_TEXT_LENGTH = 2000
 MAX_BODY_BYTES = 32768
 CONTRACT_VERSION = "1.1.0"
-POLICY_VERSION = "analysis-policy-1"
+POLICY_VERSION = "analysis-policy-2"
 
 
 class ContractModel(BaseModel):
@@ -72,7 +72,7 @@ class AnalyzeResponse(ContractModel):
         for item in self.evidence:
             if (item.key == "model_signal") != (item.basis == "classifier"):
                 raise ValueError("evidence_basis_mismatch")
-            if item.basis == "classifier" and (not self.model_version or any(key in self.limitations for key in ("model_not_ready", "inference_unavailable", "incomplete_coverage"))):
+            if item.basis == "classifier" and (self.message_language != "en" or not self.model_version or any(key in self.limitations for key in ("model_not_ready", "inference_unavailable", "incomplete_coverage"))):
                 raise ValueError("unavailable_classifier_cannot_supply_evidence")
         if (self.status == Status.suspicious) != bool(self.evidence):
             raise ValueError("evidence_status_mismatch")

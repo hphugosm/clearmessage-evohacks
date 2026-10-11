@@ -253,3 +253,99 @@ def test_hostile_urls_are_only_parsed(real_model, monkeypatch):
     assert not data.analysis_complete and data.status != "no_strong_signals"
     assert all(e.key == "model_signal" for e in data.evidence)
     assert calls == []
+
+@pytest.mark.parametrize("text", [
+    "No one should ask you to share your verification code.",
+    "Nobody should ever ask you to send your login code.",
+    "Do not tell anyone about your password.",
+    "Do not tell anyone to share their security code.",
+    "Please share this example of a scam involving passwords.",
+])
+def test_routine_security_advice_has_no_observed_warning(text):
+    assert observed_rules(text) == []
+    data = result(text, model=UnavailableClassifier())
+    assert data.status == "review" and not data.analysis_complete and data.evidence == []
+
+@pytest.mark.parametrize("text", [
+    "Please send me your login code.",
+    "Reply with your authentication code.",
+    "Please forward your security code.",
+    "Please send me your password, beware of scammers.",
+    "No one should ask you to share a password, but send me your login code.",
+])
+def test_actual_code_requests_and_trailing_notice_have_proof(text):
+    matches = observed_rules(text)
+    assert {m.key for m in matches} == {"request_for_secret"}
+    assert all(text[m.start:m.end].strip() for m in matches)
+    data = result(text, model=UnavailableClassifier())
+    assert data.status == "suspicious" and not data.analysis_complete
+
+@pytest.mark.parametrize("change", ["threshold", "artifact", "missing", "hash", "test_selection"])
+def test_selection_integrity_failures_disable_real_model(change, monkeypatch, tmp_path):
+    report = json.loads((ROOT / CONFIG["selection_report"]).read_text())
+    if change == "threshold":
+        monkeypatch.setitem(CONFIG, "warning_threshold", .01)
+    elif change == "artifact":
+        report["selection"]["model"] = "tfidf_c0.5"
+    elif change == "test_selection":
+        report["selection"]["test_used"] = True
+    path = tmp_path / "selection.json"
+    if change != "missing":
+        path.write_text(json.dumps(report))
+        import hashlib
+        monkeypatch.setitem(CONFIG, "selection_report_sha256", hashlib.sha256(path.read_bytes()).hexdigest())
+    if change == "hash":
+        monkeypatch.setitem(CONFIG, "selection_report_sha256", "0" * 64)
+    monkeypatch.setitem(CONFIG, "selection_report", str(path))
+    model = load_classifier()
+    assert not model.ready and model.version is None
+    data = result(model=model)
+    assert data.status == "review" and not data.analysis_complete
+    assert "model_not_ready" in data.limitations
+
+def test_real_model_receives_full_limit_including_trailing_request(real_model, monkeypatch):
+    suffix = " Please send me your login code."
+    text = ("Fictional ordinary school notice. " * 70)[:2000-len(suffix)] + suffix
+    assert len(text) == 2000
+    inference = Mock(wraps=real_model.predict)
+    monkeypatch.setattr(real_model, "predict", inference)
+    with TestClient(create_app(classifier=real_model)) as client:
+        response = client.post("/api/analyze", json={"text": text, "message_language": "en"})
+    assert response.status_code == 200
+    inference.assert_called_once_with(text, "en")
+    data = response.json()
+    assert data["status"] == "suspicious" and not data["analysis_complete"]
+    assert {"key":"request_for_secret", "basis":"observed_text_signal"} in data["evidence"]
+
+def test_contract_and_classifier_language_scope_are_consistent():
+    from backend.contracts import AnalyzeResponse
+    from pydantic import ValidationError
+    data = result(model=TestOnlyClassifier(Prediction(.01, .01, .98, True))).model_dump(mode="json")
+    assert any(e["basis"] == "classifier" for e in data["evidence"])
+    for language in ("auto", "cs", "other"):
+        with pytest.raises(ValidationError):
+            AnalyzeResponse.model_validate({**data, "message_language": language})
+
+def test_packaged_runtime_with_selection_report_needs_no_training_data(tmp_path):
+    import os
+    import shutil
+    # Stage the runtime files independently of the checkout; this is not a
+    # Docker execution claim. No raw corpus, encoder, training scripts or pickle.
+    shutil.copytree(ROOT / "backend", tmp_path / "backend", ignore=shutil.ignore_patterns("__pycache__"))
+    for relative in ("ml/sparse_model.py", "ml/data_prep.py", "ml/sources/mendeley-v1.json",
+                     CONFIG["artifact_path"], CONFIG["selection_report"]):
+        target = tmp_path / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / relative, target)
+    code = '''from fastapi.testclient import TestClient
+from backend.app import create_app
+with TestClient(create_app()) as client:
+ assert client.get("/api/health").json()["model_ready"]
+ data=client.post("/api/analyze",json={"text":"Please send me your login code.","message_language":"en"}).json()
+ assert data["status"] == "suspicious" and not data["analysis_complete"]
+ assert data["policy_version"] == "analysis-policy-2"
+ print("isolated_runtime_passed")'''
+    env = {key: value for key, value in os.environ.items() if key not in ("PYTHONPATH", "FRONTEND_DIST")}
+    completed = subprocess.run([sys.executable,"-c",code],cwd=tmp_path,env=env,capture_output=True,text=True,timeout=30)
+    assert completed.returncode == 0, "Isolated runtime failed (private diagnostics suppressed)"
+    assert completed.stdout.strip() == "isolated_runtime_passed"

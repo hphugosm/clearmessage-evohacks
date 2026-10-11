@@ -1,18 +1,19 @@
 # ClearMessage project status
 
-Updated **11 October 2026, Europe/Prague**. The owner requested an independent
-assessment of the Goal 01 validation draft. The current workspace is staged in
+Updated **11 October 2026, Europe/Prague**. The requested real analysis flow is
+verified with policy 2, the existing Goal 02 model, transparent rules, English
+guidance and neutral help sharing. The Goal 01 review workspace remains staged in
 RAM, not submitted: all 45 labels explicitly rechecked, no rechecks missing, all 45
 languages confirmed, four missing attributions explicitly re-confirmed. The
 98-row quarantine is now explicitly proposed; final approval remains withheld.
 The canonical review is unchanged. The draft has zero submission blockers;
 immutable draft submission and separate final approval remain outstanding.
 The English migration remains complete.
-No Goal 04, retraining, split freeze, blind/held-out message inspection or
-publication was started.
+This integration did not approve review data, retrain, freeze the split, inspect
+blind/held-out messages, publish or start Goal 04.
 
-The real Goal 02 sparse model remains integrated with `analysis-policy-1` and
-`observed-requests-1`, contract **1.1.0**. It is provisional: **human review requirements remain incomplete**, original
+The real Goal 02 sparse model remains integrated with `analysis-policy-2` and
+`observed-requests-2`, contract **1.1.0**. It is provisional: **final reviewed-data approval remains outstanding**, original
 training labels unchanged, no verified language performance. Current
 results are `suspicious` with actual basis or `review`, always
 `analysis_complete=false`. Production `no_strong_signals` is disabled.
@@ -22,8 +23,8 @@ results are `suspicious` with actual basis or `review`, always
 | Naming/language | ClearMessage; English UI, instructions, docs, metadata and public demos. Czech evaluation data remains separate. Migration verification below. |
 | Brand | Approved Style A: shared blue/navy tokens, white rounded cards, local Inter, passive local mark/illustration, input-first mobile layout. |
 | Frontend/API | Real model-backed POST via Vite and FastAPI-served build; no demo verdicts. |
-| Contract | Pydantic → OpenAPI → TypeScript; title migrated, fields/enums/versions unchanged. |
-| Model/policy | Real hash-verified project JSON; incomplete results and rules-only errors remain explicit. |
+| Contract | Pydantic → OpenAPI → TypeScript; schema 1.1.0 fields/enums unchanged; policy version 2; drift checks passed. |
+| Model/policy | Hash-verified project JSON and validation-selection report; unchanged 0.60 warning threshold; policy 2 and rules 2. Incomplete results and rules-only failures remain explicit. |
 | Dataset | 5,971 original rows. Canonical unchanged. Staged draft: 15 HAM / 13 SPAM / 17 SMISHING, all 45 rechecked and English-confirmed, four fresh attributions, 98-row quarantine proposed; zero blockers. Conditional reviewed eligible corpus: 5,873 rows (4,844 HAM / 439 SPAM / 590 SMISHING), not approved. Source/training unchanged. |
 | Data split | Immutable candidate, empty intersections; no approved final freeze. Provisional authorization preserves original assignments and `data_split_ready=false`. |
 | Czech development/challenge | Format and independent instructions; zero actual challenge records. Existing synthetic Czech regression inputs preserved, not a benchmark. |
@@ -32,6 +33,100 @@ results are `suspicious` with actual basis or `review`, always
 | Deployment | Account/destination unconfirmed; no publishing, credential collection or purchase. |
 | Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
 | OCR/submission/video/Goal 04 | Not started by this migration. |
+
+## Goal 03 — real flow verification and policy 2
+
+Inspected the clean existing repository and retained its genuine Goal 02
+integration. No dataset decisions or weights were replaced. The current flow is
+text → bounded local sparse classifier → evidence-supported observed rules →
+versioned policy → fixed English reasons/actions → neutral help preview and
+separate user-initiated sharing. Manual copying uses the selectable preview;
+no clipboard access, external agent or integration was added.
+
+- Startup now checks the pinned selection-report hash, selected artifact
+  path/hash, validation-selection record and exact threshold agreement. Missing,
+  corrupt or inconsistent selection assets disable the model. Scores remain
+  internal; the selected warning threshold is unchanged at **0.60**.
+- `observed-requests-2` handles explicit login/security/authentication code
+  requests and the verified routine-warning/negation gaps. A trailing warning
+  cannot erase an earlier direct request. Evidence remains observed wording,
+  never fraud proof or fabricated model attribution. Existing Czech test data
+  and rules are retained. Complex quotations/paraphrases remain a documented
+  finite-rule limitation.
+- Policy **analysis-policy-2**, schema **1.1.0**. Real inference failure,
+  insufficient text, partial coverage, unsupported/unspecified input language
+  and pending approval cannot produce reassurance. Explicit observed evidence
+  may still warn with rules-only/incomplete limitations. Spam/HTTPS/TLD/typos
+  or shortened links are not rule evidence; cold PSL parsing remains offline.
+- Backend contract checks passed before expanding frontend presentation. Client
+  validation now rejects evidence/status, language-scope and help/completion
+  contradictions. Style A distinguishes amber supported warnings, neutral
+  review and unavailable analysis; completion is a separate visible label.
+  Green remains reserved behind full guards and unreachable for this artifact.
+  Stronger red warnings remain disabled without a validated presentation policy.
+- Reasons and actions remain capped at three. Independent verification uses
+  familiar contact details, never those from the message. Help drafts contain
+  only approved fixed sentences, with no source, evidence, URLs, personal
+  identifiers or codes. Recovery advice collects no secrets and executes no
+  intervention. The source is processed in backend RAM, not solely in-browser.
+- Docker now includes the pinned selection report needed at startup. An
+  isolated fresh-process runtime test loaded the actual classifier/API using
+  only packaged runtime assets, without raw training data or an encoder.
+  This is not evidence of Docker execution.
+
+Executed from the repository root, using existing local dependencies:
+
+```sh
+.venv/bin/python -m pytest tests/test_analysis.py tests/test_api.py -q
+.venv/bin/python -m pip check
+.venv/bin/python scripts/export_contract.py --check
+npm --prefix frontend run contract:check
+.venv/bin/python -m pytest -q
+npm --prefix frontend test
+npm --prefix frontend run build
+.venv/bin/python scripts/prepare_model.py
+.venv/bin/python scripts/verify_analysis.py
+npm --prefix frontend run test:e2e
+python3 scripts/audit_migration.py
+git diff --check
+command -v docker
+sh scripts/test.sh
+```
+
+Actual results: initial API/contract suite **82 passed**; backend corrections
+before frontend changes **96 passed**; final full suite **183 passed**. Client
+**30 passed**. TypeScript/Vite build, Python/npm contract drift, dependency
+consistency, offline model preparation and migration audit **PASS**. Browser
+**20 passed** across the actual single-process build and Vite API proxy, including
+EN/CZ evidence, no-URL requests, uncertain and unavailable states, canary preview/
+share, no storage/external requests, and narrow reflow. The final consolidated
+`scripts/test.sh` run passed; migration inspected **140 owned files**, including
+the new machine-readable status report. Diff whitespace **PASS**.
+
+Real API smoke measurement: **25 synthetic development requests**, zero network
+attempts; p50 **0.953 ms**, p95 **3.972 ms**, max **37.223 ms** on macOS arm64,
+Python 3.13.1. These are in-process TestClient timings including model/rules/ASGI
+and cold bundled PSL, excluding first module import; not an HTTP deployment
+benchmark or language-performance validation. [Measured JSON](../ml/reports/goal03-integration.json)
+and [policy 2 verification status](../ml/reports/goal03-policy2-status.json)
+contain no source-message text. Tests verify actual full 2,000-character input
+with a trailing code request, reload/API inference, selection integrity,
+threshold conflicts, overload, invalid scores/partial coverage, no-egress and
+log/share canaries. Failure models and native-share simulations are test-only.
+
+Docker CLI detection **UNAVAILABLE, exit 1**; build/run/healthcheck **UNTESTED**.
+The existing Starlette/httpx deprecation and Node color-environment warnings
+remain visible. Initial file discovery used a nonexistent `frontend/e2e`
+path/glob; it failed and was corrected to the actual `frontend/tests` directory.
+No application/build/test failure was concealed or security check weakened.
+Real screen-reader use and public hosting/proxy/privacy checks were not performed.
+
+Review, candidate, real artifact, selection report and model-config SHA-256 values
+match the recorded pre-change pins. All production analyses remain incomplete:
+final data approval and per-language validation are outstanding; policy 2 did
+not retrain or unlock `no_strong_signals`. No final split, new model metrics,
+blind challenge use, publication or deployment is claimed. This active
+integration goal ends after verification and a local commit.
 
 ## Goal 01 — completed rechecks, awaiting submission and final approval
 

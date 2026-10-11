@@ -82,8 +82,11 @@ export default function App() {
             <p className="sr-only" role="status" aria-live="polite">{pending ? t.pending : ''}</p>
           </form>
           <div aria-live="polite" aria-atomic="true">
-            {result && <section className="result" aria-labelledby="result-heading">
-              <p className="result-label"><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="m12 3 10 18H2L12 3Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><path d="M12 9v5m0 3v.1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>{result.analysis_complete ? t.complete : t.incomplete}</p>
+            {result && <section className="result" data-status={result.status} aria-labelledby="result-heading">
+              <p className="result-label"><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                {result.status === 'no_strong_signals' ? <path d="m5 12 4 4L19 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /> : <><path d="m12 3 10 18H2L12 3Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><path d="M12 9v5m0 3v.1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></>}
+              </svg>{result.status === 'review' && result.limitations.some(key => key === 'model_not_ready' || key === 'inference_unavailable') ? t.notPerformed : t.statusLabels[result.status]}</p>
+              <p className="completion-label">{result.analysis_complete ? t.complete : t.incomplete}</p>
               <h2 id="result-heading" tabIndex={-1} ref={resultHeading}>{t.headlines[result.headline_key]}</h2>
               <p>{t.resultDetail}</p>
               <h3>{t.reasons}</h3>

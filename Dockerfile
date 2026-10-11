@@ -19,6 +19,7 @@ COPY scripts/serve.py ./scripts/serve.py
 COPY ml/sparse_model.py ml/data_prep.py ./ml/
 COPY ml/sources/mendeley-v1.json ./ml/sources/mendeley-v1.json
 COPY build/model.json ./ml/artifacts/goal02-provisional-v2/tfidf_c2.0.json
+COPY ml/reports/goal02-provisional-v2.json ./ml/reports/goal02-provisional-v2.json
 COPY --from=frontend-build /build/frontend/dist ./frontend/dist/
 USER 10001
 EXPOSE 7860

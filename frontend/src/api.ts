@@ -31,7 +31,7 @@ export function parseResponse(data: unknown): AnalyzeResponse {
     Object.keys(value).length !== keys.length || Object.keys(value).some(key => !keys.includes(key)) ||
     !['review', 'suspicious', 'no_strong_signals'].includes(String(value.status)) ||
     typeof value.analysis_complete !== 'boolean' ||
-    value.contract_version !== '1.1.0' || value.policy_version !== 'analysis-policy-1' ||
+    value.contract_version !== '1.1.0' || value.policy_version !== 'analysis-policy-2' ||
     !(value.model_version === null || (typeof value.model_version === 'string' && value.model_version.trim().length > 0)) ||
     !['auto', 'cs', 'en', 'other'].includes(String(value.message_language)) ||
     !keysMatch(value.action_keys, ['verify_independently', 'do_not_send_secrets', 'pause_payment', 'ask_trusted_person'], 1, 3) ||
@@ -49,9 +49,9 @@ export function parseResponse(data: unknown): AnalyzeResponse {
   if (result.headline_key !== expectedHeadline ||
     (result.analysis_complete && (!result.model_version || result.limitations.some(key => key !== 'not_a_safety_confirmation'))) ||
     (result.status === 'no_strong_signals' && (!result.analysis_complete || result.evidence.length !== 0)) ||
-    (result.status === 'suspicious' && result.evidence.length === 0) ||
-    (!result.analysis_complete && !result.share_summary_keys.includes('analysis_not_completed')) ||
-    (result.evidence.some(item => item.basis === 'classifier') && (!result.model_version || result.limitations.includes('inference_unavailable') || result.limitations.includes('incomplete_coverage') || result.limitations.includes('model_not_ready')))
+    ((result.status === 'suspicious') !== (result.evidence.length > 0)) ||
+    (result.analysis_complete === result.share_summary_keys.includes('analysis_not_completed')) ||
+    (result.evidence.some(item => item.basis === 'classifier') && (result.message_language !== 'en' || !result.model_version || result.limitations.includes('inference_unavailable') || result.limitations.includes('incomplete_coverage') || result.limitations.includes('model_not_ready')))
   ) throw new AnalysisError('unavailable');
   return result;
 }

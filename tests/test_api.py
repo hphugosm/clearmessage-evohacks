@@ -26,7 +26,7 @@ def test_health_separates_service_from_model(client):
     assert response.status_code == 200
     assert response.json() == {
         "service_status": "ok", "model_ready": False, "model_version": None,
-        "evaluated_message_languages": [], "human_review_complete": False, "policy_version": "analysis-policy-1",
+        "evaluated_message_languages": [], "human_review_complete": False, "policy_version": "analysis-policy-2",
         "contract_version": "1.1.0", "max_text_length": 2000, "max_body_bytes": 32768,
     }
     assert response.headers["cache-control"] == "no-store"

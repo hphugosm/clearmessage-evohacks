@@ -7,6 +7,7 @@ type Copy = {
   submit: string; pending: string;
   resultDetail: string;
   headlines: Record<AnalyzeResponse['headline_key'], string>;
+  statusLabels: Record<AnalyzeResponse['status'], string>; notPerformed: string;
   evidence: Record<AnalyzeResponse['evidence'][number]['key'], string>;
   reasons: string; noEvidence: string; incomplete: string; complete: string;
   help: string; helpPreview: string; helpNotice: string; share: string; shareUnavailable: string;
@@ -31,6 +32,8 @@ export const copy: Copy = {
   submit: 'Check Message', pending: 'Checking…',
   resultDetail: 'This output does not verify the sender or the claims and does not establish message safety. Check the claims through a familiar independent channel.',
   headlines: { model_not_ready: 'The model is not ready yet.', review_required: 'This message needs further verification.', suspicious_signals: 'There are warning signals in this message.', no_strong_signals: 'We found no strong warning signals.' },
+  statusLabels: { suspicious: 'Suspicious message', review: "We couldn't assess this reliably", no_strong_signals: 'No strong warning signs found' },
+  notPerformed: 'Analysis not performed',
   evidence: {
     request_for_secret: 'Observed textual signal: a request to disclose a password or verification code.',
     payment_pressure: 'Observed textual signal: a request for an immediate payment or transfer.',
