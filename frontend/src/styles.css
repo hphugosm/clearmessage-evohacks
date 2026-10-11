@@ -23,7 +23,7 @@ form, .surface { padding: 28px; border: 1px solid var(--cm-border-subtle); borde
 label { display: block; font-weight: 600; margin-bottom: 8px; }
 textarea { display: block; width: 100%; resize: vertical; min-height: 180px; padding: 16px; border: 1px solid var(--cm-border-control); border-radius: var(--cm-radius-control); color: var(--cm-text-primary); background: var(--cm-surface-card); }
 textarea::placeholder { color: var(--cm-text-secondary); }
-select { width: 100%; min-height: var(--cm-control-height); border: 1px solid var(--cm-border-control); border-radius: var(--cm-radius-control); background: var(--cm-surface-card); color: var(--cm-text-primary); padding: 8px 12px; }
+select { appearance: none; width: 100%; min-height: var(--cm-control-height); border: 1px solid var(--cm-border-control); border-radius: var(--cm-radius-control); background: var(--cm-surface-card) url('./assets/chevron-down.svg') no-repeat right 12px center / 20px; color: var(--cm-text-primary); padding: 8px 44px 8px 12px; }
 .field-note { display: flex; justify-content: space-between; gap: 16px; font-size: 1rem; color: var(--cm-text-secondary); margin: 12px 0 20px; }
 .field-note p { margin: 0; }
 .field-note span { white-space: nowrap; }

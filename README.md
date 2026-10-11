@@ -94,6 +94,15 @@ PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-o
 python3 scripts/export_transparency.py --check
 ```
 
+Optional Firefox and WebKit engine regression (explicit local test setup; no analysis-time download):
+
+```sh
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" frontend/node_modules/.bin/playwright install --no-remove --no-progress firefox webkit
+npm --prefix frontend run test:e2e:cross
+```
+
+The separate configuration checks production same-origin serving with the pinned Playwright engines. Firefox's protocol cannot grant clipboard read/write permissions; its two read-back cases remain covered in Chromium and WebKit. Firefox still checks selectable previews and clipboard/share failure fallbacks. WebKit engine testing is not actual Safari or physical-device usability testing. These checks also own port 8000, so run them after the default browser suite.
+
 The UI verifier owns port 8788, captures only fictional inputs under `.cache/goal09-ui`, and writes new Goal 09 evidence without replacing historical audits. The flag verifier owns a temporary production build/server. Start services ahead of a demo: the fresh locked runtime's measured cold startup is recorded in the test report. Browser native-share availability depends on the device; manual preview/copy remains available.
 
 Individual checks:

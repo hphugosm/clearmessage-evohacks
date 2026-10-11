@@ -6,9 +6,11 @@
 
 Minimalist inclusive English UI; real English PNG/JPEG browser OCR; full editable extracted text with explicit confirmation; actual frozen trained classifier; truthful expandable rule highlights; five curated local situation checklists; fixed neutral preview/copy/share fallback; same-origin report-verified Behind the AI route. Every assessment remains incomplete and says it does not establish safety. Source/model/data/thresholds and Czech evaluation provenance are preserved.
 
-Final regression **217 Python / 68 Vitest / 62 Playwright PASS**. Clean locked runtime install/build, real OCR/model complete journey, clipboard copy, unavailable-model negative case, privacy/admission/limits/restart PASS. Fifteen layout/contrast checks and five genuine native Chromium 200% zoom captures PASS; separate OCR-disabled production build PASS. See [test report](GOAL_09_TEST_REPORT.md), [implementation](GOAL_09_IMPLEMENTATION.md), [release evidence](data/goal09-local-release.json) and [UI evidence](data/goal09-ui-verification.json) for actual scope and corrected failures.
+Final regression **217 Python / 68 Vitest / 66 Chromium Playwright PASS**, plus **64 Firefox/WebKit PASS**. Clean locked runtime install/build, real OCR/model complete journey, clipboard copy, unavailable-model negative case, privacy/admission/limits/restart PASS. Fifteen layout/contrast checks and five genuine native Chromium 200% zoom captures PASS; separate OCR-disabled production build PASS. See [test report](GOAL_09_TEST_REPORT.md), [implementation](GOAL_09_IMPLEMENTATION.md), [release evidence](data/goal09-local-release.json) and [UI evidence](data/goal09-ui-verification.json) for actual scope and corrected failures.
 
-Remaining: independent English/Czech and real-world classifier validation; completed low-finding policy; representative OCR accuracy; physical mobile and actual screen-reader/Safari/Firefox testing; Docker/resource enforcement, public HTTPS/proxy privacy; upstream distribution review and a selected first-party license. These are unverified or release gates, never marked complete. Browser cleanup is explicit but does not guarantee forensic memory erasure. Native sharing is device-dependent and does not prove delivery. Cold clean-runtime startup measured 70.028 seconds; warm offline restart 2.339 seconds.
+The continuation corrected WebKit selector sizing, horizontal keyboard scrolling and OCR cancellation focus/announcement. Firefox runs 31 of 33 scenarios; its two clipboard read-back cases remain in Chromium/WebKit because Firefox automation cannot grant those permissions. WebKit engine checks do not establish actual Safari usability. See [cross-engine evidence](data/goal09-cross-browser.json).
+
+Remaining: independent English/Czech and real-world classifier validation; completed low-finding policy; representative OCR accuracy; physical mobile, actual Safari and spoken screen-reader testing; Docker/resource enforcement, public HTTPS/proxy privacy; upstream distribution review and a selected first-party license. These are unverified or release gates, never marked complete. Browser cleanup is explicit but does not guarantee forensic memory erasure. Native sharing is device-dependent and does not prove delivery. Cold clean-runtime startup measured 74.759 seconds; warm offline restart 1.061 seconds.
 
 ## Checkout and commits
 
@@ -20,7 +22,8 @@ Managed worktree parent: `/Users/hugo/.codex/worktrees/clearmessage-product-expe
 | B: real SafeScan | `47496f2` |
 | C: spans/ActionGuide | `abc7ba8` |
 | D: report-verified transparency | `359e329` |
-| E: final quality, verification and documentation | The commit containing this handoff; resolve with `git log -1 --oneline` |
+| E: final quality, verification and documentation | `8a26d3d` |
+| E continuation: cross-engine accessibility review | The commit containing this updated handoff; resolve with `git log -1 --oneline` |
 
 All implementation commits are local. No Git remote was added. Source changes are limited to frontend/components/copy/style/locked OCR setup, optional evidence contract/serializer/API route/CSP, runtime packaging/verification, focused tests and requested product documentation. Obtain the exact file list with `git diff --name-status a9a924d..HEAD` and inspect it before integration. Approved model config, training/source/review/quarantine/split records, classifier/rule implementation and canonical audits have no diff against the base.
 
@@ -35,7 +38,8 @@ All implementation commits are local. No Git remote was added. Source changes ar
 | Optional evidence contract | `backend/contracts.py`, evidence serializer in `backend/policy.py`, `frontend/src/api.ts`, generated schema/OpenAPI and API documentation |
 | Runtime and privacy | `backend/privacy.py` CSP, `scripts/package_runtime.py`, `Dockerfile`, `scripts/verify_release.py`, frontend release/UI/flag verifiers |
 | Regression | Existing app/analysis/runtime tests plus new OCR/guidance/transparency/evidence tests; `scripts/test.sh` adds fact drift |
-| Documentation/evidence | Brand Bible, UI copy, README, STATUS, third-party notices; Goal 09 reports, aggregate release/UI/flag JSON, synthetic demo PNG and desktop preview |
+| Documentation/evidence | Brand Bible, UI copy, README, STATUS, third-party notices; Goal 09 reports, aggregate release/UI/flag/cross-engine JSON, synthetic demo PNG and desktop preview |
+| Continuation quality | Native select sizing/own chevron, OCR cancel announcement/focus, keyboard table scrolling; separate cross-engine config and expanded keyboard/clipboard/cancellation tests |
 
 ## Run and test
 
@@ -50,6 +54,7 @@ Open [ClearMessage](http://127.0.0.1:7860) and [Behind the AI](http://127.0.0.1:
 
 ```sh
 sh scripts/test.sh
+npm --prefix frontend run test:e2e:cross
 PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-product-ui.mjs
 PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-ocr-flag.mjs
 .venv/bin/python scripts/verify_release.py --clean-install --report docs/data/goal09-local-release.json
@@ -57,7 +62,7 @@ python3 scripts/audit_migration.py
 git diff --check
 ```
 
-Tests own ports 8000/5173; UI capture owns 8788. Release/flag checks own temporary servers. Install Playwright Chromium explicitly if absent; no browser/model download occurs during analysis. The clean-release command needs network for explicit fresh dependency installation and is not a Docker test. It writes Goal 09 evidence, preserving canonical historical audits.
+Tests own ports 8000/5173; cross-engine checks also own 8000 and must run afterward. UI capture owns 8788. Release/flag checks own temporary servers. Install Playwright Chromium, and optional Firefox/WebKit via the explicit project-local command in README, if absent; no browser/model download occurs during analysis. The clean-release command needs network for explicit fresh dependency installation and is not a Docker test. It writes Goal 09 evidence, preserving canonical historical audits.
 
 ## Short hackathon demo
 

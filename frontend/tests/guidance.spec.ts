@@ -42,8 +42,8 @@ test('ActionGuide selects appropriate curated steps, resets checkboxes and never
   await page.getByLabel('Message text',{exact:true}).fill('A fictional ordinary message.');await expect(page.locator('.action-guide')).not.toHaveAttribute('open','');await page.getByText('What have you already done?',{exact:true}).click();await expect(page.getByRole('radio',{name:'I haven’t interacted with the message.',exact:true})).toBeChecked();
 });
 
-test('uncertain result guidance and copy keep source and selected situation private',async({page,context})=>{
-  await context.grantPermissions(['clipboard-read','clipboard-write']);await page.goto('/');
+test('uncertain result guidance and copy keep source and selected situation private',async({page,context,browserName})=>{
+  await context.grantPermissions(browserName === 'webkit' ? ['clipboard-read'] : ['clipboard-read','clipboard-write']);await page.goto('/');
   await page.getByLabel('Message text',{exact:true}).fill('PRIVATE_GUIDE_CANARY_987654 A fictional lunch plan.');await page.getByRole('button',{name:'Check message',exact:true}).click();await expect(page.locator('.result')).toHaveAttribute('data-status','review');
   await page.getByText('What have you already done?',{exact:true}).click();await page.getByRole('radio',{name:'I entered my password.',exact:true}).check();await expect(page.locator('.action-guide')).toContainText('even when the analysis is uncertain or unavailable');
   await page.getByRole('button',{name:'Ask someone for help'}).click();const preview=await page.getByLabel('Help request preview').inputValue();expect(preview).not.toMatch(/PRIVATE|987654|password|lunch/);await page.getByRole('button',{name:'Copy help request'}).click();await expect(page.getByText('Copied',{exact:true})).toBeVisible();expect(await page.evaluate(()=>navigator.clipboard.readText())).toBe(preview);

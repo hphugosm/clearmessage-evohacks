@@ -86,7 +86,7 @@ test('invalid, oversized and corrupt images preserve text fallback',async({page}
   await page.getByRole('button',{name:'Check message',exact:true}).click();await expect(page.locator('.result')).toHaveAttribute('data-status','review');
 });
 
-test('real long OCR stays editable and cannot submit an over-limit message',async({page})=>{
+test('real long OCR stays editable and cannot submit an over-limit message',async({page,browserName})=>{
   test.setTimeout(90_000);await monitorWorkers(page);let posts=0;page.on('request',request=>{if(request.method()==='POST') posts++;});
   await page.setViewportSize({width:360,height:800});await page.goto('/');
   const data=await page.evaluate(()=>{
@@ -100,7 +100,8 @@ test('real long OCR stays editable and cannot submit an over-limit message',asyn
   await (await choosing).setFiles({name:'fictional-long.png',mimeType:'image/png',buffer:Buffer.from(data,'base64')});
   const field=page.getByLabel('Review the extracted text',{exact:true});await expect(field).toBeVisible({timeout:60_000});await expect(field).toBeFocused();
   const output=await field.inputValue();expect([...output].length).toBeGreaterThan(2000);expect(posts).toBe(0);
-  await page.keyboard.press('Tab');await expect(page.getByLabel('I reviewed this text and removed sensitive details.')).toBeFocused();await page.keyboard.press('Space');
+  // WebKit on macOS uses Option+Tab to include controls in native navigation.
+  await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');await expect(page.getByLabel('I reviewed this text and removed sensitive details.')).toBeFocused();await page.keyboard.press('Space');
   await page.getByRole('button',{name:'Check message',exact:true}).click();await expect(page.getByRole('alert')).toContainText('The text exceeds 2,000 characters');expect(posts).toBe(0);await expect(field).toHaveValue(output);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await field.fill('Please send me your login code. Fictional demonstration.');await expect(page.getByLabel('I reviewed this text and removed sensitive details.')).not.toBeChecked();
@@ -133,9 +134,35 @@ test('changing input method during initialization cancels extraction and ignores
   await page.route('**/assets/ocr/eng.traineddata.gz',async route=>{await wait;await route.continue().catch(()=>{});});
   await page.goto('/');const image=await screenshot(page);await page.getByRole('button',{name:'Upload a screenshot'}).click();await page.getByLabel('Choose screenshot',{exact:true}).setInputFiles(image);
   await expect(page.getByRole('button',{name:'Cancel text recognition'})).toBeVisible();
+  // Exercise worker-initialization cancellation, rather than racing image decode
+  // and expecting termination of a worker that has not been created yet.
+  await expect.poll(()=>page.evaluate(()=>(window as unknown as {ocrWorkers:{created:number}}).ocrWorkers.created)).toBe(1);
   await page.getByRole('button',{name:'Paste a message',exact:true}).click();release();
   await page.getByLabel('Message text',{exact:true}).fill('A different fictional message.');
   await expect(page.getByLabel('Message text',{exact:true})).toHaveValue('A different fictional message.');
   expect(await page.evaluate(()=>(window as unknown as {ocrWorkers:{created:number;terminated:number}}).ocrWorkers.terminated)).toBe(1);
   await expect(page.getByRole('alert')).toHaveCount(0);await expect(page.locator('.result')).toHaveCount(0);
+});
+
+test('keyboard cancellation announces no analysis, restores focus and permits a fresh real extraction', async ({page}) => {
+  test.setTimeout(90_000); await monitorWorkers(page); let posts=0;
+  page.on('request',request=>{if(request.method()==='POST') posts++;});
+  let release!:()=>void; const blocked=new Promise<void>(resolve=>{release=resolve;});
+  await page.route('**/assets/ocr/eng.traineddata.gz',async route=>{await blocked;await route.continue().catch(()=>{});});
+  await page.goto('/'); const image=await screenshot(page);
+  await page.getByRole('button',{name:'Upload a screenshot'}).click();
+  await page.getByLabel('Choose screenshot',{exact:true}).setInputFiles(image);
+  await expect.poll(()=>page.evaluate(()=>(window as unknown as {ocrWorkers:{created:number}}).ocrWorkers.created)).toBe(1);
+  const cancel=page.getByRole('button',{name:'Cancel text recognition',exact:true});
+  await cancel.focus(); await page.keyboard.press('Enter');
+  await expect(page.getByRole('status').filter({hasText:'Text recognition was cancelled. No analysis was performed.'})).toBeVisible();
+  await expect(page.getByRole('button',{name:'Choose screenshot',exact:true})).toBeFocused();
+  await expect(page.getByLabel('Review the extracted text',{exact:true})).toHaveCount(0);
+  await expect(page.locator('.result')).toHaveCount(0); expect(posts).toBe(0);
+  expect(await page.evaluate(()=>(window as unknown as {ocrWorkers:unknown}).ocrWorkers)).toEqual({created:1,terminated:1});
+  release(); await page.unroute('**/assets/ocr/eng.traineddata.gz');
+  await page.getByLabel('Choose screenshot',{exact:true}).setInputFiles(image);
+  await expect(page.getByLabel('Review the extracted text',{exact:true})).toHaveValue(/Please send me your login code/,{timeout:60_000});
+  expect(posts).toBe(0);
+  expect(await page.evaluate(()=>(window as unknown as {ocrWorkers:unknown}).ocrWorkers)).toEqual({created:2,terminated:2});
 });

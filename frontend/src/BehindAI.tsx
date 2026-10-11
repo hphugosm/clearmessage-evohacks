@@ -1,5 +1,16 @@
+import type { KeyboardEvent } from 'react';
 import facts from './model-facts.json';
 import { copy as t } from './copy';
+
+function scrollTable(event: KeyboardEvent<HTMLDivElement>) {
+  if (event.target !== event.currentTarget || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+  const direction = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+  const region = event.currentTarget;
+  if (!direction || region.scrollWidth <= region.clientWidth) return;
+  // WebKit does not natively scroll a focused horizontal region with arrows.
+  event.preventDefault();
+  region.scrollBy({ left: direction * 64, behavior: 'auto' });
+}
 
 export default function BehindAI() {
   const b = t.behindAI;
@@ -38,7 +49,7 @@ export default function BehindAI() {
       <p>{b.languageLimit}</p>
       <details className="metrics-details"><summary>{b.detailedMetrics}</summary>
         <p className="small">{b.testCount} {facts.testCount}. {b.metricFormat}</p>
-        <div className="table-wrap" tabIndex={0} role="region" aria-label={b.classMetrics}><table>
+        <div className="table-wrap" tabIndex={0} role="region" aria-label={b.classMetrics} onKeyDown={scrollTable}><table>
           <caption>{b.classMetrics}</caption>
           <thead><tr>{b.metricColumns.map(column => <th scope="col" key={column}>{column}</th>)}</tr></thead>
           <tbody>{(['ham','spam','smishing'] as const).map(label => {
@@ -47,7 +58,7 @@ export default function BehindAI() {
           })}</tbody>
         </table></div>
         <p className="small">{b.confusionExplanation}</p>
-        <div className="table-wrap" tabIndex={0} role="region" aria-label={b.confusionTitle}><table><caption>{b.confusionTitle}</caption><thead><tr><th scope="col">{b.sourceClass}</th>{['HAM','SPAM','SMISHING'].map(label=><th scope="col" key={label}>{label}</th>)}</tr></thead><tbody>{facts.confusionMatrix.map((row,index)=><tr key={index}><th scope="row">{['HAM','SPAM','SMISHING'][index]}</th>{row.map((value,column)=><td key={column}>{value}</td>)}</tr>)}</tbody></table></div>
+        <div className="table-wrap" tabIndex={0} role="region" aria-label={b.confusionTitle} onKeyDown={scrollTable}><table><caption>{b.confusionTitle}</caption><thead><tr><th scope="col">{b.sourceClass}</th>{['HAM','SPAM','SMISHING'].map(label=><th scope="col" key={label}>{label}</th>)}</tr></thead><tbody>{facts.confusionMatrix.map((row,index)=><tr key={index}><th scope="row">{['HAM','SPAM','SMISHING'][index]}</th>{row.map((value,column)=><td key={column}>{value}</td>)}</tr>)}</tbody></table></div>
       </details>
     </section>
     <section aria-labelledby="limits-title"><h2 id="limits-title">{b.limitsTitle}</h2><p>{b.limits}</p><p>{b.releaseLimit}</p></section>

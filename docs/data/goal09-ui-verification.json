@@ -1,7 +1,7 @@
 {
   "goal": "Goal 09",
   "date": "2026-10-11",
-  "executed_at_utc": "2026-10-11T11:22:35.957Z",
+  "executed_at_utc": "2026-10-11T11:40:35.529Z",
   "node": "v25.8.2",
   "browser": "156.0.8078.4",
   "device": "darwin arm64 desktop; emulated CSS viewports",
@@ -164,7 +164,7 @@
         },
         {
           "element": "select",
-          "height": 48,
+          "height": 50,
           "font_px": 20
         },
         {
@@ -207,7 +207,7 @@
         },
         {
           "element": "select",
-          "height": 48,
+          "height": 50,
           "font_px": 20
         },
         {
@@ -250,7 +250,7 @@
         },
         {
           "element": "select",
-          "height": 48,
+          "height": 50,
           "font_px": 20
         },
         {
@@ -397,7 +397,7 @@
         },
         {
           "element": "select",
-          "height": 48,
+          "height": 50,
           "font_px": 20
         },
         {
@@ -470,7 +470,7 @@
         },
         {
           "element": "select",
-          "height": 48,
+          "height": 50,
           "font_px": 20
         },
         {
@@ -543,7 +543,7 @@
         },
         {
           "element": "select",
-          "height": 48,
+          "height": 50,
           "font_px": 20
         },
         {
@@ -616,7 +616,7 @@
         },
         {
           "element": "select",
-          "height": 67,
+          "height": 82,
           "font_px": 40
         },
         {
@@ -689,7 +689,7 @@
         },
         {
           "element": "select",
-          "height": 48,
+          "height": 50,
           "font_px": 20
         },
         {
@@ -737,7 +737,7 @@
         },
         {
           "element": "select",
-          "height": 48,
+          "height": 50,
           "font_px": 20
         },
         {

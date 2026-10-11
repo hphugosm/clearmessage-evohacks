@@ -5,7 +5,7 @@
   ],
   "container_tested": false,
   "cpu_scope": "One numerical thread and one inference slot; host CPU count is not constrained by a container quota",
-  "executed_at_utc": "2026-10-11T11:14:05Z",
+  "executed_at_utc": "2026-10-11T11:46:14Z",
   "execution": "Fresh locked Python venv and clean npm ci/build, isolated whitelisted runtime, real loopback HTTP and Chromium; NOT Docker",
   "failed_model": {
     "admission": null,
@@ -52,7 +52,7 @@
         "analysis_complete": false,
         "case": "ordinary",
         "evidence_keys": [],
-        "latency_ms": 15.669,
+        "latency_ms": 7.272,
         "limitations": [
           "language_not_evaluated",
           "model_not_ready",
@@ -70,7 +70,7 @@
           "payment_pressure",
           "secrecy_request"
         ],
-        "latency_ms": 2.065,
+        "latency_ms": 1.297,
         "limitations": [
           "language_not_evaluated",
           "model_not_ready",
@@ -84,7 +84,7 @@
         "analysis_complete": false,
         "case": "unsupported-scope",
         "evidence_keys": [],
-        "latency_ms": 1.273,
+        "latency_ms": 0.698,
         "limitations": [
           "language_not_evaluated",
           "model_not_ready",
@@ -100,7 +100,7 @@
         "evidence_keys": [
           "request_for_secret"
         ],
-        "latency_ms": 77.452,
+        "latency_ms": 27.802,
         "limitations": [
           "language_not_evaluated",
           "model_not_ready",
@@ -126,10 +126,10 @@
     "mode": "failed-model",
     "outgoing_network_attempts": 0,
     "readiness_probe_exit": 1,
-    "sampled_peak_rss_mib": 154.47,
-    "samples": 76,
+    "sampled_peak_rss_mib": 153.7,
+    "samples": 48,
     "sequential_latency": null,
-    "startup_to_http_health_seconds": 1.484
+    "startup_to_http_health_seconds": 0.737
   },
   "genuine_inference_without_runtime_errors_verified": true,
   "goal": "Goal 09",
@@ -147,7 +147,7 @@
         "analysis_complete": false,
         "case": "ordinary",
         "evidence_keys": [],
-        "latency_ms": 18.298,
+        "latency_ms": 11.026,
         "limitations": [
           "language_not_evaluated",
           "policy_not_validated",
@@ -163,7 +163,7 @@
           "payment_pressure",
           "secrecy_request"
         ],
-        "latency_ms": 3.562,
+        "latency_ms": 1.674,
         "limitations": [
           "language_not_evaluated",
           "policy_not_validated",
@@ -175,7 +175,7 @@
         "analysis_complete": false,
         "case": "unsupported-scope",
         "evidence_keys": [],
-        "latency_ms": 2.146,
+        "latency_ms": 1.168,
         "limitations": [
           "language_not_evaluated",
           "policy_not_validated",
@@ -189,7 +189,7 @@
         "evidence_keys": [
           "request_for_secret"
         ],
-        "latency_ms": 66.525,
+        "latency_ms": 30.688,
         "limitations": [
           "language_not_evaluated",
           "policy_not_validated",
@@ -213,10 +213,10 @@
     "mode": "offline-restart",
     "outgoing_network_attempts": 0,
     "readiness_probe_exit": 0,
-    "sampled_peak_rss_mib": 162.61,
-    "samples": 42,
+    "sampled_peak_rss_mib": 162.72,
+    "samples": 20,
     "sequential_latency": null,
-    "startup_to_http_health_seconds": 2.339
+    "startup_to_http_health_seconds": 1.061
   },
   "passed": true,
   "platform": {
@@ -228,7 +228,7 @@
   "real_model": {
     "admission": {
       "overflow_http_status": 503,
-      "remaining_wait_measured_seconds": 4.847,
+      "remaining_wait_measured_seconds": 4.849,
       "slots": 8,
       "slow_body_http_status": 408,
       "timeout_seconds": 5
@@ -275,9 +275,9 @@
       "http_200": 32,
       "http_503": 0,
       "latency": {
-        "max_ms": 24.987,
-        "p50_ms": 19.202,
-        "p95_ms": 24.136,
+        "max_ms": 12.918,
+        "p50_ms": 8.845,
+        "p95_ms": 11.31,
         "requests": 32
       },
       "requests": 32
@@ -287,7 +287,7 @@
         "analysis_complete": false,
         "case": "ordinary",
         "evidence_keys": [],
-        "latency_ms": 20.612,
+        "latency_ms": 13.441,
         "limitations": [
           "language_not_evaluated",
           "policy_not_validated",
@@ -303,7 +303,7 @@
           "payment_pressure",
           "secrecy_request"
         ],
-        "latency_ms": 3.672,
+        "latency_ms": 1.778,
         "limitations": [
           "language_not_evaluated",
           "policy_not_validated",
@@ -315,7 +315,7 @@
         "analysis_complete": false,
         "case": "unsupported-scope",
         "evidence_keys": [],
-        "latency_ms": 2.008,
+        "latency_ms": 1.221,
         "limitations": [
           "language_not_evaluated",
           "policy_not_validated",
@@ -329,7 +329,7 @@
         "evidence_keys": [
           "request_for_secret"
         ],
-        "latency_ms": 79.289,
+        "latency_ms": 30.945,
         "limitations": [
           "language_not_evaluated",
           "policy_not_validated",
@@ -353,18 +353,18 @@
     "mode": "real-model",
     "outgoing_network_attempts": 0,
     "readiness_probe_exit": 0,
-    "sampled_peak_rss_mib": 157.56,
-    "samples": 1277,
+    "sampled_peak_rss_mib": 163.53,
+    "samples": 1343,
     "sequential_latency": {
-      "max_ms": 6.778,
-      "p50_ms": 3.059,
-      "p95_ms": 4.905,
+      "max_ms": 4.253,
+      "p50_ms": 1.784,
+      "p95_ms": 2.143,
       "requests": 100
     },
-    "startup_to_http_health_seconds": 70.028
+    "startup_to_http_health_seconds": 74.759
   },
   "runtime_assets_unchanged_after_analysis_and_restart": true,
-  "runtime_file_count": 50,
+  "runtime_file_count": 51,
   "selection_report_sha256": "3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd",
   "versions": {
     "fastapi": "0.143.0",

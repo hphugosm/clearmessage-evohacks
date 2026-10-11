@@ -1,0 +1,504 @@
+{
+  "goal": "Goal 09",
+  "execution": "Local production frontend and actual approved model/API in pinned Playwright engines; failure/legacy fixtures confined to tests",
+  "started_at_utc": "2026-10-11T11:47:10.509Z",
+  "duration_ms": 32287.324,
+  "platform": {
+    "system": "Darwin",
+    "architecture": "arm64"
+  },
+  "playwright": "1.64.0",
+  "engines": {
+    "firefox": {
+      "version": "157.0",
+      "revision": "1555",
+      "passed": 31
+    },
+    "webkit": {
+      "version": "27.2",
+      "revision": "2370",
+      "passed": 33
+    }
+  },
+  "passed": true,
+  "passed_tests": 64,
+  "failed_tests": 0,
+  "skipped_tests_in_selected_scope": 0,
+  "retries": 0,
+  "firefox_excluded_readback_tests": [
+    "actual clipboard write contains only the neutral preview",
+    "uncertain result guidance and copy keep source and selected situation private"
+  ],
+  "exclusion_reason": "Firefox Playwright protocol cannot grant clipboard-read/write; both tests pass in Chromium and WebKit. Manual preview, denial, missing-API and share fallbacks still run in Firefox.",
+  "source_sha256": {
+    "frontend/src/SafeScan.tsx": "5f26577c744d3899395959e04763fc1d9f8331dea8cea6abea616a027635d6fb",
+    "frontend/src/BehindAI.tsx": "7ca6a25653df9b9a4e1ffcbe904fde36a67979166c34318e3f30449969b22b5e",
+    "frontend/src/styles.css": "b6e1846e7f720532ca85cff6b9f0416cd0a9f76de176ac9450cb8084803a3663",
+    "frontend/src/assets/chevron-down.svg": "e3c9abe91629e047f9960fc5dd54dcf36e4fc8fffba950c2773ab785126ae220",
+    "frontend/playwright.cross-browser.config.ts": "f0151e3b18fe3d483921d8fe86bfb052ed4b172c001a39851457355e4916f31d",
+    "frontend/tests/app.spec.ts": "a1802f34defa8f8f3a86ffa028ebdf2c3c15abcc0b2125e8061946ab3c798a43",
+    "frontend/tests/guidance.spec.ts": "23dbeaabb28c4e05823531c59832d396bfa3f6c775a6ac515eac2c837ebabf00",
+    "frontend/tests/ocr.spec.ts": "4dc62a0d59edd44a8382f3d2bccc7be24b4116e971862505ab27869b1edd655f",
+    "frontend/tests/transparency.spec.ts": "0cb40321df86e2c42b4ac248ef350dc50a2ee97925b7807880204c8c9b89e203",
+    "frontend/package-lock.json": "1ae1ecdbac5982643dbfbbd627ae4338504cedd7865de9ed5a0093cbc0663545"
+  },
+  "safety_policy_changed": false,
+  "model_version": "clearmessage-sparse-v1:b6e56c3f1d34",
+  "not_tested": [
+    "Actual Safari application",
+    "Physical mobile devices",
+    "Spoken screen reader output",
+    "Independent human usability",
+    "Docker/public deployment"
+  ],
+  "checks": [
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "real frontend POST \u2192 API \u2192 honest limited review, without storage or external requests",
+      "duration_ms": 824,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "empty and overlong inputs never call analyze",
+      "duration_ms": 260,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "English UI is independent of message language",
+      "duration_ms": 221,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "network failure clearly says analysis was not performed",
+      "duration_ms": 210,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "unknown successful payload cannot render reassurance",
+      "duration_ms": 215,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "mobile keyboard submission and inert HTML text",
+      "duration_ms": 186,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "real CZ rules without URL, neutral preview and gesture-only share canary",
+      "duration_ms": 435,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "Style A assets, English metadata and narrow text reflow",
+      "duration_ms": 326,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "real English signals without links \u2192 bounded reasons/actions \u2192 neutral preview",
+      "duration_ms": 278,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "unavailable model contract has a separate incomplete service state",
+      "duration_ms": 486,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "pending edits cancel the old request and ignore late responses even when transport ignores abort",
+      "duration_ms": 376,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "keyboard-only flow exposes truthful evidence and a private help preview",
+      "duration_ms": 233,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "clipboard denial and native cancellation/failure preserve a selectable neutral fallback",
+      "duration_ms": 436,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "missing clipboard and late copy completion cannot restore old feedback",
+      "duration_ms": 477,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "language edits during a pending request cancel without an error or result",
+      "duration_ms": 222,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "reduced motion, control geometry and reserved green state keep explicit limitations",
+      "duration_ms": 287,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "app.spec.ts",
+      "name": "font download failure retains readable fallback and functioning real API",
+      "duration_ms": 223,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "real frontend POST \u2192 API \u2192 honest limited review, without storage or external requests",
+      "duration_ms": 448,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "empty and overlong inputs never call analyze",
+      "duration_ms": 216,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "English UI is independent of message language",
+      "duration_ms": 203,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "network failure clearly says analysis was not performed",
+      "duration_ms": 176,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "unknown successful payload cannot render reassurance",
+      "duration_ms": 176,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "mobile keyboard submission and inert HTML text",
+      "duration_ms": 189,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "real CZ rules without URL, neutral preview and gesture-only share canary",
+      "duration_ms": 321,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "Style A assets, English metadata and narrow text reflow",
+      "duration_ms": 171,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "real English signals without links \u2192 bounded reasons/actions \u2192 neutral preview",
+      "duration_ms": 220,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "unavailable model contract has a separate incomplete service state",
+      "duration_ms": 180,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "pending edits cancel the old request and ignore late responses even when transport ignores abort",
+      "duration_ms": 313,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "keyboard-only flow exposes truthful evidence and a private help preview",
+      "duration_ms": 223,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "actual clipboard write contains only the neutral preview",
+      "duration_ms": 247,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "clipboard denial and native cancellation/failure preserve a selectable neutral fallback",
+      "duration_ms": 333,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "missing clipboard and late copy completion cannot restore old feedback",
+      "duration_ms": 373,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "language edits during a pending request cancel without an error or result",
+      "duration_ms": 187,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "reduced motion, control geometry and reserved green state keep explicit limitations",
+      "duration_ms": 222,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "app.spec.ts",
+      "name": "font download failure retains readable fallback and functioning real API",
+      "duration_ms": 211,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "guidance.spec.ts",
+      "name": "exact observed highlights escape HTML and never activate message URLs",
+      "duration_ms": 351,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "guidance.spec.ts",
+      "name": "negated notices and ordinary messages have no fabricated warning reasons",
+      "duration_ms": 334,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "guidance.spec.ts",
+      "name": "legacy evidence and model-only findings never invent a highlighted phrase",
+      "duration_ms": 690,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "guidance.spec.ts",
+      "name": "ActionGuide selects appropriate curated steps, resets checkboxes and never sends choices",
+      "duration_ms": 713,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "guidance.spec.ts",
+      "name": "exact observed highlights escape HTML and never activate message URLs",
+      "duration_ms": 298,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "guidance.spec.ts",
+      "name": "negated notices and ordinary messages have no fabricated warning reasons",
+      "duration_ms": 270,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "guidance.spec.ts",
+      "name": "legacy evidence and model-only findings never invent a highlighted phrase",
+      "duration_ms": 282,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "guidance.spec.ts",
+      "name": "ActionGuide selects appropriate curated steps, resets checkboxes and never sends choices",
+      "duration_ms": 496,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "guidance.spec.ts",
+      "name": "uncertain result guidance and copy keep source and selected situation private",
+      "duration_ms": 365,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "ocr.spec.ts",
+      "name": "real local PNG OCR \u2192 editable review \u2192 explicit confirmation \u2192 actual approved model \u2192 neutral help",
+      "duration_ms": 1347,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "ocr.spec.ts",
+      "name": "real JPEG OCR works through drag and drop without automatically checking",
+      "duration_ms": 1049,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "ocr.spec.ts",
+      "name": "invalid, oversized and corrupt images preserve text fallback",
+      "duration_ms": 510,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "ocr.spec.ts",
+      "name": "real long OCR stays editable and cannot submit an over-limit message",
+      "duration_ms": 2743,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "ocr.spec.ts",
+      "name": "real blank screenshot has a readable error and no reassuring result at 200% text",
+      "duration_ms": 569,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "ocr.spec.ts",
+      "name": "OCR initialization failure terminates the worker and offers paste input",
+      "duration_ms": 295,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "ocr.spec.ts",
+      "name": "changing input method during initialization cancels extraction and ignores late text",
+      "duration_ms": 269,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "ocr.spec.ts",
+      "name": "keyboard cancellation announces no analysis, restores focus and permits a fresh real extraction",
+      "duration_ms": 1134,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "ocr.spec.ts",
+      "name": "real local PNG OCR \u2192 editable review \u2192 explicit confirmation \u2192 actual approved model \u2192 neutral help",
+      "duration_ms": 674,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "ocr.spec.ts",
+      "name": "real JPEG OCR works through drag and drop without automatically checking",
+      "duration_ms": 497,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "ocr.spec.ts",
+      "name": "invalid, oversized and corrupt images preserve text fallback",
+      "duration_ms": 551,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "ocr.spec.ts",
+      "name": "real long OCR stays editable and cannot submit an over-limit message",
+      "duration_ms": 2201,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "ocr.spec.ts",
+      "name": "real blank screenshot has a readable error and no reassuring result at 200% text",
+      "duration_ms": 415,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "ocr.spec.ts",
+      "name": "OCR initialization failure terminates the worker and offers paste input",
+      "duration_ms": 243,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "ocr.spec.ts",
+      "name": "changing input method during initialization cancels extraction and ignores late text",
+      "duration_ms": 326,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "ocr.spec.ts",
+      "name": "keyboard cancellation announces no analysis, restores focus and permits a fresh real extraction",
+      "duration_ms": 605,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "transparency.spec.ts",
+      "name": "Behind the AI route and reload expose report-verified values and adjacent limitations",
+      "duration_ms": 768,
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "file": "transparency.spec.ts",
+      "name": "transparency reflows at 360px and 200% text enlargement with keyboard-operable details",
+      "duration_ms": 241,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "transparency.spec.ts",
+      "name": "Behind the AI route and reload expose report-verified values and adjacent limitations",
+      "duration_ms": 303,
+      "passed": true
+    },
+    {
+      "engine": "webkit",
+      "file": "transparency.spec.ts",
+      "name": "transparency reflows at 360px and 200% text enlargement with keyboard-operable details",
+      "duration_ms": 181,
+      "passed": true
+    }
+  ]
+}
