@@ -1,0 +1,460 @@
+{
+  "api": {
+    "analysis_complete": false,
+    "cache_control": "no-store",
+    "evidence_count": 3,
+    "http_status": 200,
+    "model_version": "clearmessage-sparse-v1:7fe727cfb786",
+    "policy_version": "analysis-policy-2"
+  },
+  "audit_goal": "Goal 07",
+  "automated_checks_passed": true,
+  "browser": "156.0.8078.4",
+  "contrasts": [
+    {
+      "background": "#f6f8fc",
+      "foreground": "#172033",
+      "minimum": 4.5,
+      "name": "body",
+      "passed": true,
+      "ratio": 15.301
+    },
+    {
+      "background": "#fff",
+      "foreground": "#172033",
+      "minimum": 4.5,
+      "name": "card body",
+      "passed": true,
+      "ratio": 16.268
+    },
+    {
+      "background": "#f6f8fc",
+      "foreground": "#5b6b82",
+      "minimum": 4.5,
+      "name": "secondary page",
+      "passed": true,
+      "ratio": 5.103
+    },
+    {
+      "background": "#fff",
+      "foreground": "#64748b",
+      "minimum": 4.5,
+      "name": "secondary card",
+      "passed": true,
+      "ratio": 4.759
+    },
+    {
+      "background": "#173da5",
+      "foreground": "#fff",
+      "minimum": 4.5,
+      "name": "primary/disabled busy",
+      "passed": true,
+      "ratio": 9.345
+    },
+    {
+      "background": "#12317f",
+      "foreground": "#fff",
+      "minimum": 4.5,
+      "name": "primary hover/active",
+      "passed": true,
+      "ratio": 11.854
+    },
+    {
+      "background": "#fff",
+      "foreground": "#173da5",
+      "minimum": 4.5,
+      "name": "help button",
+      "passed": true,
+      "ratio": 9.345
+    },
+    {
+      "background": "#fffbeb",
+      "foreground": "#92400e",
+      "minimum": 4.5,
+      "name": "warning text/icon",
+      "passed": true,
+      "ratio": 6.837
+    },
+    {
+      "background": "#fff",
+      "foreground": "#92400e",
+      "minimum": 4.5,
+      "name": "review text/icon",
+      "passed": true,
+      "ratio": 7.09
+    },
+    {
+      "background": "#f0fdf4",
+      "foreground": "#166534",
+      "minimum": 4.5,
+      "name": "reserved green text/icon",
+      "passed": true,
+      "ratio": 6.812
+    },
+    {
+      "background": "#fef2f2",
+      "foreground": "#991b1b",
+      "minimum": 4.5,
+      "name": "error text",
+      "passed": true,
+      "ratio": 7.597
+    },
+    {
+      "background": "#fff",
+      "foreground": "#64748b",
+      "minimum": 3,
+      "name": "control border",
+      "passed": true,
+      "ratio": 4.759
+    },
+    {
+      "background": "#f6f8fc",
+      "foreground": "#173da5",
+      "minimum": 3,
+      "name": "focus/page",
+      "passed": true,
+      "ratio": 8.789
+    },
+    {
+      "background": "#fffbeb",
+      "foreground": "#173da5",
+      "minimum": 3,
+      "name": "focus/warning",
+      "passed": true,
+      "ratio": 9.011
+    }
+  ],
+  "date": "2026-10-11",
+  "device": "darwin arm64 desktop; emulated CSS viewports",
+  "executed_at_utc": "2026-10-11T08:50:50.903Z",
+  "external_browser_requests": [],
+  "flow": "English form \u2192 same-origin POST \u2192 real Goal 02 model/rules/policy 2 \u2192 incomplete result \u2192 neutral help preview",
+  "goal": "Goal 07",
+  "layouts": [
+    {
+      "body_font_px": 20,
+      "controls": [
+        {
+          "element": "textarea",
+          "font_px": 20,
+          "height": 258
+        },
+        {
+          "element": "select",
+          "font_px": 20,
+          "height": 48
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 53.1875
+        },
+        {
+          "element": "summary",
+          "font_px": 20,
+          "height": 52
+        }
+      ],
+      "grid_columns": "604.797px 403.203px",
+      "height": 1000,
+      "illustration_display": "block",
+      "name": "desktop-input",
+      "screenshot": ".cache/goal04-ui/desktop-input.png",
+      "scroll_width_css_px": 1440,
+      "text_scale": 1,
+      "viewport_width_css_px": 1440,
+      "width": 1440
+    },
+    {
+      "body_font_px": 20,
+      "controls": [
+        {
+          "element": "textarea",
+          "font_px": 20,
+          "height": 258
+        },
+        {
+          "element": "select",
+          "font_px": 20,
+          "height": 48
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 53.1875
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 51.1875
+        },
+        {
+          "element": "textarea",
+          "font_px": 20,
+          "height": 226
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 51.1875
+        },
+        {
+          "element": "summary",
+          "font_px": 20,
+          "height": 52
+        }
+      ],
+      "grid_columns": "604.797px 403.203px",
+      "height": 1000,
+      "illustration_display": "block",
+      "name": "desktop-result-help",
+      "screenshot": ".cache/goal04-ui/desktop-result-help.png",
+      "scroll_width_css_px": 1440,
+      "text_scale": 1,
+      "viewport_width_css_px": 1440,
+      "width": 1440
+    },
+    {
+      "body_font_px": 20,
+      "controls": [
+        {
+          "element": "textarea",
+          "font_px": 20,
+          "height": 258
+        },
+        {
+          "element": "select",
+          "font_px": 20,
+          "height": 48
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 53.1875
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 51.1875
+        },
+        {
+          "element": "textarea",
+          "font_px": 20,
+          "height": 226
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 51.1875
+        },
+        {
+          "element": "summary",
+          "font_px": 20,
+          "height": 84
+        }
+      ],
+      "grid_columns": "320px",
+      "height": 800,
+      "illustration_display": "none",
+      "name": "mobile-360-result-help",
+      "screenshot": ".cache/goal04-ui/mobile-360-result-help.png",
+      "scroll_width_css_px": 360,
+      "text_scale": 1,
+      "viewport_width_css_px": 360,
+      "width": 360
+    },
+    {
+      "body_font_px": 20,
+      "controls": [
+        {
+          "element": "textarea",
+          "font_px": 20,
+          "height": 258
+        },
+        {
+          "element": "select",
+          "font_px": 20,
+          "height": 48
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 53.1875
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 51.1875
+        },
+        {
+          "element": "textarea",
+          "font_px": 20,
+          "height": 226
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 51.1875
+        },
+        {
+          "element": "summary",
+          "font_px": 20,
+          "height": 84
+        }
+      ],
+      "grid_columns": "280px",
+      "height": 800,
+      "illustration_display": "none",
+      "name": "reflow-320-result-help",
+      "screenshot": ".cache/goal04-ui/reflow-320-result-help.png",
+      "scroll_width_css_px": 320,
+      "text_scale": 1,
+      "viewport_width_css_px": 320,
+      "width": 320
+    },
+    {
+      "body_font_px": 40,
+      "controls": [
+        {
+          "element": "textarea",
+          "font_px": 40,
+          "height": 482
+        },
+        {
+          "element": "select",
+          "font_px": 40,
+          "height": 69
+        },
+        {
+          "element": "button",
+          "font_px": 36,
+          "height": 78.390625
+        },
+        {
+          "element": "button",
+          "font_px": 36,
+          "height": 76.390625
+        },
+        {
+          "element": "textarea",
+          "font_px": 40,
+          "height": 418
+        },
+        {
+          "element": "button",
+          "font_px": 36,
+          "height": 76.390625
+        },
+        {
+          "element": "summary",
+          "font_px": 40,
+          "height": 148
+        }
+      ],
+      "grid_columns": "576px",
+      "height": 900,
+      "illustration_display": "none",
+      "name": "text-200-result-help",
+      "screenshot": ".cache/goal04-ui/text-200-result-help.png",
+      "scroll_width_css_px": 640,
+      "text_scale": 2,
+      "viewport_width_css_px": 640,
+      "width": 640
+    },
+    {
+      "body_font_px": 20,
+      "controls": [
+        {
+          "element": "textarea",
+          "font_px": 20,
+          "height": 258
+        },
+        {
+          "element": "select",
+          "font_px": 20,
+          "height": 48
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 53.1875
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 51.1875
+        },
+        {
+          "element": "summary",
+          "font_px": 20,
+          "height": 52
+        }
+      ],
+      "grid_columns": "604.797px 403.203px",
+      "height": 1000,
+      "illustration_display": "block",
+      "name": "desktop-review",
+      "screenshot": ".cache/goal04-ui/desktop-review.png",
+      "scroll_width_css_px": 1440,
+      "text_scale": 1,
+      "viewport_width_css_px": 1440,
+      "width": 1440
+    },
+    {
+      "body_font_px": 20,
+      "controls": [
+        {
+          "element": "textarea",
+          "font_px": 20,
+          "height": 258
+        },
+        {
+          "element": "select",
+          "font_px": 20,
+          "height": 48
+        },
+        {
+          "element": "button",
+          "font_px": 18,
+          "height": 53.1875
+        },
+        {
+          "element": "summary",
+          "font_px": 20,
+          "height": 84
+        }
+      ],
+      "grid_columns": "320px",
+      "height": 800,
+      "illustration_display": "none",
+      "name": "mobile-360-error",
+      "screenshot": ".cache/goal04-ui/mobile-360-error.png",
+      "scroll_width_css_px": 360,
+      "text_scale": 1,
+      "viewport_width_css_px": 360,
+      "width": 360
+    }
+  ],
+  "manual_visual_inspection": {
+    "date": "2026-10-11",
+    "method": "All seven generated fictional-input screenshots opened with view_image and visually inspected during Goal 07.",
+    "native_zoom_repeated": false,
+    "observations": "Style A preserved; interaction-first mobile/reflow, visible limitations and actions, separate review/warning states, no horizontal page overflow. Preview textarea intentionally scrolls.",
+    "performed": true
+  },
+  "node": "v25.8.2",
+  "not_tested": [
+    "physical mobile keyboard",
+    "real screen reader",
+    "human participants",
+    "Safari/Firefox",
+    "Docker",
+    "deployment"
+  ],
+  "page_errors": [],
+  "reduced_motion_transition": "0s",
+  "server_output_empty": true,
+  "source_harness": "frontend/scripts/verify-ui.mjs",
+  "source_harness_goal": "Goal 04",
+  "zoom_scope": "640 CSS px viewport plus 200% root text enlargement; native browser zoom is recorded separately in goal04-native-zoom.json"
+}

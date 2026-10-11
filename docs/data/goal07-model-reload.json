@@ -1,0 +1,74 @@
+{
+  "architecture": "arm64",
+  "device": "Apple M5",
+  "experiment_report_sha256": "b0d359771769be9f983370eec8599b7be13a6b55c4bc274259694a317eef3715",
+  "models": {
+    "minilm_c0.5": {
+      "artifact_sha256_verified": true,
+      "fresh_process_inference": "passed",
+      "fresh_process_matches_parent": true,
+      "fresh_process_network_disabled": true,
+      "fresh_process_wall_seconds_including_imports": 3.9572506670374423,
+      "latency": {
+        "device": "cpu",
+        "includes_policy": true,
+        "median_ms": 6.3597914995625615,
+        "p95_ms": 8.825970767065883,
+        "sample_count": 32
+      },
+      "oversized_input_review": true,
+      "repeat_encoding_first32_max_difference": 3.8743019104003906e-07,
+      "token_overflow_review": true
+    },
+    "minilm_c2.0": {
+      "artifact_sha256_verified": true,
+      "fresh_process_inference": "passed",
+      "fresh_process_matches_parent": true,
+      "fresh_process_network_disabled": true,
+      "fresh_process_wall_seconds_including_imports": 3.878402750007808,
+      "latency": {
+        "device": "cpu",
+        "includes_policy": true,
+        "median_ms": 6.045312504284084,
+        "p95_ms": 7.802031538449228,
+        "sample_count": 32
+      },
+      "oversized_input_review": true,
+      "repeat_encoding_first32_max_difference": 3.8743019104003906e-07,
+      "token_overflow_review": true
+    },
+    "tfidf_c0.5": {
+      "artifact_sha256_verified": true,
+      "fresh_process_inference": "passed",
+      "fresh_process_matches_parent": true,
+      "fresh_process_network_disabled": true,
+      "fresh_process_wall_seconds_including_imports": 0.7288080002181232,
+      "latency": {
+        "device": "cpu",
+        "includes_policy": true,
+        "median_ms": 0.45466702431440353,
+        "p95_ms": 0.595256220549345,
+        "sample_count": 32
+      },
+      "oversized_input_review": true
+    },
+    "tfidf_c2.0": {
+      "artifact_sha256_verified": true,
+      "fresh_process_inference": "passed",
+      "fresh_process_matches_parent": true,
+      "fresh_process_network_disabled": true,
+      "fresh_process_wall_seconds_including_imports": 0.6934862909838557,
+      "latency": {
+        "device": "cpu",
+        "includes_policy": true,
+        "median_ms": 0.45354152098298073,
+        "p95_ms": 0.6549230078235269,
+        "sample_count": 32
+      },
+      "oversized_input_review": true
+    }
+  },
+  "ram_bytes": 25769803776,
+  "selected_model": "tfidf_c2.0",
+  "system": "Darwin"
+}

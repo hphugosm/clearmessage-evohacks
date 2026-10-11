@@ -45,11 +45,11 @@ accepted. Missing/mismatched assets are a release blocker, not successful setup.
 | tracked `ml/reports/goal02-provisional-v2.json` | `b0d359771769be9f983370eec8599b7be13a6b55c4bc274259694a317eef3715` |
 
 [MODEL_CARD](MODEL_CARD.md#integrity-device-and-reproducibility) documents the
-explicit local training/reproduction path with source audit, frozen candidate
+explicit local training/reproduction path with source audit, immutable provisional
 manifest and `--allow-provisional-original-labels`. That command was **not run**
 by this goal and does not approve the human review. A newly trained different
 hash requires a separate reviewed model/selection/config update; do not bypass
-integrity checks. Restoring the existing approved project artifact is the current
+integrity checks. Restoring the existing hash-pinned provisional project artifact is the current
 release setup path. The underlying experiment remains provisional.
 
 The selected TF-IDF JSON includes word/character vocabulary, learned IDF,

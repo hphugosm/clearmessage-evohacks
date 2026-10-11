@@ -1,6 +1,14 @@
 # ClearMessage project status
 
-Updated **11 October 2026, Europe/Prague**. Goal 06 was assessed and **skipped**:
+Updated **11 October 2026, Europe/Prague**. Goal 07 final audit is complete.
+**NO-GO for an approved detector/public release**: Goal 01 approval/quarantine/final
+split and final approved Goal 02 are absent; actual deployment/container gates
+remain unresolved. Local technical verification passes with the genuine
+provisional model. See [FINAL_AUDIT](FINAL_AUDIT.md) for evidence, error/coverage
+results and the release recommendation. No features, training, policy/data
+changes, deployment or publishing occurred.
+
+Goal 06 was assessed and **skipped**:
 the text core passes locally, but the required working deployed core remains
 unverified. OCR was not implemented or enabled. The prerequisite checks and
 reason are recorded below.
@@ -34,17 +42,101 @@ results are `suspicious` with actual basis or `review`, always
 | Frontend/API | Real model-backed POST via Vite and FastAPI-served build; no demo verdicts. |
 | Contract | Pydantic → OpenAPI → TypeScript; schema 1.1.0 fields/enums unchanged; policy version 2; drift checks passed. |
 | Model/policy | Hash-verified project JSON and validation-selection report; unchanged 0.60 warning threshold; policy 2 and rules 2. Incomplete results and rules-only failures remain explicit. |
-| Dataset | 5,971 original rows. Canonical unchanged. Staged draft: 15 HAM / 13 SPAM / 17 SMISHING, all 45 rechecked and English-confirmed, four fresh attributions, 98-row quarantine proposed; zero blockers. Conditional reviewed eligible corpus: 5,873 rows (4,844 HAM / 439 SPAM / 590 SMISHING), not approved. Source/training unchanged. |
+| Dataset | 5,971 source rows. Canonical: 45 saved decisions (16 confirmed / 29 disagreed), all 45 languages pending, four missing attributions. 98-row/46-group conflict quarantine not approved. Historical RAM-staged draft is not final approval; source/training unchanged. |
 | Data split | Immutable candidate, empty intersections; no approved final freeze. Provisional authorization preserves original assignments and `data_split_ready=false`. |
 | Czech development/challenge | Format and independent instructions; zero actual challenge records. Existing synthetic Czech regression inputs preserved, not a benchmark. |
 | Sharing | Fixed English dictionary/templates, preview, separate Copy/Share click. Write-only clipboard copies the neutral preview; denial/missing support selects it for manual copying. No source content or recipient selection. |
 | Docker | Three-stage build and hardened loopback Compose prepared. CLI/daemon unavailable; build/run/healthcheck/enforcement **untested**. |
 | Deployment | Fresh local release verified; no authorized existing public host/account or URL. HTTPS/proxy/hosting controls unverified. |
 | Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
+| Goal 07 | Final local audit passed technical checks; approved/public release NO-GO. FINAL_AUDIT records separate classifier/policy/language evidence. |
 | Goal 05 | Local fallback verified; actual Docker and public release blocked, detailed evidence below. |
 | Goal 04 | Implemented and verified below; real screen-reader/physical-device testing remains unperformed. |
 | OCR | Goal 06 skipped at the deployed-core gate; no Tesseract dependency, screenshot input or OCR assets added. |
 | Submission/video | Not started by this optional goal. |
+
+## Goal 07 — final release audit
+
+Started from clean commit `e0323fb`; read the required instructions, STATUS,
+DEPLOYMENT_REPORT, BRAND_BIBLE and ACCEPTANCE, plus PROJECT_PLAN/RESEARCH. The
+formal approval check ran first: **Goal 01 not finalized**. Canonical review has
+45 decisions, 16 confirmed / 29 disagreed, 45 languages pending, four missing
+attributions and blank quarantine approval. `mendeley-v1.split.json` is absent.
+Candidate/provisional manifests remain immutable but unapproved, with empty
+leakage intersections and data_split_ready=false. The historical staged RAM
+draft does not establish submitted/final approval. Final eligible reviewed counts
+cannot be certified; original-label provisional eligibility remains 5,873.
+
+The locally loaded JSON and selection-report hashes match `tfidf_c2.0`, seed
+20261010, threshold 0.60 and the expressly authorized original-label provisional
+manifest. Provenance says human/language review incomplete. **No final approved
+Goal 02 or public deployed model exists to certify.** Neither review nor quarantine,
+source/split, artifact/config, thresholds or Czech provenance were changed.
+
+Executed checks:
+
+```sh
+sh scripts/test.sh
+.venv/bin/python scripts/training_preflight.py
+.venv/bin/python scripts/prepare_data.py verify --manifest ml/manifests/mendeley-v1.split.candidate.json --input ml/data/raw/Dataset_5971.zip
+.venv/bin/python scripts/audit_release.py --output docs/data/goal07-model-audit.json
+.venv/bin/python scripts/verify_release.py --clean-install --report docs/data/goal07-local-release.json
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python scripts/verify_model.py --report ml/reports/goal02-provisional-v2.json --output docs/data/goal07-model-reload.json
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node tests/review_tool_browser.mjs
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node tests/review_validation_browser.mjs
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-ui.mjs
+.venv/bin/python scripts/verify_analysis.py
+python3 scripts/audit_migration.py
+git diff --check
+```
+
+**PASS:** full suite **188 Python / 32 Vitest / 34 Playwright**, build, pip and
+contract drift; both separate fictional review-tool browser flows; all four saved
+model reload/fresh-process parity/overflow checks; selected-model recomputation of
+881 validation and 880 test classifier/error/baseline/CLI-policy results; current
+policy checked independently; fresh locked local runtime, offline restart,
+corrupt-model case, limits, no-store, logs/share canaries and zero network attempts.
+Independent synthetic API smoke passed 25 real requests across five fictional
+EN/CZ development cases; this is not language accuracy. Final migration audit
+passed **161 owned files**, and `git diff --check` passed. Existing Starlette/httpx
+and Node color warnings remain visible. No tests/security checks were weakened.
+
+**BLOCKED, exit 2:** approved training preflight correctly refuses absent final
+manifest and incomplete label/metadata/language confirmation. **NOT RUN:** actual
+Docker/Linux/Compose enforcement, public HTTPS/proxy/hosting/anonymous access,
+real screen-reader/physical-device/participant or native-share delivery checks.
+No available container tool or authorized public destination was found; no URL
+invented. No model was trained and no blind challenge opened.
+
+Recomputed source-label test macro-F1 **0.863645**; smishing classifier **9 FP / 14
+FN** (3 smishing→ham / 11 smishing→spam). These annotations are not approved fraud
+ground truth. Older CLI policy: 75 warnings, 805 review, 7 warning FP, 20 source
+smishing without an explicit warning. Current policy with honest unspecified
+language: **880/880 test review**, zero observed warnings, zero inference errors,
+zero completed checks (also 881/881 validation review). Do not present the CLI
+count as integrated API coverage or treat review as a reassuring negative.
+**English metrics unavailable; Czech metrics unavailable**, separately reported;
+source-language aggregate is neither a verified English nor Czech benchmark.
+Synthetic regression examples are behavior tests only.
+
+Fresh runtime on Apple M5/macOS arm64: cold startup **68.646 s**, restart **0.979 s**;
+sampled RSS **159.55 / 161.92 / 154.25 MiB** for real/restart/failed processes.
+100 loopback requests p50 **1.840 ms**, p95 **2.276 ms**, max **3.296 ms**. No
+Linux quota/image-size/Internet-latency claim follows from these measurements.
+Current UI harness passed seven captures/14 contrast pairs; all captures opened
+and visually inspected separately (desktop, 360px, 320 CSS px, text enlargement,
+error). Native 200% zoom evidence was reviewed from Goal 04, not repeated. No
+WCAG certification, field validation or human usability observation was claimed.
+
+Added a read-only reproducible audit script and machine-readable evidence, plus
+[FINAL_AUDIT](FINAL_AUDIT.md)'s five requested sections. Preserved historical
+Goal 03/04 generated reports while copying fresh measurements to Goal 07 files.
+Corrected misleading “approved project artifact” / “frozen candidate” wording in
+the deployment report to explicitly provisional identity. No critical runtime
+privacy/safety regression was found within executed scope; no production behavior
+changed. Final approval/training, representative language evaluation, hosting and
+licensing clearance remain release blockers. Demonstrate only the accurately
+labeled local prototype. Local commit follows checks; stop after Goal 07.
 
 ## Goal 06 — optional OCR skipped at the release gate
 
