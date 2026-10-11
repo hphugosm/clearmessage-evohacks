@@ -25,3 +25,9 @@ Pinned OCR packages acquired at explicit setup; generated same-origin resources 
 Executed: 18 new OCR unit tests (50 client tests total) PASS; five production browser tests PASS, including real PNG and JPEG recognition, drag/drop, review/confirmation, actual approved-model API and neutral help. Full regression results are recorded below after completion. Canonical model/data untouched; no external requests, cookies or IndexedDB in real OCR tests. Native browser memory release depends on browser garbage collection after explicit cleanup; no claim of forensic erasure.
 
 B final regression `sh scripts/test.sh` PASS: 199 Python / 50 Vitest / 44 Playwright (production and dev proxy), contract/dependency/migration/build checks PASS. Browser suite 24.0s. OCR assets approximately 36 MiB before HTTP compression. A commit `aefb818`; B commit follows this checkpoint.
+
+## Milestone C — explanations and ActionGuide
+
+Optional evidence spans expose the existing rule offsets only (no snippets, scores or model attribution); backward-compatible missing offsets show general explanations. The UI validates Unicode code-point bounds and escapes expanded phrases; no URL links. Five local curated situation checklists collect no secrets, perform no interventions and never enter the fixed help draft. Input edits reset checklist state.
+
+`sh scripts/test.sh` PASS after correcting an initially miscounted expected offset: **209 Python / 63 Vitest / 54 Playwright**, build/migration/contract/dependency checks PASS. Initial run: **208 Python passed / 1 failed** (expected end 27; the actual unmodified rule correctly ends at 28). The assertion and API example were corrected, not the rule. Browser 36.1s. New real-API exact spans, Unicode/HTML/URL masking, negation, legacy/no-offset and model-only behavior, all situations, uncertain analyses and privacy-safe clipboard tests PASS. B commit `47496f2`; C commit follows.

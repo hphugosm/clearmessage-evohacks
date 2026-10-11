@@ -33,9 +33,27 @@ class Status(StrEnum):
     no_strong_signals = "no_strong_signals"
 
 
+class EvidenceSpan(ContractModel):
+    start: int = Field(ge=0, lt=MAX_TEXT_LENGTH)
+    end: int = Field(gt=0, le=MAX_TEXT_LENGTH)
+
+    @model_validator(mode="after")
+    def ordered(self) -> "EvidenceSpan":
+        if self.end <= self.start:
+            raise ValueError("invalid_evidence_span")
+        return self
+
+
 class Evidence(ContractModel):
     key: Literal["model_signal", "request_for_secret", "payment_pressure", "secrecy_request"]
     basis: Literal["classifier", "observed_text_signal"]
+    span: EvidenceSpan | None = None  # Original Unicode code-point offsets; no excerpt.
+
+    @model_validator(mode="after")
+    def span_is_observed(self) -> "Evidence":
+        if self.span is not None and self.basis != "observed_text_signal":
+            raise ValueError("classifier_cannot_attribute_text_span")
+        return self
     # No source text, URL, phone number, sender name or invented attribution.
 
 

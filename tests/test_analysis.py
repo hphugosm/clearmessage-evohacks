@@ -91,7 +91,7 @@ def test_conflicting_safety_advice_cannot_hide_later_request(text):
 def test_rules_override_high_ham_and_do_not_fabricate_attribution():
     data = result("Please send me your password.")
     assert data.status == "suspicious"
-    assert [e.model_dump() for e in data.evidence] == [{"key": "request_for_secret", "basis": "observed_text_signal"}]
+    assert [e.model_dump() for e in data.evidence] == [{"key": "request_for_secret", "basis": "observed_text_signal", "span": {"start": 7, "end": 28}}]
 
 def test_all_signals_bounded_and_spam_is_not_phishing():
     data = result("Please send me your password. Pay me now. Do not tell your parents.", model=TestOnlyClassifier(Prediction(.01,.01,.98,True)))
@@ -321,7 +321,7 @@ def test_real_model_receives_full_limit_including_trailing_request(real_model, m
     inference.assert_called_once_with(text, "en")
     data = response.json()
     assert data["status"] == "suspicious" and not data["analysis_complete"]
-    assert {"key":"request_for_secret", "basis":"observed_text_signal"} in data["evidence"]
+    assert {"key":"request_for_secret", "basis":"observed_text_signal", "span":{"start":len(text)-len(suffix)+8,"end":len(text)-1}} in data["evidence"]
 
 def test_contract_and_classifier_language_scope_are_consistent():
     from backend.contracts import AnalyzeResponse

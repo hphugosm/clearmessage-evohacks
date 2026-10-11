@@ -6,6 +6,8 @@ import { copy as t } from './copy';
 import mark from '../../assets/brand/mark.svg';
 import HelpRequest from './HelpRequest';
 import SafeScan from './SafeScan';
+import EvidenceDetails from './EvidenceDetails';
+import ActionGuide from './ActionGuide';
 
 const OCR_ENABLED = import.meta.env.VITE_ENABLE_OCR !== 'false';
 
@@ -18,6 +20,8 @@ export default function App() {
   const [confirmationError, setConfirmationError] = useState(false);
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<AnalyzeResponse | null>(null);
+  const [analyzedText, setAnalyzedText] = useState('');
+  const [guideRevision, setGuideRevision] = useState(0);
   const [helpPreview, setHelpPreview] = useState(false);
   const [error, setError] = useState<ClientErrorKey | null>(null);
   const textField = useRef<HTMLTextAreaElement>(null);
@@ -35,6 +39,8 @@ export default function App() {
     activeRequest.current = null;
     setPending(false);
     setResult(null);
+    setAnalyzedText('');
+    setGuideRevision(value => value + 1);
     setHelpPreview(false);
     setError(null);
     setConfirmationError(false);
@@ -55,7 +61,7 @@ export default function App() {
     setPending(true);
     try {
       const response = await analyze({ text, message_language: messageLanguage }, controller.signal);
-      if (id === requestId.current) setResult(response);
+      if (id === requestId.current) { setAnalyzedText(text); setResult(response); }
     } catch (caught) {
       if (id === requestId.current) setError(caught instanceof AnalysisError ? caught.key : 'unavailable');
     } finally {
@@ -117,7 +123,7 @@ export default function App() {
               <h2 id="result-heading" tabIndex={-1} ref={resultHeading}>{t.headlines[result.headline_key]}</h2>
               <p>{t.resultDetail}</p>
               <h3>{t.reasons}</h3>
-              {result.evidence.length ? <ul>{result.evidence.map(item => <li key={item.key}>{t.evidence[item.key]}</li>)}</ul> : <p>{t.noEvidence}</p>}
+              {result.evidence.length ? <EvidenceDetails evidence={result.evidence} analyzedText={analyzedText} /> : <p>{t.noEvidence}</p>}
               <h3>{t.steps}</h3>
               <ol>{result.action_keys.map(key => <li key={key}>{t.actions[key]}</li>)}</ol>
               <h3>{t.limitationsLabel}</h3>
@@ -126,10 +132,7 @@ export default function App() {
               {helpPreview && <HelpRequest summaryKeys={result.share_summary_keys} />}
             </section>}
           </div>
-          <details className="clicked-advice">
-            <summary>{t.clicked}</summary>
-            <ol>{t.clickedAdvice.map(advice => <li key={advice}>{advice}</li>)}</ol>
-          </details>
+          <ActionGuide key={guideRevision} />
         </div>
       </main>
       <footer>{t.footer}</footer>

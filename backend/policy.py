@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 import math
 import re
-from backend.contracts import AnalyzeRequest, AnalyzeResponse, CONTRACT_VERSION, Evidence, POLICY_VERSION, Status
+from backend.contracts import AnalyzeRequest, AnalyzeResponse, CONTRACT_VERSION, Evidence, EvidenceSpan, POLICY_VERSION, Status
 from backend.inference import Classifier, CONFIG, Prediction
 from backend.rules import observed_rules
 from backend.urls import parse_urls
@@ -56,7 +56,7 @@ def analyze_text(payload: AnalyzeRequest, classifier: Classifier, policy: Policy
         limitations.append("policy_not_validated")
     complete = not limitations
     status = Status.review
-    evidence = [Evidence(key=m.key, basis="observed_text_signal") for m in rules][:3]
+    evidence = [Evidence(key=m.key, basis="observed_text_signal", span=EvidenceSpan(start=m.start, end=m.end)) for m in rules][:3]
     # Only EN may use the experimental model warning. This is not evaluated EN
     # performance: it cannot complete analysis. CZ/unknown use observed rules.
     if prediction and prediction.full_text_coverage and language == "en" and prediction.smishing >= policy.warning_threshold:

@@ -204,6 +204,16 @@
             ],
             "title": "Key",
             "type": "string"
+          },
+          "span": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EvidenceSpan"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -211,6 +221,29 @@
           "basis"
         ],
         "title": "Evidence",
+        "type": "object"
+      },
+      "EvidenceSpan": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 2000.0,
+            "title": "End",
+            "type": "integer"
+          },
+          "start": {
+            "exclusiveMaximum": 2000.0,
+            "minimum": 0.0,
+            "title": "Start",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ],
+        "title": "EvidenceSpan",
         "type": "object"
       },
       "HealthResponse": {

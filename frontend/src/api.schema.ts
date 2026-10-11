@@ -114,6 +114,14 @@ export interface components {
              * @enum {string}
              */
             key: "model_signal" | "request_for_secret" | "payment_pressure" | "secrecy_request";
+            span?: components["schemas"]["EvidenceSpan"] | null;
+        };
+        /** EvidenceSpan */
+        EvidenceSpan: {
+            /** End */
+            end: number;
+            /** Start */
+            start: number;
         };
         /** HealthResponse */
         HealthResponse: {

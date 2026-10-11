@@ -1,6 +1,6 @@
 # Goal 09 — isolated product experience
 
-11 October 2026. Active only on `feature/clearmessage-product-experience`, based on `a9a924d`. See [progress](GOAL_09_PROGRESS.md). Baseline: 199 Python / 32 Vitest / 34 Playwright PASS. Milestone A build and 34 browser regressions PASS; minimalist Style A refinement implemented. Frozen model/data and safety policy preserved; every assessment still incomplete. No deployment, merge or public release. Milestone B PASS: real English browser PNG/JPEG OCR, explicit editable confirmation, same-origin pinned assets and cleanup. Full regression 199 Python / 50 Vitest / 44 Playwright PASS. Remaining milestones in progress.
+11 October 2026. Active only on `feature/clearmessage-product-experience`, based on `a9a924d`. See [progress](GOAL_09_PROGRESS.md). Baseline: 199 Python / 32 Vitest / 34 Playwright PASS. Milestone A build and 34 browser regressions PASS; minimalist Style A refinement implemented. Frozen model/data and safety policy preserved; every assessment still incomplete. No deployment, merge or public release. Milestone B PASS: real English browser PNG/JPEG OCR, explicit editable confirmation, same-origin pinned assets and cleanup. Full regression 199 Python / 50 Vitest / 44 Playwright PASS. Milestone C PASS: truthful optional rule offsets, escaped expandable highlights, deterministic five-situation ActionGuide and unchanged fixed sharing. Full regression 209 Python / 63 Vitest / 54 Playwright PASS. Transparency/final verification in progress.
 
 # ClearMessage project status
 

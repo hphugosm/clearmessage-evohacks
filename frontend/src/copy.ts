@@ -1,7 +1,13 @@
 import type { AnalyzeResponse, ClientErrorKey } from './api';
 import type { OcrErrorKey } from './ocr';
 
+export type Situation = 'none' | 'opened' | 'password' | 'payment' | 'code';
+
 type Copy = {
+  evidenceTitles: Record<AnalyzeResponse['evidence'][number]['key'], string>;
+  evidenceIntro: string; observedEvidenceLimit: string; modelEvidenceLimit: string;
+  guide: { title: string; notice: string; choose: string; next: string; ephemeral: string;
+    situations: Record<Situation, string>; checklists: Record<Situation, string[]> };
   hero: string; home: string; behind: string; inputMethod: string; paste: string; screenshot: string;
   scan: { title: string; drop: string; formats: string; choose: string; replace: string; privacy: string;
     initializing: string; reading: string; ready: string; cancel: string; fallback: string;
@@ -28,6 +34,23 @@ type Copy = {
 };
 
 export const copy: Copy = {
+  evidenceTitles: { request_for_secret: 'A request for a password or code', payment_pressure: 'Pressure to pay quickly', secrecy_request: 'A request to keep things secret', model_signal: 'An experimental model pattern' },
+  evidenceIntro: 'Expand a finding to see its basis. Text highlights come only from observed rules.',
+  observedEvidenceLimit: 'This is an observed textual signal, not proof of fraud or an explanation of the model’s prediction.',
+  modelEvidenceLimit: 'This finding comes from the experimental classifier. It cannot identify which words caused the prediction.',
+  guide: {
+    title: 'What have you already done?', choose: 'Choose the situation that fits', next: 'Here’s what you can do now.',
+    notice: 'These steps are general advice, even when the analysis is uncertain or unavailable. ClearMessage does not inspect your device, secure accounts or contact anyone. Do not enter any of those details here.',
+    ephemeral: 'Your choices and checklist stay in memory in this page. They are not sent or saved. Marking a step does not establish safety.',
+    situations: { none: 'I haven’t interacted with the message.', opened: 'I opened the link.', password: 'I entered my password.', payment: 'I shared payment information.', code: 'I shared a verification code.' },
+    checklists: {
+      none: ['Pause before replying, opening links or making a payment.', 'Verify the request using a familiar app or a contact you already know. Do not use the message’s links or contact details.', 'Ask someone you trust if you are unsure.'],
+      opened: ['Close the page. Do not enter information, download files or install anything it suggests. Clicking alone does not tell us what happened.', 'If you also shared information, choose the matching situation above.', 'If you downloaded or installed something, update your device’s security software and run a scan. Ask someone you trust for help.', 'Verify the request through a familiar independent channel.'],
+      password: ['Open the official service through a familiar app or address, without using the message.', 'Change the affected password. Change it on other accounts where you reused it.', 'Turn on two-factor authentication if the service offers it.', 'Review account activity and contact official support if you cannot access the account or see unfamiliar changes.'],
+      payment: ['Contact your bank or payment provider promptly through its official app or the number on your card.', 'Explain that your payment information may have been exposed and ask about securing the account or disputing a payment. Recovery is not guaranteed.', 'Review recent transactions with the provider and follow its instructions. Do not share more information with the message’s sender.'],
+      code: ['Stop sharing codes and close the page. A code may allow account access or authorize a payment.', 'Contact the affected service through a familiar official channel. If a bank or payment was involved, contact the bank promptly.', 'Secure the affected account through its official app or address: change the password and review active sessions if available.', 'Check recent account activity with official support. Do not approve unexpected login or payment requests.'],
+    },
+  },
   hero: 'Not sure about a message?', home: 'Home', behind: 'Behind the AI',
   inputMethod: 'Input method', paste: 'Paste a message', screenshot: 'Upload a screenshot',
   scan: {
@@ -75,7 +98,7 @@ export const copy: Copy = {
     secrecy_request: 'Observed textual signal: a request to conceal something from family or another trusted person.',
     model_signal: 'The experimental model found a concerning message pattern. This does not prove fraud or explain particular words.',
   },
-  reasons: 'What the result is based on', noEvidence: 'We have no specific textual evidence of fraud. A low or uncertain finding does not establish safety.',
+  reasons: 'What caught our attention?', noEvidence: 'We have no specific textual evidence of fraud. A low or uncertain finding does not establish safety.',
   incomplete: 'Limited check · analysis is incomplete', complete: 'Analysis completed · safety not established',
   help: 'Ask someone for help', helpPreview: 'Help request preview',
   helpNotice: 'The draft contains only fixed neutral sentences, without your source message or personal details. You can copy it manually. You choose the recipient and whether to send.',

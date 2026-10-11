@@ -39,7 +39,11 @@ export function parseResponse(data: unknown): AnalyzeResponse {
     !Array.isArray(value.limitations) || !value.limitations.includes('not_a_safety_confirmation') ||
     !keysMatch(value.share_summary_keys, ['analysis_not_completed', 'help_verify_independently'], 0, 2) ||
     !Array.isArray(value.evidence) || value.evidence.length > 3 ||
-    value.evidence.some(item => typeof item !== 'object' || item === null || Object.keys(item).length !== 2 ||
+    value.evidence.some(item => typeof item !== 'object' || item === null || Object.keys(item).some(key => !['key', 'basis', 'span'].includes(key)) ||
+      (item.span !== undefined && item.span !== null && (item.basis !== 'observed_text_signal' ||
+        typeof item.span !== 'object' || Object.keys(item.span).length !== 2 ||
+        !Number.isInteger(item.span.start) || !Number.isInteger(item.span.end) ||
+        item.span.start < 0 || item.span.end <= item.span.start || item.span.end > MAX_TEXT_LENGTH)) ||
       !evidenceKeys.includes(item.key) || item.basis !== (item.key === 'model_signal' ? 'classifier' : 'observed_text_signal')) ||
     new Set(value.evidence.map(item => item.key)).size !== value.evidence.length
   ) throw new AnalysisError('unavailable');

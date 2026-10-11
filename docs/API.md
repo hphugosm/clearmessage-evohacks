@@ -27,7 +27,7 @@ Example from the real saved Goal 02 artifact, not a fixture verdict:
   "status": "suspicious",
   "analysis_complete": false,
   "headline_key": "suspicious_signals",
-  "evidence": [{"key":"request_for_secret","basis":"observed_text_signal"}],
+  "evidence": [{"key":"request_for_secret","basis":"observed_text_signal","span":{"start":7,"end":28}}],
   "action_keys": ["verify_independently","do_not_send_secrets","ask_trusted_person"],
   "limitations": ["language_not_evaluated","policy_not_validated","not_a_safety_confirmation"],
   "message_language": "en",
@@ -67,8 +67,7 @@ Policy 2 retains the validation-selected warning threshold. Startup verifies the
 selection-report hash, selected artifact identity/hash and threshold agreement;
 drift or a report missing from the installation disables the model. The client
 rejects evidence/status contradictions, classifier evidence outside explicit
-English scope, and completion/share-summary contradictions. Schema fields and
-contract version are unchanged; older policy responses are rejected explicitly.
+English scope, and completion/share-summary contradictions. Goal 09 adds optional `evidence.span` Unicode code-point offsets for observed rules; classifier evidence has no span. No source excerpt is returned. Older 1.1.0 responses without spans still parse; decision semantics, policy and contract version are unchanged; older policy responses are rejected explicitly.
 
 `share_summary_keys` select only two neutral fixed sentences. The user opens a
 preview, manually copies text or makes another gesture to invoke native Web Share.
@@ -128,3 +127,7 @@ and `tldextract` with `suffix_list_urls=()`, `cache_dir=None`, bundled snapshot.
 No refresh, DNS, HTTP, WHOIS or redirects. HTTPS/TLD/shorteners are not fraud
 evidence. No downloads occur during analysis. Hosting logs/proxies/HTTPS require
 verification before a separately authorized deployment; none occurred here.
+
+## Optional evidence span extension
+
+Observed evidence may include `span: {start, end}`: zero-based original Unicode code points, start inclusive/end exclusive, validated integers with 0 <= start < end <= 2,000. These are the existing deterministic rule offsets after URL masking, not model attribution. The client slices only the submitted snapshot, validates bounds again and escapes text inside an expanded detail. Missing offsets show the general explanation without highlights. A classifier span is rejected. The fixed help summary never includes offsets or excerpts.

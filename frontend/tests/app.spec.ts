@@ -109,6 +109,7 @@ test('real CZ rules without URL, neutral preview and gesture-only share canary',
   expect(data).toMatchObject({ status: 'suspicious', analysis_complete: false,
     evidence: [{ key: 'request_for_secret', basis: 'observed_text_signal' }] });
   await expect(page.getByRole('heading', { name: 'There are warning signals in this message.' })).toBeVisible();
+  await page.getByText('A request for a password or code', { exact: true }).click();
   await expect(page.getByText('Observed textual signal: a request to disclose a password or verification code.')).toBeVisible();
   expect(await page.evaluate(() => (window as unknown as {sharedDrafts: ShareData[]}).sharedDrafts)).toEqual([]);
   await expect(page.getByLabel('Help request preview')).toHaveCount(0);
@@ -119,7 +120,7 @@ test('real CZ rules without URL, neutral preview and gesture-only share canary',
   await page.getByRole('button', { name: 'Share help request' }).click();
   expect(await page.evaluate(() => (window as unknown as {sharedDrafts: ShareData[]}).sharedDrafts)).toEqual([{ text: preview }]);
   expect(consoleMessages.join(' ')).not.toContain(canary);
-  await page.getByText('I already clicked or shared something', { exact: true }).click();
+  await page.getByText('What have you already done?', { exact: true }).click();
   await expect(page.getByText(/Do not enter any of those details here/)).toBeVisible();
   await page.getByLabel('Message text', { exact: true }).fill('Jiná fiktivní zpráva.');
   await expect(page.getByLabel('Help request preview')).toHaveCount(0);
@@ -249,6 +250,10 @@ test('keyboard-only flow and actual clipboard write contain only the preview', a
   await expect(page.getByRole('button', { name: 'Check message' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { name: 'There are warning signals in this message.' })).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.getByText('A request for a password or code', { exact: true })).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('.evidence-quote mark')).toHaveText('send me your password');
   await page.keyboard.press('Tab');
   await expect(page.getByRole('button', { name: 'Ask someone for help' })).toBeFocused();
   await page.keyboard.press('Enter');
