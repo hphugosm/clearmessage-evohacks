@@ -87,11 +87,13 @@ Fixed error bodies contain `analysis_complete=false`, `error_key`,
 | HTTP | error_key | Situation |
 |---|---|---|
 | 400 | unexpected_query / invalid_input / request_rejected | Query string or malformed request |
+| 408 | request_rejected | Analysis POST body not fully received within five seconds |
 | 413 | body_too_large | Body over 32 KiB |
 | 415 | json_required | Wrong Content-Type |
 | 422 | invalid_input | Empty/long text, types, extra fields, JSON |
 | 404 / 405 | not_found / method_not_allowed | Path/method |
 | 500 | service_unavailable | Sanitized internal failure |
+| 503 | service_unavailable | All eight HTTP admission slots occupied |
 
 Inference failure/busy slot returns HTTP 200 with limited review or actual rule
 warning. The client times out after 10 seconds, with no synthesized verdict.
@@ -107,8 +109,17 @@ versions/limits. `/api/openapi.json` needs no external CDN.
 Source text stays in RAM of our backend. No history, user cache, telemetry,
 training from user messages, third-party APIs, cookies or browser storage.
 The launcher disables access logs. Responses use no-store/nosniff/no-referrer/CSP.
-The API rejects query strings. One process accepts at most 32 concurrent
-connections and has one nonblocking inference slot, with no private-text queue.
+The API rejects query strings. One process admits at most eight simultaneous HTTP requests (including asset/health
+requests) and has one nonblocking inference slot, with no private-text inference queue.
+POST body buffering is capped at 32 KiB with a five-second total receive deadline.
+Keep-alive is five seconds; the listen backlog is 64, not an active connection cap.
+Idle/partial-header connections require upstream connection/header-rate protection
+before public deployment. Fixed 408/503 bodies retain no-store. Private server
+diagnostics omit exception details, addresses and internal paths. Numerical libraries
+use one thread; one Uvicorn worker is used. The health probe defaults to service
+liveness and remains successful if the artifact fails to load; its explicit
+`--require-model` option fails for a missing/corrupt artifact. Neither probe asserts
+approved detector quality. See [release evidence](DEPLOYMENT_REPORT.md).
 
 The sparse model handles full allowed text without a transformer token cap;
 this does not imply it understands every word. `full_text_coverage=false`

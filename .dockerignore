@@ -9,6 +9,8 @@ frontend/test-results
 frontend/playwright-report
 .cache
 .env*
+build/*
+!build/model.json
 ml/data
 ml/artifacts
 tests

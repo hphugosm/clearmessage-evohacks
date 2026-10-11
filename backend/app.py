@@ -44,7 +44,7 @@ def create_app(frontend_dir: Path | None = None, classifier: Classifier | None =
     async def health() -> HealthResponse:
         return HealthResponse(service_status="ok", model_ready=classifier.ready, model_version=classifier.version, evaluated_message_languages=list(classifier.evaluated_languages), human_review_complete=classifier.human_review_complete, policy_version=POLICY_VERSION, contract_version=CONTRACT_VERSION, max_text_length=MAX_TEXT_LENGTH, max_body_bytes=MAX_BODY_BYTES)
 
-    errors = {status: {"model": ErrorResponse} for status in (400, 413, 415, 422, 500)}
+    errors = {status: {"model": ErrorResponse} for status in (400, 408, 413, 415, 422, 500, 503)}
 
     @api.post("/api/analyze", response_model=AnalyzeResponse, responses=errors)
     def analyze(payload: AnalyzeRequest) -> AnalyzeResponse:

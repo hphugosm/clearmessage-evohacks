@@ -27,7 +27,8 @@ Verified locally: Python **3.13.1**, macOS arm64; Node **25.8.2**, npm **11.11.1
 Node 24 is the pinned Docker build environment; its container execution remains
 untested. Exact package versions and wheel/integrity hashes are locked in
 `backend/requirements*.txt` and `frontend/package-lock.json`. Do not install globally.
-Internet is needed only for explicit dependency/browser/encoder setup, never analysis.
+Internet is needed only for explicit dependency/browser setup and container
+builds, never analysis. The selected sparse model needs no encoder download.
 
 Run these commands from the repository root:
 
@@ -120,13 +121,12 @@ original archive; the earlier automatic download returned 403. No substitute cor
 
 Actual raw counts: 5,971 rows, 4,844 ham / 489 spam / 638 smishing. Excluding
 98 rows in 46 conflicting groups leaves 5,873 candidate rows. Cross-split group
-intersections are empty. All 45 label decisions are now saved: 16 agreements and
-29 requested corrections;
-zero pending labels. Language/attribution, correction reconciliation and exclusion
-approval remain incomplete.
+intersections are empty. The latest human-review draft and approval blockers are recorded in
+[STATUS](docs/STATUS.md). The canonical review is unchanged; the proposed
+98-row quarantine and final eligible dataset have not been approved.
 The candidate has `data_split_ready=false`; no approved final freeze exists.
 The user authorized a provisional experiment on original labels, described in
-[MODEL_CARD](docs/MODEL_CARD.md) and [ML instructions](ml/README.md). This migration
+[MODEL_CARD](docs/MODEL_CARD.md) and [ML instructions](ml/README.md). This release
 does not retrain, inspect held-out/blind inputs or alter review decisions.
 
 The chosen artifact is ignored by Git. A new checkout must restore the project's
@@ -135,6 +135,9 @@ card's explicitly provisional workflow. Without it the application discloses
 rules-only operation and model preparation fails; a checkout alone is not a detector.
 
 ```sh
+# If absent, restore the trusted project output; no public artifact URL is available.
+.venv/bin/python scripts/prepare_model.py --artifact-file /path/to/trusted/tfidf_c2.0.json
+# If already present, validate and stage it offline:
 .venv/bin/python scripts/prepare_model.py
 .venv/bin/python scripts/verify_analysis.py
 .venv/bin/python -m pytest tests/test_analysis.py tests/test_api.py -q
@@ -145,27 +148,48 @@ then writes ignored `build/model.json`. It neither trains nor downloads.
 `verify_analysis.py` measures fictional development smoke cases without saving
 message text; its results are not language accuracy or real-world validation.
 
-## Docker
+## Clean release and Docker
 
-Docker CLI/daemon are unavailable on this machine. **Build, run and healthcheck
-are untested**, not passed. On a machine with Docker:
+[Release instructions and measured evidence](docs/DEPLOYMENT_REPORT.md) describe
+clean-clone setup, trusted artifact restoration, fresh-process HTTP/browser tests,
+resource bounds and the outstanding container/hosting checks.
 
 ```sh
+npm --prefix frontend run build
 .venv/bin/python scripts/prepare_model.py
-docker info
-docker build --tag clearmessage:analysis .
-docker run --rm --name clearmessage --read-only \
-  --tmpfs /tmp:rw,noexec,nosuid,size=16m --cap-drop ALL \
-  --security-opt no-new-privileges --memory 512m --cpus 1 \
-  -p 127.0.0.1:7860:7860 clearmessage:analysis
+.venv/bin/python scripts/package_runtime.py --output build/runtime
+.venv/bin/python scripts/verify_release.py --clean-install
 ```
 
-One final container serves build assets and API as nonprivileged user 10001.
-Node exists only in the build stage. The final image includes the verified sparse
-model and pinned selection report for offline startup verification, not raw data,
-tests, encoder or Node. Base images are pinned by digest; registry availability
-checks do not prove container execution. The healthcheck
-measures service liveness.
+The verifier explicitly installs hash-locked dependencies in a fresh temporary
+venv, performs clean `npm ci`/build and tests the isolated production runtime,
+restart and corrupted-model failure. It uses the genuine existing model and
+blocks outgoing socket/DNS calls in the application process. It is **not a Docker
+test**. The runtime package refuses to replace a differing existing directory;
+choose another empty output directory after source changes.
+
+Docker CLI/daemon and alternative runtimes are unavailable here. **Container
+build, run, healthcheck and resource/network enforcement remain untested**.
+On a machine with Docker and the trusted model staged above:
+
+```sh
+docker info
+docker compose config --quiet
+docker compose build
+docker compose up -d
+curl --fail http://127.0.0.1:7860/api/health
+docker compose exec -T app python scripts/healthcheck.py --require-model
+docker compose logs --no-log-prefix
+docker compose down
+```
+
+Three stages produce one nonprivileged CPU runtime serving frontend and API.
+Compose proposes a read-only filesystem, loopback port, internal network,
+512 MiB memory, one CPU and 64 processes. These are prepared settings, not verified
+Docker enforcement. The selected JSON includes vocabulary/IDF/head; no encoder,
+GPU, raw corpus, training CLI, tests or Node ships in the final runtime. Model and
+selection-report hashes are checked at setup/build and every startup; startup only
+loads assets. Default health checks liveness; `--require-model` checks readiness.
 
 ## Contracts, privacy and project state
 
@@ -175,15 +199,16 @@ TypeScript describe the shared versioned contract. All backend responses use
 Processing happens on our backend, not entirely in the browser.
 
 No deployment destination/account is confirmed. No credentials, purchase,
-publication or deployment is part of this migration. Hosting logs/proxies/HTTPS
-need verification before a separately authorized release. Starlette's existing
+publication or deployment occurred. Fresh local release verification passed;
+public HTTPS, proxy/hosting logging and container execution remain unverified.
+See the release report for measured scope. Starlette's existing
 httpx TestClient deprecation warning remains visible; it is not suppressed.
 
 [STATUS](docs/STATUS.md) records executed checks and historical results.
 [MIGRATION_REPORT](docs/MIGRATION_REPORT.md) records the ClearMessage migration.
 [Project plan](docs/PROJECT_PLAN.md), [research](docs/RESEARCH.md),
 [acceptance](docs/ACCEPTANCE.md), [planning notes](docs/PLANNING_NOTES.md) and
-`AGENTS.md` are English. The local Git repository has no remote. Goal 04 completes
+`AGENTS.md` are English. The local Git repository has no remote. Goal 04 completed
 the simple Style A interface, neutral preview/copying and cancellation guards.
 [UI verification](docs/UI_VERIFICATION.md) records browser and visual scope.
 The existing workspace path is retained to preserve local environments;

@@ -1,20 +1,20 @@
 # ClearMessage project status
 
-Updated **11 October 2026, Europe/Prague**. Goal 04 completes the simple English
-Style A interface over the existing real model/API: neutral help preview,
-gesture-only copy/share, honest fallback and cancellation/stale-response guards.
-Desktop, 360px mobile, 320 CSS px reflow, text enlargement and separate native
-200% browser zoom were checked. Policy 2 and the existing Goal 02 model remain
-unchanged. The last recorded Goal 01 review state is staged in
-RAM, not submitted: all 45 labels explicitly rechecked, no rechecks missing, all 45
-languages confirmed, four missing attributions explicitly re-confirmed. The
-98-row quarantine is now explicitly proposed; final approval remains withheld.
-The canonical review is unchanged. The draft has zero submission blockers;
-immutable draft submission and separate final approval remain outstanding.
-The English migration remains complete.
-This interface work did not approve review data, retrain, freeze the split,
-inspect blind/held-out messages or publish. Only Goal 04 was completed; OCR
-belongs to Goal 06 and was not started.
+Updated **11 October 2026, Europe/Prague**. Goal 05 prepared the three-stage
+single-container release and verified fresh local execution of the real model,
+API and English Style A frontend. **Docker execution and public deployment remain
+blocked**, not completed: no Docker/alternative runtime and no authorized existing
+hosting destination. There is no public URL. Clean local install, production
+packaging, real HTTP/Chromium flows, restart and corrupt-model failure passed;
+measurements and actual scope are recorded below and in
+[DEPLOYMENT_REPORT](DEPLOYMENT_REPORT.md). No publishing, purchase, credential
+collection, retraining, review approval, split freeze, OCR or Devpost submission.
+
+Goal 04's interface and the English migration remain intact. The last recorded
+Goal 01 review state is staged in RAM, not submitted: all 45 labels explicitly
+rechecked, all 45 languages confirmed, four missing attributions re-confirmed,
+98-row quarantine proposed; final approval remains withheld. Canonical review,
+provisional model, thresholds, Czech evaluation data and provenance are unchanged.
 
 The real Goal 02 sparse model remains integrated with `analysis-policy-2` and
 `observed-requests-2`, contract **1.1.0**. It is provisional: **final reviewed-data approval remains outstanding**, original
@@ -33,11 +33,96 @@ results are `suspicious` with actual basis or `review`, always
 | Data split | Immutable candidate, empty intersections; no approved final freeze. Provisional authorization preserves original assignments and `data_split_ready=false`. |
 | Czech development/challenge | Format and independent instructions; zero actual challenge records. Existing synthetic Czech regression inputs preserved, not a benchmark. |
 | Sharing | Fixed English dictionary/templates, preview, separate Copy/Share click. Write-only clipboard copies the neutral preview; denial/missing support selects it for manual copying. No source content or recipient selection. |
-| Docker | Source prepared; CLI/daemon unavailable. Build/run/healthcheck **untested**. |
-| Deployment | Account/destination unconfirmed; no publishing, credential collection or purchase. |
+| Docker | Three-stage build and hardened loopback Compose prepared. CLI/daemon unavailable; build/run/healthcheck/enforcement **untested**. |
+| Deployment | Fresh local release verified; no authorized existing public host/account or URL. HTTPS/proxy/hosting controls unverified. |
 | Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
+| Goal 05 | Local fallback verified; actual Docker and public release blocked, detailed evidence below. |
 | Goal 04 | Implemented and verified below; real screen-reader/physical-device testing remains unperformed. |
 | OCR/submission/video | Not started by this interface goal. |
+
+## Goal 05 — production packaging and verified local fallback
+
+Started from clean commit `74b24f0`; preserved foreign reference files, canonical
+review, data/manifests, model hash and policy selection. Added no dependencies or
+product features. Three pinned build/runtime stages produce one nonprivileged CPU
+service. Explicit model import accepts only our hash-pinned JSON and selection
+report; build staging emits a per-file integrity manifest and excludes raw data,
+training CLI, encoder, GPU, tests and Node. Runtime/restart only loads assets.
+
+The request boundary admits eight simultaneous HTTP requests, one inference at a
+time, 32 KiB body/2,000 characters and five-second total body receive deadline.
+Fixed 408/503 errors retain no-store. Numerical libraries use one thread; one
+worker, five-second keep-alive and backlog 64. The previous Uvicorn connection
+limit could emit an early plain 503 outside the privacy boundary; app admission
+now preserves fixed JSON/security headers. Partial headers/idle TCP still require
+upstream protection for any future public deployment. No Linux quota or Compose
+network/resource enforcement was tested.
+
+Health is live-service versus verified-model readiness, with an explicit
+`healthcheck.py --require-model` probe. Corrupt model stays live, fails readiness,
+returns incomplete review or an actual observed warning with rules-only limits.
+Server diagnostics discard private values/tracebacks/paths; access logs are off.
+The fresh verifier blocks socket/DNS calls in only the application process; its
+instrumentation never enters the production package. Browser/HTTP/canary checks
+use only fictional public development cases and no model/API mocks.
+
+Executed commands from the repository root:
+
+```sh
+.venv/bin/python scripts/prepare_model.py
+.venv/bin/python scripts/package_runtime.py --output build/debug-runtime
+.venv/bin/python -m pytest tests/test_runtime.py -q
+.venv/bin/python scripts/export_contract.py
+npm --prefix frontend run contract:generate
+.venv/bin/python scripts/verify_release.py --clean-install
+sh scripts/test.sh
+python3 scripts/audit_migration.py
+git diff --check
+```
+
+The trusted-import test restores a missing model in a task-owned runtime copy;
+an incorrect JSON hash is rejected without leaking its contents or paths. Package
+replacement refuses foreign/differing files. No owner files were removed.
+Initial fresh runs **failed** a 30-second startup allowance. Cold scientific
+imports were slow in the newly installed macOS environment; the final verifier
+allows 120 seconds and actually measures startup rather than declaring success
+from a Dockerfile. Docker start-period is provisionally 120 seconds. An initial migration check
+failed while the new release-report link target was still unwritten; adding the
+completed report resolved it. Final migration audit passed: **154 owned files**.
+
+Full script **PASS**: **188 Python**, **32 Vitest**, **34 Playwright**; dependency
+consistency, OpenAPI/TypeScript drift, TypeScript/Vite build and English migration
+passed. Existing Starlette/httpx deprecation and Node color-environment warnings
+remain visible. Separate fresh-install verification passed, including same-origin
+font/illustration, genuine inference, neutral preview, unsupported scope, invalid
+input, unavailable model, overload and slow bodies. No blind/test dataset was
+opened for selection. Current analysis is always incomplete; no low finding was
+unlocked and no new language-performance claim was made.
+
+Final measured run on Apple M5/macOS arm64: fresh startup **61.741 s**,
+offline restart **0.894 s**, sampled peak RSS **163.88 MiB**;
+100 real sequential requests p50 **1.71 ms**, p95 **1.904 ms**, max **3.781 ms**.
+Thirty-two requests/eight clients all returned HTTP 200; a separately saturated
+admission test returned fixed 503, and all slow bodies returned fixed 408 after
+five seconds. Corrupt-model liveness exited 0/readiness 1. Zero outgoing attempts
+and empty application logs across all three processes; 29 package hashes
+unchanged after successful inference and offline restart. These fictional
+requests measured operation, not representative classifier accuracy.
+
+[Measured machine-readable evidence](data/goal05-local-release.json) and
+[English release instructions/evidence](DEPLOYMENT_REPORT.md) specify exact
+measurements and limitations. CPU/RSS/loopback latency are development-host data,
+not Linux container quotas, Internet latency or accuracy metrics. Compose uses a
+provisional 512 MiB CPU-only budget with headroom over the measured process RSS;
+Linux image execution and resource tuning must be checked on a Docker host.
+
+**Blocked / skipped:** Docker CLI/daemon/alternative runtime absent (therefore no
+build/run/healthcheck/image-size or enforcement success); no authorized existing
+public destination (therefore no HTTPS/anonymous public access or proxy/hosting
+logging verification). Official Hugging Face compute-Spaces paid-plan conditions
+were rechecked on 11 October 2026 and linked in the release report; no account,
+plan purchase or credentials were assumed. Only the clean local fallback is
+verified. No public URL, publication, OCR or Devpost action.
 
 ## Goal 04 — simple English Style A interface
 

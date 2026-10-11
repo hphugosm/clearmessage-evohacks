@@ -1,0 +1,363 @@
+{
+  "blockers": [
+    "No Docker CLI or daemon/alternative container runtime",
+    "No authorized existing public destination or hosting configuration"
+  ],
+  "container_tested": false,
+  "cpu_scope": "One numerical thread and one inference slot; host CPU count is not constrained by a container quota",
+  "executed_at_utc": "2026-10-11T08:37:03Z",
+  "execution": "Fresh locked Python venv and clean npm ci/build, isolated whitelisted runtime, real loopback HTTP and Chromium; NOT Docker",
+  "failed_model": {
+    "admission": null,
+    "application_logs_empty": true,
+    "browser": {
+      "browser": "156.0.8078.4",
+      "external_requests": 0,
+      "flows": [
+        {
+          "analysis_complete": false,
+          "case": "ordinary",
+          "status": "review"
+        },
+        {
+          "analysis_complete": false,
+          "case": "observed-warning",
+          "status": "suspicious"
+        },
+        {
+          "analysis_complete": false,
+          "case": "unsupported-scope",
+          "status": "review"
+        }
+      ],
+      "local_assets_loaded": true,
+      "page_errors": 0,
+      "passed": true
+    },
+    "concurrency": null,
+    "flows": [
+      {
+        "analysis_complete": false,
+        "case": "ordinary",
+        "evidence_keys": [],
+        "latency_ms": 6.503,
+        "limitations": [
+          "language_not_evaluated",
+          "model_not_ready",
+          "rules_only",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "review"
+      },
+      {
+        "analysis_complete": false,
+        "case": "observed-warning",
+        "evidence_keys": [
+          "request_for_secret",
+          "payment_pressure",
+          "secrecy_request"
+        ],
+        "latency_ms": 1.077,
+        "limitations": [
+          "language_not_evaluated",
+          "model_not_ready",
+          "rules_only",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "suspicious"
+      },
+      {
+        "analysis_complete": false,
+        "case": "unsupported-scope",
+        "evidence_keys": [],
+        "latency_ms": 0.627,
+        "limitations": [
+          "language_not_evaluated",
+          "model_not_ready",
+          "rules_only",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "review"
+      },
+      {
+        "analysis_complete": false,
+        "case": "private-canary",
+        "evidence_keys": [
+          "request_for_secret"
+        ],
+        "latency_ms": 27.271,
+        "limitations": [
+          "language_not_evaluated",
+          "model_not_ready",
+          "rules_only",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "suspicious"
+      }
+    ],
+    "health": {
+      "contract_version": "1.1.0",
+      "evaluated_message_languages": [],
+      "human_review_complete": false,
+      "max_body_bytes": 32768,
+      "max_text_length": 2000,
+      "model_ready": false,
+      "model_version": null,
+      "policy_version": "analysis-policy-2",
+      "service_status": "ok"
+    },
+    "liveness_probe_exit": 0,
+    "mode": "failed-model",
+    "outgoing_network_attempts": 0,
+    "readiness_probe_exit": 1,
+    "sampled_peak_rss_mib": 154.28,
+    "samples": 25,
+    "sequential_latency": null,
+    "startup_to_http_health_seconds": 0.702
+  },
+  "genuine_inference_without_runtime_errors_verified": true,
+  "goal": "Goal 05",
+  "memory_scope": "Sampled process RSS via ps (KiB), including startup and load; no cgroup enforcement or image-size measurement",
+  "model_bytes": 2670307,
+  "model_sha256": "7fe727cfb7868445f07ad32b0449131165268a8c5cbd8bafb71dd2b5178747fa",
+  "node": "v25.8.2",
+  "offline_restart": {
+    "admission": null,
+    "application_logs_empty": true,
+    "browser": null,
+    "concurrency": null,
+    "flows": [
+      {
+        "analysis_complete": false,
+        "case": "ordinary",
+        "evidence_keys": [],
+        "latency_ms": 10.218,
+        "limitations": [
+          "language_not_evaluated",
+          "human_review_incomplete",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "review"
+      },
+      {
+        "analysis_complete": false,
+        "case": "observed-warning",
+        "evidence_keys": [
+          "request_for_secret",
+          "payment_pressure",
+          "secrecy_request"
+        ],
+        "latency_ms": 1.724,
+        "limitations": [
+          "language_not_evaluated",
+          "human_review_incomplete",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "suspicious"
+      },
+      {
+        "analysis_complete": false,
+        "case": "unsupported-scope",
+        "evidence_keys": [],
+        "latency_ms": 1.101,
+        "limitations": [
+          "language_not_evaluated",
+          "human_review_incomplete",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "review"
+      },
+      {
+        "analysis_complete": false,
+        "case": "private-canary",
+        "evidence_keys": [
+          "request_for_secret"
+        ],
+        "latency_ms": 29.56,
+        "limitations": [
+          "language_not_evaluated",
+          "human_review_incomplete",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "suspicious"
+      }
+    ],
+    "health": {
+      "contract_version": "1.1.0",
+      "evaluated_message_languages": [],
+      "human_review_complete": false,
+      "max_body_bytes": 32768,
+      "max_text_length": 2000,
+      "model_ready": true,
+      "model_version": "clearmessage-sparse-v1:7fe727cfb786",
+      "policy_version": "analysis-policy-2",
+      "service_status": "ok"
+    },
+    "liveness_probe_exit": 0,
+    "mode": "offline-restart",
+    "outgoing_network_attempts": 0,
+    "readiness_probe_exit": 0,
+    "sampled_peak_rss_mib": 161.77,
+    "samples": 17,
+    "sequential_latency": null,
+    "startup_to_http_health_seconds": 0.894
+  },
+  "passed": true,
+  "platform": {
+    "architecture": "arm64",
+    "system": "Darwin"
+  },
+  "privacy_scope": "Application stdout/stderr, responses, browser requests/console and blocked outgoing socket/DNS attempts verified locally; proxy/hosting unverified",
+  "public_url": null,
+  "real_model": {
+    "admission": {
+      "overflow_http_status": 503,
+      "remaining_wait_measured_seconds": 4.849,
+      "slots": 8,
+      "slow_body_http_status": 408,
+      "timeout_seconds": 5
+    },
+    "application_logs_empty": true,
+    "browser": {
+      "browser": "156.0.8078.4",
+      "external_requests": 0,
+      "flows": [
+        {
+          "analysis_complete": false,
+          "case": "ordinary",
+          "status": "review"
+        },
+        {
+          "analysis_complete": false,
+          "case": "observed-warning",
+          "status": "suspicious"
+        },
+        {
+          "analysis_complete": false,
+          "case": "unsupported-scope",
+          "status": "review"
+        }
+      ],
+      "local_assets_loaded": true,
+      "page_errors": 0,
+      "passed": true
+    },
+    "concurrency": {
+      "client_workers": 8,
+      "http_200": 32,
+      "http_503": 0,
+      "latency": {
+        "max_ms": 11.227,
+        "p50_ms": 8.799,
+        "p95_ms": 10.982,
+        "requests": 32
+      },
+      "requests": 32
+    },
+    "flows": [
+      {
+        "analysis_complete": false,
+        "case": "ordinary",
+        "evidence_keys": [],
+        "latency_ms": 11.05,
+        "limitations": [
+          "language_not_evaluated",
+          "human_review_incomplete",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "review"
+      },
+      {
+        "analysis_complete": false,
+        "case": "observed-warning",
+        "evidence_keys": [
+          "request_for_secret",
+          "payment_pressure",
+          "secrecy_request"
+        ],
+        "latency_ms": 1.6,
+        "limitations": [
+          "language_not_evaluated",
+          "human_review_incomplete",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "suspicious"
+      },
+      {
+        "analysis_complete": false,
+        "case": "unsupported-scope",
+        "evidence_keys": [],
+        "latency_ms": 1.053,
+        "limitations": [
+          "language_not_evaluated",
+          "human_review_incomplete",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "review"
+      },
+      {
+        "analysis_complete": false,
+        "case": "private-canary",
+        "evidence_keys": [
+          "request_for_secret"
+        ],
+        "latency_ms": 30.594,
+        "limitations": [
+          "language_not_evaluated",
+          "human_review_incomplete",
+          "policy_not_validated",
+          "not_a_safety_confirmation"
+        ],
+        "status": "suspicious"
+      }
+    ],
+    "health": {
+      "contract_version": "1.1.0",
+      "evaluated_message_languages": [],
+      "human_review_complete": false,
+      "max_body_bytes": 32768,
+      "max_text_length": 2000,
+      "model_ready": true,
+      "model_version": "clearmessage-sparse-v1:7fe727cfb786",
+      "policy_version": "analysis-policy-2",
+      "service_status": "ok"
+    },
+    "liveness_probe_exit": 0,
+    "mode": "real-model",
+    "outgoing_network_attempts": 0,
+    "readiness_probe_exit": 0,
+    "sampled_peak_rss_mib": 163.88,
+    "samples": 1073,
+    "sequential_latency": {
+      "max_ms": 3.781,
+      "p50_ms": 1.71,
+      "p95_ms": 1.904,
+      "requests": 100
+    },
+    "startup_to_http_health_seconds": 61.741
+  },
+  "runtime_assets_unchanged_after_analysis_and_restart": true,
+  "runtime_file_count": 29,
+  "selection_report_sha256": "b0d359771769be9f983370eec8599b7be13a6b55c4bc274259694a317eef3715",
+  "versions": {
+    "fastapi": "0.143.0",
+    "numpy": "2.5.3",
+    "pydantic": "2.14.0",
+    "python": "3.13.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "tldextract": "5.4.0",
+    "uvicorn": "0.54.0"
+  }
+}

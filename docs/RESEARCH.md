@@ -1,6 +1,6 @@
 # ClearMessage sources and reuse decisions
 
-English revision: 10 October 2026. The owner-supplied English planning package records prior checks of key event, primary-dataset, hosting and contrast references. This migration did not recheck external rules, pricing or availability. The entries below retain those dated research leads, not a fresh exhaustive audit; recheck changing event/hosting terms before release. This is a research inventory, not an implementation report. Actual local acquisition, hashes and provisional training results are recorded in DATA_SOURCES, MODEL_CARD and STATUS; they must not be confused with the older planning assumptions. Published licenses and counts must be checked against acquired files and upstream provenance before use. The entries summarize sources; they do not reproduce source text.
+English revision: 11 October 2026. The owner-supplied English planning package records prior checks of key event, primary-dataset, hosting and contrast references. Goal 05 rechecked the official Spaces overview on 11 October 2026; event rules and other inventory references were not freshly audited. The entries below retain those dated research leads, not a fresh exhaustive audit; recheck changing event/hosting terms before release. This is a research inventory, not an implementation report. Actual local acquisition, hashes and provisional training results are recorded in DATA_SOURCES, MODEL_CARD and STATUS; they must not be confused with the older planning assumptions. Published licenses and counts must be checked against acquired files and upstream provenance before use. The entries summarize sources; they do not reproduce source text.
 
 ## Event
 
@@ -52,7 +52,7 @@ No suitable public Czech corpus for this exact task was verified in the original
 
 [H1 — Docker Spaces](https://huggingface.co/docs/hub/spaces-sdks-docker): a candidate destination for one frontend/API container, not the only hosting option.
 
-[H2 — Current Spaces overview](https://huggingface.co/docs/hub/spaces-overview): creating Docker/Gradio compute Spaces requires a paid plan; CPU Basic having no hourly fee does not make account creation universally free. Use an already authorized host or a documented local fallback. No purchase is authorized by a build prompt.
+Rechecked **11 October 2026**: [H2 — Current Spaces overview](https://huggingface.co/docs/hub/spaces-overview): creating Docker/Gradio compute Spaces requires a paid plan; CPU Basic having no hourly fee does not make account creation universally free. Use an already authorized host or a documented local fallback. No purchase is authorized by a build prompt.
 
 The supplied Codex goal syntax is preserved as a project workflow. CODEX_GOALS also provides plain prompts if the current client does not expose that command. Repository instructions and active status remain authoritative for the implementation; a goal prompt does not expand publishing or billing authorization.
 
