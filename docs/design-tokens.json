@@ -1,62 +1,59 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "product": "ClearMessage",
-  "style": "Style A — Modern & Friendly",
+  "style": "Style A \u2014 Modern & Friendly with Apple-inspired minimalism",
   "colors": {
     "brand": {
       "primary": "#173DA5",
       "hover": "#12317F"
     },
     "surface": {
-      "page": "#F6F8FC",
+      "page": "#FAFAFC",
       "card": "#FFFFFF",
-      "accent": "#EEF2FF"
+      "accent": "#EEF3FF"
     },
     "text": {
-      "primary": "#172033",
-      "secondary": "#64748B",
-      "secondary-page": "#5B6B82"
+      "primary": "#111827",
+      "secondary": "#596579",
+      "secondary-page": "#596579"
     },
     "border": {
-      "subtle": "#DCE3EF",
-      "control": "#64748B"
-    },
-    "accent": {
-      "decorative": "#6366F1"
+      "subtle": "#E5E7EB",
+      "control": "#667085"
     },
     "state": {
       "positive": {
-        "indicator": "#16A34A",
-        "surface": "#F0FDF4",
+        "indicator": "#166534",
+        "surface": "#FFFFFF",
         "text": "#166534"
       },
       "warning": {
-        "indicator": "#F59E0B",
+        "indicator": "#9A6700",
         "surface": "#FFFBEB",
-        "text": "#92400E"
+        "text": "#9A6700"
       },
       "danger": {
-        "indicator": "#DC2626",
+        "indicator": "#B42318",
         "surface": "#FEF2F2",
-        "text": "#991B1B"
+        "text": "#B42318"
       }
     }
   },
   "typography": {
-    "family": "Inter",
+    "family": "-apple-system, BlinkMacSystemFont, Segoe UI, Inter, system-ui, sans-serif",
     "fallback": "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
     "hero": {
-      "px": 36,
-      "weight": 700,
-      "lineHeight": 1.2
+      "px": 44,
+      "weight": 650,
+      "lineHeight": 1.16
     },
     "heroMobile": {
       "px": 32,
-      "weight": 700,
-      "lineHeight": 1.25
+      "weight": 650,
+      "lineHeight": 1.2
     },
     "section": {
-      "px": 24,
+      "px": 26,
       "weight": 600,
       "lineHeight": 1.3
     },
@@ -89,16 +86,14 @@
   ],
   "radiusPx": {
     "control": 12,
-    "card": 16,
+    "card": 20,
     "panel": 20
   },
   "layout": {
-    "maxWidthPx": 1120,
-    "desktopColumns": "minmax(0, 3fr) minmax(0, 2fr)",
-    "desktopGapPx": 48,
-    "stackBelowPx": 900,
-    "hideIllustrationBelowPx": 700,
-    "mobileGutterPx": 20
+    "maxWidthPx": 880,
+    "interactionWidthPx": 736,
+    "columns": 1,
+    "mobileGutterPx": 16
   },
   "controls": {
     "minHeightPx": 48,
@@ -110,5 +105,5 @@
     "durationMs": 150,
     "reduceMotion": true
   },
-  "shadow": "0 8px 28px rgba(23,32,51,0.06)"
+  "shadow": "0 2px 8px rgba(17,24,39,0.025)"
 }

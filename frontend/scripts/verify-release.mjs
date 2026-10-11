@@ -19,7 +19,7 @@ try {
   await page.evaluate(() => document.fonts.ready);
   assert.equal(await page.locator('html').getAttribute('lang'), 'en');
   assert.equal(await page.title(), 'ClearMessage — Message guidance');
-  assert(await page.evaluate(() => document.fonts.check('20px Inter')));
+  assert((await page.locator('body').evaluate(element => getComputedStyle(element).fontFamily)).includes('-apple-system'));
   const checks = [];
   for (const [name, text, language, expected] of [
     ['ordinary', 'We can meet for a fictional lunch tomorrow.', 'en', 'review'],
@@ -29,7 +29,7 @@ try {
     await page.getByLabel('Message text', {exact:true}).fill(text);
     await page.getByLabel('Message language', {exact:true}).selectOption(language);
     const waiting = page.waitForResponse(response => response.url().endsWith('/api/analyze'));
-    await page.getByRole('button', {name:'Check Message',exact:true}).click();
+    await page.getByRole('button', {name:'Check message',exact:true}).click();
     const response = await waiting;
     const result = await response.json();
     assert.equal(response.headers()['cache-control'], 'no-store');

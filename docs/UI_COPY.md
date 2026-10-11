@@ -1,6 +1,6 @@
 # ClearMessage English UI copy
 
-Version 1.3.1 · 11 October 2026. Approved Style A wording is integrated with the
+Version 2.0 · 11 October 2026. Approved Style A wording is integrated with the
 model retrained on the approved dataset. The exact current strings below match
 `frontend/src/copy.ts`; update both together. All current results are incomplete.
 English interface language does not establish evaluated model support.
@@ -13,7 +13,7 @@ English interface language does not establish evaluated model support.
 | titleLines.1 | Make safer decisions. |
 | prototypeLabel | EVOHACKS 2026 prototype |
 | illustrationCaption | Make sense of it, together. |
-| intro | Not sure whether a message is trustworthy? Paste it here, and we'll help you identify warning signs and understand what to do next. |
+| intro | Paste a message or upload a screenshot. We'll help you understand the warning signs and what you can do next. |
 | stage | Development version · Performance is unverified for individual languages; checks remain limited. |
 | textLabel | Message text |
 | placeholder | Paste the message here… |
@@ -25,7 +25,7 @@ English interface language does not establish evaluated model support.
 | languages.en | English |
 | languages.cs | Czech |
 | languages.other | Other language |
-| submit | Check Message |
+| submit | Check message |
 | pending | Checking… |
 | footer | ClearMessage does not verify senders or links. It never confirms that a message is safe. |
 
@@ -140,3 +140,7 @@ unverified language performance and limited checks.** HTML uses `lang="en"`.
 All labels, errors and live announcements are English. Decorative mark/hero images
 have empty alt text and are hidden from assistive technology. The submit arrow is
 hidden; no UI locale switcher or untranslated fallback exists.
+
+## Goal 09 refinement
+
+Hero: **Not sure about a message?** The approved minimalist direction uses native typography, a centered layout and neutral results. Screenshot, explanations, ActionGuide and transparency wording are implemented in the shared dictionary as those milestones become available. See GOAL_09_PROGRESS for verified scope.

@@ -4,7 +4,6 @@ import { analyze, AnalysisError, MAX_TEXT_LENGTH, textLength, validateText } fro
 import type { AnalyzeResponse, ClientErrorKey, MessageLanguage } from './api';
 import { copy as t } from './copy';
 import mark from '../../assets/brand/mark.svg';
-import illustration from '../../assets/brand/support-illustration.svg';
 import HelpRequest from './HelpRequest';
 
 export default function App() {
@@ -59,12 +58,13 @@ export default function App() {
   return (
     <div className="page">
       <header>
-        <span className="brand"><img src={mark} width="40" height="40" alt="" aria-hidden="true" />ClearMessage</span>
-        <span className="prototype-label">{t.prototypeLabel}</span>
+        <a className="brand" href="/"><img src={mark} width="32" height="32" alt="" aria-hidden="true" />ClearMessage</a>
+        <nav aria-label="Main navigation"><a href="/" aria-current="page">Home</a></nav>
       </header>
       <main className="hero">
         <div className="interaction">
-          <h1>{t.titleLines[0]}<br />{t.titleLines[1]}</h1>
+          <p className="prototype-label">{t.prototypeLabel}</p>
+          <h1>Not sure about a message?</h1>
           <p className="intro">{t.intro}</p>
           <p className="stage">{t.stage}</p>
           <form onSubmit={submit} noValidate aria-busy={pending}>
@@ -111,7 +111,6 @@ export default function App() {
             <ol>{t.clickedAdvice.map(advice => <li key={advice}>{advice}</li>)}</ol>
           </details>
         </div>
-        <aside className="hero-art" aria-hidden="true"><img src={illustration} alt="" aria-hidden="true" width="520" height="520" /><p>{t.illustrationCaption}</p></aside>
       </main>
       <footer>{t.footer}</footer>
     </div>
