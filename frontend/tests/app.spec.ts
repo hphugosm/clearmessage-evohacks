@@ -187,3 +187,180 @@ test('unavailable model contract has a separate incomplete service state', async
   await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
   await expect(page.getByText('No strong warning signs found', { exact: true })).toHaveCount(0);
 });
+
+test('pending edits cancel the old request and ignore late responses even when transport ignores abort', async ({ page }) => {
+  // Test-only transport wrapper delays real API results and deliberately ignores abort.
+  await page.addInitScript(() => {
+    const realFetch = window.fetch.bind(window);
+    const state = { release: () => {}, calls: 0 };
+    (window as unknown as { delayedAnalysis: typeof state }).delayedAnalysis = state;
+    window.fetch = async (input, options) => {
+      if (input !== '/api/analyze') return realFetch(input, options);
+      state.calls++;
+      if (state.calls !== 1) return realFetch(input, options);
+      const response = await realFetch(input, { ...options, signal: undefined });
+      await new Promise<void>(resolve => { state.release = resolve; });
+      return response;
+    };
+  });
+  await page.goto('/');
+  await page.getByLabel('Message language', { exact: true }).selectOption('en');
+  await page.getByLabel('Message text', { exact: true }).fill('Please send me your login code.');
+  await page.getByRole('button', { name: 'Check Message' }).click();
+  await expect(page.getByRole('button', { name: 'Checking…' })).toBeDisabled();
+  await expect(page.getByRole('status')).toHaveText('Checking…');
+  await expect(page.getByLabel('Message text', { exact: true })).toBeEnabled();
+  await page.getByLabel('Message text', { exact: true }).fill('Fictional ordinary lunch plan for tomorrow.');
+  await expect(page.getByRole('button', { name: 'Check Message' })).toBeEnabled();
+  await page.getByRole('button', { name: 'Check Message' }).click();
+  await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
+  await page.evaluate(() => (window as unknown as {delayedAnalysis: {release: () => void}}).delayedAnalysis.release());
+  // Drain the resumed promise and React rendering before checking the retained state.
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
+  await expect(page.getByText('Observed textual signal:', { exact: false })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Ask someone for help' }).click();
+  await page.getByLabel('Message language', { exact: true }).selectOption('other');
+  await expect(page.locator('.result')).toHaveCount(0);
+  await expect(page.getByLabel('Help request preview')).toHaveCount(0);
+});
+
+test('keyboard-only flow and actual clipboard write contain only the preview', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  const canary = 'PRIVATE_UI_CANARY_Alex_123456 https://notice.invalid/test';
+  const logs: string[] = [];
+  page.on('console', message => logs.push(message.text()));
+  await page.goto('/');
+  await page.keyboard.press('Tab');
+  await expect(page.getByLabel('Message text', { exact: true })).toBeFocused();
+  expect(await page.getByLabel('Message text', { exact: true }).evaluate(element => getComputedStyle(element).outlineWidth)).toBe('3px');
+  await page.keyboard.insertText(`Please send me your password. ${canary}`);
+  await page.keyboard.press('Tab');
+  await expect(page.getByLabel('Message language', { exact: true })).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Check Message' })).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('heading', { name: 'There are warning signals in this message.' })).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Ask someone for help' })).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page.getByLabel('Help request preview')).toBeFocused();
+  const draft = await page.getByLabel('Help request preview').inputValue();
+  // Clipboard reads here are a test verifier only. Production code is write-only.
+  await page.evaluate(() => navigator.clipboard.writeText('TEST_CLIPBOARD_UNCHANGED'));
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('TEST_CLIPBOARD_UNCHANGED');
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Copy help request' })).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('status').filter({ hasText: 'Copied' })).toHaveText('Copied');
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(draft);
+  expect(draft).not.toMatch(/PRIVATE|Alex|123456|notice\.invalid|password/);
+  expect(logs.join(' ')).not.toContain(canary);
+  await page.getByLabel('Message text', { exact: true }).fill('A changed fictional message.');
+  await expect(page.getByText('Copied', { exact: true })).toHaveCount(0);
+});
+
+test('clipboard denial and native cancellation/failure preserve a selectable neutral fallback', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText: async () => { throw new Error('PRIVATE_CLIPBOARD_ERROR_CANARY'); } } });
+    let attempts = 0;
+    Object.defineProperty(navigator, 'share', { value: async () => {
+      if (++attempts === 1) throw new DOMException('PRIVATE_SHARE_CANCEL_CANARY', 'AbortError');
+      throw new Error('PRIVATE_SHARE_ERROR_CANARY');
+    } });
+  });
+  await page.goto('/');
+  await page.getByLabel('Message text', { exact: true }).fill('A fictional ordinary message for testing.');
+  await page.getByRole('button', { name: 'Check Message' }).click();
+  await page.getByRole('button', { name: 'Ask someone for help' }).click();
+  await page.getByRole('button', { name: 'Copy help request' }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Copying did not complete' })).toBeVisible();
+  await expect(page.getByLabel('Help request preview')).toBeFocused();
+  expect(await page.getByLabel('Help request preview').evaluate(element => {
+    const field = element as HTMLTextAreaElement;
+    return field.selectionStart === 0 && field.selectionEnd === field.value.length;
+  })).toBe(true);
+  await expect(page.getByText('Copied', { exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Share help request' }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Sharing cancelled.' })).toBeVisible();
+  await page.getByRole('button', { name: 'Share help request' }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Sharing could not be opened.' })).toBeVisible();
+  expect(await page.locator('.result').textContent()).not.toContain('CANARY');
+  await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
+});
+
+test('missing clipboard and late copy completion cannot restore old feedback', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+  });
+  await page.goto('/');
+  await page.getByLabel('Message text', { exact: true }).fill('A fictional ordinary message for testing.');
+  await page.getByRole('button', { name: 'Check Message' }).click();
+  await page.getByRole('button', { name: 'Ask someone for help' }).click();
+  await page.getByRole('button', { name: 'Copy help request' }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Copying did not complete' })).toBeVisible();
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: () => new Promise<void>(resolve => {
+      (window as unknown as { finishCopy: () => void }).finishCopy = resolve;
+    }) } });
+  });
+  await page.getByRole('button', { name: 'Copy help request' }).click();
+  await expect(page.getByRole('button', { name: 'Copying…' })).toBeDisabled();
+  await page.getByRole('button', { name: 'Ask someone for help' }).click();
+  await page.evaluate(() => (window as unknown as { finishCopy: () => void }).finishCopy());
+  await page.getByRole('button', { name: 'Ask someone for help' }).click();
+  await expect(page.getByText('Copied', { exact: true })).toHaveCount(0);
+});
+
+test('language edits during a pending request cancel without an error or result', async ({ page }) => {
+  let release!: () => void;
+  const blocked = new Promise<void>(resolve => { release = resolve; });
+  await page.route('**/api/analyze', async route => { await blocked; await route.abort().catch(() => {}); });
+  await page.goto('/');
+  await page.getByLabel('Message text', { exact: true }).fill('A fictional ordinary message.');
+  await page.getByRole('button', { name: 'Check Message' }).click();
+  await expect(page.getByRole('button', { name: 'Checking…' })).toBeDisabled();
+  await page.getByLabel('Message language', { exact: true }).selectOption('other');
+  await expect(page.getByRole('button', { name: 'Check Message' })).toBeEnabled();
+  release();
+  await expect(page.getByRole('alert')).toHaveCount(0);
+  await expect(page.locator('.result')).toHaveCount(0);
+});
+
+test('reduced motion, control geometry and reserved green state keep explicit limitations', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  expect(await page.getByRole('button', { name: 'Check Message' }).evaluate(element => getComputedStyle(element).transitionDuration)).toBe('0s');
+  expect(await page.locator('body').evaluate(element => getComputedStyle(element).fontSize)).toBe('20px');
+  expect(await page.getByRole('button', { name: 'Check Message' }).evaluate(element => getComputedStyle(element).fontSize)).toBe('18px');
+  for (const selector of ['textarea', 'select', 'button', 'summary']) {
+    for (const box of await page.locator(selector).evaluateAll(elements => elements.map(element => element.getBoundingClientRect().height))) expect(box).toBeGreaterThanOrEqual(48);
+  }
+  // Reserved future-state fixture only. The actual provisional model never emits this.
+  await page.route('**/api/analyze', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({
+    status: 'no_strong_signals', analysis_complete: true, headline_key: 'no_strong_signals', evidence: [],
+    action_keys: ['verify_independently', 'ask_trusted_person'], limitations: ['not_a_safety_confirmation'],
+    message_language: 'en', model_version: 'test-only-future-model', policy_version: 'analysis-policy-2', contract_version: '1.1.0',
+    share_summary_keys: ['help_verify_independently'],
+  }) }));
+  await page.getByLabel('Message language', { exact: true }).selectOption('en');
+  await page.getByLabel('Message text', { exact: true }).fill('A fictional future-contract fixture only.');
+  await page.getByRole('button', { name: 'Check Message' }).click();
+  await expect(page.locator('.result')).toHaveAttribute('data-status', 'no_strong_signals');
+  await expect(page.getByText('No strong warning signs found', { exact: true })).toBeVisible();
+  await expect(page.getByText('This output does not establish message safety.', { exact: true })).toBeVisible();
+  expect(await page.locator('.result-label').evaluate(element => getComputedStyle(element).color)).toBe('rgb(22, 101, 52)');
+  await page.getByRole('button', { name: 'Ask someone for help' }).click();
+  expect(await page.getByLabel('Help request preview').inputValue()).not.toContain('The automated check was limited');
+});
+
+test('font download failure retains readable fallback and functioning real API', async ({ page }) => {
+  await page.route('**/*.woff2', route => route.abort());
+  await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
+  expect(await page.locator('body').evaluate(element => getComputedStyle(element).fontFamily)).toContain('system-ui');
+  await page.getByLabel('Message text', { exact: true }).fill('A fictional ordinary message in the fallback font.');
+  await page.getByRole('button', { name: 'Check Message' }).click();
+  await expect(page.locator('.result')).toHaveAttribute('data-status', 'review');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});

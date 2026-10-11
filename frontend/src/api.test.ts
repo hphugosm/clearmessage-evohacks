@@ -9,7 +9,7 @@ const missingModel = {
   message_language: 'en', model_version: null, policy_version: 'analysis-policy-2',
   contract_version: '1.1.0', share_summary_keys: ['analysis_not_completed', 'help_verify_independently'],
 };
-afterEach(() => { vi.unstubAllGlobals(); });
+afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
 
 describe('input limits and incomplete results', () => {
   it('keeps the client input limit aligned with the canonical OpenAPI contract', () => {
@@ -51,6 +51,26 @@ describe('input limits and incomplete results', () => {
   it('replaces transport exception text with a fixed key', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('FIKTIVNI_PRIVATE_TEXT')));
     await expect(analyze({ text: 'Fictional sample', message_language: 'auto' })).rejects.toThrow(/^unavailable$/);
+  });
+  it('propagates cancellation without exposing private transport errors', async () => {
+    const controller = new AbortController();
+    vi.stubGlobal('fetch', vi.fn((_url, options: RequestInit) => new Promise((_resolve, reject) => {
+      options.signal?.addEventListener('abort', () => reject(new Error('PRIVATE_ABORT_CANARY')));
+    })));
+    const promise = analyze({ text: 'Fictional sample', message_language: 'en' }, controller.signal);
+    const rejected = expect(promise).rejects.toThrow(/^unavailable$/);
+    controller.abort();
+    await rejected;
+  });
+  it('bounds stalled transport to ten seconds', async () => {
+    vi.useFakeTimers();
+    vi.stubGlobal('fetch', vi.fn((_url, options: RequestInit) => new Promise((_resolve, reject) => {
+      options.signal?.addEventListener('abort', () => reject(new Error('PRIVATE_TIMEOUT_CANARY')));
+    })));
+    const rejected = expect(analyze({ text: 'Fictional sample', message_language: 'en' })).rejects.toThrow(/^unavailable$/);
+    await vi.advanceTimersByTimeAsync(10_000);
+    await rejected;
+    expect(vi.getTimerCount()).toBe(0);
   });
 });
 

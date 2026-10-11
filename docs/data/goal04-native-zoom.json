@@ -1,0 +1,25 @@
+{
+  "goal": "Goal 04",
+  "date": "2026-10-11",
+  "method": "Native app accessibility tree, browser zoom control and screenshots through cua_repl",
+  "application": "Google Chrome for Testing",
+  "browser_version": "156.0.8078.4",
+  "dedicated_loopback_port": 8789,
+  "window_screen_px": [
+    1280,
+    900
+  ],
+  "native_zoom_percent": 200,
+  "zoom_evidence": "Native browser accessibility zoom control reported 110%, then 200%.",
+  "checks": {
+    "real_api_three_observed_signals": true,
+    "incomplete_result_visible": true,
+    "neutral_preview_readable": true,
+    "keyboard_tab_reaches_copy": true,
+    "copy_focus_outline_visible": true
+  },
+  "native_share_sent": false,
+  "physical_mobile_test": false,
+  "screen_reader_test": false,
+  "scope": "Separate manual visual/native UI verification; screenshots in Codex conversation, not a browser automation assertion or WCAG certification."
+}

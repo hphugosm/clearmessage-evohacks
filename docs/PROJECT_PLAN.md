@@ -17,7 +17,7 @@ The initial scope is SMS, short chat messages and short emails. Attachments, lon
 5. **Ask someone for help** previews a neutral summary built only from approved fixed templates. Copying or native sharing requires a user action. Never include the original message, snippets, URL or private identifiers.
 6. A small **I already clicked or shared something** section offers situation-specific general next steps without asking for secrets.
 
-The current implementation includes real provisional classification, observed rule evidence and sanitized help sharing. All results remain incomplete. Goal 04 is not started; STATUS records the actual scope and remaining review/language blockers.
+The current implementation includes real provisional classification, observed rule evidence and sanitized help sharing. All results remain incomplete. Goal 04 adds gesture-only copying, cancellation guards and verified Style A layout/accessibility checks; STATUS records the actual scope and remaining review/language blockers.
 
 ## Result policy and Style A
 

@@ -35,7 +35,7 @@ BROWSER_INPUTS = {
     "Pošli mi své heslo. ${canary}",
     "Jiná fiktivní zpráva.",
 }
-SUFFIXES = {".md", ".py", ".ts", ".tsx", ".css", ".json", ".txt", ".in", ".html", ".svg", ".sh", ".toml", ".yaml", ".yml"}
+SUFFIXES = {".md", ".py", ".ts", ".tsx", ".mjs", ".css", ".json", ".txt", ".in", ".html", ".svg", ".sh", ".toml", ".yaml", ".yml"}
 
 
 def owned_paths() -> list[Path]:

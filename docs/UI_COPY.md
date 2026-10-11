@@ -1,6 +1,6 @@
 # ClearMessage English UI copy
 
-Version 1.2.0 · 11 October 2026. Approved Style A wording is integrated with the
+Version 1.3.0 · 11 October 2026. Approved Style A wording is integrated with the
 real provisional model. The exact current strings below match
 `frontend/src/copy.ts`; update both together. All current results are incomplete.
 English interface language does not establish evaluated model support.
@@ -74,6 +74,12 @@ English interface language does not establish evaluated model support.
 | help | Ask someone for help |
 | helpPreview | Help request preview |
 | helpNotice | The draft contains only fixed neutral sentences, without your source message or personal details. You can copy it manually. You choose the recipient and whether to send. |
+| copyHelp | Copy help request |
+| copying | Copying… |
+| copied | Copied |
+| copyUnavailable | Copying did not complete. Select the preview text and copy it manually. |
+| sharing | Opening sharing… |
+| shareCancelled | Sharing cancelled. You can still copy the preview manually. |
 | share | Share help request |
 | shareUnavailable | Sharing could not be opened. You can copy the draft manually; nothing was sent automatically. |
 | clicked | I already clicked or shared something |
@@ -93,15 +99,18 @@ English interface language does not establish evaluated model support.
 ## Fixed help payload
 
 Only `analysis_not_completed` and `help_verify_independently` are accepted.
-`frontend/src/help.ts` joins these neutral sentences; it accepts no source text:
+`frontend/src/help.ts` joins `helpTemplates` from the single English dictionary
+`frontend/src/copy.ts`; it accepts no source text:
 
 > The automated check was limited and does not establish message safety.
 
 > I received a message I need to verify. Could you please help me check its claims through a familiar independent channel? I do not want to use the contact or link from the message.
 
-Preview precedes a separate native-share gesture; manual copying uses the
-selectable preview. The application does not access the clipboard, select a
-recipient or send automatically. Cancellation is not an analysis failure.
+Preview precedes a separate copy or native-share gesture. Copy writes only the
+fixed draft; the application never reads the clipboard. Failed/unavailable copying
+selects the preview for manual copying. No recipient is selected and nothing is
+sent automatically. Cancellation is reported without an analysis failure; a
+resolved share dialog is not described as confirmed delivery.
 
 ## Presentation and future scope
 
@@ -118,8 +127,8 @@ with the incomplete/rules-only limitation visible. The green presentation is
 reserved for a valid completed low-finding response and is unreachable in the
 current production policy.
 
-Dedicated copy feedback, additional UX work and optional OCR remain future goals,
-not implemented by this migration. Fictional demos must use `.invalid` domains;
+Goal 04 implements copy feedback and input/request cancellation. Optional OCR
+remains Goal 06 and is not implemented. Fictional demos must use `.invalid` domains;
 no source dataset row is public product copy. Recovery advice collects no secrets
 and does not claim that a device or account was checked.
 

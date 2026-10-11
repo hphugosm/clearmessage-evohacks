@@ -1,16 +1,20 @@
 # ClearMessage project status
 
-Updated **11 October 2026, Europe/Prague**. The requested real analysis flow is
-verified with policy 2, the existing Goal 02 model, transparent rules, English
-guidance and neutral help sharing. The Goal 01 review workspace remains staged in
+Updated **11 October 2026, Europe/Prague**. Goal 04 completes the simple English
+Style A interface over the existing real model/API: neutral help preview,
+gesture-only copy/share, honest fallback and cancellation/stale-response guards.
+Desktop, 360px mobile, 320 CSS px reflow, text enlargement and separate native
+200% browser zoom were checked. Policy 2 and the existing Goal 02 model remain
+unchanged. The last recorded Goal 01 review state is staged in
 RAM, not submitted: all 45 labels explicitly rechecked, no rechecks missing, all 45
 languages confirmed, four missing attributions explicitly re-confirmed. The
 98-row quarantine is now explicitly proposed; final approval remains withheld.
 The canonical review is unchanged. The draft has zero submission blockers;
 immutable draft submission and separate final approval remain outstanding.
 The English migration remains complete.
-This integration did not approve review data, retrain, freeze the split, inspect
-blind/held-out messages, publish or start Goal 04.
+This interface work did not approve review data, retrain, freeze the split,
+inspect blind/held-out messages or publish. Only Goal 04 was completed; OCR
+belongs to Goal 06 and was not started.
 
 The real Goal 02 sparse model remains integrated with `analysis-policy-2` and
 `observed-requests-2`, contract **1.1.0**. It is provisional: **final reviewed-data approval remains outstanding**, original
@@ -28,11 +32,91 @@ results are `suspicious` with actual basis or `review`, always
 | Dataset | 5,971 original rows. Canonical unchanged. Staged draft: 15 HAM / 13 SPAM / 17 SMISHING, all 45 rechecked and English-confirmed, four fresh attributions, 98-row quarantine proposed; zero blockers. Conditional reviewed eligible corpus: 5,873 rows (4,844 HAM / 439 SPAM / 590 SMISHING), not approved. Source/training unchanged. |
 | Data split | Immutable candidate, empty intersections; no approved final freeze. Provisional authorization preserves original assignments and `data_split_ready=false`. |
 | Czech development/challenge | Format and independent instructions; zero actual challenge records. Existing synthetic Czech regression inputs preserved, not a benchmark. |
-| Sharing | Fixed English templates, preview and separate gesture; selectable manual-copy fallback. No clipboard API or source content. |
+| Sharing | Fixed English dictionary/templates, preview, separate Copy/Share click. Write-only clipboard copies the neutral preview; denial/missing support selects it for manual copying. No source content or recipient selection. |
 | Docker | Source prepared; CLI/daemon unavailable. Build/run/healthcheck **untested**. |
 | Deployment | Account/destination unconfirmed; no publishing, credential collection or purchase. |
 | Git | Local repository with no remote; commit after verification. Owner-supplied reference folder preserved. |
-| OCR/submission/video/Goal 04 | Not started by this migration. |
+| Goal 04 | Implemented and verified below; real screen-reader/physical-device testing remains unperformed. |
+| OCR/submission/video | Not started by this interface goal. |
+
+## Goal 04 — simple English Style A interface
+
+Started from a clean repository; preserved the real classifier, versioned API,
+policy thresholds, review/splits, Czech evaluation provenance and local assets.
+No dependencies were added and no foreign changes were overwritten.
+
+- Style A retains the two-column desktop hero, local older/younger phone scene,
+  mobile interaction-first layout, blue/navy/white tokens, rounded cards and
+  self-hosted Inter. Rem sizes now respect the browser default; body 20px,
+  buttons 18px at the standard default, actions at least 48px. No age/account,
+  score, fake progress, safety badge, bilingual fallback or stored history.
+- Text/language edits cancel an active request and clear previous result/error/
+  help feedback. Request IDs also ignore transports that return after abort;
+  unmount cleans up. The API keeps its ten-second deadline and fixed private-
+  content-free errors. Duplicate submission is disabled while pending.
+- Help receives only allowlisted template keys, not source text/full responses.
+  Fixed neutral templates moved into the one English dictionary. Preview opens
+  before a separate copy/share gesture. Copy writes only the preview; production
+  code never reads the clipboard. Failed/unavailable copying selects it for
+  manual copying and never claims success. Sharing cancellation/failure is
+  reported honestly; a resolved native dialog is not proof of delivery.
+- Brief polite live announcements sit outside the busy form; the result heading
+  and help preview receive keyboard focus. Opening/copying the preview does not
+  cause the entire result to be announced again. Actual screen-reader speech
+  has not been tested.
+- Real results remain incomplete review or evidence-supported amber suspicious.
+  At most three reasons and actions; limitations stay visible. Green is a
+  guarded future contract fixture only, with its safety limitation; production
+  low-finding and red stronger-warning presentations remain disabled.
+
+Executed commands from the repository root:
+
+```sh
+sh scripts/test.sh
+npm --prefix frontend test
+npm --prefix frontend run build
+npm --prefix frontend run test:e2e
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-ui.mjs
+python3 scripts/audit_migration.py
+git diff --check
+```
+
+Actual results: full script **PASS** — **183 Python**, **32 Vitest**, **34
+Playwright** tests across the actual FastAPI-served build and Vite API proxy;
+dependency consistency, Python/TypeScript contract drift, TypeScript/Vite build
+and migration audit passed. After the final compact announcement/default-font
+adjustments, the frontend tests/build/browser checks were run again and passed.
+Existing Starlette/httpx and Node color-environment warnings remain visible.
+
+The separate visual harness passed **seven captures and 14 contrast pairs**:
+1440px desktop initial/warning/help/review, 360px mobile warning/help/error,
+320 CSS px reflow and 640px with 200% text enlargement. All captured images were
+opened and visually inspected; no horizontal page overflow or hidden result
+steps/limitations. A separate headed testing browser's native zoom control
+explicitly showed **200%**; real submission/result/help and keyboard Tab to the
+outlined copy control worked. No native sharing was sent. The preview itself
+is a resizable textarea with vertical scrolling for long text.
+[English verification report](UI_VERIFICATION.md),
+[measured JSON](data/goal04-ui-verification.json) and
+[native zoom record](data/goal04-native-zoom.json) state the precise scope.
+
+Copy canaries were absent from the actual clipboard payload, fixed share
+payload, browser console and result; existing backend log/no-egress tests also
+passed. Test-only browser reads verify clipboard equality; no application read.
+Network/malformed/missing model, pending/edit, cancellation, language changes,
+keyboard, unavailable clipboard and late copy/analysis response checks passed.
+
+Initial harness checks failed because CSS minification changes HEX case and
+uses three-digit HEX; those measurement-parser defects were corrected before
+the successful measurements. No test/security requirements were weakened.
+The Chrome connector was unavailable; installed isolated testing Chromium
+provided actual native zoom. Real screen reader, physical mobile/on-screen
+keyboard, Safari/Firefox and human-participant checks are **NOT PERFORMED**.
+Docker remains **UNTESTED** (no CLI/daemon); deployment is unperformed. Final
+review/data approval and language-performance validation remain outstanding.
+The temporary verification server/browser were closed; unrelated review
+processes were left untouched.
+Local commit follows verification. Stop here; no OCR or next goal started.
 
 ## Goal 03 — real flow verification and policy 2
 

@@ -5,7 +5,7 @@ import type { AnalyzeResponse, ClientErrorKey, MessageLanguage } from './api';
 import { copy as t } from './copy';
 import mark from '../../assets/brand/mark.svg';
 import illustration from '../../assets/brand/support-illustration.svg';
-import { buildHelpDraft } from './help';
+import HelpRequest from './HelpRequest';
 
 export default function App() {
   const [messageLanguage, setMessageLanguage] = useState<MessageLanguage>('auto');
@@ -13,41 +13,48 @@ export default function App() {
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<AnalyzeResponse | null>(null);
   const [helpPreview, setHelpPreview] = useState(false);
-  const [shareFailed, setShareFailed] = useState(false);
   const [error, setError] = useState<ClientErrorKey | null>(null);
   const textField = useRef<HTMLTextAreaElement>(null);
   const resultHeading = useRef<HTMLHeadingElement>(null);
+  const requestId = useRef(0);
+  const activeRequest = useRef<AbortController | null>(null);
 
   useEffect(() => { if (result) resultHeading.current?.focus(); }, [result]);
+  useEffect(() => () => { requestId.current++; activeRequest.current?.abort(); }, []);
+
+  function clearPrevious() {
+    requestId.current++;
+    activeRequest.current?.abort();
+    activeRequest.current = null;
+    setPending(false);
+    setResult(null);
+    setHelpPreview(false);
+    setError(null);
+  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (pending) return;
     setResult(null);
     setHelpPreview(false);
-    setShareFailed(false);
     const invalid = validateText(text);
     setError(invalid);
     if (invalid) { textField.current?.focus(); return; }
+    const id = ++requestId.current;
+    const controller = new AbortController();
+    activeRequest.current = controller;
     setPending(true);
     try {
-      setResult(await analyze({ text, message_language: messageLanguage }));
+      const response = await analyze({ text, message_language: messageLanguage }, controller.signal);
+      if (id === requestId.current) setResult(response);
     } catch (caught) {
-      setError(caught instanceof AnalysisError ? caught.key : 'unavailable');
+      if (id === requestId.current) setError(caught instanceof AnalysisError ? caught.key : 'unavailable');
     } finally {
-      setPending(false);
+      if (id === requestId.current) { setPending(false); activeRequest.current = null; }
     }
   }
 
-  async function shareDraft() {
-    if (!result || !helpPreview) return;
-    setShareFailed(false);
-    try {
-      await navigator.share({ text: buildHelpDraft(result.share_summary_keys) });
-    } catch (caught) {
-      if (!(caught instanceof DOMException && caught.name === 'AbortError')) setShareFailed(true);
-    }
-  }
+  const resultLabel = result ? (result.status === 'review' && result.limitations.some(key => key === 'model_not_ready' || key === 'inference_unavailable') ? t.notPerformed : t.statusLabels[result.status]) : '';
 
   return (
     <div className="page">
@@ -63,14 +70,14 @@ export default function App() {
           <form onSubmit={submit} noValidate aria-busy={pending}>
             <label htmlFor="message">{t.textLabel}</label>
             <textarea id="message" ref={textField} value={text} rows={7} placeholder={t.placeholder}
-              disabled={pending} autoComplete="off" spellCheck={false} autoCorrect="off" autoCapitalize="off"
+              autoComplete="off" spellCheck={false} autoCorrect="off" autoCapitalize="off"
               aria-invalid={error === 'empty' || error === 'too_long' || error === 'invalid_input'}
               aria-describedby={`privacy text-limit${error ? ' form-error' : ''}`}
-              onChange={event => { setText(event.target.value); setResult(null); setHelpPreview(false); setShareFailed(false); setError(null); }} />
+              onChange={event => { setText(event.target.value); clearPrevious(); }} />
             <div className="field-note"><p id="text-limit">{t.limit}</p><span className={textLength(text) > MAX_TEXT_LENGTH ? 'over-limit' : ''}>{textLength(text)} / {MAX_TEXT_LENGTH}</span></div>
             <label htmlFor="message-language">{t.languageLabel}</label>
-            <select id="message-language" aria-describedby="language-hint" value={messageLanguage} disabled={pending}
-              onChange={event => { setMessageLanguage(event.target.value as MessageLanguage); setResult(null); setHelpPreview(false); setShareFailed(false); setError(null); }}>
+            <select id="message-language" aria-describedby="language-hint" value={messageLanguage}
+              onChange={event => { setMessageLanguage(event.target.value as MessageLanguage); clearPrevious(); }}>
               {Object.entries(t.languages).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
             </select>
             <p id="language-hint" className="language-hint">{t.languageHint}</p>
@@ -79,13 +86,13 @@ export default function App() {
             <button className="submit" disabled={pending} type="submit">{pending ? t.pending : t.submit}
               {!pending && <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>}
             </button>
-            <p className="sr-only" role="status" aria-live="polite">{pending ? t.pending : ''}</p>
           </form>
-          <div aria-live="polite" aria-atomic="true">
+          <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">{pending ? t.pending : result ? `${resultLabel}. ${result.analysis_complete ? t.complete : t.incomplete}` : ''}</p>
+          <div>
             {result && <section className="result" data-status={result.status} aria-labelledby="result-heading">
               <p className="result-label"><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none">
                 {result.status === 'no_strong_signals' ? <path d="m5 12 4 4L19 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /> : <><path d="m12 3 10 18H2L12 3Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><path d="M12 9v5m0 3v.1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></>}
-              </svg>{result.status === 'review' && result.limitations.some(key => key === 'model_not_ready' || key === 'inference_unavailable') ? t.notPerformed : t.statusLabels[result.status]}</p>
+              </svg>{resultLabel}</p>
               <p className="completion-label">{result.analysis_complete ? t.complete : t.incomplete}</p>
               <h2 id="result-heading" tabIndex={-1} ref={resultHeading}>{t.headlines[result.headline_key]}</h2>
               <p>{t.resultDetail}</p>
@@ -95,14 +102,8 @@ export default function App() {
               <ol>{result.action_keys.map(key => <li key={key}>{t.actions[key]}</li>)}</ol>
               <h3>{t.limitationsLabel}</h3>
               <ul>{result.limitations.map(key => <li key={key}>{t.limitations[key]}</li>)}</ul>
-              <button type="button" className="help-button" aria-expanded={helpPreview} onClick={() => setHelpPreview(!helpPreview)}>{t.help}</button>
-              {helpPreview && <div className="help-preview">
-                <label htmlFor="help-draft">{t.helpPreview}</label>
-                <p>{t.helpNotice}</p>
-                <textarea id="help-draft" readOnly value={buildHelpDraft(result.share_summary_keys)} rows={6} />
-                {typeof navigator.share === 'function' && <button type="button" className="help-button" onClick={shareDraft}>{t.share}</button>}
-                {shareFailed && <p role="alert">{t.shareUnavailable}</p>}
-              </div>}
+              <button type="button" className="help-button" aria-expanded={helpPreview} aria-controls="help-preview" onClick={() => setHelpPreview(value => !value)}>{t.help}</button>
+              {helpPreview && <HelpRequest summaryKeys={result.share_summary_keys} />}
             </section>}
           </div>
           <details className="clicked-advice">

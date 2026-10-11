@@ -56,9 +56,14 @@ export function parseResponse(data: unknown): AnalyzeResponse {
   return result;
 }
 
-export async function analyze(request: AnalyzeRequest): Promise<AnalyzeResponse> {
+export async function analyze(request: AnalyzeRequest, signal?: AbortSignal): Promise<AnalyzeResponse> {
   const error = validateText(request.text);
   if (error) throw new AnalysisError(error);
+  const controller = new AbortController();
+  const abort = () => controller.abort();
+  if (signal?.aborted) abort();
+  signal?.addEventListener('abort', abort, { once: true });
+  const timeout = setTimeout(abort, 10_000);
   try {
     const response = await fetch('/api/analyze', {
       method: 'POST',
@@ -67,12 +72,15 @@ export async function analyze(request: AnalyzeRequest): Promise<AnalyzeResponse>
       cache: 'no-store',
       credentials: 'omit',
       referrerPolicy: 'no-referrer',
-      signal: AbortSignal.timeout(10_000),
+      signal: controller.signal,
     });
     if (!response.ok) throw new AnalysisError([413, 422].includes(response.status) ? 'invalid_input' : 'unavailable');
     return parseResponse(await response.json());
   } catch (error) {
     if (error instanceof AnalysisError) throw error;
     throw new AnalysisError('unavailable');
+  } finally {
+    clearTimeout(timeout);
+    signal?.removeEventListener('abort', abort);
   }
 }

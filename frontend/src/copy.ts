@@ -11,6 +11,9 @@ type Copy = {
   evidence: Record<AnalyzeResponse['evidence'][number]['key'], string>;
   reasons: string; noEvidence: string; incomplete: string; complete: string;
   help: string; helpPreview: string; helpNotice: string; share: string; shareUnavailable: string;
+  copyHelp: string; copying: string; copied: string; copyUnavailable: string;
+  sharing: string; shareCancelled: string;
+  helpTemplates: Record<AnalyzeResponse['share_summary_keys'][number], string>;
   clicked: string; clickedAdvice: string[]; steps: string; limitationsLabel: string; footer: string;
   errors: Record<ClientErrorKey, string>;
   actions: Record<AnalyzeResponse['action_keys'][number], string>;
@@ -45,6 +48,13 @@ export const copy: Copy = {
   help: 'Ask someone for help', helpPreview: 'Help request preview',
   helpNotice: 'The draft contains only fixed neutral sentences, without your source message or personal details. You can copy it manually. You choose the recipient and whether to send.',
   share: 'Share help request', shareUnavailable: 'Sharing could not be opened. You can copy the draft manually; nothing was sent automatically.',
+  copyHelp: 'Copy help request', copying: 'Copying…', copied: 'Copied',
+  copyUnavailable: 'Copying did not complete. Select the preview text and copy it manually.',
+  sharing: 'Opening sharing…', shareCancelled: 'Sharing cancelled. You can still copy the preview manually.',
+  helpTemplates: {
+    analysis_not_completed: 'The automated check was limited and does not establish message safety.',
+    help_verify_independently: 'I received a message I need to verify. Could you please help me check its claims through a familiar independent channel? I do not want to use the contact or link from the message.',
+  },
   clicked: 'I already clicked or shared something', clickedAdvice: [
     'Stop further steps. Close the page; do not enter more information or download anything. Clicking alone does not tell us what happened.',
     'If you entered a password, change it through a familiar app or address. If you sent money or banking details, contact your bank through a familiar channel. Do not enter any of those details here.',

@@ -183,6 +183,8 @@ httpx TestClient deprecation warning remains visible; it is not suppressed.
 [MIGRATION_REPORT](docs/MIGRATION_REPORT.md) records the ClearMessage migration.
 [Project plan](docs/PROJECT_PLAN.md), [research](docs/RESEARCH.md),
 [acceptance](docs/ACCEPTANCE.md), [planning notes](docs/PLANNING_NOTES.md) and
-`AGENTS.md` are English. The local Git repository has no remote. Goal 04 has not
-started. The existing workspace path is retained to preserve local environments;
+`AGENTS.md` are English. The local Git repository has no remote. Goal 04 completes
+the simple Style A interface, neutral preview/copying and cancellation guards.
+[UI verification](docs/UI_VERIFICATION.md) records browser and visual scope.
+The existing workspace path is retained to preserve local environments;
 use `clearmessage-evohacks` for new clone/delivery directories.

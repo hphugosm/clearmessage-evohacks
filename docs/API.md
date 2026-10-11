@@ -74,7 +74,10 @@ contract version are unchanged; older policy responses are rejected explicitly.
 preview, manually copies text or makes another gesture to invoke native Web Share.
 The payload contains **only `text` from allowlisted templates**: no source,
 status, evidence, URL, recipient or personal details. Cancellation is not an
-analysis error. No clipboard API, automatic sending or external integration.
+analysis error. A separate Copy help request click writes only that fixed preview
+to the clipboard; clipboard content is never read. Failed/unavailable copying
+selects the preview for manual copying and does not claim success. No automatic
+sending or external integration.
 
 ## Errors and health
 

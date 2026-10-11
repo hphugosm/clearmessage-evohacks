@@ -76,8 +76,10 @@ payment and disclosure requests match, secret protection is the displayed priori
 beside independent verification and trusted help (the three-step cap).
 
 Help drafts contain only allowlisted neutral sentences. Preview first, second
-user gesture for the native share picker; manual copying available without a
-clipboard API. No automatic recipient, reporting, bank contact or intervention.
+user gesture for copying or the native share picker. Clipboard writing accepts
+only the fixed draft; the application never reads clipboard content. Unavailable
+or failed writing leaves a selected preview for manual copying. No automatic
+recipient, reporting, bank contact or intervention.
 “I already clicked” gives three manually checkable steps; it collects no extra
 secrets and does not claim to inspect/clean the device. Advice was cross-checked
 with [FTC phishing guidance](https://consumer.ftc.gov/articles/how-recognize-avoid-phishing-scams)

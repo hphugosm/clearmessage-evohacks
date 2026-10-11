@@ -111,7 +111,7 @@ Keep navigation minimal. There is no interface language toggle or complicated me
 
 ### Message input card
 
-Use a persistent **Message text** label, not a placeholder-only label. Placeholder: **Paste the message here…**. Default textarea height is about 200px, resizable vertically. Body/input text is 20px. Show the 2,000-code-point limit and character count without truncating pasted text. Connect privacy, limit and error text with `aria-describedby`. Set `aria-invalid` for actual invalid input. Preserve the user's current input after a failure. Disable editing only while that request is pending; editing afterwards clears the old result.
+Use a persistent **Message text** label, not a placeholder-only label. Placeholder: **Paste the message here…**. Default textarea height is about 200px, resizable vertically. Body/input text is 20px. Show the 2,000-code-point limit and character count without truncating pasted text. Connect privacy, limit and error text with `aria-describedby`. Set `aria-invalid` for actual invalid input. Preserve the user's current input after a failure. Keep message/language editing available during a request: an edit cancels that request and clears the old result. Disable duplicate submission while pending; ignore late responses after an edit.
 
 ### Message-language hint
 
@@ -127,7 +127,7 @@ Use one visible state label, a 24px heading, short explanation, **Why do we thin
 
 ### Help summary
 
-The current integration provides a preview and user-initiated native sharing; selectable preview text is the manual-copy fallback. Dedicated copy feedback remains future Goal 04 work. **Ask someone for help** opens a preview of fixed neutral wording. **Copy help request** copies only that preview. **Share help request** invokes native sharing after a click, with copy fallback. **Copied** appears in a polite live region. On clipboard failure offer selectable preview text without claiming success. Cancelling native share is not an analysis failure. Never select a recipient or send automatically.
+Goal 04 provides preview, user-initiated copying with honest feedback, and optional native sharing; selectable preview text remains the manual-copy fallback. **Ask someone for help** opens a preview of fixed neutral wording. **Copy help request** copies only that preview. **Share help request** invokes native sharing after a click, with copy fallback. **Copied** appears in a polite live region. On clipboard failure offer selectable preview text without claiming success. Cancelling native share is not an analysis failure. Never select a recipient or send automatically.
 
 ### Optional OCR
 
