@@ -1,6 +1,6 @@
 # ClearMessage Goal 10 progress
 
-11 October 2026 · Europe/Prague. Started at 16:22; current verified implementation checkpoint at 16:45. Feature freeze deadline 18:00; internal submission target 19:00. No artificial waiting, model training, publication, deployment or merge.
+11 October 2026 · Europe/Prague. Started at 16:22; implementation checkpoint at 16:45; final documentation at 17:00. Feature freeze deadline 18:00; internal submission target 19:00. No artificial waiting, model training, publication, deployment or merge.
 
 ## Isolation and baseline
 
@@ -25,3 +25,22 @@ Retained browser runs initially failed selectors for a decorative status marker 
 ## Remaining verification at this checkpoint
 
 Full `sh scripts/test.sh`, cross-engine checks, clean locked packaged release, final source/hash/diff review and final documentation/commit. Real speech API presence is observed in Chromium, but its initial voice inventory is empty; playback/lifecycle tests use explicit test mocks. Physical audible output, screen-reader speech, actual Safari/mobile usability, Docker/public hosting and independent language/model validation remain unverified or release gates. See the final Goal 10 test report and handoff for completed commands and truthful scope.
+
+
+## Final E verification and handoff — 17:00 Prague
+
+Feature implementation froze before 18:00. First implementation commit **2277dfa** followed the integrated passing A–D build/helper/retained/new-feature checks. Verification milestone **a1148b0** saves current scripts, factual fixed copy, implementation and actual cross-engine/UI/OCR-disabled/release evidence. The final documentation milestone is `docs: complete Goal 10 verification and handoff`; resolve its exact hash with `git log --oneline c91cf63..HEAD` or the final user-facing handoff.
+
+Final `sh scripts/test.sh` **PASS: 217 Python / 131 Vitest / 88 Chromium**, with dependency/schema/fact/build/migration checks; 44 scenarios in each Chromium serving mode. Cross-engine production **PASS: 42 Firefox / 44 WebKit**, zero failures/flaky/retries. Two Firefox clipboard read-back exclusions remain explicitly covered elsewhere. Existing Starlette/httpx warning is retained. Logs for this run are temporary local artifacts; the tracked aggregate contains reproducible commands and source hashes without source-message content.
+
+Human-first UI verification **PASS: 27 captures + 7 genuine native Chromium 200% zoom captures / 17 contrast pairs**, with 360/320px/text enlargement, forced colors, reduced motion, actual API/automatic/manual mask and neutral preview. Separate OCR-disabled production build **PASS** using `--goal10`. Actual desktop/360px/bubble/shield/native-zoom pixels were inspected. Actual in-app home/example/phrase/mask/details close/reopen and native Listen/Stop/completion controls were observed; incomplete warning remains visible while details close.
+
+Fresh locked packaged release **PASS** after an initial failed walkthrough. The failure was an immediate Home assertion before React hydration after transparency reload; explicit waiting repaired it. The successful repeat used another fresh environment and real OCR/model/copy/example/mask/pattern/transparency, an offline restart and a disposable failed model. Application logs stayed empty, outgoing attempts zero, runtime hashes unchanged. Cold/warm/failed health startup 61.169/0.693/0.700s. These are local measurements; Docker execution remains unavailable.
+
+A temporary pre-commit migration failure referenced documentation drafts not yet created. Drafts were created and completed; full final test migration inspected 232 files, verification-commit audit inspected 235, and final documentation audit passed with 236 owned files. No scan or guard was weakened. Read-only final review found no blocking safety/privacy/a11y defect or lost retained regression; its details-toggle coverage observation was verified in the actual browser.
+
+Automatic approval review rejected replacing the shared OCR verifier's Goal 09 default/removing old behavior. Kept its already passing scoped `--goal10` adapter. No requested deliverable is blocked; no approval workaround was added.
+
+The final Chromium native inventories contained 180 voices/41 English/41 local English, unlike an earlier empty-inventory observation. Firefox/WebKit initially listed zero voices. Native control behavior and mocked payload/lifecycle tests do not establish audible sound or voice privacy. Physical audio, spoken screen reader, physical mobile/actual Safari/human usability, independent language/performance policy, licensing and Docker/public-host privacy remain unverified/gates. Automatic masking and narrow pattern labels are aids with disclosed limits, not complete protection or confirmed fraud.
+
+Backend, tracked ML/data/model/review/split/evaluation and canonical prior audit files have zero diff from c91cf63; approved artifact/report/split hashes match. Main and Goal 09 remain clean; no merge/deploy/publish/Devpost submission. No remaining implementation tasks for Goal 10. Final [test report](GOAL_10_TEST_REPORT.md), [handoff](GOAL_10_HANDOFF.md), [aggregate evidence](data/goal10-verification.json) and actual home screenshot are the reviewable result. GO for reviewed local-prototype integration/demo; NO-GO for an independently validated public detector.

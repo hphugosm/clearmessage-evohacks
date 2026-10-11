@@ -6,8 +6,9 @@ ClearMessage helps people understand short messages and choose a safer next step
 React + TypeScript + Vite calls FastAPI/Pydantic, our genuinely trained Goal 02
 TF-IDF + LogisticRegression model, and transparent textual rules. The interface,
 documentation and project instructions are English; message language is separate.
-The approved [Style A brand bible](docs/BRAND_BIBLE.md) now includes the Goal 09 minimalist refinement.
-[Goal 09 handoff and demo](docs/GOAL_09_HANDOFF.md) records the isolated release candidate and verification.
+The approved [Style A brand bible](docs/BRAND_BIBLE.md) includes the Goal 10 human-first refinement.
+[Goal 10 handoff and demo](docs/GOAL_10_HANDOFF.md) records the isolated tested prototype, all six features and integration instructions.
+[Goal 09 handoff](docs/GOAL_09_HANDOFF.md) remains the preserved historical base.
 
 **The dataset review is approved and the model was retrained. Language performance
 and completed low-finding policy remain unverified.** Current analysis returns `suspicious` with an actual basis or
@@ -22,13 +23,17 @@ requests. Help sharing uses fixed neutral sentences, a preview and a separate
 user gesture. It never includes the source message. Czech evaluation formats,
 regression inputs and provenance remain available and unchanged.
 
-## Screenshot, explanations and guidance
+## Check a message and choose a next step
+
+Home offers **Upload a screenshot**, **Paste a message** and **Try an example**. The example is clearly fictional and goes through the real trained model/API, with an honest incomplete result. The simple result keeps a short reason, next step and critical limits visible; **Why this result?** opens detailed evidence. **Listen** reads only approved fixed guidance and **Stop reading** cancels it. It never speaks the original text; browser/device voices may use online services.
+
+**Hide personal details** replaces recognizable emails, URLs, phone-like numbers and labeled secrets in the result display. **Privacy controls** also lets users select more text to mask. Automatic detection can miss details; masks do not change inference or erase processed data. Help preview/copy/share always excludes original text. At most one **Possible pattern** explains an observed delivery/account/bank request without confirming fraud or sender identity.
 
 Choose **Upload a screenshot** for real English PNG/JPEG OCR in the browser, using pinned resources from the application origin. Images are not uploaded. Review and edit the full extracted text, remove sensitive details, confirm it, then choose **Check message**. Images are bounded to 10 MiB, 12 megapixels and 16,384 pixels per side. OCR errors offer paste input; text above 2,000 Unicode code points stays editable and is never automatically shortened.
 
-Observed rule explanations can expand to highlight a proven phrase. Classifier-only findings cannot identify particular words. **What have you already done?** offers five curated local checklists; choices never enter analysis or sharing. **Behind the AI** at `/how-it-works` shows report-verified counts/metrics beside the previously evaluated-test and independent-language limitations.
+The detailed view displays an inert message bubble with selectable exact observed-rule phrases. Classifier-only findings cannot identify particular words; Unicode offsets are verified rather than guessed. **What have you already done?** offers five curated local checklists; choices never enter analysis or sharing. **Behind the AI** at `/how-it-works` shows report-verified counts/metrics beside the previously evaluated-test and independent-language limitations.
 
-Screenshot input is enabled for the authorized Goal 09 build. To disable it while preserving paste analysis:
+Screenshot input remains enabled in the authorized human-first build. To disable it while preserving paste analysis:
 
 ```sh
 VITE_ENABLE_OCR=false npm --prefix frontend run build
@@ -36,7 +41,7 @@ VITE_ENABLE_OCR=false npm --prefix frontend run build
 VITE_ENABLE_OCR=false npm --prefix frontend run dev
 ```
 
-English recognition of synthetic fixtures is verified, not a general OCR quality benchmark. Screenshot bytes, temporary canvases and workers are released; browser garbage collection controls final memory reclamation. See [implementation](docs/GOAL_09_IMPLEMENTATION.md) and [test report](docs/GOAL_09_TEST_REPORT.md).
+English recognition of synthetic fixtures is verified, not a general OCR quality benchmark. Screenshot bytes, temporary canvases and workers are released; browser garbage collection controls final memory reclamation. See [current implementation](docs/GOAL_10_IMPLEMENTATION.md) and [test report](docs/GOAL_10_TEST_REPORT.md); the [Goal 09 OCR implementation](docs/GOAL_09_IMPLEMENTATION.md) remains its historical base.
 
 ## Requirements and installation
 
@@ -86,11 +91,11 @@ Ports 8000 and 5173 must be free; tests do not reuse unrelated servers. Browser
 traces, videos and automatic screenshots are disabled. Failure mocks are confined
 to tests. Normal end-to-end tests use the actual trained model and inert fixtures.
 
-Additional Goal 09 checks and actual screenshots:
+Additional Goal 10 checks and actual screenshots:
 
 ```sh
-PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-product-ui.mjs
-PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-ocr-flag.mjs
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-human-first-ui.mjs
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" node frontend/scripts/verify-ocr-flag.mjs --goal10
 python3 scripts/export_transparency.py --check
 ```
 
@@ -103,7 +108,7 @@ npm --prefix frontend run test:e2e:cross
 
 The separate configuration checks production same-origin serving with the pinned Playwright engines. Firefox's protocol cannot grant clipboard read/write permissions; its two read-back cases remain covered in Chromium and WebKit. Firefox still checks selectable previews and clipboard/share failure fallbacks. WebKit engine testing is not actual Safari or physical-device usability testing. These checks also own port 8000, so run them after the default browser suite.
 
-The UI verifier owns port 8788, captures only fictional inputs under `.cache/goal09-ui`, and writes new Goal 09 evidence without replacing historical audits. The flag verifier owns a temporary production build/server. Start services ahead of a demo: the fresh locked runtime's measured cold startup is recorded in the test report. Browser native-share availability depends on the device; manual preview/copy remains available.
+The human-first UI verifier owns port 8788, captures only fictional inputs under `.cache/goal10-ui`, and writes Goal 10 evidence without replacing historical audits. It separately checks enlarged text and actual native Chromium page zoom using an isolated profile. The preserved Goal 09 UI script and the OCR flag script's Goal 09 default remain historical tooling; use the scoped commands above for this checkout. The flag verifier owns a temporary production build/server. Start services ahead of a demo: the fresh locked runtime's measured cold startup is recorded in the test report. Browser native-share availability depends on the device; manual preview/copy remains available.
 
 Individual checks:
 
@@ -186,7 +191,7 @@ message text; its results are not language accuracy or real-world validation.
 
 ## Clean release and Docker
 
-[Release instructions and measured evidence](docs/DEPLOYMENT_REPORT.md) describe
+[Current test/release evidence](docs/GOAL_10_TEST_REPORT.md) and [historical release instructions](docs/DEPLOYMENT_REPORT.md) describe
 clean-clone setup, trusted artifact restoration, fresh-process HTTP/browser tests,
 resource bounds and the outstanding container/hosting checks.
 
@@ -194,7 +199,7 @@ resource bounds and the outstanding container/hosting checks.
 npm --prefix frontend run build
 .venv/bin/python scripts/prepare_model.py
 .venv/bin/python scripts/package_runtime.py --output build/runtime
-.venv/bin/python scripts/verify_release.py --clean-install --report docs/data/goal09-local-release.json
+.venv/bin/python scripts/verify_release.py --clean-install --goal 10 --report docs/data/goal10-local-release.json
 ```
 
 The verifier explicitly installs hash-locked dependencies in a fresh temporary
@@ -235,7 +240,7 @@ TypeScript describe the shared versioned contract. All backend responses use
 Processing happens on our backend, not entirely in the browser.
 
 No deployment destination/account is confirmed. No credentials, purchase,
-publication or deployment occurred. Fresh local release verification passed;
+publication or deployment occurred. Goal 10 fresh local release verification passed;
 public HTTPS, proxy/hosting logging and container execution remain unverified.
 See the release report for measured scope. Starlette's existing
 httpx TestClient deprecation warning remains visible; it is not suppressed.

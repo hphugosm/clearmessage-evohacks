@@ -1,0 +1,179 @@
+{
+  "goal": "Goal 10",
+  "recorded_at_utc": "2026-10-11T15:04:35.795060+00:00",
+  "base_commit": "c91cf63edbb7b2a00984a141e2984e4c5bb8530f",
+  "implementation_commit": "2277dfaf827087d2e6548a33c2feb5cd270857fc",
+  "verification_commit": "a1148b0cd2abbd9b6d57a8c273a78399910b16bc",
+  "default_suite": {
+    "command": "sh scripts/test.sh",
+    "passed": true,
+    "python": 217,
+    "vitest": 131,
+    "chromium": 88,
+    "chromium_projects": [
+      "production",
+      "dev-proxy"
+    ],
+    "python_warning": "Existing Starlette httpx TestClient deprecation warning; not suppressed"
+  },
+  "cross_engine_suite": {
+    "command": "npm --prefix frontend run test:e2e:cross -- --reporter=json",
+    "passed": true,
+    "firefox": 42,
+    "webkit": 44,
+    "failed": 0,
+    "skipped_after_selection": 0,
+    "flaky": 0,
+    "retries": 0,
+    "scope": "Two clipboard read-back cases deliberately excluded in Firefox; tested in Chromium/WebKit"
+  },
+  "native_speech_capabilities": {
+    "chromium_production": {
+      "api": true,
+      "initialVoices": 180,
+      "initialEnglishVoices": 41,
+      "initialLocalEnglishVoices": 41
+    },
+    "chromium_dev_proxy": {
+      "api": true,
+      "initialVoices": 180,
+      "initialEnglishVoices": 41,
+      "initialLocalEnglishVoices": 41
+    },
+    "cross_engines": [
+      {
+        "project": "firefox",
+        "api": true,
+        "initialVoices": 0,
+        "initialEnglishVoices": 0,
+        "initialLocalEnglishVoices": 0
+      },
+      {
+        "project": "webkit",
+        "api": true,
+        "initialVoices": 0,
+        "initialEnglishVoices": 0,
+        "initialLocalEnglishVoices": 0
+      }
+    ],
+    "in_app_browser": "Actual Listen/Stop and natural completion UI observed; no physical audible-output claim"
+  },
+  "layout": {
+    "captures": 27,
+    "native_200_percent_zoom_captures": 7,
+    "contrast_pairs": 17,
+    "minimum_normal_text_contrast": 4.694,
+    "manual_visual_review": [
+      "desktop-home",
+      "mobile-360-home",
+      "message bubble",
+      "privacy shield",
+      "native-200-bubble"
+    ],
+    "screenshot": "docs/data/goal10-home.png"
+  },
+  "actual_ui_review": {
+    "details_close_and_reopen": true,
+    "incomplete_warning_visible_while_closed": true,
+    "listen_then_stop_returns_listen": true,
+    "exact_observed_phrase_selection": true,
+    "display_url_masked": true
+  },
+  "packaged_release": {
+    "command": ".venv/bin/python scripts/verify_release.py --clean-install --goal 10 --report docs/data/goal10-local-release.json",
+    "passed": true,
+    "container_tested": false,
+    "runtime_unchanged": true,
+    "outgoing_network_attempts": 0,
+    "application_logs_empty": true
+  },
+  "frozen_scope_diff_empty": [
+    "backend",
+    "ml",
+    "docs/FINAL_AUDIT.md",
+    "docs/MODEL_CARD.md",
+    "docs/GOAL_09_HANDOFF.md",
+    "docs/GOAL_09_TEST_REPORT.md",
+    "docs/data/goal09-local-release.json",
+    "docs/data/approved-local-release-v1.json"
+  ],
+  "frozen_sha256": {
+    "ml/artifacts/goal02-approved-v1/tfidf_c2.0.json": "b6e56c3f1d3428c4cc9aee2fe2caa2beb10bd30cabcf35df8da915041e3eb4e1",
+    "ml/reports/goal02-approved-v1.json": "3721e1f04a448633e1fb503dd06c4db6f81ce2b10116726ae29acb7faef172cd",
+    "ml/manifests/mendeley-v1.split.json": "9fa155bd267fd5492523b297515b3b1a357832ce19e131357ba81198cf89b988"
+  },
+  "source_sha256": {
+    "backend/model-config.json": "55e3e4a43f95ee15fe257530f5bf227d0dd103f0ae151aa840402db9cfa23ccd",
+    "frontend/scripts/prepare-ocr.mjs": "4e517440bf577a1fa4f99fc59f49b55b8750cc77ef241aba00f308504b097596",
+    "frontend/scripts/verify-human-first-ui.mjs": "b4ed2b22f9ec69ed3dfd68fbaee149e70f8ea931aa6f2b794864dfe392cb924a",
+    "frontend/scripts/verify-ocr-flag.mjs": "838ee1a650f7cddca9d1f974d7eafd76299b1cae36e648ba1703ebf33bba9a4d",
+    "frontend/scripts/verify-product-ui.mjs": "57dceaac952e3feeb96013a5d87c949bb8bcfd7e04a684b36d6903fecdc3a231",
+    "frontend/scripts/verify-release.mjs": "5e01b5b5a8757cb391a08477bdf50ec94f831012e16580c8bacb80f54986e35a",
+    "frontend/scripts/verify-ui.mjs": "4d547f0fc1e98e2b4db02d1e8a1862843fd71d73eeb84c0dc117bff2084edeac",
+    "frontend/src/ActionGuide.tsx": "ff6854590350963faacabd7e478d2838b15781ac050c677219430c805c2005f9",
+    "frontend/src/App.tsx": "9bb1c980a48df1b0aa22c404009e76116e4fd195ee2ad71534ed04ab52a734db",
+    "frontend/src/BehindAI.tsx": "7ca6a25653df9b9a4e1ffcbe904fde36a67979166c34318e3f30449969b22b5e",
+    "frontend/src/EvidenceDetails.tsx": "449d1f5db803aad086b6827a680bf06f8076bf044087a428011bf4145274f89f",
+    "frontend/src/HelpRequest.tsx": "908955986dcb6fd20e4578f1d1ef6a79b2b3677e9f5ef6411fa041e6957b3c19",
+    "frontend/src/MessageBubble.tsx": "0ccdb879ebeaaf44613d5e86174e6d9f667351cc698b90c5bca699da236636fe",
+    "frontend/src/SafeScan.tsx": "5f26577c744d3899395959e04763fc1d9f8331dea8cea6abea616a027635d6fb",
+    "frontend/src/api.schema.ts": "49feb45a4ed30be5e6850dd049964bec09605b4c5836b9c392002d5af3e27ddc",
+    "frontend/src/api.test.ts": "8c4629275ca6ca9011204d9a73240c4b78a62c3c3148d5762c98e9acdb9a0a1f",
+    "frontend/src/api.ts": "fb8fd34cf8943e0e2d357b25e6984004f8ea6c6c60b428abb398c498305fbcc5",
+    "frontend/src/assets/Inter-LICENSE.txt": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a",
+    "frontend/src/assets/InterVariable.woff2": "693b77d4f32ee9b8bfc995589b5fad5e99adf2832738661f5402f9978429a8e3",
+    "frontend/src/assets/chevron-down.svg": "e3c9abe91629e047f9960fc5dd54dcf36e4fc8fffba950c2773ab785126ae220",
+    "frontend/src/brand-tokens.css": "adafac5cf5c9f653d5dac4814e2a5e5a3d99bda98b2752fb886bf5b20c37583b",
+    "frontend/src/bubble.test.ts": "d0cd86fa4d9fe5826be01f02c6b450d51bd01d84a92e1816061da78ce43d6eae",
+    "frontend/src/bubble.ts": "5b281dddcbf970f6fe84287b9587174057c9007ab3064d3ccdea6d5a9deadb23",
+    "frontend/src/copy.ts": "f8638be31fbd45bfd8079957f2d31e06790a8de10a0d1df7c478b150bc7dae5a",
+    "frontend/src/evidence.test.ts": "59d7bfc036dcd1cf0f2322aa0de8341af7fb42d02b8c4217296ef2f5659698ac",
+    "frontend/src/evidence.ts": "dc108d73fc5ed3c7f68f226c59da654bfbb3a65ef51b17307cd798376da2c7e8",
+    "frontend/src/help.test.ts": "02cb6cb0801e90ea1080a0c4a14076bf99e9169426ee767af746f7f7a5b2eddc",
+    "frontend/src/help.ts": "65f97752674bb5ecd38778fad15c5df018b7c7b7cb96d0a9dc861cfc8ed2199e",
+    "frontend/src/main.tsx": "e0a12b080d820a7519f87d494dadd6af075385a2fc9275283222267e2bad2ef0",
+    "frontend/src/model-facts.json": "c5a3a8b3a9b8c003dbf5f4aad2d80319485ca95b5c21878780e7ddcbfe4d1550",
+    "frontend/src/ocr.test.ts": "0609b53465ddb8591a8a7fdf11d756bff78c94b4e7ea689fa2a3e0739a04fb91",
+    "frontend/src/ocr.ts": "a4ad35ad4b52399ed0b6a5069b7142a3d8d22ed9e92eabff9a44e4fd9f589521",
+    "frontend/src/patterns.test.ts": "21dae5d2686c8acb60b1c60e3c2c96dfb5b08e8775bb7d022e8e4cb68c6e95a3",
+    "frontend/src/patterns.ts": "34c98e2e0d2381cab20ac95ea9d71216773ebd4f547c9d3f64934a4f360b1e27",
+    "frontend/src/privacy.test.ts": "10e9b95f48bd81d989be9864f7320a46adbfae3fa283c68df70c79c42ec5580a",
+    "frontend/src/privacy.ts": "39935427aa898019d169474ab93c4316ce3599e82423c885eba7d85dc2194995",
+    "frontend/src/speech.test.ts": "3c20f5019893beae6aca0a6c4c1b6d9c6ed92ed5be9387fd9ce22342e721029f",
+    "frontend/src/speech.ts": "65de0c47bb3b463ebee8bc5542ba337ed6519c76b0a2c0bed53d339cac28a626",
+    "frontend/src/styles.css": "c3d83ee217bffddd56a0f650aad51958857e6602f31250c0db607f9772749f0f",
+    "frontend/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "frontend/tests/app.spec.ts": "f7d115dbb0dcfa08fa315633540e9348b4ed176f928734729b6bb6ae7bc818a3",
+    "frontend/tests/guidance.spec.ts": "2e266d7c61da72b46473188a92e6160d9b8f22ea0f565b4a46a349c1ee0f4eee",
+    "frontend/tests/human-first.spec.ts": "fc43975e64d22c5b7bd2bba49575601b025087db5260b66132763764f3df88bb",
+    "frontend/tests/ocr.spec.ts": "bdae774953641c70f84f1151faf2daaef5c6bc709695c8b7982e26a50ee104bb",
+    "frontend/tests/transparency.spec.ts": "e5f22251b0724724f0506268a8754a1c82b2bf26f96b8c3ef937ca94d436489c",
+    "scripts/verify_release.py": "895e7892f9196004e352601ecd587737d3305c1518385ee3bed6212c898db7b6"
+  },
+  "previous_failed_checks": [
+    "Initial helper regressions and obsolete selectors corrected and rerun",
+    "Fresh release browser home-return assertion did not wait for hydration; fixed and clean release rerun passed",
+    "Temporary missing draft-document links failed migration check; created drafts and final checks passed"
+  ],
+  "approval_review": {
+    "rejected_action": "Change shared OCR verifier default and remove Goal 09 behavior",
+    "reason": "Preserve prior Goal 09 verification behavior",
+    "resolution": "Keep verified --goal10 adapter; no blocked deliverable"
+  },
+  "not_verified": [
+    "Physical audible output",
+    "Spoken screen-reader UX",
+    "Physical mobile and actual Safari usability",
+    "Human participant research",
+    "Docker build/run/enforcement",
+    "Public HTTPS and hosting/proxy privacy",
+    "Independent English/Czech model validation",
+    "Completed low-finding policy",
+    "Distribution-license clearance"
+  ],
+  "recommendation": "GO for reviewed local prototype integration/demo; NO-GO for independently validated public detector",
+  "merged": false,
+  "deployed": false,
+  "published": false,
+  "submitted": false
+}
